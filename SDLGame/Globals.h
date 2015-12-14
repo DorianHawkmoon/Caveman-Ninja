@@ -16,12 +16,14 @@ enum update_status {
 // Configuration -----------
 #define SCREEN_WIDTH 640
 #define SCREEN_HEIGHT 480
+#define SCREEN_SIZE 2
+
 #define FULLSCREEN false
 #define BORDERLESS false
 #define RESIZABLE true
 #define FULLSCREEN_DESKTOP false
 #define VSYNC true
+
 #define TITLE "Super Awesome Game"
-#define SPRITE_FILE "sprites.png"
 
 #endif // !GLOBALS_H

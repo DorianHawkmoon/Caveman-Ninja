@@ -3,20 +3,34 @@
 #ifndef MODULE_INPUT_H
 #define MODULE_INPUT_H
 
-typedef unsigned __int8 Uint8;
 #include "Module.h"
+typedef unsigned __int8 Uint8;
+
+#define MAX_KEYS 300
+
+enum KeyState {
+	KEY_IDLE = 0,
+	KEY_DOWN,
+	KEY_REPEAT,
+	KEY_UP
+};
 
 class ModuleInput : public Module {
 public:
-	ModuleInput();
+	ModuleInput(bool started = true);
 	virtual ~ModuleInput();
 
-	bool Init();
-	update_status Update();
-	bool CleanUp();
+	// Check key states (includes mouse and joy buttons)
+	inline KeyState GetKey(int id) const {
+		return keyboard[id];
+	}
+
+	bool init();
+	update_status preUpdate();
+	bool cleanUp();
 
 private:
-	const Uint8 *keyboard = nullptr;
+	KeyState *keyboard;
 };
 
 #endif // !MODULE_INPUT_H

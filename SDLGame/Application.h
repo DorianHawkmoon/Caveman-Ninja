@@ -19,12 +19,12 @@ public:
 	Application();
 	virtual ~Application();
 
-	bool Init();
-	bool Start();
-	update_status PreUpdate();
-	update_status Update();
-	update_status PostUpdate();
-	bool CleanUp();
+	bool init();
+	bool start();
+	update_status preUpdate();
+	update_status update();
+	update_status postUpdate();
+	bool cleanUp();
 
 public:
 	ModuleRender* renderer;

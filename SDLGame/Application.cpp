@@ -7,15 +7,13 @@
 #include "ModuleAudio.h"
 
 Application::Application() {
-	// Order matters: they will Init/start/update in this order
+	// Order matters: they will init/start/update in this order
 	modules.push_back(window = new ModuleWindow());
 	modules.push_back(renderer = new ModuleRender());
 	modules.push_back(textures = new ModuleTextures());
 	modules.push_back(input = new ModuleInput());
 	modules.push_back(scene = new ModuleScene());
 	modules.push_back(audio = new ModuleAudio());
-
-	// Homework: Create a new module to handle music and sound effects
 }
 
 Application::~Application() {
@@ -26,54 +24,54 @@ Application::~Application() {
 	SDL_Quit();
 }
 
-bool Application::Init() {
+bool Application::init() {
 	bool ret = true;
 
 	for (std::list<Module*>::iterator it = modules.begin(); it != modules.end() && ret; ++it)
-		ret = (*it)->Init();
+		ret = (*it)->init();
 
 	return ret;
 }
 
-bool Application::Start() {
+bool Application::start() {
 	bool result = true;
 	for (std::list<Module*>::iterator it = modules.begin(); it != modules.end() && result == true; ++it)
-		result = (*it)->Start();
+		result = (*it)->start();
 	return result;
 }
 
-update_status Application::PreUpdate() {
+update_status Application::preUpdate() {
 	update_status ret = UPDATE_CONTINUE;
 
 	for (std::list<Module*>::iterator it = modules.begin(); it != modules.end() && ret == UPDATE_CONTINUE; ++it)
-		ret = (*it)->PreUpdate();
+		ret = (*it)->preUpdate();
 
 	return ret;
 }
 
-update_status Application::Update() {
+update_status Application::update() {
 	update_status ret = UPDATE_CONTINUE;
 
 	for (std::list<Module*>::iterator it = modules.begin(); it != modules.end() && ret == UPDATE_CONTINUE; ++it)
-		ret = (*it)->Update();
+		ret = (*it)->update();
 
 	return ret;
 }
 
-update_status Application::PostUpdate() {
+update_status Application::postUpdate() {
 	update_status ret = UPDATE_CONTINUE;
 
 	for (std::list<Module*>::iterator it = modules.begin(); it != modules.end() && ret == UPDATE_CONTINUE; ++it)
-		ret = (*it)->PostUpdate();
+		ret = (*it)->postUpdate();
 
 	return ret;
 }
 
-bool Application::CleanUp() {
+bool Application::cleanUp() {
 	bool ret = true;
 
 	for (std::list<Module*>::reverse_iterator it = modules.rbegin(); it != modules.rend() && ret; ++it)
-		ret = (*it)->CleanUp();
+		ret = (*it)->cleanUp();
 
 	return ret;
 }

@@ -1,2 +1,11 @@
-﻿  ModuleInput.cpp
-  SDLGame.vcxproj -> C:\Users\Dorian\Documents\Visual Studio 2015\Projects\SDLGame\Game\SDLGame.exe
+﻿  ModuleWindow.cpp
+  ModuleTextures.cpp
+  ModuleScene.cpp
+  ModuleRender.cpp
+  ModuleInput.cpp
+  ModuleAudio.cpp
+  Main.cpp
+  Log.cpp
+  Application.cpp
+  Generando código...
+  SDLGame.vcxproj -> C:\Users\Dorian\documents\visual studio 2015\Projects\SDLGame\Game\SDLGame.exe

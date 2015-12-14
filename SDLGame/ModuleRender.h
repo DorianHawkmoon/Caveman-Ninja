@@ -3,25 +3,29 @@
 #define MODULE_RENDER_H
 
 #include "Module.h"
+#include "SDL\SDL_rect.h"
 struct SDL_Texture;
 struct SDL_Renderer;
-struct SDL_Rect;
 
 class ModuleRender : public Module {
 public:
-	ModuleRender();
+	ModuleRender(bool started = true);
 	virtual ~ModuleRender();
 
-	bool Init();
-	update_status PreUpdate();
-	update_status Update();
-	update_status PostUpdate();
-	bool CleanUp();
+	bool init();
+	update_status preUpdate();
+	update_status update();
+	update_status postUpdate();
+	bool cleanUp();
 
-	bool Blit(SDL_Texture* texture, int x, int y, SDL_Rect* section);
+	//TODO entender que coño hace el método con camera
+	bool blit(SDL_Texture* texture, int x, int y, SDL_Rect* section, float speed=1.0f);
+	//TODO pintar rectangulo
+	//TODO pintar pixeles
 
 public:
 	SDL_Renderer* renderer = nullptr;
+	SDL_Rect camera;
 };
 
 

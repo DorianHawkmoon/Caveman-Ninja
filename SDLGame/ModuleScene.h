@@ -13,8 +13,8 @@ public:
 	ModuleScene();
 	virtual ~ModuleScene();
 
-	bool Start();
-	update_status Update();
+	bool start();
+	update_status update();
 
 private:
 	SDL_Texture* img;

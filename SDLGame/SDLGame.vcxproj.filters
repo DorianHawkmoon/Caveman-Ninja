@@ -42,20 +42,17 @@
     <ClCompile Include="ModuleRender.cpp">
       <Filter>Archivos de código fuente\Core Modules</Filter>
     </ClCompile>
-    <ClCompile Include="ModuleTextures.cpp">
-      <Filter>Archivos de código fuente</Filter>
-    </ClCompile>
     <ClCompile Include="ModuleScene.cpp">
       <Filter>Archivos de código fuente\Core Modules</Filter>
     </ClCompile>
     <ClCompile Include="ModuleAudio.cpp">
       <Filter>Archivos de código fuente\Core Modules</Filter>
     </ClCompile>
+    <ClCompile Include="ModuleTextures.cpp">
+      <Filter>Archivos de código fuente\Core Modules</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Globals.h">
-      <Filter>Archivos de código fuente\Utilities</Filter>
-    </ClInclude>
     <ClInclude Include="Module.h">
       <Filter>Archivos de código fuente\Core Modules</Filter>
     </ClInclude>
@@ -71,13 +68,16 @@
     <ClInclude Include="ModuleRender.h">
       <Filter>Archivos de código fuente\Core Modules</Filter>
     </ClInclude>
-    <ClInclude Include="ModuleTextures.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
     <ClInclude Include="ModuleScene.h">
       <Filter>Archivos de código fuente\Core Modules</Filter>
     </ClInclude>
     <ClInclude Include="ModuleAudio.h">
+      <Filter>Archivos de código fuente\Core Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Globals.h">
+      <Filter>Archivos de código fuente\Main</Filter>
+    </ClInclude>
+    <ClInclude Include="ModuleTextures.h">
       <Filter>Archivos de código fuente\Core Modules</Filter>
     </ClInclude>
   </ItemGroup>

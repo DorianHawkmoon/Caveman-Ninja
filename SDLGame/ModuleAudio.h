@@ -4,22 +4,28 @@
 
 #include "Module.h"
 #include "SDL_mixer\SDL_mixer.h" //included here because declaring the struct makes an error (line 131 of SDL_mixer)
-#include <list>
+#include <vector>
+
+#define DEFAULT_MUSIC_FADE_TIME 2.0f
 
 class ModuleAudio :	public Module {
 public:
-	ModuleAudio();
+	ModuleAudio(bool started=true);
 	virtual ~ModuleAudio();
 
-	bool Init();
-	bool CleanUp();
+	bool init();
+	bool cleanUp();
 
-	Mix_Music* const LoadMusic(const char* path);
-	Mix_Chunk* const LoadEffect(const char* path);
+	bool const playMusic(const char* path, float fade_time = DEFAULT_MUSIC_FADE_TIME);
+	unsigned int const loadEffect(const char* path);
+	bool playEffect(unsigned int fx, int repeat = 0);
 
 private:
-	std::list<Mix_Music*> music;
-	std::list<Mix_Chunk*> effects;
+	Mix_Music* const ModuleAudio::loadMusic(const char* path);
+
+private:
+	Mix_Music* music;
+	std::vector<Mix_Chunk*> effects;
 };
 
 

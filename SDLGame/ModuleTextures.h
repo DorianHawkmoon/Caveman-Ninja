@@ -9,13 +9,14 @@ struct SDL_Texture;
 
 class ModuleTextures : public Module {
 public:
-	ModuleTextures();
+	ModuleTextures(bool started = true);
 	virtual ~ModuleTextures();
 
-	bool Init();
-	bool CleanUp();
+	bool init();
+	bool cleanUp();
 
-	SDL_Texture* const Load(const char* path);
+	SDL_Texture* const load(const char* path);
+	void unload(SDL_Texture* texture);
 
 private:
 	std::list<SDL_Texture*> textures;

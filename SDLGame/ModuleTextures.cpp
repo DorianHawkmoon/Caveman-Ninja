@@ -5,15 +5,15 @@
 #include "ModuleRender.h"
 
 
-ModuleTextures::ModuleTextures() {}
+ModuleTextures::ModuleTextures(bool started): Module(started) {}
 
 
 ModuleTextures::~ModuleTextures() {
 	IMG_Quit();
 }
 
-bool ModuleTextures::Init() {
-	LOG("Init Image library");
+bool ModuleTextures::init() {
+	LOG("init Image library");
 	bool ret = true;
 
 	// load support for the PNG image format
@@ -21,14 +21,14 @@ bool ModuleTextures::Init() {
 	int init = IMG_Init(flags);
 
 	if ((init & flags) != flags) {
-		LOG("Could not initialize Image lib. IMG_Init: %s", IMG_GetError());
+		LOG("Could not initialize Image lib. IMG_init: %s", IMG_GetError());
 		ret = false;
 	}
 
 	return ret;
 }
 
-bool ModuleTextures::CleanUp() {
+bool ModuleTextures::cleanUp() {
 	LOG("Freeing textures and Image library");
 
 	for (std::list<SDL_Texture*>::iterator it = textures.begin(); it != textures.end(); ++it) {
@@ -39,14 +39,14 @@ bool ModuleTextures::CleanUp() {
 	return true;
 }
 
-SDL_Texture* const ModuleTextures::Load(const char* path) {
+SDL_Texture* const ModuleTextures::load(const char* path) {
 	SDL_Texture* texture = nullptr;
 	std::string finalPath = "images/";
 	finalPath.append(path);
 	SDL_Surface* surface = IMG_Load(finalPath.c_str());
 
 	if (surface == nullptr) {
-		LOG("Could not load surface with path: %s. IMG_Load: %s", path, IMG_GetError());
+		LOG("Could not load surface with path: %s. IMG_load: %s", path, IMG_GetError());
 	} else {
 		texture = SDL_CreateTextureFromSurface(App->renderer->renderer, surface);
 
@@ -60,4 +60,14 @@ SDL_Texture* const ModuleTextures::Load(const char* path) {
 	}
 
 	return texture;
+}
+
+void ModuleTextures::unload(SDL_Texture * texture) {
+	for (std::list<SDL_Texture*>::iterator it = textures.begin(); it != textures.end(); ++it) {
+		if (*it == texture) {
+			SDL_DestroyTexture(*it);
+			textures.erase(it);
+			break;
+		}
+	}
 }

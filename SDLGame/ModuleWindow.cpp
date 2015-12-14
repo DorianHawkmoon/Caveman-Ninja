@@ -1,7 +1,7 @@
 #include "ModuleWindow.h"
 #include "Globals.h"
 
-ModuleWindow::ModuleWindow() {}
+ModuleWindow::ModuleWindow(bool started):Module(started) {}
 
 // Destructor
 ModuleWindow::~ModuleWindow() {
@@ -11,8 +11,8 @@ ModuleWindow::~ModuleWindow() {
 }
 
 // Called before render is available
-bool ModuleWindow::Init() {
-	LOG("Init SDL window & surface");
+bool ModuleWindow::init() {
+	LOG("init SDL window & surface");
 	bool ret = true;
 
 	if (SDL_Init(SDL_INIT_VIDEO) < 0) {
@@ -21,8 +21,8 @@ bool ModuleWindow::Init() {
 	}
 	else {
 		//Create window
-		int width = SCREEN_WIDTH;
-		int height = SCREEN_HEIGHT;
+		int width = SCREEN_WIDTH* SCREEN_SIZE;
+		int height = SCREEN_HEIGHT* SCREEN_SIZE;
 		Uint32 flags = SDL_WINDOW_SHOWN;
 
 		if (FULLSCREEN == true) {
@@ -54,11 +54,11 @@ bool ModuleWindow::Init() {
 }
 
 // Called before quitting
-bool ModuleWindow::CleanUp() {
+bool ModuleWindow::cleanUp() {
 	LOG("Destroying SDL window and quitting all SDL systems");
 
 	//Destroy window
-	if (window != NULL) {
+	if (window != nullptr) {
 		SDL_DestroyWindow(window);
 	}
 

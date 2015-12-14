@@ -4,8 +4,8 @@
 
 enum main_states {
 	MAIN_CREATION,
-	MAIN_INIT,
-	MAIN_START,
+	MAIN_init,
+	MAIN_start,
 	MAIN_UPDATE,
 	MAIN_FINISH,
 	MAIN_EXIT
@@ -24,55 +24,55 @@ int main(int argc, char* argv[]) {
 
 				LOG("Application Creation --------------");
 				App = new Application();
-				state = MAIN_INIT;
+				state = MAIN_init;
 				break;
 
-			case MAIN_INIT:
+			case MAIN_init:
 
-				LOG("Application Init --------------");
-				if (App->Init() == false) {
-					LOG("Application Init exits with error -----");
+				LOG("Application init --------------");
+				if (App->init() == false) {
+					LOG("Application init exits with error -----");
 					state = MAIN_EXIT;
 				} else {
-					state = MAIN_START;
+					state = MAIN_start;
 				}
 
 				break;
 
-			case MAIN_START:
+			case MAIN_start:
 
-				LOG("Application Start --------------");
-				if (App->Start() == false) {
-					LOG("Application Start exits with error -----");
+				LOG("Application start --------------");
+				if (App->start() == false) {
+					LOG("Application start exits with error -----");
 					state = MAIN_EXIT;
 				} else {
 					state = MAIN_UPDATE;
-					LOG("Application Update --------------");
+					LOG("Application update --------------");
 				}
 
 				break;
 
 			case MAIN_UPDATE:
 			{
-				int update_return = App->PreUpdate();
+				int update_return = App->preUpdate();
 				if (update_return == UPDATE_ERROR) {
-					LOG("Application PreUpdate exits with error -----");
+					LOG("Application preUpdate exits with error -----");
 					state = MAIN_EXIT;
 				} else if (update_return == UPDATE_STOP) {
 					state = MAIN_FINISH;
 				}
 
-				update_return = App->Update();
+				update_return = App->update();
 				if (update_return == UPDATE_ERROR) {
-					LOG("Application Update exits with error -----");
+					LOG("Application update exits with error -----");
 					state = MAIN_EXIT;
 				} else if (update_return == UPDATE_STOP) {
 					state = MAIN_FINISH;
 				}
 
-				update_return = App->PostUpdate();
+				update_return = App->postUpdate();
 				if (update_return == UPDATE_ERROR) {
-					LOG("Application PostUpdate exits with error -----");
+					LOG("Application postUpdate exits with error -----");
 					state = MAIN_EXIT;
 				} else if (update_return == UPDATE_STOP) {
 					state = MAIN_FINISH;
@@ -84,9 +84,9 @@ int main(int argc, char* argv[]) {
 
 			case MAIN_FINISH:
 
-				LOG("Application CleanUp --------------");
-				if (App->CleanUp() == false) {
-					LOG("Application CleanUp exits with error -----");
+				LOG("Application cleanUp --------------");
+				if (App->cleanUp() == false) {
+					LOG("Application cleanUp exits with error -----");
 				} else
 					main_return = EXIT_SUCCESS;
 
@@ -108,12 +108,12 @@ int main(int argc, char* argv[]) {
 }
 
 //windows entry console
-int mainCRTStartup(int argc, char* argv[]) {
+int mainCRTstartup(int argc, char* argv[]) {
 	return main(argc, argv);
 }
 
 //windows entry window
-int WinMainCRTStartup(int argc, char* argv[]) {
+int WinMainCRTstartup(int argc, char* argv[]) {
 	return main(argc, argv);
 }
 

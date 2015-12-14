@@ -9,31 +9,52 @@ class Application;
 class Module {
 public:
 
-	Module() {}
+	Module(bool active = true) : active(active) {
 
-	virtual bool Init() {
+	}
+
+	bool enable() {
+		if (active == false) {
+			return active = start();
+		}
+
 		return true;
 	}
 
-	virtual bool Start() {
+	bool disable() {
+		if (active == true) {
+			return active = !cleanUp();
+		}
+
 		return true;
 	}
 
-	virtual update_status PreUpdate() {
-		return UPDATE_CONTINUE;
-	}
-
-	virtual update_status Update() {
-		return UPDATE_CONTINUE;
-	}
-
-	virtual update_status PostUpdate() {
-		return UPDATE_CONTINUE;
-	}
-
-	virtual bool CleanUp() {
+	virtual bool init() {
 		return true;
 	}
+
+	virtual bool start() {
+		return true;
+	}
+
+	virtual update_status preUpdate() {
+		return UPDATE_CONTINUE;
+	}
+
+	virtual update_status update() {
+		return UPDATE_CONTINUE;
+	}
+
+	virtual update_status postUpdate() {
+		return UPDATE_CONTINUE;
+	}
+
+	virtual bool cleanUp() {
+		return true;
+	}
+
+private:
+	bool active;
 };
 
 #endif // !MODULE_H
