@@ -1,7 +1,0 @@
-﻿  Test.cpp
-  Main.cpp
-c:\users\dorian\documents\visual studio 2015\projects\sdlgame\sdlgame\main.cpp(1): fatal error C1083: No se puede abrir el archivo incluir: 'SDL\SDL.h': No such file or directory
-  Log.cpp
-c:\users\dorian\documents\visual studio 2015\projects\sdlgame\sdlgame\log.cpp(62): error C4996: 'vsprintf': This function or variable may be unsafe. Consider using vsprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-  c:\program files (x86)\windows kits\10\include\10.0.10150.0\ucrt\stdio.h(1465): note: vea la declaración de 'vsprintf'
-  Generando código...

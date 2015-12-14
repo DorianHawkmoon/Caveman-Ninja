@@ -5,6 +5,10 @@
 #include "ModuleTextures.h"
 #include "ModuleScene.h"
 #include "ModuleAudio.h"
+#include "ModulePlayer.h"
+#include "ModuleSceneKen.h"
+#include "ModuleFadeToBlack.h"
+#include "SDL\SDL.h"
 
 Application::Application() {
 	// Order matters: they will init/start/update in this order
@@ -14,6 +18,11 @@ Application::Application() {
 	modules.push_back(input = new ModuleInput());
 	modules.push_back(scene = new ModuleScene());
 	modules.push_back(audio = new ModuleAudio());
+
+	// Game Modules
+	modules.push_back(fade = new ModuleFadeToBlack());
+	modules.push_back(scene_ken = new ModuleSceneKen(false));
+	modules.push_back(player = new ModulePlayer(false));
 }
 
 Application::~Application() {
@@ -27,24 +36,30 @@ Application::~Application() {
 bool Application::init() {
 	bool ret = true;
 
-	for (std::list<Module*>::iterator it = modules.begin(); it != modules.end() && ret; ++it)
+	for (std::list<Module*>::iterator it = modules.begin(); it != modules.end() && ret; ++it) {
 		ret = (*it)->init();
+	}
+
+	// Start the first scene --
+	fade->fadeToBlack(scene_ken, nullptr, 3.0f);
 
 	return ret;
 }
 
 bool Application::start() {
 	bool result = true;
-	for (std::list<Module*>::iterator it = modules.begin(); it != modules.end() && result == true; ++it)
+	for (std::list<Module*>::iterator it = modules.begin(); it != modules.end() && result == true; ++it) {
 		result = (*it)->start();
+	}
 	return result;
 }
 
 update_status Application::preUpdate() {
 	update_status ret = UPDATE_CONTINUE;
 
-	for (std::list<Module*>::iterator it = modules.begin(); it != modules.end() && ret == UPDATE_CONTINUE; ++it)
+	for (std::list<Module*>::iterator it = modules.begin(); it != modules.end() && ret == UPDATE_CONTINUE; ++it) {
 		ret = (*it)->preUpdate();
+	}
 
 	return ret;
 }
@@ -52,8 +67,9 @@ update_status Application::preUpdate() {
 update_status Application::update() {
 	update_status ret = UPDATE_CONTINUE;
 
-	for (std::list<Module*>::iterator it = modules.begin(); it != modules.end() && ret == UPDATE_CONTINUE; ++it)
+	for (std::list<Module*>::iterator it = modules.begin(); it != modules.end() && ret == UPDATE_CONTINUE; ++it) {
 		ret = (*it)->update();
+	}
 
 	return ret;
 }
@@ -61,8 +77,9 @@ update_status Application::update() {
 update_status Application::postUpdate() {
 	update_status ret = UPDATE_CONTINUE;
 
-	for (std::list<Module*>::iterator it = modules.begin(); it != modules.end() && ret == UPDATE_CONTINUE; ++it)
+	for (std::list<Module*>::iterator it = modules.begin(); it != modules.end() && ret == UPDATE_CONTINUE; ++it) {
 		ret = (*it)->postUpdate();
+	}
 
 	return ret;
 }
@@ -70,8 +87,9 @@ update_status Application::postUpdate() {
 bool Application::cleanUp() {
 	bool ret = true;
 
-	for (std::list<Module*>::reverse_iterator it = modules.rbegin(); it != modules.rend() && ret; ++it)
+	for (std::list<Module*>::reverse_iterator it = modules.rbegin(); it != modules.rend() && ret; ++it) {
 		ret = (*it)->cleanUp();
+	}
 
 	return ret;
 }

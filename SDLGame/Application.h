@@ -5,7 +5,6 @@
 #include "Globals.h"
 #include <list>
 #include "Module.h"
-#include "SDL\SDL.h"
 
 class ModuleRender;
 class ModuleWindow;
@@ -13,6 +12,9 @@ class ModuleTextures;
 class ModuleInput;
 class ModuleScene;
 class ModuleAudio;
+class ModuleFadeToBlack;
+class ModulePlayer;
+class ModuleSceneKen;
 
 class Application {
 public:
@@ -33,6 +35,10 @@ public:
 	ModuleInput* input;
 	ModuleScene* scene;
 	ModuleAudio* audio;
+	ModuleFadeToBlack* fade;
+
+	ModulePlayer* player;
+	ModuleSceneKen* scene_ken;
 
 private:
 
