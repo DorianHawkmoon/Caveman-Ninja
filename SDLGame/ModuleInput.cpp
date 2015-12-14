@@ -3,7 +3,7 @@
 #include "SDL\SDL.h"
 
 #include "Application.h"
-//#include "ModuleAudio.h"
+#include "ModuleAudio.h"
 
 ModuleInput::ModuleInput() {}
 
@@ -40,7 +40,7 @@ update_status ModuleInput::Update() {
 
 	if (keyboard[SDL_SCANCODE_F]) {
 		//TODO en otro sitio!!
-		/*Mix_PlayChannel(-1, App->audio->LoadEffect("playerLaser.wav"), 0);*/
+		Mix_PlayChannel(-1, App->audio->LoadEffect("playerLaser.wav"), 0);
 	}
 
 	SDL_Event Events;
