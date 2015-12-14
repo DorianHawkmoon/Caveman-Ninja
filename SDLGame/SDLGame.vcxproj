@@ -39,6 +39,7 @@
     <ClInclude Include="ModuleScene.h" />
     <ClInclude Include="ModuleTextures.h" />
     <ClInclude Include="ModuleWindow.h" />
+    <ClInclude Include="Point.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{1C26C921-73BE-4D82-ADDF-EA4D5B581FC4}</ProjectGuid>

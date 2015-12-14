@@ -80,5 +80,8 @@
     <ClInclude Include="ModuleTextures.h">
       <Filter>Archivos de código fuente\Core Modules</Filter>
     </ClInclude>
+    <ClInclude Include="Point.h">
+      <Filter>Archivos de código fuente\Utilities</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
