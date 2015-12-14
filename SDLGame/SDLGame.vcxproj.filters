@@ -22,6 +22,9 @@
     <Filter Include="Archivos de código fuente\Main">
       <UniqueIdentifier>{b86f4f2d-6d96-4616-a69e-397d2dec2898}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Archivos de código fuente\Game Modules">
+      <UniqueIdentifier>{dcb954fa-a660-477b-b83b-55dcd5e6d203}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Log.cpp">
@@ -81,6 +84,9 @@
       <Filter>Archivos de código fuente\Core Modules</Filter>
     </ClInclude>
     <ClInclude Include="Point.h">
+      <Filter>Archivos de código fuente\Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="Animation.h">
       <Filter>Archivos de código fuente\Utilities</Filter>
     </ClInclude>
   </ItemGroup>
