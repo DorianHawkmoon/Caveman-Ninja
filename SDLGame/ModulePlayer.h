@@ -14,15 +14,17 @@ public:
 	ModulePlayer(bool start_enabled = true);
 	~ModulePlayer();
 
-	bool Start();
-	update_status Update();
-	bool CleanUp();
+	bool start();
+	update_status update();
+	bool cleanUp();
 
 public:
 
 	SDL_Texture* graphics = nullptr;
 	Animation idle;
 	Animation backward;
+	Animation forward;
+	Animation* actual;
 	iPoint position;
 };
 

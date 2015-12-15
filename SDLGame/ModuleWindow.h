@@ -3,7 +3,7 @@
 #define MODULE_WINDOW_H
 
 #include "Module.h"
-#include "SDL\SDL.h"
+#include "SDL/SDL.h"
 
 class ModuleWindow : public Module {
 public:

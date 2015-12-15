@@ -1,8 +1,8 @@
 #include "ModuleAudio.h"
 #include "Globals.h"
-#include "SDL\SDL.h"
+#include "SDL/SDL.h"
 #include <string>
-#include "SDL_mixer\SDL_mixer.h"
+#include "SDL_mixer/SDL_mixer.h"
 
 ModuleAudio::ModuleAudio(bool started): Module(started) {}
 

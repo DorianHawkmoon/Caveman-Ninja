@@ -3,7 +3,7 @@
 #define ANIMATION_H
 
 #include <vector>
-#include "SDL\SDL_rect.h"
+#include "SDL/SDL_rect.h"
 
 class Animation {
 public:

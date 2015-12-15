@@ -5,7 +5,7 @@
 #include "ModuleWindow.h"
 #include "Globals.h"
 #include "ModuleInput.h"
-#include "SDL\SDL.h"
+#include "SDL/SDL.h"
 
 ModuleRender::ModuleRender(bool started ): Module(started) {
 	camera.x = camera.y = 0;

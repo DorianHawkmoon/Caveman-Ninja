@@ -29,6 +29,10 @@ public:
 		return true;
 	}
 
+	bool isEnabled() {
+		return active;
+	}
+
 	virtual bool init() {
 		return true;
 	}

@@ -4,7 +4,7 @@
 #include "ModuleTextures.h"
 #include "ModuleAudio.h"
 
-ModuleScene::ModuleScene() {}
+ModuleScene::ModuleScene(bool started):Module(started) {}
 
 
 ModuleScene::~ModuleScene() {}

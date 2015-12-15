@@ -2,6 +2,7 @@
 #include "Application.h"
 #include "ModuleSceneKen.h"
 #include "ModuleRender.h"
+#include "ModuleSceneHonda.h"
 #include "ModuleTextures.h"
 #include "ModulePlayer.h"
 #include "ModuleInput.h"
@@ -11,7 +12,7 @@
 
 // Reference at https://www.youtube.com/watch?v=OEhmUuehGOA
 
-ModuleSceneKen::ModuleSceneKen(bool start_enabled) : Module(start_enabled)
+ModuleSceneKen::ModuleSceneKen(bool started) : Module(started)
 {
 	// ground
 	ground.x = 8;
@@ -19,8 +20,16 @@ ModuleSceneKen::ModuleSceneKen(bool start_enabled) : Module(start_enabled)
 	ground.w = 896;
 	ground.h = 72;
 
-	// TODO 2 : setup the foreground (red ship) with
+	// setup the foreground (red ship) with
 	// coordinates x,y,w,h from ken_stage.png
+	ship.frames.push_back({9, 25, 522, 181});
+	ship.frames.push_back({9, 26, 522, 181});
+	ship.frames.push_back({9, 27, 522, 181});
+	ship.frames.push_back({9, 28, 522, 181});
+	ship.frames.push_back({9, 27, 522, 181});
+	ship.frames.push_back({9, 26, 522, 181});
+	ship.frames.push_back({9, 25, 522, 181});
+	ship.speed = 0.05f;
 
 	// Background / sky
 	background.x = 72;
@@ -34,28 +43,33 @@ ModuleSceneKen::ModuleSceneKen(bool start_enabled) : Module(start_enabled)
 	flag.frames.push_back({848, 304, 40, 40});
 	flag.speed = 0.08f;
 
-	// TODO 4: Setup Girl Animation from coordinates from ken_stage.png
-
+	//Setup Girl Animation from coordinates from ken_stage.png
+	girl.frames.push_back({624, 16, 32, 52});
+	girl.frames.push_back({624, 80, 32, 52});
+	girl.frames.push_back({624, 144, 32, 52});
+	girl.frames.push_back({624, 80, 32, 52});
+	girl.speed = 0.08f;
 }
 
 ModuleSceneKen::~ModuleSceneKen()
 {}
 
 // Load assets
-bool ModuleSceneKen::Start()
+bool ModuleSceneKen::start()
 {
 	LOG("Loading ken scene");
 	
 	graphics = App->textures->load("ken_stage.png");
 
-	// TODO 7: Enable the player module
-	// TODO 0: trigger background music
+	// Enable the player module
+	App->player->enable();
+	//App->audio->playMusic("ken.ogg");
 	
 	return true;
 }
 
 // UnLoad assets
-bool ModuleSceneKen::CleanUp()
+bool ModuleSceneKen::cleanUp()
 {
 	LOG("Unloading ken scene");
 
@@ -66,18 +80,16 @@ bool ModuleSceneKen::CleanUp()
 }
 
 // Update: draw background
-update_status ModuleSceneKen::Update()
+update_status ModuleSceneKen::update()
 {
-	// TODO 5: make sure the ship goes up and down
-
 	// Draw everything --------------------------------------
-	// TODO 1: Tweak the movement speed of the sea&sky + flag to your taste
-	App->renderer->blit(graphics, 0, 0, &background, 1.0f); // sea and sky
-	App->renderer->blit(graphics, 560, 8, &(flag.GetCurrentFrame()), 1.0f); // flag animation
+	App->renderer->blit(graphics, 0, 0, &background, 0.77f); // sea and sky
+	App->renderer->blit(graphics, 560, 8, &(flag.GetCurrentFrame()), 0.77f); // flag animation
 
-	// TODO 3: Draw the ship. Be sure to tweak the speed.
+	App->renderer->blit(graphics, 0, 0, &(ship.GetCurrentFrame()), 0.77f);
 
-	// TODO 6: Draw the girl. Make sure it follows the ship movement!
+	//Draw the girl. Make sure it follows the ship movement!
+	App->renderer->blit(graphics, 191, 103 - (ship.GetCurrentFrame().y - 25), &(girl.GetCurrentFrame()), 0.77f);
 	
 	App->renderer->blit(graphics, 0, 170, &ground);
 
@@ -86,6 +98,10 @@ update_status ModuleSceneKen::Update()
 
 	// TODO 11: Make that pressing space triggers a switch to honda logic module
 	// using FadeToBlack module
+	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN) {
+		LOG("Unloading ken scene and loading scene honda");
+		App->fade->fadeToBlack(App->scene_honda, this, 2.0f);
+	}
 
 	return UPDATE_CONTINUE;
 }

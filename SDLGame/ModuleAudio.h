@@ -3,7 +3,7 @@
 #define MODULE_AUDIO_H
 
 #include "Module.h"
-#include "SDL_mixer\SDL_mixer.h" //included here because declaring the struct makes an error (line 131 of SDL_mixer)
+#include "SDL_mixer/SDL_mixer.h" //included here because declaring the struct makes an error (line 131 of SDL_mixer)
 #include <vector>
 
 #define DEFAULT_MUSIC_FADE_TIME 2.0f

@@ -1,5 +1,5 @@
 #include "ModuleTextures.h"
-#include "SDL_image\SDL_image.h"
+#include "SDL_image/SDL_image.h"
 #include "Globals.h"
 #include "Application.h"
 #include "ModuleRender.h"

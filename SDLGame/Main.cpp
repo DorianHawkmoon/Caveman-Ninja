@@ -1,11 +1,10 @@
-#include "SDL\SDL.h"
+#include "SDL/SDL.h"
 #include "Globals.h"
 #include "Application.h"
 
 enum main_states {
 	MAIN_CREATION,
-	MAIN_init,
-	MAIN_start,
+	MAIN_INIT,
 	MAIN_UPDATE,
 	MAIN_FINISH,
 	MAIN_EXIT
@@ -24,26 +23,14 @@ int main(int argc, char* argv[]) {
 
 				LOG("Application Creation --------------");
 				App = new Application();
-				state = MAIN_init;
+				state = MAIN_INIT;
 				break;
 
-			case MAIN_init:
+			case MAIN_INIT:
 
 				LOG("Application init --------------");
 				if (App->init() == false) {
 					LOG("Application init exits with error -----");
-					state = MAIN_EXIT;
-				} else {
-					state = MAIN_start;
-				}
-
-				break;
-
-			case MAIN_start:
-
-				LOG("Application start --------------");
-				if (App->start() == false) {
-					LOG("Application start exits with error -----");
 					state = MAIN_EXIT;
 				} else {
 					state = MAIN_UPDATE;
@@ -52,27 +39,12 @@ int main(int argc, char* argv[]) {
 
 				break;
 
+
 			case MAIN_UPDATE:
 			{
-				int update_return = App->preUpdate();
+				int update_return = App->update();
 				if (update_return == UPDATE_ERROR) {
 					LOG("Application preUpdate exits with error -----");
-					state = MAIN_EXIT;
-				} else if (update_return == UPDATE_STOP) {
-					state = MAIN_FINISH;
-				}
-
-				update_return = App->update();
-				if (update_return == UPDATE_ERROR) {
-					LOG("Application update exits with error -----");
-					state = MAIN_EXIT;
-				} else if (update_return == UPDATE_STOP) {
-					state = MAIN_FINISH;
-				}
-
-				update_return = App->postUpdate();
-				if (update_return == UPDATE_ERROR) {
-					LOG("Application postUpdate exits with error -----");
 					state = MAIN_EXIT;
 				} else if (update_return == UPDATE_STOP) {
 					state = MAIN_FINISH;

@@ -4,13 +4,13 @@
 
 #include "Module.h"
 #include "ModuleAudio.h"
-#include "SDL_mixer\SDL_mixer.h"
+#include "SDL_mixer/SDL_mixer.h"
 
 struct SDL_Texture;
 
 class ModuleScene : public Module {
 public:
-	ModuleScene();
+	ModuleScene(bool started=true);
 	virtual ~ModuleScene();
 
 	bool start();

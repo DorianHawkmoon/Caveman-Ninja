@@ -15,6 +15,7 @@ class ModuleAudio;
 class ModuleFadeToBlack;
 class ModulePlayer;
 class ModuleSceneKen;
+class ModuleSceneHonda;
 
 class Application {
 public:
@@ -22,10 +23,7 @@ public:
 	virtual ~Application();
 
 	bool init();
-	bool start();
-	update_status preUpdate();
 	update_status update();
-	update_status postUpdate();
 	bool cleanUp();
 
 public:
@@ -33,12 +31,13 @@ public:
 	ModuleWindow* window;
 	ModuleTextures* textures;
 	ModuleInput* input;
-	ModuleScene* scene;
+	//ModuleScene* scene;
 	ModuleAudio* audio;
 	ModuleFadeToBlack* fade;
 
 	ModulePlayer* player;
 	ModuleSceneKen* scene_ken;
+	ModuleSceneHonda* scene_honda;
 
 private:
 
