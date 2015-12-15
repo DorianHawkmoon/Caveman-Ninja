@@ -2,6 +2,12 @@
 #include "Globals.h"
 #include "Application.h"
 
+//TODO timer.h
+// TODO colisiones
+// TODO entities
+//TODO particles
+
+
 enum main_states {
 	MAIN_CREATION,
 	MAIN_INIT,

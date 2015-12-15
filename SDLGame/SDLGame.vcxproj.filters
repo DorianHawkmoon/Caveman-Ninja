@@ -63,8 +63,11 @@
     <ClCompile Include="ModuleFadeToBlack.cpp">
       <Filter>Archivos de código fuente\Core Modules</Filter>
     </ClCompile>
+    <ClCompile Include="Entity.cpp">
+      <Filter>Archivos de código fuente\Utilities</Filter>
+    </ClCompile>
     <ClCompile Include="ModuleSceneHonda.cpp">
-      <Filter>Archivos de código fuente</Filter>
+      <Filter>Archivos de código fuente\Game Modules</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -110,8 +113,11 @@
     <ClInclude Include="ModuleFadeToBlack.h">
       <Filter>Archivos de código fuente\Core Modules</Filter>
     </ClInclude>
+    <ClInclude Include="Entity.h">
+      <Filter>Archivos de código fuente\Utilities</Filter>
+    </ClInclude>
     <ClInclude Include="ModuleSceneHonda.h">
-      <Filter>Archivos de encabezado</Filter>
+      <Filter>Archivos de código fuente\Game Modules</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
