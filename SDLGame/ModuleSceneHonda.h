@@ -26,9 +26,6 @@ public:
 	SDL_Rect sky;
 	SDL_Rect background;
 	SDL_Rect lateral;
-	Animation flag;
-	Animation ship;
-	Animation girl;
 };
 #endif // !MODULE_SCENE_HONDA_H
 

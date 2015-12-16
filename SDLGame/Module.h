@@ -13,7 +13,7 @@ public:
 
 	}
 
-	bool enable() {
+	inline bool enable() {
 		if (active == false) {
 			return active = start();
 		}
@@ -21,7 +21,7 @@ public:
 		return true;
 	}
 
-	bool disable() {
+	inline bool disable() {
 		if (active == true) {
 			return active = !cleanUp();
 		}
@@ -29,31 +29,31 @@ public:
 		return true;
 	}
 
-	bool isEnabled() {
+	inline bool isEnabled() {
 		return active;
 	}
 
-	virtual bool init() {
+	inline virtual bool init() {
 		return true;
 	}
 
-	virtual bool start() {
+	inline virtual bool start() {
 		return true;
 	}
 
-	virtual update_status preUpdate() {
+	inline virtual update_status preUpdate() {
 		return UPDATE_CONTINUE;
 	}
 
-	virtual update_status update() {
+	inline virtual update_status update() {
 		return UPDATE_CONTINUE;
 	}
 
-	virtual update_status postUpdate() {
+	inline virtual update_status postUpdate() {
 		return UPDATE_CONTINUE;
 	}
 
-	virtual bool cleanUp() {
+	inline virtual bool cleanUp() {
 		return true;
 	}
 

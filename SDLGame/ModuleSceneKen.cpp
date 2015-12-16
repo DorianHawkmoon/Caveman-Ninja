@@ -100,8 +100,11 @@ update_status ModuleSceneKen::update()
 	// using FadeToBlack module
 	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN) {
 		LOG("Unloading ken scene and loading scene honda");
-		App->fade->fadeToBlack(App->scene_honda, this, 2.0f);
+		App->fade->fadeToBlack(App->scene_honda, this, 6.0f);
 	}
+
+	//SDL_SetRenderDrawColor(App->renderer->renderer, 0, 0, 0, (Uint8) (0.5* 255.0f));
+	//SDL_RenderFillRect(App->renderer->renderer, nullptr);
 
 	return UPDATE_CONTINUE;
 }

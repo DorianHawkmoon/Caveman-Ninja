@@ -54,6 +54,12 @@ update_status ModuleFadeToBlack::update() {
 	return UPDATE_CONTINUE;
 }
 
+update_status ModuleFadeToBlack::postUpdate() {
+	
+
+	return UPDATE_CONTINUE;
+}
+
 // Fade to black. At mid point deactivate one module, then activate the other
 void ModuleFadeToBlack::fadeToBlack(Module * moduleOn, Module * moduleOff, float time) {
 	fadingIn = (moduleOff != nullptr) ? true : false;

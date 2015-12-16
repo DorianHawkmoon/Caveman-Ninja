@@ -47,7 +47,7 @@ private:
 	* Variable que guarda si la entidad está destruida
 	*/
 	bool destroyed;
-
+	//TODO destruir la entidad en el postupdate del módulo correcto (en la escena?)
 };
 
 

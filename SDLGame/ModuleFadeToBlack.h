@@ -12,6 +12,7 @@ public:
 
 	bool start();
 	update_status update();
+	update_status postUpdate();
 	void fadeToBlack(Module* moduleOn, Module* moduleOff = nullptr, float time = 1.0f);
 	bool isFading() const;
 

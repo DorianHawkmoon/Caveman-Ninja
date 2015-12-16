@@ -10,6 +10,10 @@ public:
 	float speed;
 	std::vector<SDL_Rect> frames;
 
+	~Animation() {
+		frames.clear();
+	}
+
 private:
 	float current_frame;
 
