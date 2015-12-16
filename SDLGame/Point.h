@@ -53,16 +53,16 @@ public:
 	}
 
 	// Utils ------------------------------------------------
-	bool IsZero() const {
+	bool isZero() const {
 		return (x == 0 && y == 0);
 	}
 
-	Point& SetToZero() {
+	Point& setToZero() {
 		x = y = 0;
 		return(*this);
 	}
 
-	Point& Negate() {
+	Point& negate() {
 		x = -x;
 		y = -y;
 
@@ -70,7 +70,7 @@ public:
 	}
 
 	// Distances ---------------------------------------------
-	TYPE DistanceTo(const Point& v) const {
+	TYPE distanceTo(const Point& v) const {
 		TYPE fx = x - v.x;
 		TYPE fy = y - v.y;
 
