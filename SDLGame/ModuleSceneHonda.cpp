@@ -45,6 +45,7 @@ bool ModuleSceneHonda::start() {
 
 	// Enable the player module
 	App->player->enable();
+	App->input->enable();
 	//App->audio->playMusic("honda.ogg");
 
 	return true;

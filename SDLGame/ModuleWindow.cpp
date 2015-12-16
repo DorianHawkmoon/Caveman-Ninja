@@ -8,6 +8,16 @@ ModuleWindow::~ModuleWindow() {
 	if (screen_surface != nullptr) {
 		delete screen_surface;
 	}
+
+	LOG("Destroying SDL window and quitting all SDL systems");
+
+	//Destroy window
+	if (window != nullptr) {
+		SDL_DestroyWindow(window);
+	}
+
+	//Quit SDL subsystems
+	SDL_Quit();
 }
 
 // Called before render is available
@@ -55,15 +65,7 @@ bool ModuleWindow::init() {
 
 // Called before quitting
 bool ModuleWindow::cleanUp() {
-	LOG("Destroying SDL window and quitting all SDL systems");
-
-	//Destroy window
-	if (window != nullptr) {
-		SDL_DestroyWindow(window);
-	}
-
-	//Quit SDL subsystems
-	SDL_Quit();
+	LOG("CleanUp windows");
 	return true;
 }
 

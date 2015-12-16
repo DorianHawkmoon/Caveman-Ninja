@@ -3,7 +3,8 @@
 #include "SDL/SDL.h"
 
 #include "Application.h"
-#include "ModuleAudio.h"
+
+#include "ModuleRender.h"
 
 
 
@@ -14,10 +15,13 @@ ModuleInput::ModuleInput(bool started): Module(started) {
 
 // Destructor
 ModuleInput::~ModuleInput() {
+	LOG("Quiting SDL input event system");
 	if (keyboard != nullptr){
 		delete[] keyboard; 
 		keyboard = nullptr; 
 	}
+
+	SDL_QuitSubSystem(SDL_INIT_EVENTS);
 }
 
 // Called before render is available
@@ -32,6 +36,10 @@ bool ModuleInput::init() {
 	}
 
 	return ret;
+}
+
+bool ModuleInput::start() {
+	return true;
 }
 
 // Called every draw update
@@ -63,9 +71,12 @@ update_status ModuleInput::preUpdate() {
 		return UPDATE_STOP;
 	}
 
-	if (keyboard[SDL_SCANCODE_F]) {
-		//TODO en otro sitio!!
-		//Mix_PlayChannel(-1, App->audio->loadEffect("playerLaser.wav"), 0);
+	if (keyboard[SDL_SCANCODE_T]) {
+		if (App->renderer->isEnabled()) {
+			App->renderer->disable();
+		} else {
+			App->renderer->enable();
+		}
 	}
 
 	SDL_Event events;
@@ -74,7 +85,6 @@ update_status ModuleInput::preUpdate() {
 			case SDL_QUIT:
 				return UPDATE_STOP;
 			break;
-
 
 		}
 	}
@@ -88,7 +98,7 @@ update_status ModuleInput::preUpdate() {
 
 // Called before quitting
 bool ModuleInput::cleanUp() {
-	LOG("Quitting SDL input event subsystem");
-	SDL_QuitSubSystem(SDL_INIT_EVENTS);
+	LOG("Disabling SDL input event subsystem");
+	memset(keyboard, KEY_IDLE, sizeof(KeyState) * MAX_KEYS);
 	return true;
 }

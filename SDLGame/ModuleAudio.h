@@ -14,6 +14,7 @@ public:
 	virtual ~ModuleAudio();
 
 	bool init();
+	bool start();
 	bool cleanUp();
 
 	bool const playMusic(const char* path, float fade_time = DEFAULT_MUSIC_FADE_TIME);

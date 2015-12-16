@@ -42,8 +42,6 @@ ModulePlayer::ModulePlayer(bool start_enabled) : Module(start_enabled)
 ModulePlayer::~ModulePlayer()
 {
 	// Homework : check for memory leaks
-	App->textures->unload(graphics);
-	
 }
 
 // Load assets
@@ -71,7 +69,7 @@ update_status ModulePlayer::update(){
 	
 	int movement = 0;
 	if (App->input->GetKey(SDL_SCANCODE_D)) {
-		movement = 1;
+ 		movement = 1;
 	} else if (App->input->GetKey(SDL_SCANCODE_A)) {
 		movement = -1;
 	}

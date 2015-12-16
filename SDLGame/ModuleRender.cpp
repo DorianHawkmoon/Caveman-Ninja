@@ -14,7 +14,14 @@ ModuleRender::ModuleRender(bool started ): Module(started) {
 }
 
 // Destructor
-ModuleRender::~ModuleRender() {}
+ModuleRender::~ModuleRender() {
+	LOG("Destroying renderer");
+
+	//Destroy window
+	if (renderer != nullptr) {
+		SDL_DestroyRenderer(renderer);
+	}
+}
 
 // Called before render is available
 bool ModuleRender::init() {
@@ -34,6 +41,10 @@ bool ModuleRender::init() {
 	}
 
 	return ret;
+}
+
+bool ModuleRender::start() {
+	return true;
 }
 
 // Called every draw update
@@ -71,13 +82,7 @@ update_status ModuleRender::postUpdate() {
 
 // Called before quitting
 bool ModuleRender::cleanUp() {
-	LOG("Destroying renderer");
-
-	//Destroy window
-	if (renderer != nullptr) {
-		SDL_DestroyRenderer(renderer);
-	}
-
+	LOG("CleanUp render");
 	return true;
 }
 

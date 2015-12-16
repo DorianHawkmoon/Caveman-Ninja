@@ -13,7 +13,7 @@ public:
 
 	}
 
-	inline bool enable() {
+	bool enable() {
 		if (active == false) {
 			return active = start();
 		}
@@ -21,7 +21,7 @@ public:
 		return true;
 	}
 
-	inline bool disable() {
+	bool disable() {
 		if (active == true) {
 			return active = !cleanUp();
 		}

@@ -26,6 +26,7 @@ public:
 	}
 
 	bool init();
+	bool start();
 	update_status preUpdate();
 	bool cleanUp();
 

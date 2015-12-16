@@ -14,6 +14,11 @@ bool ModuleFadeToBlack::start() {
 	return true;
 }
 
+bool ModuleFadeToBlack::cleanUp() {
+	SDL_SetRenderDrawBlendMode(App->renderer->renderer, SDL_BLENDMODE_NONE);
+	return true;
+}
+
 update_status ModuleFadeToBlack::update() {
 	if (startTime > 0) {
 		Uint32 now = SDL_GetTicks() - startTime;

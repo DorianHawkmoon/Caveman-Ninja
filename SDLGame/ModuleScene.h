@@ -7,6 +7,14 @@
 #include "SDL_mixer/SDL_mixer.h"
 
 struct SDL_Texture;
+class Scene;
+
+//TODO gestiona el cambio de escena
+//TODO instancia la escena y hace el cambio
+//TODO load scene
+//TODO remove scene
+//TODO change scene
+//TODO stack scenes (actual scene)?
 
 class ModuleScene : public Module {
 public:
@@ -14,11 +22,12 @@ public:
 	virtual ~ModuleScene();
 
 	bool start();
+	update_status preUpdate();
 	update_status update();
+	update_status postUpdate();
 
 private:
-	SDL_Texture* img;
-	Mix_Music* music;
+	Scene* scene;
 };
 
 #endif // !MODULE_SCENE_H

@@ -63,6 +63,7 @@ bool ModuleSceneKen::start()
 
 	// Enable the player module
 	App->player->enable();
+	App->input->enable();
 	//App->audio->playMusic("ken.ogg");
 	
 	return true;
@@ -93,18 +94,13 @@ update_status ModuleSceneKen::update()
 	
 	App->renderer->blit(graphics, 0, 170, &ground);
 
-	// TODO 10: Build an entire new scene "honda", you can find its
-	// and music in the Game/ folder
-
-	// TODO 11: Make that pressing space triggers a switch to honda logic module
+	//  Make that pressing space triggers a switch to honda logic module
 	// using FadeToBlack module
 	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN) {
 		LOG("Unloading ken scene and loading scene honda");
-		App->fade->fadeToBlack(App->scene_honda, this, 6.0f);
+		App->input->disable();
+		App->fade->fadeToBlack(App->scene_honda, this, 3.0f);
 	}
-
-	//SDL_SetRenderDrawColor(App->renderer->renderer, 0, 0, 0, (Uint8) (0.5* 255.0f));
-	//SDL_RenderFillRect(App->renderer->renderer, nullptr);
 
 	return UPDATE_CONTINUE;
 }

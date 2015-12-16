@@ -13,6 +13,7 @@ public:
 	virtual ~ModuleRender();
 
 	bool init();
+	bool start();
 	update_status preUpdate();
 	update_status update();
 	update_status postUpdate();

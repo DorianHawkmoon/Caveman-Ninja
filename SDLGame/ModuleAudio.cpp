@@ -4,10 +4,12 @@
 #include <string>
 #include "SDL_mixer/SDL_mixer.h"
 
-ModuleAudio::ModuleAudio(bool started): Module(started) {}
+ModuleAudio::ModuleAudio(bool started): Module(started), effects() {}
 
 // Destructor
 ModuleAudio::~ModuleAudio() {
+	//just in case, cleanup
+	cleanUp();
 	Mix_Quit();
 	SDL_QuitSubSystem(SDL_INIT_AUDIO);
 }
@@ -25,12 +27,16 @@ bool ModuleAudio::init() {
 		LOG("Could not initialize Mixer lib. Mix_init: %s", Mix_GetError());
 		ret = false;
 	}
-	else if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0) {
-			LOG("SDL_mixer could not initialize! SDL_mixer Error: %s\n", Mix_GetError());
-			ret = false;
-	}
-
+	
 	return ret;
+}
+
+bool ModuleAudio::start() {
+	if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0) {
+		LOG("SDL_mixer could not initialize! SDL_mixer Error: %s\n", Mix_GetError());
+		return false;
+	}
+	return true;
 }
 
 // Called before quitting
