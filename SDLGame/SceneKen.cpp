@@ -6,6 +6,10 @@
 #include "ModuleInput.h"
 #include "ModuleRender.h"
 #include "Entity.h"
+#include "ModuleParticles.h"
+
+#include "KenParticle.h"
+
 SceneKen::SceneKen() {
 	// ground
 	ground.x = 8;
@@ -60,6 +64,9 @@ bool SceneKen::start() {
 	App->player->enable();
 	App->input->enable();
 	//App->audio->playMusic("ken.ogg");
+
+	KenParticle* particle = new KenParticle();
+	App->particles->addParticle(particle);
 
 	return true;
 }

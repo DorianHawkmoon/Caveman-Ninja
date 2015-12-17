@@ -7,6 +7,7 @@
 #include "ModuleAudio.h"
 #include "ModulePlayer.h"
 #include "ModuleFadeToBlack.h"
+#include "ModuleParticles.h"
 #include "SDL/SDL.h"
 
 Application::Application() {
@@ -16,6 +17,7 @@ Application::Application() {
 	modules.push_back(renderer = new ModuleRender());
 	modules.push_back(textures = new ModuleTextures());
 	modules.push_back(audio = new ModuleAudio());
+	
 
 	// Game Modules
 	
@@ -23,6 +25,8 @@ Application::Application() {
 	//modules.push_back(scene_ken = new ModuleSceneKen(false));
 	//modules.push_back(scene_honda = new ModuleSceneHonda(false));
 	modules.push_back(player = new ModulePlayer());
+
+	modules.push_back(particles = new ModuleParticles());
 
 	modules.push_back(fade = new ModuleFadeToBlack());
 }

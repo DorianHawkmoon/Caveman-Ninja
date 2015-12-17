@@ -34,6 +34,9 @@
     <Filter Include="Archivos de código fuente\Properties">
       <UniqueIdentifier>{4b26e973-bb51-4f36-bdde-16076b8d1c89}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Archivos de código fuente\Particles">
+      <UniqueIdentifier>{f7d2ed65-135e-4d40-adb2-4fdda493374f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Log.cpp">
@@ -98,6 +101,12 @@
     </ClCompile>
     <ClCompile Include="SpriteComponent.cpp">
       <Filter>Archivos de código fuente\Properties</Filter>
+    </ClCompile>
+    <ClCompile Include="ModuleParticles.cpp">
+      <Filter>Archivos de código fuente\Core Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="KenParticle.cpp">
+      <Filter>Archivos de código fuente\Particles</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -169,6 +178,15 @@
     </ClInclude>
     <ClInclude Include="SpriteComponent.h">
       <Filter>Archivos de código fuente\Properties</Filter>
+    </ClInclude>
+    <ClInclude Include="ModuleParticles.h">
+      <Filter>Archivos de código fuente\Core Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="IParticle.h">
+      <Filter>Archivos de código fuente\Particles</Filter>
+    </ClInclude>
+    <ClInclude Include="KenParticle.h">
+      <Filter>Archivos de código fuente\Particles</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

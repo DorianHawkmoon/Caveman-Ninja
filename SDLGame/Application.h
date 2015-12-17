@@ -8,6 +8,7 @@
 
 class ModuleRender;
 class ModuleWindow;
+class ModuleParticles;
 class ModuleTextures;
 class ModuleInput;
 class ModuleScene;
@@ -34,6 +35,7 @@ public:
 	ModuleScene* scene;
 	ModuleAudio* audio;
 	ModuleFadeToBlack* fade;
+	ModuleParticles* particles;
 
 	ModulePlayer* player;
 	/*ModuleSceneKen* scene_ken;
