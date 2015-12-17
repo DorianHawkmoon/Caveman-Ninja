@@ -3,13 +3,11 @@
 #include "ModuleRender.h"
 #include "ModuleWindow.h"
 #include "ModuleTextures.h"
-//#include "ModuleScene.h"
+#include "ModuleScene.h"
 #include "ModuleAudio.h"
 #include "ModulePlayer.h"
-#include "ModuleSceneKen.h"
 #include "ModuleFadeToBlack.h"
 #include "SDL/SDL.h"
-#include "ModuleSceneHonda.h"
 
 Application::Application() {
 	// Order matters: they will init/start/update in this order
@@ -17,13 +15,13 @@ Application::Application() {
 	modules.push_back(window = new ModuleWindow());
 	modules.push_back(renderer = new ModuleRender());
 	modules.push_back(textures = new ModuleTextures());
-	//modules.push_back(scene = new ModuleScene());
 	modules.push_back(audio = new ModuleAudio());
 
 	// Game Modules
 	
-	modules.push_back(scene_ken = new ModuleSceneKen(false));
-	modules.push_back(scene_honda = new ModuleSceneHonda(false));
+	modules.push_back(scene = new ModuleScene());
+	//modules.push_back(scene_ken = new ModuleSceneKen(false));
+	//modules.push_back(scene_honda = new ModuleSceneHonda(false));
 	modules.push_back(player = new ModulePlayer());
 
 	modules.push_back(fade = new ModuleFadeToBlack());
@@ -51,7 +49,7 @@ bool Application::init() {
 	}
 
 	// Start the first scene --
-	fade->fadeToBlack(scene_ken, nullptr, 3.0f);
+	fade->fadeToBlack(scene, nullptr, 3.0f);
 
 	return ret;
 }

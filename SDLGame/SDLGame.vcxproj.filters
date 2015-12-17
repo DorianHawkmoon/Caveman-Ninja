@@ -31,6 +31,9 @@
     <Filter Include="Archivos de código fuente\Scenes">
       <UniqueIdentifier>{c469cf02-aec9-4847-889c-17f90a658531}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Archivos de código fuente\Properties">
+      <UniqueIdentifier>{4b26e973-bb51-4f36-bdde-16076b8d1c89}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Log.cpp">
@@ -83,6 +86,18 @@
     </ClCompile>
     <ClCompile Include="SceneNode.cpp">
       <Filter>Archivos de código fuente\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneHonda.cpp">
+      <Filter>Archivos de código fuente\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneKen.cpp">
+      <Filter>Archivos de código fuente\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="IComponent.cpp">
+      <Filter>Archivos de código fuente\Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="SpriteComponent.cpp">
+      <Filter>Archivos de código fuente\Properties</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -142,6 +157,18 @@
     </ClInclude>
     <ClInclude Include="SceneNode.h">
       <Filter>Archivos de código fuente\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneHonda.h">
+      <Filter>Archivos de código fuente\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneKen.h">
+      <Filter>Archivos de código fuente\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="IComponent.h">
+      <Filter>Archivos de código fuente\Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="SpriteComponent.h">
+      <Filter>Archivos de código fuente\Properties</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

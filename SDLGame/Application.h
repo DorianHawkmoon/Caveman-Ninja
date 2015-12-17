@@ -31,13 +31,13 @@ public:
 	ModuleWindow* window;
 	ModuleTextures* textures;
 	ModuleInput* input;
-	//ModuleScene* scene;
+	ModuleScene* scene;
 	ModuleAudio* audio;
 	ModuleFadeToBlack* fade;
 
 	ModulePlayer* player;
-	ModuleSceneKen* scene_ken;
-	ModuleSceneHonda* scene_honda;
+	/*ModuleSceneKen* scene_ken;
+	ModuleSceneHonda* scene_honda;*/
 
 private:
 

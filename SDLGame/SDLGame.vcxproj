@@ -21,6 +21,7 @@
   <ItemGroup>
     <ClCompile Include="Application.cpp" />
     <ClCompile Include="Entity.cpp" />
+    <ClCompile Include="IComponent.cpp" />
     <ClCompile Include="Log.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="ModuleAudio.cpp" />
@@ -34,7 +35,10 @@
     <ClCompile Include="ModuleTextures.cpp" />
     <ClCompile Include="ModuleWindow.cpp" />
     <ClCompile Include="Scene.cpp" />
+    <ClCompile Include="SceneHonda.cpp" />
+    <ClCompile Include="SceneKen.cpp" />
     <ClCompile Include="SceneNode.cpp" />
+    <ClCompile Include="SpriteComponent.cpp" />
     <ClCompile Include="Transform.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -42,6 +46,7 @@
     <ClInclude Include="Application.h" />
     <ClInclude Include="Entity.h" />
     <ClInclude Include="Globals.h" />
+    <ClInclude Include="IComponent.h" />
     <ClInclude Include="Module.h" />
     <ClInclude Include="ModuleAudio.h" />
     <ClInclude Include="ModuleFadeToBlack.h" />
@@ -55,7 +60,10 @@
     <ClInclude Include="ModuleWindow.h" />
     <ClInclude Include="Point.h" />
     <ClInclude Include="Scene.h" />
+    <ClInclude Include="SceneHonda.h" />
+    <ClInclude Include="SceneKen.h" />
     <ClInclude Include="SceneNode.h" />
+    <ClInclude Include="SpriteComponent.h" />
     <ClInclude Include="Transform.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

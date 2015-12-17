@@ -26,6 +26,8 @@ public:
 	update_status update();
 	update_status postUpdate();
 
+
+
 private:
 	Scene* scene;
 };

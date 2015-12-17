@@ -1,19 +1,12 @@
-#include "Globals.h"
+#include "SceneKen.h"
+
 #include "Application.h"
-#include "ModuleSceneKen.h"
-#include "ModuleRender.h"
-#include "ModuleSceneHonda.h"
-#include "ModuleTextures.h"
 #include "ModulePlayer.h"
+#include "ModuleTextures.h"
 #include "ModuleInput.h"
-#include "ModuleAudio.h"
-#include "ModuleFadeToBlack.h"
-#include "SDL/SDL.h"
-
-// Reference at https://www.youtube.com/watch?v=OEhmUuehGOA
-
-ModuleSceneKen::ModuleSceneKen(bool started) : Module(started)
-{
+#include "ModuleRender.h"
+#include "Entity.h"
+SceneKen::SceneKen() {
 	// ground
 	ground.x = 8;
 	ground.y = 391;
@@ -49,40 +42,40 @@ ModuleSceneKen::ModuleSceneKen(bool started) : Module(started)
 	girl.frames.push_back({624, 144, 32, 52});
 	girl.frames.push_back({624, 80, 32, 52});
 	girl.speed = 0.08f;
+
+	
 }
 
-ModuleSceneKen::~ModuleSceneKen()
-{}
+
+SceneKen::~SceneKen() {}
+
 
 // Load assets
-bool ModuleSceneKen::start()
-{
+bool SceneKen::start() {
 	LOG("Loading ken scene");
-	
+
 	graphics = App->textures->load("ken_stage.png");
 
 	// Enable the player module
 	App->player->enable();
 	App->input->enable();
 	//App->audio->playMusic("ken.ogg");
-	
+
 	return true;
 }
 
 // UnLoad assets
-bool ModuleSceneKen::cleanUp()
-{
+bool SceneKen::cleanUp() {
 	LOG("Unloading ken scene");
 
 	App->textures->unload(graphics);
 	App->player->disable();
-	
+
 	return true;
 }
 
 // Update: draw background
-update_status ModuleSceneKen::update()
-{
+bool SceneKen::update() {
 	// Draw everything --------------------------------------
 	App->renderer->blit(graphics, 0, 0, &background, 0.77f); // sea and sky
 	App->renderer->blit(graphics, 560, 8, &(flag.GetCurrentFrame()), 0.77f); // flag animation
@@ -91,16 +84,16 @@ update_status ModuleSceneKen::update()
 
 	//Draw the girl. Make sure it follows the ship movement!
 	App->renderer->blit(graphics, 191, 103 - (ship.GetCurrentFrame().y - 25), &(girl.GetCurrentFrame()), 0.77f);
-	
+
 	App->renderer->blit(graphics, 0, 170, &ground);
 
 	//  Make that pressing space triggers a switch to honda logic module
 	// using FadeToBlack module
-	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN) {
-	/*	LOG("Unloading ken scene and loading scene honda");
+	/*if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN) {
+		LOG("Unloading ken scene and loading scene honda");
 		App->input->disable();
-		App->fade->fadeToBlack(App->scene_honda, this, 3.0f);*/
-	}
+		App->fade->fadeToBlack(App->scene_honda, this, 3.0f);
+	}*/
 
 	return UPDATE_CONTINUE;
 }
