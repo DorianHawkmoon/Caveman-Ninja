@@ -3,7 +3,9 @@
 #define MODULE_RENDER_H
 
 #include "Module.h"
-#include "SDL/SDL_rect.h"
+#include "SDL/SDL.h"
+#include "Point.h"
+#include "ICollider.h"
 struct SDL_Texture;
 struct SDL_Renderer;
 
@@ -21,7 +23,9 @@ public:
 
 	//TODO entender que coño hace el método con camera
 	bool blit(SDL_Texture* texture, int x, int y, SDL_Rect* section, float speed=1.0f);
+	bool paintCollision(const ICollider* collision);
 	//TODO pintar rectangulo
+	bool paintRectangle(const SDL_Color& color, const iPoint& position, const SDL_Rect& rect);
 	//TODO pintar pixeles
 
 public:

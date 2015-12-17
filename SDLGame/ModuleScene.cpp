@@ -12,28 +12,53 @@ ModuleScene::ModuleScene(bool started):Module(started) {}
 ModuleScene::~ModuleScene() {}
 
 bool ModuleScene::start() {
-	scene = new SceneKen();
-	scene->start();
+	currentScene = new SceneKen();
+	currentScene->start();
 	return true;
 }
 
 update_status ModuleScene::preUpdate() {
-	if (!scene->preUpdate()) {
+	if (!currentScene->preUpdate()) {
 		return UPDATE_ERROR;
 	}
 	return UPDATE_CONTINUE;
 }
 
 update_status ModuleScene::update() {
-	if (!scene->update()) {
+	if (!currentScene->update()) {
 		return UPDATE_ERROR;
 	}
 	return UPDATE_CONTINUE;
 }
 
 update_status ModuleScene::postUpdate() {
-	if (!scene->postUpdate()) {
+	if (!currentScene->postUpdate()) {
 		return UPDATE_ERROR;
 	}
+
+	makeChangeScene();
 	return UPDATE_CONTINUE;
+}
+
+void ModuleScene::changeScene(Scene * scene) {
+	LOG("Scene change");
+	nextScene = scene;
+	
+}
+
+void ModuleScene::makeChangeScene() {
+	LOG("Change scene");
+
+	if (nextScene != nullptr) {
+		// Elimina la escena anterior (de haberla)
+		if (currentScene != nullptr) {
+			currentScene->cleanUp();
+			delete currentScene;
+		}
+
+		// Realiza el cambio de escena
+		currentScene = nextScene;
+		nextScene = nullptr;
+		currentScene->start();
+	}
 }

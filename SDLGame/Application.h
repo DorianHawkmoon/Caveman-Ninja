@@ -15,6 +15,7 @@ class ModuleScene;
 class ModuleAudio;
 class ModuleFadeToBlack;
 class ModulePlayer;
+class ModuleCollision;
 class ModuleSceneKen;
 class ModuleSceneHonda;
 
@@ -36,7 +37,7 @@ public:
 	ModuleAudio* audio;
 	ModuleFadeToBlack* fade;
 	ModuleParticles* particles;
-
+	ModuleCollision* collisions;
 	ModulePlayer* player;
 	/*ModuleSceneKen* scene_ken;
 	ModuleSceneHonda* scene_honda;*/

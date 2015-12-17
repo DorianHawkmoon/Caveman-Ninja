@@ -9,6 +9,9 @@
 #include "ModuleParticles.h"
 
 #include "KenParticle.h"
+#include "ICollider.h"
+#include "ModuleCollision.h"
+#include "RectangleCollider.h"
 
 SceneKen::SceneKen() {
 	// ground
@@ -67,6 +70,9 @@ bool SceneKen::start() {
 
 	KenParticle* particle = new KenParticle();
 	App->particles->addParticle(particle);
+
+	const ICollider* coll;// = new RectangleCollider(fPoint(10, 10), App->player->actual->GetCurrentFrame(), TypeCollider::NONE_COLLIDER);
+	//App->collisions->addCollider(coll);
 
 	return true;
 }

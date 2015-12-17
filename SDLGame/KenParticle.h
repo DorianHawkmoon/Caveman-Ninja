@@ -21,7 +21,8 @@ public:
 		velocity.x = 1;
 		velocity.y = 0;
 
-		animation.speed = 0.01f;
+		animation.loop = 1;
+		animation.speed = 0.03f;
 		animation.frames.push_back({493,1563,43,32});
 		animation.frames.push_back({550,1563,56,32});
 		animation.frames.push_back({614,1563,26,32});

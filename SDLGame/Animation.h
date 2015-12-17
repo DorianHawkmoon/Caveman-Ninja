@@ -19,11 +19,11 @@ private:
 	float current_frame;
 
 public:
-	Animation() : frames(), speed(1.0f), current_frame(0.0f), loop(0) {}
+	Animation() : frames(), speed(1.0f), current_frame(0.0f), loop(-1) {}
 
 	SDL_Rect& GetCurrentFrame() {
 		current_frame += speed;
-		if (current_frame >= frames.size() & (loop > 0)) {
+		if (current_frame >= frames.size() && (loop > 1 || loop<=-1)) {
 			current_frame = 0.0f;
 			--loop;
 		} else if(current_frame >= frames.size()) {

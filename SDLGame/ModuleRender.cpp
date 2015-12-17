@@ -112,3 +112,12 @@ bool ModuleRender::blit(SDL_Texture* texture, int x, int y, SDL_Rect* section, f
 
 	return ret;
 }
+
+inline bool ModuleRender::paintCollision(const ICollider * collision) {
+	collision->paintCollider();
+}
+
+bool ModuleRender::paintRectangle(const SDL_Color& color, const iPoint& position, const SDL_Rect& rect) {
+	SDL_RenderDrawRect(renderer, &rect);
+	return true;
+}

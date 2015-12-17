@@ -2,6 +2,8 @@
 #ifndef POINT_H
 #define POINT_H
 
+#include <math.h>
+
 template<class TYPE>
 class Point {
 public:

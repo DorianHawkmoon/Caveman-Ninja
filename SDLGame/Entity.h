@@ -6,8 +6,8 @@
 #include "Globals.h"
 class IComponent;
 
-enum Category {
-	NONE = 0,
+enum class Category {
+	NONE_CATEGORY = 0,
 	PLAYER = 1 << 0,
 	WALL = 1 << 1,
 	ENEMY = 1 << 2, 
@@ -16,7 +16,7 @@ enum Category {
 
 class Entity  {
 public:
-	Entity(Category category=NONE);
+	Entity(Category category=Category::NONE_CATEGORY);
 	~Entity();
 
 	bool start();

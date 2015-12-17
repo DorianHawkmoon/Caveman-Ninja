@@ -26,10 +26,15 @@ public:
 	update_status update();
 	update_status postUpdate();
 
-
+	void changeScene(Scene* scene);
 
 private:
-	Scene* scene;
+	Scene* currentScene;
+	Scene* nextScene;
+	Scene* lastScene;
+
+private:
+	void makeChangeScene();
 };
 
 #endif // !MODULE_SCENE_H

@@ -8,6 +8,7 @@
 #include "ModulePlayer.h"
 #include "ModuleFadeToBlack.h"
 #include "ModuleParticles.h"
+#include "ModuleCollision.h"
 #include "SDL/SDL.h"
 
 Application::Application() {
@@ -27,6 +28,7 @@ Application::Application() {
 	modules.push_back(player = new ModulePlayer());
 
 	modules.push_back(particles = new ModuleParticles());
+	modules.push_back(collisions = new ModuleCollision());
 
 	modules.push_back(fade = new ModuleFadeToBlack());
 }

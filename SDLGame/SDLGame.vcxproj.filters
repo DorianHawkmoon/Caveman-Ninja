@@ -37,6 +37,9 @@
     <Filter Include="Archivos de código fuente\Particles">
       <UniqueIdentifier>{f7d2ed65-135e-4d40-adb2-4fdda493374f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Archivos de código fuente\Core Modules\Colliders">
+      <UniqueIdentifier>{9431b611-40e9-449f-ad7e-0a9fa783b094}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Log.cpp">
@@ -107,6 +110,15 @@
     </ClCompile>
     <ClCompile Include="KenParticle.cpp">
       <Filter>Archivos de código fuente\Particles</Filter>
+    </ClCompile>
+    <ClCompile Include="ModuleCollision.cpp">
+      <Filter>Archivos de código fuente\Core Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="RectangleCollider.cpp">
+      <Filter>Archivos de código fuente\Core Modules\Colliders</Filter>
+    </ClCompile>
+    <ClCompile Include="CircleCollider.cpp">
+      <Filter>Archivos de código fuente\Core Modules\Colliders</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -187,6 +199,18 @@
     </ClInclude>
     <ClInclude Include="KenParticle.h">
       <Filter>Archivos de código fuente\Particles</Filter>
+    </ClInclude>
+    <ClInclude Include="ModuleCollision.h">
+      <Filter>Archivos de código fuente\Core Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="ICollider.h">
+      <Filter>Archivos de código fuente\Core Modules\Colliders</Filter>
+    </ClInclude>
+    <ClInclude Include="RectangleCollider.h">
+      <Filter>Archivos de código fuente\Core Modules\Colliders</Filter>
+    </ClInclude>
+    <ClInclude Include="CircleCollider.h">
+      <Filter>Archivos de código fuente\Core Modules\Colliders</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
