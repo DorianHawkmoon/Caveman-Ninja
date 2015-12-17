@@ -7,6 +7,7 @@
 #include "ModuleRender.h"
 #include "Application.h"
 #include "Globals.h"
+#include "Animation.h"
 
 class KenParticle :	public IParticle {
 public:
@@ -18,7 +19,14 @@ public:
 		texture = App->textures->load("ryu4.png");
 		timelife = 1000;
 		velocity.x = 1;
-		velocity.y = 1;
+		velocity.y = 0;
+
+		animation.speed = 0.01f;
+		animation.frames.push_back({493,1563,43,32});
+		animation.frames.push_back({550,1563,56,32});
+		animation.frames.push_back({614,1563,26,32});
+		/*animation.frames.push_back({652,1563,15,32});
+		animation.frames.push_back({677,1563,28,32});*/
 
 		return true;
 	}
@@ -33,15 +41,13 @@ public:
 		timelife -= SDL_GetTicks() - startLife;
 		//pinto la particula
 		if (timelife > 0) {
-			SDL_Rect r;
-			r.x = 493;
-			r.y = 1563;
-			r.w = 43;
-			r.h = 32;
-			App->renderer->blit(texture, position.x, position.y, &r);
+			App->renderer->blit(texture, position.x, position.y, &animation.GetCurrentFrame());
 		}
 		return UPDATE_CONTINUE;
 	}
+
+private:
+	Animation animation;
 };
 #endif // !KEN_PARTICLE_H
 
