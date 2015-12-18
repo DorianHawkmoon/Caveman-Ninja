@@ -47,9 +47,8 @@ void ModuleScene::changeScene(Scene * scene) {
 }
 
 void ModuleScene::makeChangeScene() {
-	LOG("Change scene");
-
 	if (nextScene != nullptr) {
+		LOG("Change scene");
 		// Elimina la escena anterior (de haberla)
 		if (currentScene != nullptr) {
 			currentScene->cleanUp();

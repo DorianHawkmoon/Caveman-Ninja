@@ -31,14 +31,17 @@
     <Filter Include="Archivos de código fuente\Scenes">
       <UniqueIdentifier>{c469cf02-aec9-4847-889c-17f90a658531}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Archivos de código fuente\Properties">
-      <UniqueIdentifier>{4b26e973-bb51-4f36-bdde-16076b8d1c89}</UniqueIdentifier>
+    <Filter Include="Archivos de código fuente\cuarentena">
+      <UniqueIdentifier>{34388a17-f75f-4706-bf61-6c80c067c6ab}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Archivos de código fuente\Particles">
+    <Filter Include="Archivos de código fuente\cuarentena\Colliders">
+      <UniqueIdentifier>{9431b611-40e9-449f-ad7e-0a9fa783b094}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de código fuente\cuarentena\Particles">
       <UniqueIdentifier>{f7d2ed65-135e-4d40-adb2-4fdda493374f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Archivos de código fuente\Core Modules\Colliders">
-      <UniqueIdentifier>{9431b611-40e9-449f-ad7e-0a9fa783b094}</UniqueIdentifier>
+    <Filter Include="Archivos de código fuente\Entities\Properties">
+      <UniqueIdentifier>{4b26e973-bb51-4f36-bdde-16076b8d1c89}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -78,12 +81,6 @@
     <ClCompile Include="Entity.cpp">
       <Filter>Archivos de código fuente\Entities</Filter>
     </ClCompile>
-    <ClCompile Include="ModuleSceneHonda.cpp">
-      <Filter>Archivos de código fuente\Scenes</Filter>
-    </ClCompile>
-    <ClCompile Include="ModuleSceneKen.cpp">
-      <Filter>Archivos de código fuente\Scenes</Filter>
-    </ClCompile>
     <ClCompile Include="Scene.cpp">
       <Filter>Archivos de código fuente\Scenes</Filter>
     </ClCompile>
@@ -103,22 +100,28 @@
       <Filter>Archivos de código fuente\Entities</Filter>
     </ClCompile>
     <ClCompile Include="SpriteComponent.cpp">
-      <Filter>Archivos de código fuente\Properties</Filter>
-    </ClCompile>
-    <ClCompile Include="ModuleParticles.cpp">
-      <Filter>Archivos de código fuente\Core Modules</Filter>
+      <Filter>Archivos de código fuente\Entities\Properties</Filter>
     </ClCompile>
     <ClCompile Include="KenParticle.cpp">
-      <Filter>Archivos de código fuente\Particles</Filter>
-    </ClCompile>
-    <ClCompile Include="ModuleCollision.cpp">
-      <Filter>Archivos de código fuente\Core Modules</Filter>
+      <Filter>Archivos de código fuente\cuarentena\Particles</Filter>
     </ClCompile>
     <ClCompile Include="RectangleCollider.cpp">
-      <Filter>Archivos de código fuente\Core Modules\Colliders</Filter>
+      <Filter>Archivos de código fuente\cuarentena\Colliders</Filter>
     </ClCompile>
     <ClCompile Include="CircleCollider.cpp">
-      <Filter>Archivos de código fuente\Core Modules\Colliders</Filter>
+      <Filter>Archivos de código fuente\cuarentena\Colliders</Filter>
+    </ClCompile>
+    <ClCompile Include="ModuleCollision.cpp">
+      <Filter>Archivos de código fuente\cuarentena</Filter>
+    </ClCompile>
+    <ClCompile Include="ModuleParticles.cpp">
+      <Filter>Archivos de código fuente\cuarentena</Filter>
+    </ClCompile>
+    <ClCompile Include="ModuleSceneHonda.cpp">
+      <Filter>Archivos de código fuente\cuarentena</Filter>
+    </ClCompile>
+    <ClCompile Include="ModuleSceneKen.cpp">
+      <Filter>Archivos de código fuente\cuarentena</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -164,12 +167,6 @@
     <ClInclude Include="Entity.h">
       <Filter>Archivos de código fuente\Entities</Filter>
     </ClInclude>
-    <ClInclude Include="ModuleSceneHonda.h">
-      <Filter>Archivos de código fuente\Scenes</Filter>
-    </ClInclude>
-    <ClInclude Include="ModuleSceneKen.h">
-      <Filter>Archivos de código fuente\Scenes</Filter>
-    </ClInclude>
     <ClInclude Include="Scene.h">
       <Filter>Archivos de código fuente\Scenes</Filter>
     </ClInclude>
@@ -189,28 +186,34 @@
       <Filter>Archivos de código fuente\Entities</Filter>
     </ClInclude>
     <ClInclude Include="SpriteComponent.h">
-      <Filter>Archivos de código fuente\Properties</Filter>
-    </ClInclude>
-    <ClInclude Include="ModuleParticles.h">
-      <Filter>Archivos de código fuente\Core Modules</Filter>
+      <Filter>Archivos de código fuente\Entities\Properties</Filter>
     </ClInclude>
     <ClInclude Include="IParticle.h">
-      <Filter>Archivos de código fuente\Particles</Filter>
+      <Filter>Archivos de código fuente\cuarentena\Particles</Filter>
     </ClInclude>
     <ClInclude Include="KenParticle.h">
-      <Filter>Archivos de código fuente\Particles</Filter>
-    </ClInclude>
-    <ClInclude Include="ModuleCollision.h">
-      <Filter>Archivos de código fuente\Core Modules</Filter>
+      <Filter>Archivos de código fuente\cuarentena\Particles</Filter>
     </ClInclude>
     <ClInclude Include="ICollider.h">
-      <Filter>Archivos de código fuente\Core Modules\Colliders</Filter>
+      <Filter>Archivos de código fuente\cuarentena\Colliders</Filter>
     </ClInclude>
     <ClInclude Include="RectangleCollider.h">
-      <Filter>Archivos de código fuente\Core Modules\Colliders</Filter>
+      <Filter>Archivos de código fuente\cuarentena\Colliders</Filter>
     </ClInclude>
     <ClInclude Include="CircleCollider.h">
-      <Filter>Archivos de código fuente\Core Modules\Colliders</Filter>
+      <Filter>Archivos de código fuente\cuarentena\Colliders</Filter>
+    </ClInclude>
+    <ClInclude Include="ModuleCollision.h">
+      <Filter>Archivos de código fuente\cuarentena</Filter>
+    </ClInclude>
+    <ClInclude Include="ModuleParticles.h">
+      <Filter>Archivos de código fuente\cuarentena</Filter>
+    </ClInclude>
+    <ClInclude Include="ModuleSceneHonda.h">
+      <Filter>Archivos de código fuente\cuarentena</Filter>
+    </ClInclude>
+    <ClInclude Include="ModuleSceneKen.h">
+      <Filter>Archivos de código fuente\cuarentena</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

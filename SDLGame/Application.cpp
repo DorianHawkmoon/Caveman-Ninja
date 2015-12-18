@@ -23,12 +23,10 @@ Application::Application() {
 	// Game Modules
 	
 	modules.push_back(scene = new ModuleScene());
-	//modules.push_back(scene_ken = new ModuleSceneKen(false));
-	//modules.push_back(scene_honda = new ModuleSceneHonda(false));
 	modules.push_back(player = new ModulePlayer());
 
-	modules.push_back(particles = new ModuleParticles());
-	modules.push_back(collisions = new ModuleCollision());
+	/*modules.push_back(particles = new ModuleParticles());
+	modules.push_back(collisions = new ModuleCollision());*/
 
 	modules.push_back(fade = new ModuleFadeToBlack());
 }

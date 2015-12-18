@@ -16,8 +16,6 @@ class ModuleAudio;
 class ModuleFadeToBlack;
 class ModulePlayer;
 class ModuleCollision;
-class ModuleSceneKen;
-class ModuleSceneHonda;
 
 class Application {
 public:
@@ -39,8 +37,6 @@ public:
 	ModuleParticles* particles;
 	ModuleCollision* collisions;
 	ModulePlayer* player;
-	/*ModuleSceneKen* scene_ken;
-	ModuleSceneHonda* scene_honda;*/
 
 private:
 

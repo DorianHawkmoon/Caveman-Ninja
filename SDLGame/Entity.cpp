@@ -46,7 +46,7 @@ update_status Entity::update() {
 update_status Entity::postUpdate() {
 	update_status result=UPDATE_CONTINUE;
 	for (std::list<IComponent*>::iterator it = properties.begin(); it != properties.end() && result == UPDATE_CONTINUE; ++it) {
-		result = (*it)->preUpdate();
+		result = (*it)->postUpdate();
 	}
 	return result;
 }
