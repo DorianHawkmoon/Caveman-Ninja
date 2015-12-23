@@ -5,36 +5,43 @@
 #include <algorithm>
 #include <functional>
 
-Scene::Scene(): root(nullptr), entities() {}
+Scene::Scene(): root(nullptr), entities() {
+	rootE = new Entity();
+	root = new SceneNode(rootE);
+}
 
 Scene::~Scene() {
+	if (rootE != nullptr) {
+		delete rootE;
+	}
+
 	if (root != nullptr) {
 		delete root;
 	}
 }
 
-bool Scene::preUpdate() {
+update_status Scene::preUpdate() {
 	if (root != nullptr) {
 		root->preUpdate();
 	}
-	return true;
+	return UPDATE_CONTINUE;
 }
 
-bool Scene::update() {
+update_status Scene::update() {
 	if (root != nullptr) {
 		root->update();
 	}
-	return true;
+	return UPDATE_CONTINUE;
 }
 
-bool Scene::postUpdate() {
+update_status Scene::postUpdate() {
 	if (root != nullptr) {
 		root->postUpdate();
 	}
 	//elimino entidades destruidas
 	auto wreckfieldBegin = std::remove_if(entities.begin(), entities.end(), std::mem_fn(&Entity::isDestroyed));
 	entities.erase(wreckfieldBegin, entities.end());
-	return true;
+	return UPDATE_CONTINUE;
 }
 
 bool Scene::cleanUp() {

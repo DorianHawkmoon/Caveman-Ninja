@@ -3,13 +3,13 @@
 inline RectangleCollider::RectangleCollider(fPoint position, SDL_Rect rectangle, TypeCollider type) : ICollider(position, nullptr, type), rect(rectangle) {}
 
 inline void RectangleCollider::paintCollider() const {
-	iPoint pos(position.x, position.y);
+	/*iPoint pos(position.x, position.y);
 	SDL_Color color;
 	color.b = 255;
 	color.r = 255;
 	color.g = 255;
 	color.a = 255;
-	App->renderer->paintRectangle(color, pos, rect);
+	App->renderer->paintRectangle(color, pos, rect);*/
 }
 
 inline bool RectangleCollider::checkSpecificCollision(const ICollider * self) const {

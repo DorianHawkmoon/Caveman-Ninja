@@ -39,11 +39,11 @@ public:
 	}
 
 	inline virtual update_status update() {
-		timelife -= SDL_GetTicks() - startLife;
-		//pinto la particula
-		if (timelife > 0) {
-			App->renderer->blit(texture, position.x, position.y, &animation.GetCurrentFrame());
-		}
+		//timelife -= SDL_GetTicks() - startLife;
+		////pinto la particula
+		//if (timelife > 0) {
+		//	App->renderer->blit(texture, position.x, position.y, &animation.GetCurrentFrame());
+		//}
 		return UPDATE_CONTINUE;
 	}
 

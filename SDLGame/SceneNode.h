@@ -4,6 +4,7 @@
 
 #include <vector>
 #include "Transform.h"
+#include "Globals.h"
 class Entity;
 
 class SceneNode {
@@ -49,11 +50,12 @@ public:
 	*/
 	virtual bool isDestroyed() const;
 
-	bool preUpdate();
 
-	bool update();
-
-	bool postUpdate();
+	bool start();
+	update_status preUpdate();
+	update_status update();
+	update_status postUpdate();
+	bool cleanUp();
 
 private:
 	/**

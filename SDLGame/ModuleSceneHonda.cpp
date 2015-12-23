@@ -54,10 +54,10 @@ bool ModuleSceneHonda::start() {
 update_status ModuleSceneHonda::update() {
 	// Draw everything --------------------------------------
 
-	App->renderer->blit(graphics, -75, 176, &ground, 1.1f);
-	App->renderer->blit(graphics, -7, 2, &lateral);
-	App->renderer->blit(graphics, -58, 0, &sky,1.1f);
-	App->renderer->blit(graphics, 89, 50, &background); // sea and sky
+	//App->renderer->blit(graphics, -75, 176, &ground, 1.1f);
+	//App->renderer->blit(graphics, -7, 2, &lateral);
+	//App->renderer->blit(graphics, -58, 0, &sky,1.1f);
+	//App->renderer->blit(graphics, 89, 50, &background); // sea and sky
 
 	
 	

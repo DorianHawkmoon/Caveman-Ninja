@@ -7,6 +7,8 @@
 
 class Animation {
 public:
+	//TODO make an animator with a state machine
+	//TODO add an offset for every frame
 	float speed;
 	int loop;
 	std::vector<SDL_Rect> frames;
@@ -23,6 +25,7 @@ public:
 
 	SDL_Rect& GetCurrentFrame() {
 		current_frame += speed;
+		//TODO improve loops
 		if (current_frame >= frames.size() && (loop > 1 || loop<=-1)) {
 			current_frame = 0.0f;
 			--loop;

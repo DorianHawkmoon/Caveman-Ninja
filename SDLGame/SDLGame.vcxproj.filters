@@ -90,12 +90,6 @@
     <ClCompile Include="SceneNode.cpp">
       <Filter>Archivos de código fuente\Scenes</Filter>
     </ClCompile>
-    <ClCompile Include="SceneHonda.cpp">
-      <Filter>Archivos de código fuente\Scenes</Filter>
-    </ClCompile>
-    <ClCompile Include="SceneKen.cpp">
-      <Filter>Archivos de código fuente\Scenes</Filter>
-    </ClCompile>
     <ClCompile Include="IComponent.cpp">
       <Filter>Archivos de código fuente\Entities</Filter>
     </ClCompile>
@@ -122,6 +116,18 @@
     </ClCompile>
     <ClCompile Include="ModuleSceneKen.cpp">
       <Filter>Archivos de código fuente\cuarentena</Filter>
+    </ClCompile>
+    <ClCompile Include="MotionComponent.cpp">
+      <Filter>Archivos de código fuente\Entities\Properties</Filter>
+    </ClCompile>
+    <ClCompile Include="FirstLevel.cpp">
+      <Filter>Archivos de código fuente\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="Camera.cpp">
+      <Filter>Archivos de código fuente\Utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="HorizontalSpriteScrollComponent.cpp">
+      <Filter>Archivos de código fuente\Entities\Properties</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -176,12 +182,6 @@
     <ClInclude Include="SceneNode.h">
       <Filter>Archivos de código fuente\Scenes</Filter>
     </ClInclude>
-    <ClInclude Include="SceneHonda.h">
-      <Filter>Archivos de código fuente\Scenes</Filter>
-    </ClInclude>
-    <ClInclude Include="SceneKen.h">
-      <Filter>Archivos de código fuente\Scenes</Filter>
-    </ClInclude>
     <ClInclude Include="IComponent.h">
       <Filter>Archivos de código fuente\Entities</Filter>
     </ClInclude>
@@ -214,6 +214,18 @@
     </ClInclude>
     <ClInclude Include="ModuleSceneKen.h">
       <Filter>Archivos de código fuente\cuarentena</Filter>
+    </ClInclude>
+    <ClInclude Include="MotionComponent.h">
+      <Filter>Archivos de código fuente\Entities\Properties</Filter>
+    </ClInclude>
+    <ClInclude Include="FirstLevel.h">
+      <Filter>Archivos de código fuente\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera.h">
+      <Filter>Archivos de código fuente\Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="HorizontalSpriteScrollComponent.h">
+      <Filter>Archivos de código fuente\Entities\Properties</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

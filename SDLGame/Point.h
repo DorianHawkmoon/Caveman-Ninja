@@ -82,5 +82,7 @@ public:
 
 typedef Point<int> iPoint;
 typedef Point<float> fPoint;
+typedef Point<int> Vector2i;
+typedef Point<float> Vector2f;
 
 #endif // !POINT_H

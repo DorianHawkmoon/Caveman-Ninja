@@ -7,10 +7,13 @@
 #include "ModuleInput.h"
 #include "SDL/SDL.h"
 
-ModuleRender::ModuleRender(bool started ): Module(started) {
-	camera.x = camera.y = 0;
-	camera.w = SCREEN_WIDTH * SCREEN_SIZE;
-	camera.h = SCREEN_HEIGHT* SCREEN_SIZE;
+
+#include <stdio.h>
+#include <stdlib.h>
+
+ModuleRender::ModuleRender(bool started ): 
+	Module(started), renderer(nullptr), camera(SCREEN_WIDTH * SCREEN_SIZE, SCREEN_HEIGHT* SCREEN_SIZE) {
+
 }
 
 // Destructor
@@ -60,17 +63,21 @@ update_status ModuleRender::update() {
 	// debug camera
 	int speed = 1;
 
-	if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
-		App->renderer->camera.y += speed;
+	if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT) {
+		camera.setY(camera.getY() - speed);
+	}
 
-	if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
-		App->renderer->camera.y -= speed;
+	if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT) {
+		camera.setY(camera.getY() + speed);
+	}
 
-	if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
-		App->renderer->camera.x += speed;
+	if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT) {
+		camera.setX(camera.getX() - speed);
+	}
 
-	if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
-		App->renderer->camera.x -= speed;
+	if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT) {
+		camera.setX(camera.getX() + speed);
+	}
 
 	return UPDATE_CONTINUE;
 }
@@ -86,31 +93,43 @@ bool ModuleRender::cleanUp() {
 	return true;
 }
 
-// blit to screen
-bool ModuleRender::blit(SDL_Texture* texture, int x, int y, SDL_Rect* section, float speed) {
-	bool ret = true;
-	SDL_Rect rect;
-	//x e y son las coordenadas mundo, estoy pasando de coordenadas locales a globales
-	rect.x = (int) (camera.x * speed) + x * SCREEN_SIZE;
-	rect.y = (int) (camera.y * speed) + y * SCREEN_SIZE;
+bool ModuleRender::blit(SDL_Texture* texture, iPoint position, SDL_Rect* sectionTexture, float speed) {
+	bool result = true;
 
-	if (section != NULL) {
-		rect.w = section->w;
-		rect.h = section->h;
+	SDL_Rect cam = camera.getViewArea();
+	cam.x *= speed;
+	cam.y *= speed;
+
+
+	SDL_Rect rectDestiny;
+	rectDestiny.x = (int) position.x * SCREEN_SIZE - cam.x;
+	rectDestiny.y = (int) position.y * SCREEN_SIZE - cam.y;
+	rectDestiny.w = 0;
+	rectDestiny.h = 0;
+
+	//need the size of the image to paint at it image
+	if (sectionTexture != nullptr) {
+		rectDestiny.w = sectionTexture->w;
+		rectDestiny.h = sectionTexture->h;
+	} else {
+		//if not, ask the whole texture
+		SDL_QueryTexture(texture, nullptr, nullptr, &rectDestiny.w, &rectDestiny.h);
 	}
-	else {
-		SDL_QueryTexture(texture, NULL, NULL, &rect.w, &rect.h);
+	//float windowProportion = (float) App->window->screen_surface->w / (float) cameraView.w;
+	rectDestiny.w *= SCREEN_SIZE;
+	rectDestiny.h *= SCREEN_SIZE;
+
+	//check if are inside the view
+	SDL_Rect sizeWindows=camera.getWindowsSize();
+	if (SDL_HasIntersection(&sizeWindows, &rectDestiny)==SDL_TRUE) {
+		//paint
+		if (SDL_RenderCopy(renderer, texture, sectionTexture, &rectDestiny) != 0) {
+			LOG("Cannot blit to screen. SDL_RenderCopy error: %s", SDL_GetError());
+			result = false;
+		}
 	}
 
-	rect.w *= SCREEN_SIZE;
-	rect.h *= SCREEN_SIZE;
-
-	if (SDL_RenderCopy(renderer, texture, section, &rect) != 0) {
-		LOG("Cannot blit to screen. SDL_RenderCopy error: %s", SDL_GetError());
-		ret = false;
-	}
-
-	return ret;
+	return result;
 }
 
 inline bool ModuleRender::paintCollision(const ICollider * collision) {

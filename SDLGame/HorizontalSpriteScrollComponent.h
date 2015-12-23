@@ -1,20 +1,17 @@
 #pragma once
-#ifndef SPRITE_COMPONENT_H
-#define SPRITE_COMPONENT_H
-
 #include "IComponent.h"
-#include <string>
-#include "Point.h"
 #include "SDL\SDL_rect.h"
-
+#include "Point.h"
+#include <string>
 struct SDL_Texture;
 
-class SpriteComponent : public IComponent {
+class HorizontalSpriteScrollComponent :	public IComponent {
 public:
-	SpriteComponent(std::string nameComponent, std::string nameTexture);
-	~SpriteComponent();
+	HorizontalSpriteScrollComponent(std::string nameComponent, std::string nameTexture);
+	~HorizontalSpriteScrollComponent();
 
 	bool start();
+	update_status update();
 	update_status postUpdate();
 	bool cleanUp();
 
@@ -28,7 +25,8 @@ public:
 private:
 	std::string name;
 	SDL_Texture* texture;
+
+	int scrollingOffset;
+	int numberToCover;
 };
 
-
-#endif // !SPRITE_COMPONENT_H

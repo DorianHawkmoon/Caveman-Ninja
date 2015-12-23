@@ -4,6 +4,7 @@
 
 #include <string>
 #include "Globals.h"
+class Entity;
 
 /*
 *  Provides the interface for all properties
@@ -40,11 +41,15 @@ public:
 	*/
 	virtual IComponent* makeClone() = 0;
 
-	virtual bool start()=0;
-	virtual update_status preUpdate() = 0;
-	virtual update_status update() = 0;
-	virtual update_status postUpdate() = 0;
-	virtual bool cleanUp() = 0;
+	virtual bool start() { return true; };
+	virtual update_status preUpdate() { return UPDATE_CONTINUE;  };
+	virtual update_status update() { return UPDATE_CONTINUE; };
+	virtual update_status postUpdate() { return UPDATE_CONTINUE; };
+	virtual bool cleanUp() { return true; };
+
+public:
+	//TODO best site for the parent, risk of inapropiate delete
+	Entity* parent;
 
 private:
 	/// The property ID assigned to this IProperty derived class

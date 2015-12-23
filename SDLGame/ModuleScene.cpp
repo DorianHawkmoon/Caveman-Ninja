@@ -3,8 +3,7 @@
 #include "ModuleRender.h"
 #include "ModuleTextures.h"
 #include "ModuleAudio.h"
-
-#include "SceneKen.h"
+#include "FirstLevel.h"
 
 ModuleScene::ModuleScene(bool started):Module(started) {}
 
@@ -12,7 +11,7 @@ ModuleScene::ModuleScene(bool started):Module(started) {}
 ModuleScene::~ModuleScene() {}
 
 bool ModuleScene::start() {
-	currentScene = new SceneKen();
+	currentScene = new FirstLevel();
 	currentScene->start();
 	return true;
 }

@@ -15,7 +15,6 @@ Application::Application() {
 	// Order matters: they will init/start/update in this order
 	modules.push_back(input = new ModuleInput());
 	modules.push_back(window = new ModuleWindow());
-	modules.push_back(renderer = new ModuleRender());
 	modules.push_back(textures = new ModuleTextures());
 	modules.push_back(audio = new ModuleAudio());
 	
@@ -29,6 +28,7 @@ Application::Application() {
 	modules.push_back(collisions = new ModuleCollision());*/
 
 	modules.push_back(fade = new ModuleFadeToBlack());
+	modules.push_back(renderer = new ModuleRender());
 }
 
 Application::~Application() {

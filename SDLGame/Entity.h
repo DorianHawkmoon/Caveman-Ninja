@@ -4,6 +4,7 @@
 
 #include <list>
 #include "Globals.h"
+#include "Transform.h"
 class IComponent;
 
 enum class Category {
@@ -57,6 +58,9 @@ public:
 	inline Category getCategory() const {
 		return category;
 	}
+
+public:
+	Transform transform;
 
 private:
 	/**

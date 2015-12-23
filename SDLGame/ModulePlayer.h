@@ -16,6 +16,7 @@ public:
 
 	bool start();
 	update_status update();
+	update_status postUpdate();
 	bool cleanUp();
 
 public:

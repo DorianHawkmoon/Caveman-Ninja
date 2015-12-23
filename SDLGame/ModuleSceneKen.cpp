@@ -84,23 +84,23 @@ bool ModuleSceneKen::cleanUp()
 update_status ModuleSceneKen::update()
 {
 	// Draw everything --------------------------------------
-	App->renderer->blit(graphics, 0, 0, &background, 0.77f); // sea and sky
-	App->renderer->blit(graphics, 560, 8, &(flag.GetCurrentFrame()), 0.77f); // flag animation
+//	App->renderer->blit(graphics, 0, 0, &background, 0.77f); // sea and sky
+	//App->renderer->blit(graphics, 560, 8, &(flag.GetCurrentFrame()), 0.77f); // flag animation
 
-	App->renderer->blit(graphics, 0, 0, &(ship.GetCurrentFrame()), 0.77f);
+	//App->renderer->blit(graphics, 0, 0, &(ship.GetCurrentFrame()), 0.77f);
 
 	//Draw the girl. Make sure it follows the ship movement!
-	App->renderer->blit(graphics, 191, 103 - (ship.GetCurrentFrame().y - 25), &(girl.GetCurrentFrame()), 0.77f);
+	//App->renderer->blit(graphics, 191, 103 - (ship.GetCurrentFrame().y - 25), &(girl.GetCurrentFrame()), 0.77f);
 	
-	App->renderer->blit(graphics, 0, 170, &ground);
+	//App->renderer->blit(graphics, 0, 170, &ground);
 
 	//  Make that pressing space triggers a switch to honda logic module
 	// using FadeToBlack module
-	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN) {
+	//if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN) {
 	/*	LOG("Unloading ken scene and loading scene honda");
 		App->input->disable();
 		App->fade->fadeToBlack(App->scene_honda, this, 3.0f);*/
-	}
+	//}
 
 	return UPDATE_CONTINUE;
 }

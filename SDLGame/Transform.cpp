@@ -2,7 +2,9 @@
 
 
 
-Transform::Transform() {}
+Transform::Transform() {
+	setToZero();
+}
 
 
 Transform::~Transform() {}

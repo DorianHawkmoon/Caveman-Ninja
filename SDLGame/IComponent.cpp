@@ -1,4 +1,5 @@
 #include "IComponent.h"
+#include "Entity.h"
 
 IComponent::IComponent(const std::string id) : componentID(id) {}
 

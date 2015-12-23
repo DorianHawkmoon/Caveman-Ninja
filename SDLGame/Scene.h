@@ -14,14 +14,17 @@ public:
 	virtual ~Scene();
 
 	virtual bool start() = 0;
-	virtual bool preUpdate();
-	virtual bool update();
-	virtual bool postUpdate();
+	virtual update_status preUpdate();
+	virtual update_status update();
+	virtual update_status postUpdate();
 	virtual bool cleanUp();
 
 protected:
 	SceneNode* root;
 	std::list<Entity*> entities;
+
+private:
+	Entity* rootE;
 };
 #endif // !SCENE_H
 

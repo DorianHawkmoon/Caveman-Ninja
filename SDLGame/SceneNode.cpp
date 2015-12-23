@@ -52,7 +52,7 @@ void SceneNode::remove() {
 
 Transform SceneNode::getWorldTransform() const {
 	//initialize a transform
-	Transform transform;//= sf::Transform::Identity;
+	Transform transform;//TODO hacer transform= sf::Transform::Identity;
 
 						//iterate the scene graph to the root to get the absolute transforms
 	for (const SceneNode* node = this; node != nullptr; node = node->parent) {
@@ -75,30 +75,43 @@ bool SceneNode::isMarkedForRemoval() const {
 	// By default, remove node if entity is destroyed
 	return isDestroyed();
 }
-//TODO en module scene en postupdate borrar los nodos marcados (removewrecks)
+
 //TODO cambiar nombre remove wrecks
 bool SceneNode::isDestroyed() const {
 	return entity->isDestroyed();
 }
 
-bool SceneNode::preUpdate() {
+bool SceneNode::start() {
+	entity->start();
+	// Call function recursively for all remaining children
+	std::for_each(children.begin(), children.end(), std::mem_fn(&SceneNode::start));
+	return true;
+}
 
+update_status SceneNode::preUpdate() {
+	entity->preUpdate();
 	// Call function recursively for all remaining children
 	std::for_each(children.begin(), children.end(), std::mem_fn(&SceneNode::preUpdate));
-	return true;
+	return UPDATE_CONTINUE;
 }
 
-bool SceneNode::update() {
-	//TODO pintamos el entity
-
-
+update_status SceneNode::update() {
+	entity->update();
 	// Call function recursively for all remaining children
 	std::for_each(children.begin(), children.end(), std::mem_fn(&SceneNode::update));
-
-	return true;
+	return UPDATE_CONTINUE;
 }
 
-bool SceneNode::postUpdate() {
-	removeWrecks();
+update_status SceneNode::postUpdate() {
+	entity->postUpdate();
+	// Call function recursively for all remaining children
+	std::for_each(children.begin(), children.end(), std::mem_fn(&SceneNode::postUpdate));
+	return UPDATE_CONTINUE;
+}
+
+bool SceneNode::cleanUp() {
+	entity->cleanUp();
+	// Call function recursively for all remaining children
+	std::for_each(children.begin(), children.end(), std::mem_fn(&SceneNode::cleanUp));
 	return true;
 }
