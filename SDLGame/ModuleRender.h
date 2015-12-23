@@ -24,7 +24,7 @@ public:
 
 	//TODO entender que coño hace el método con camera
 	//bool blit(SDL_Texture* texture, int x, int y, SDL_Rect* section, float speed=1.0f);
-	bool blit(SDL_Texture* texture, iPoint position, SDL_Rect* sectionTexture, float speed=1.0f);
+	bool blit(SDL_Texture* texture, iPoint position, SDL_Rect* sectionTexture, float speed = 1.0f, int repeatHorizontal=0);
 	bool paintCollision(const ICollider* collision);
 	//TODO pintar rectangulo
 	bool paintRectangle(const SDL_Color& color, const iPoint& position, const SDL_Rect& rect);

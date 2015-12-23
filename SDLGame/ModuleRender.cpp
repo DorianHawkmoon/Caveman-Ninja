@@ -93,7 +93,7 @@ bool ModuleRender::cleanUp() {
 	return true;
 }
 
-bool ModuleRender::blit(SDL_Texture* texture, iPoint position, SDL_Rect* sectionTexture, float speed) {
+bool ModuleRender::blit(SDL_Texture * texture, iPoint position, SDL_Rect * sectionTexture, float speed, int repeatHorizontal) {
 	bool result = true;
 
 	SDL_Rect cam = camera.getViewArea();
@@ -115,13 +115,12 @@ bool ModuleRender::blit(SDL_Texture* texture, iPoint position, SDL_Rect* section
 		//if not, ask the whole texture
 		SDL_QueryTexture(texture, nullptr, nullptr, &rectDestiny.w, &rectDestiny.h);
 	}
-	//float windowProportion = (float) App->window->screen_surface->w / (float) cameraView.w;
 	rectDestiny.w *= SCREEN_SIZE;
 	rectDestiny.h *= SCREEN_SIZE;
 
 	//check if are inside the view
-	SDL_Rect sizeWindows=camera.getWindowsSize();
-	if (SDL_HasIntersection(&sizeWindows, &rectDestiny)==SDL_TRUE) {
+	SDL_Rect sizeWindows = camera.getWindowsSize();
+	if (SDL_HasIntersection(&sizeWindows, &rectDestiny) == SDL_TRUE) {
 		//paint
 		if (SDL_RenderCopy(renderer, texture, sectionTexture, &rectDestiny) != 0) {
 			LOG("Cannot blit to screen. SDL_RenderCopy error: %s", SDL_GetError());

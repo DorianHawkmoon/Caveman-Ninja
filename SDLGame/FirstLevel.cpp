@@ -30,7 +30,7 @@ bool FirstLevel::start() {
 	background->rect.y = 0;
 	background->rect.w = 242;
 	background->rect.h = 224;
-	//background->speedCamera = 0.2f;
+	background->speedCamera = 0.2f;
 	buffer->addComponent(background);
 
 	//TODO arreglar los dos prixeles transparentes de mountain
@@ -42,30 +42,7 @@ bool FirstLevel::start() {
 	background->speedCamera = 0.3f;
 	buffer->addComponent(background);
 
-	
-	
-
-	//estos árboles son del arcade mientras que los otros sprites son del snes
-	/*background = new SpriteComponent("trees", "trees.png");
-	background->rect.x = 0;
-	background->rect.y = 0;
-	background->rect.w = 770;
-	background->rect.h = 96;
-	background->speedCamera = 0.5;
-	background->offset.y = 128;
-	buffer->addComponent(background);*/
 	root->addChild(buffer);
-
-	//buffer = new Entity(Category::NONE_CATEGORY);
-	//background = new HorizontalSpriteScrollComponent("mountain", "montanas.png");
-	//background->rect.x = 0;
-	//background->rect.y = 0;
-	//background->rect.w = 258;
-	//background->rect.h = 224;
-	////background->speedCamera = 0.3f;
-	//buffer->addComponent(background);
-	//root->addChild(buffer);
-
 
 	root->start();
 	return true;
