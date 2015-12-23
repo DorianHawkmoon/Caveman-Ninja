@@ -129,6 +129,9 @@
     <ClCompile Include="HorizontalSpriteScrollComponent.cpp">
       <Filter>Archivos de código fuente\Entities\Properties</Filter>
     </ClCompile>
+    <ClCompile Include="VerticalSpriteScrollComponent.cpp">
+      <Filter>Archivos de código fuente</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Module.h">
@@ -226,6 +229,9 @@
     </ClInclude>
     <ClInclude Include="HorizontalSpriteScrollComponent.h">
       <Filter>Archivos de código fuente\Entities\Properties</Filter>
+    </ClInclude>
+    <ClInclude Include="VerticalSpriteScrollComponent.h">
+      <Filter>Archivos de encabezado</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

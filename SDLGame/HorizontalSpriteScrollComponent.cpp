@@ -70,7 +70,10 @@ bool HorizontalSpriteScrollComponent::cleanUp() {
 IComponent * HorizontalSpriteScrollComponent::makeClone() {
 	HorizontalSpriteScrollComponent* clone = new HorizontalSpriteScrollComponent(getID(), name);
 	clone->rect = rect;
-	//TODO hacer el clone
 	clone->offset = offset;
+	clone->offset = offset;
+	clone->speedCamera = speedCamera;
+	clone->scrollingOffset = scrollingOffset;
+	clone->numberToCover = numberToCover;
 	return clone;
 }
