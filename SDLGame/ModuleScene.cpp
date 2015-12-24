@@ -39,6 +39,10 @@ update_status ModuleScene::postUpdate() {
 	return UPDATE_CONTINUE;
 }
 
+bool ModuleScene::cleanUp() {
+	return currentScene->cleanUp();
+}
+
 void ModuleScene::changeScene(Scene * scene) {
 	LOG("Scene change");
 	nextScene = scene;

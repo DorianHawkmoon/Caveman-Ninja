@@ -43,9 +43,12 @@ update_status ModuleFadeToBlack::update() {
 
 		if (now >= totalTime) {
 			if (fadingIn == true) {
-				if (moduleOff != nullptr)
-					moduleOff->disable();
+				//important, enable before disable because if a texture is shared between
+				//the two modules, it's not unloaded and later loaded again
 				moduleOn->enable();
+				if (moduleOff != nullptr) {
+					moduleOff->disable();
+				}
 
 				totalTime += totalTime;
 				startTime = SDL_GetTicks();

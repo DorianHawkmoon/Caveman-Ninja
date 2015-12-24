@@ -76,7 +76,7 @@ public:
 		TYPE fx = x - v.x;
 		TYPE fy = y - v.y;
 
-		return sqrt((fx*fx) + (fy*fy));
+		return static_cast<TYPE>(sqrt((fx*fx) + (fy*fy)));
 	}
 };
 

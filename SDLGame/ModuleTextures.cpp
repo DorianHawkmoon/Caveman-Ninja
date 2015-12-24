@@ -3,7 +3,7 @@
 #include "Globals.h"
 #include "Application.h"
 #include "ModuleRender.h"
-
+#include <algorithm>
 
 ModuleTextures::ModuleTextures(bool started): Module(started) {}
 
@@ -31,8 +31,8 @@ bool ModuleTextures::init() {
 bool ModuleTextures::cleanUp() {
 	LOG("Freeing textures and Image library");
 
-	for (std::list<SDL_Texture*>::iterator it = textures.begin(); it != textures.end(); ++it) {
-		SDL_DestroyTexture(*it);
+	for (std::list<LoadedTexture*>::iterator it = textures.begin(); it != textures.end(); ++it) {
+		delete (*it);
 	}
 
 	textures.clear();
@@ -44,31 +44,49 @@ SDL_Texture* const ModuleTextures::load(const char* path) {
 	SDL_Texture* texture = nullptr;
 	std::string finalPath = "images/";
 	finalPath.append(path);
-	SDL_Surface* surface = IMG_Load(finalPath.c_str());
+	
+	//search for the texture
+	std::list<LoadedTexture*>::iterator it = std::find_if(textures.begin(), textures.end(),
+		[&path](LoadedTexture* text) { return text->name.compare(path) == 0; });
 
-	if (surface == nullptr) {
-		LOG("Could not load surface with path: %s. IMG_load: %s", path, IMG_GetError());
+		//if found
+	if (it != textures.end()) {
+		(*it)->count++; //increment counter
+		texture = (*it)->texture;
+
 	} else {
-		texture = SDL_CreateTextureFromSurface(App->renderer->renderer, surface);
-
-		if (texture == nullptr) {
-			LOG("Unable to create texture from surface! SDL Error: %s\n", SDL_GetError());
+		//if not load it
+		SDL_Surface* surface = IMG_Load(finalPath.c_str());
+		if (surface == nullptr) {
+			LOG("Could not load surface with path: %s. IMG_load: %s", path, IMG_GetError());
 		} else {
-			textures.push_back(texture);
+			//create the texture and store it
+			texture = SDL_CreateTextureFromSurface(App->renderer->renderer, surface);
+			if (texture == nullptr) {
+				LOG("Unable to create texture from surface! SDL Error: %s\n", SDL_GetError());
+			} else {
+				LoadedTexture* newTexture = new LoadedTexture(path, texture);
+				textures.push_back(newTexture);
+			}
 		}
-
 		SDL_FreeSurface(surface);
 	}
-
+	
 	return texture;
 }
 
 void ModuleTextures::unload(SDL_Texture * texture) {
-	for (std::list<SDL_Texture*>::iterator it = textures.begin(); it != textures.end(); ++it) {
-		if (*it == texture) {
-			SDL_DestroyTexture(*it);
+	//search for the texture
+	std::list<LoadedTexture*>::iterator it = std::find_if(textures.begin(), textures.end(),
+		[&texture](LoadedTexture* loaded) { return loaded->texture == texture; });
+
+	if (it != textures.end()) {
+		LoadedTexture* loaded = *it;
+		if (loaded->count > 1) {
+			loaded->count--;
+		} else {
+			delete loaded;
 			textures.erase(it);
-			break;
 		}
 	}
 }

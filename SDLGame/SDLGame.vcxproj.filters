@@ -130,7 +130,7 @@
       <Filter>Archivos de código fuente\Entities\Properties</Filter>
     </ClCompile>
     <ClCompile Include="VerticalSpriteScrollComponent.cpp">
-      <Filter>Archivos de código fuente</Filter>
+      <Filter>Archivos de código fuente\Entities\Properties</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -231,7 +231,7 @@
       <Filter>Archivos de código fuente\Entities\Properties</Filter>
     </ClInclude>
     <ClInclude Include="VerticalSpriteScrollComponent.h">
-      <Filter>Archivos de encabezado</Filter>
+      <Filter>Archivos de código fuente\Entities\Properties</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

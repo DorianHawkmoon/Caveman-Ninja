@@ -22,8 +22,6 @@ public:
 	update_status postUpdate();
 	bool cleanUp();
 
-	//TODO entender que coño hace el método con camera
-	//bool blit(SDL_Texture* texture, int x, int y, SDL_Rect* section, float speed=1.0f);
 	bool blit(SDL_Texture* texture, iPoint position, SDL_Rect* sectionTexture, float speed = 1.0f);
 	bool paintCollision(const ICollider* collision);
 	//TODO pintar rectangulo

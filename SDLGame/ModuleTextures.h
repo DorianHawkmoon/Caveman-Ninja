@@ -4,8 +4,20 @@
 
 #include "Module.h"
 #include <list>
+#include <vector>
+#include "SDL_image\SDL_image.h"
+#include "SDL\SDL.h"
 
-struct SDL_Texture;
+struct LoadedTexture {
+	LoadedTexture(const std::string& name, SDL_Texture* texture) : name(name), texture(texture),count(1) {}
+	LoadedTexture() {
+		SDL_DestroyTexture(texture);
+	}
+
+	const std::string name;
+	int count;
+	SDL_Texture* texture;
+};
 
 class ModuleTextures : public Module {
 public:
@@ -19,7 +31,9 @@ public:
 	void unload(SDL_Texture* texture);
 
 private:
-	std::list<SDL_Texture*> textures;
+	//TODO comprobar como se alloca dinamicamente string y si es mejor a punteros o no
+	std::list<LoadedTexture*> textures;
+
 };
 
 #endif // !MODULE_TEXTURES_H

@@ -6,10 +6,7 @@
 #include "Globals.h"
 #include "ModuleInput.h"
 #include "SDL/SDL.h"
-
-
-#include <stdio.h>
-#include <stdlib.h>
+#include <math.h>
 
 ModuleRender::ModuleRender(bool started ): 
 	Module(started), renderer(nullptr), camera(SCREEN_WIDTH * SCREEN_SIZE, SCREEN_HEIGHT* SCREEN_SIZE) {
@@ -97,13 +94,13 @@ bool ModuleRender::blit(SDL_Texture * texture, iPoint position, SDL_Rect * secti
 	bool result = true;
 
 	SDL_Rect cam = camera.getViewArea();
-	cam.x *= speed;
-	cam.y *= speed;
+	cam.x = static_cast<int>(cam.x*speed);
+	cam.y = static_cast<int>(cam.y*speed);
 
 
 	SDL_Rect rectDestiny;
-	rectDestiny.x = (int) position.x * SCREEN_SIZE - cam.x;
-	rectDestiny.y = (int) position.y * SCREEN_SIZE - cam.y;
+	rectDestiny.x = static_cast<int>( position.x * SCREEN_SIZE - cam.x);
+	rectDestiny.y = static_cast<int>( position.y * SCREEN_SIZE - cam.y);
 	rectDestiny.w = 0;
 	rectDestiny.h = 0;
 

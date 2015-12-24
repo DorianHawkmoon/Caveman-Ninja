@@ -1,11 +1,13 @@
 #pragma once
 #ifndef VERTICAL_SPRITE_SCROLL_COMPONENT_H
 #define VERTICAL_SPRITE_SCROLL_COMPONENT_H
+
 #include "IComponent.h"
 #include <string>
+#include "SDL/SDL.h"
+#include "Point.h"
 
-class VerticalSpriteScrollComponent :
-	public IComponent {
+class VerticalSpriteScrollComponent : public IComponent {
 public:
 	VerticalSpriteScrollComponent(std::string nameComponent, std::string nameTexture);
 	~VerticalSpriteScrollComponent();

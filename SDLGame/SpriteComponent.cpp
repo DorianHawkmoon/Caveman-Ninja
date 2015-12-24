@@ -22,8 +22,8 @@ bool SpriteComponent::start() {
 update_status SpriteComponent::postUpdate() {
 	//paint the sprite
 	iPoint finalPosition;
-	finalPosition.x= parent->transform.position.x + offset.x;
-	finalPosition.y = parent->transform.position.y + offset.y;
+	finalPosition.x= static_cast<int>(parent->transform.position.x + offset.x);
+	finalPosition.y = static_cast<int>(parent->transform.position.y + offset.y);
 	
 	App->renderer->blit(texture, finalPosition, &rect, speedCamera);
 	return UPDATE_CONTINUE;

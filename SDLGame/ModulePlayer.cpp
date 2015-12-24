@@ -10,7 +10,9 @@
 ModulePlayer::ModulePlayer(bool start_enabled) : Module(start_enabled)
 {
 	position.x = 100;
-	position.y = 236;
+	//altura de la escena menos la distancia desde el suelo(borde inferior de la pantalla)
+	//hasta donde quiero poner a joe
+	position.y = 256-28;
 
 	// idle animation (arcade sprite sheet)
 	idle.frames.push_back({0, 102, 42, 48});

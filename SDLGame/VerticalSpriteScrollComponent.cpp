@@ -21,21 +21,21 @@ VerticalSpriteScrollComponent::~VerticalSpriteScrollComponent() {
 
 bool VerticalSpriteScrollComponent::start() {
 	texture = App->textures->load(name.c_str());
-	float widthWindow = App->renderer->camera.getWindowsSize().w;
+	int widthWindow = App->renderer->camera.getWindowsSize().w;
 	int widthSprite = rect.h * SCREEN_SIZE;
-	float result = widthWindow / widthSprite;
-	numberToCover = ceil(result);
+	float result = ((float)widthWindow) / widthSprite;
+	numberToCover = static_cast<int>(ceil(result));
 	numberToCover++;
 	return texture != nullptr;
 }
 
 update_status VerticalSpriteScrollComponent::update() {
 	SDL_Rect cam = App->renderer->camera.getViewArea();
-	int yCam = cam.y * speedCamera; //actual position of camera
+	int yCam = static_cast<int>(cam.y * speedCamera); //actual position of camera
 
 									//actual absolute position of sprite
-	int yPosition = parent->transform.position.x + rect.h*scrollingOffset;
-	int yPositionWidth = parent->transform.position.x + rect.h*(scrollingOffset + 1);
+	int yPosition = static_cast<int>(parent->transform.position.x + rect.h*scrollingOffset);
+	int yPositionWidth = static_cast<int>(parent->transform.position.x + rect.h*(scrollingOffset + 1));
 
 	yPosition = (int) yPosition * SCREEN_SIZE - yCam; //coordenada local
 	yPositionWidth = (int) yPositionWidth * SCREEN_SIZE - yCam; //coordenada local
@@ -51,14 +51,14 @@ update_status VerticalSpriteScrollComponent::update() {
 update_status VerticalSpriteScrollComponent::postUpdate() {
 	//paint the sprite
 	iPoint finalPosition(0, 0);
-	finalPosition.x = parent->transform.position.x + offset.x;
-	finalPosition.y = parent->transform.position.y + offset.y;
+	finalPosition.x = static_cast<int>(parent->transform.position.x + offset.x);
+	finalPosition.y = static_cast<int>(parent->transform.position.y + offset.y);
 
 	finalPosition.x += rect.h*(scrollingOffset - 1);
-	App->renderer->blit(texture, finalPosition, &rect, speedCamera, 1);
+	App->renderer->blit(texture, finalPosition, &rect, speedCamera);
 	finalPosition.x += rect.h;
 	for (int i = 0; i < numberToCover; ++i) {
-		App->renderer->blit(texture, finalPosition, &rect, speedCamera, 1);
+		App->renderer->blit(texture, finalPosition, &rect, speedCamera);
 		finalPosition.x += rect.h;
 	}
 	return UPDATE_CONTINUE;
