@@ -21,31 +21,17 @@ public:
 		camera.y = y;
 	}
 
-	int getX() const {
-		return camera.x;
+	inline int getX(float speed = 1.0f) const {
+		return static_cast<int>(camera.x*speed);
 	}
 
-	int getY() const {
-		return camera.y;
+	inline int getY(float speed=1.0f) const {
+		return static_cast<int>(camera.y*speed);
 	}
 
-	inline SDL_Rect getWindowsSize() {
-		SDL_Rect sizeWindows;
-		sizeWindows.x = 0;
-		sizeWindows.y = 0;
-		sizeWindows.w = camera.w;
-		sizeWindows.h = camera.h;
-		return sizeWindows;
-	}
+	SDL_Rect getWindowsSize() const;
 
-	SDL_Rect getViewArea() const {
-		SDL_Rect area;
-		area.x = camera.x;
-		area.y = camera.y;
-		area.w = camera.w;
-		area.h = camera.h;
-		return area;
-	}
+	SDL_Rect getViewArea(float speed = 1.0f) const;
 
 private:
 	SDL_Rect camera;

@@ -90,13 +90,10 @@ bool ModuleRender::cleanUp() {
 	return true;
 }
 
-bool ModuleRender::blit(SDL_Texture * texture, iPoint position, SDL_Rect * sectionTexture, float speed) {
+bool ModuleRender::blit(SDL_Texture * texture, iPoint position, SDL_Rect* sectionTexture, float speed) {
 	bool result = true;
 
-	SDL_Rect cam = camera.getViewArea();
-	cam.x = static_cast<int>(cam.x*speed);
-	cam.y = static_cast<int>(cam.y*speed);
-
+	SDL_Rect cam = camera.getViewArea(speed);
 
 	SDL_Rect rectDestiny;
 	rectDestiny.x = static_cast<int>( position.x * SCREEN_SIZE - cam.x);
@@ -132,7 +129,25 @@ inline bool ModuleRender::paintCollision(const ICollider * collision) {
 	collision->paintCollider();
 }
 
-bool ModuleRender::paintRectangle(const SDL_Color& color, const iPoint& position, const SDL_Rect& rect) {
-	SDL_RenderDrawRect(renderer, &rect);
-	return true;
+bool ModuleRender::paintRectangle(const SDL_Color& color, const iPoint& position, const SDL_Rect& rect, float speed) {
+	bool result = true;
+
+	SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
+	SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, color.a);
+
+	SDL_Rect rec(rect);
+	rec.x = static_cast<int>(position.x * SCREEN_SIZE -  camera.getX(speed));
+	rec.y = static_cast<int>(position.y * SCREEN_SIZE - camera.getY(speed));
+	rec.w *= SCREEN_SIZE;
+	rec.h *= SCREEN_SIZE;
+	
+
+	if (SDL_RenderFillRect(renderer, &rec) != 0) {
+		LOG("Cannot draw rectangle to screen. SDL_RenderFillRect error: %s", SDL_GetError());
+		result = false;
+	}
+
+
+
+	return result;
 }

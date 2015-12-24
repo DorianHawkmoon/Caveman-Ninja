@@ -21,6 +21,7 @@ ModulePlayer::ModulePlayer(bool start_enabled) : Module(start_enabled)
 	idle.frames.push_back({126, 102, 42, 48});
 	idle.speed = 0.05f;
 
+
 }
 
 ModulePlayer::~ModulePlayer()
@@ -79,5 +80,11 @@ update_status ModulePlayer::postUpdate() {
 	iPoint pos = position;
 	pos.y -= actual->GetCurrentFrame().h;
 	App->renderer->blit(graphics, pos, &(actual->GetCurrentFrame()));
+	SDL_Color color;
+	color.r = 255;
+	color.g = 165;
+	color.b = 0;
+	color.a = 127;
+	App->renderer->paintRectangle(color, pos, actual->GetCurrentFrame());
 	return UPDATE_CONTINUE;
 }

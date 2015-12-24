@@ -33,7 +33,6 @@ bool FirstLevel::start() {
 	background->speedCamera = 0.3f;
 	buffer->addComponent(background);
 
-	//TODO arreglar los dos prixeles transparentes de mountain
 	background = new HorizontalSpriteScrollComponent("mountain", "montanas.png");
 	background->rect.x = 0;
 	background->rect.y = 0;

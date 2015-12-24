@@ -24,8 +24,7 @@ public:
 
 	bool blit(SDL_Texture* texture, iPoint position, SDL_Rect* sectionTexture, float speed = 1.0f);
 	bool paintCollision(const ICollider* collision);
-	//TODO pintar rectangulo
-	bool paintRectangle(const SDL_Color& color, const iPoint& position, const SDL_Rect& rect);
+	bool paintRectangle(const SDL_Color& color, const iPoint& position, const SDL_Rect& rect, float speed=1.0f);
 	//TODO pintar pixeles
 
 public:

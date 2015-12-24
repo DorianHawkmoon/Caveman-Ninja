@@ -40,7 +40,6 @@ bool ModuleTextures::cleanUp() {
 }
 
 SDL_Texture* const ModuleTextures::load(const char* path) {
-	//TODO llevar un conteo de quien tiene la textura para saber si descargarla o no
 	SDL_Texture* texture = nullptr;
 	std::string finalPath = "images/";
 	finalPath.append(path);
