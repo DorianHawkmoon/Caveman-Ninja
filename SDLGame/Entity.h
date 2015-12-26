@@ -69,9 +69,9 @@ private:
 	Category category;
 	/**
 	* Variable que guarda si la entidad está destruida
+	* Será destruida por el nodo que la contiene
 	*/
 	bool destroyed;
-	//TODO destruir la entidad en el postupdate del módulo correcto (en la escena?)
 
 	std::list<IComponent*> properties;
 };

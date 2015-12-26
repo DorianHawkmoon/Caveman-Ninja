@@ -67,7 +67,7 @@ bool Entity::addComponent(IComponent * component) {
 			[&component](IComponent* comp) { return comp->getID().compare(component->getID()) == 0; });
 
 		if (it == properties.end()) {
-			component->parent = this;
+			component->setParent(this);
 			properties.push_back(component);
 			result = true;
 		}

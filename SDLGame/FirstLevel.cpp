@@ -83,6 +83,5 @@ update_status FirstLevel::update() {
 
 update_status FirstLevel::postUpdate() {
 	root->postUpdate();
-	root->removeWrecks();
 	return UPDATE_CONTINUE;
 }

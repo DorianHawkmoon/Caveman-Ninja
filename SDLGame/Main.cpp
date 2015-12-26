@@ -2,7 +2,6 @@
 #include "Globals.h"
 #include "Application.h"
 
-//TODO timer.h
 // TODO colisiones
 // TODO entities
 //TODO particles

@@ -46,6 +46,7 @@
     <ClCompile Include="FirstLevel.cpp" />
     <ClCompile Include="SceneNode.cpp" />
     <ClCompile Include="SpriteComponent.cpp" />
+    <ClCompile Include="Timer.cpp" />
     <ClCompile Include="Transform.cpp" />
     <ClCompile Include="VerticalSpriteScrollComponent.cpp" />
   </ItemGroup>
@@ -81,6 +82,7 @@
     <ClInclude Include="FirstLevel.h" />
     <ClInclude Include="SceneNode.h" />
     <ClInclude Include="SpriteComponent.h" />
+    <ClInclude Include="Timer.h" />
     <ClInclude Include="Transform.h" />
     <ClInclude Include="VerticalSpriteScrollComponent.h" />
   </ItemGroup>

@@ -38,12 +38,7 @@ public:
 	/**
 	* Elimina los nodos marcados para eliminar (sus entidades están eliminadas)
 	*/
-	void removeWrecks();
-	/*
-	* Devuelve si el nodo es marcado para eliminar
-	* @return true si esta destruido
-	*/
-	virtual bool isMarkedForRemoval() const;
+	void removeDead();
 	/**
 	* Devuelve si el nodo está destruido
 	* @return true si esta destruido

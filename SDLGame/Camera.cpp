@@ -11,8 +11,8 @@ SDL_Rect Camera::getWindowsSize() const {
 
 SDL_Rect Camera::getViewArea(float speed) const {
 	SDL_Rect area;
-	area.x = camera.x*speed;
-	area.y = camera.y*speed;
+	area.x = static_cast<int>(camera.x*speed);
+	area.y = static_cast<int>(camera.y*speed);
 	area.w = camera.w;
 	area.h = camera.h;
 	return area;

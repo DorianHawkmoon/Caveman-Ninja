@@ -6,6 +6,8 @@
 #include "Globals.h"
 class Entity;
 
+//TODO repasar los const y referencias del codigo
+
 /*
 *  Provides the interface for all properties
 */
@@ -22,6 +24,8 @@ public:
 	* IProperty destructor
 	*/
 	virtual ~IComponent();
+
+	void setParent(Entity* entity);
 
 	/**
 	* GetID will return the Property ID used for this property.
@@ -47,8 +51,7 @@ public:
 	virtual update_status postUpdate() { return UPDATE_CONTINUE; };
 	virtual bool cleanUp() { return true; };
 
-public:
-	//TODO best site for the parent, risk of inapropiate delete
+protected:
 	Entity* parent;
 
 private:

@@ -62,21 +62,15 @@ Transform SceneNode::getWorldTransform() const {
 	return transform;
 }
 
-void SceneNode::removeWrecks() {
+void SceneNode::removeDead() {
 	// Remove all children which request so
-	auto wreckfieldBegin = std::remove_if(children.begin(), children.end(), std::mem_fn(&SceneNode::isMarkedForRemoval));
+	auto wreckfieldBegin = std::remove_if(children.begin(), children.end(), std::mem_fn(&SceneNode::isDestroyed));
 	children.erase(wreckfieldBegin, children.end()); //erase the vector from the new end to the last end (remove the positions removed)
 
-													 // Call function recursively for all remaining children
-	std::for_each(children.begin(), children.end(), std::mem_fn(&SceneNode::removeWrecks));
+	// Call function recursively for all remaining children
+	//std::for_each(children.begin(), children.end(), std::mem_fn(&SceneNode::removeDead));
 }
 
-bool SceneNode::isMarkedForRemoval() const {
-	// By default, remove node if entity is destroyed
-	return isDestroyed();
-}
-
-//TODO cambiar nombre remove wrecks
 bool SceneNode::isDestroyed() const {
 	return entity->isDestroyed();
 }
@@ -106,6 +100,8 @@ update_status SceneNode::postUpdate() {
 	entity->postUpdate();
 	// Call function recursively for all remaining children
 	std::for_each(children.begin(), children.end(), std::mem_fn(&SceneNode::postUpdate));
+
+	removeDead();
 	return UPDATE_CONTINUE;
 }
 
