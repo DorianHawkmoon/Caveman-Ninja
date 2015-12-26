@@ -3,7 +3,7 @@
 #define SCENE_KEN_H
 
 #include "Scene.h"
-
+//TODO es el que hace la instancia de la siguiente escena y se lo pasa al módulo
 class FirstLevel : public Scene {
 public:
 	FirstLevel();

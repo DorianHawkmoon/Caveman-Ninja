@@ -4,13 +4,15 @@
 #include "ModuleTextures.h"
 #include "ModuleAudio.h"
 #include "FirstLevel.h"
+#include "ModuleInput.h"
 
-ModuleScene::ModuleScene(bool started):Module(started) {}
+ModuleScene::ModuleScene(bool started):Module(started), currentScene(false), nextScene(nullptr) {}
 
 
 ModuleScene::~ModuleScene() {}
 
 bool ModuleScene::start() {
+	SDL_SetRenderDrawBlendMode(App->renderer->renderer, SDL_BLENDMODE_BLEND);
 	currentScene = new FirstLevel();
 	currentScene->start();
 	return true;
@@ -27,6 +29,7 @@ update_status ModuleScene::update() {
 	if (!currentScene->update()) {
 		return UPDATE_ERROR;
 	}
+
 	return UPDATE_CONTINUE;
 }
 
@@ -40,27 +43,56 @@ update_status ModuleScene::postUpdate() {
 }
 
 bool ModuleScene::cleanUp() {
+	SDL_SetRenderDrawBlendMode(App->renderer->renderer, SDL_BLENDMODE_NONE);
 	return currentScene->cleanUp();
 }
 
-void ModuleScene::changeScene(Scene * scene) {
+void ModuleScene::changeScene(Scene * scene, float time) {
 	LOG("Scene change");
 	nextScene = scene;
-	
+	App->input->disable();
+	fadingIn = (currentScene != nullptr) ? true : false;
+	startTime = SDL_GetTicks();
+	totalTime = (Uint32) (time  * 0.5f * 1000.0f);
 }
 
 void ModuleScene::makeChangeScene() {
-	if (nextScene != nullptr) {
-		LOG("Change scene");
-		// Elimina la escena anterior (de haberla)
-		if (currentScene != nullptr) {
-			currentScene->cleanUp();
-			delete currentScene;
+	if (startTime > 0) {
+		Uint32 now = SDL_GetTicks() - startTime;
+		float normalized = (float) now / (float) totalTime;
+
+		if (normalized > 1.0f) {
+			normalized = 1.0f;
 		}
 
-		// Realiza el cambio de escena
-		currentScene = nextScene;
-		nextScene = nullptr;
-		currentScene->start();
+		if (fadingIn == false) {
+			normalized = 1.0f - normalized;
+		}
+
+		// Draw a screen-size balck rectangle with alpha
+		SDL_SetRenderDrawColor(App->renderer->renderer, 0, 0, 0, (Uint8) (normalized * 255.0f));
+		SDL_RenderFillRect(App->renderer->renderer, nullptr);
+
+		if (now >= totalTime) {
+			if (fadingIn == true) {
+				// Elimina la escena anterior (de haberla)
+				if (currentScene != nullptr) {
+					currentScene->cleanUp();
+					delete currentScene;
+				}
+
+				// Realiza el cambio de escena
+				currentScene = nextScene;
+				nextScene = nullptr;
+				currentScene->start();
+
+				totalTime += totalTime;
+				startTime = SDL_GetTicks();
+				fadingIn = false;
+			} else {
+				startTime = 0;
+				App->input->enable();
+			}
+		}
 	}
 }

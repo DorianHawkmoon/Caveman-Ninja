@@ -4,7 +4,8 @@
 
 #include "Application.h"
 
-#include "ModuleRender.h"
+#include "ModuleScene.h"
+#include "FirstLevel.h"
 
 
 
@@ -72,11 +73,8 @@ update_status ModuleInput::preUpdate() {
 	}
 
 	if (keyboard[SDL_SCANCODE_T]) {
-		if (App->renderer->isEnabled()) {
-			App->renderer->disable();
-		} else {
-			App->renderer->enable();
-		}
+		//debug
+		//App->scene->changeScene(new FirstLevel());
 	}
 
 	SDL_Event events;

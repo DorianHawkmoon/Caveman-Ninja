@@ -9,13 +9,6 @@
 struct SDL_Texture;
 class Scene;
 
-//TODO gestiona el cambio de escena
-//TODO instancia la escena y hace el cambio
-//TODO load scene
-//TODO remove scene
-//TODO change scene
-//TODO stack scenes (actual scene)?
-
 class ModuleScene : public Module {
 public:
 	ModuleScene(bool started=true);
@@ -26,12 +19,15 @@ public:
 	update_status update();
 	update_status postUpdate();
 	bool cleanUp();
-	void changeScene(Scene* scene);
+	void changeScene(Scene* scene, float time=1.0f);
 
 private:
 	Scene* currentScene;
 	Scene* nextScene;
-	Scene* lastScene;
+
+	Uint32 startTime = 0;
+	Uint32 totalTime = 0;
+	bool fadingIn = true;
 
 private:
 	void makeChangeScene();
