@@ -43,6 +43,9 @@
     <Filter Include="Archivos de código fuente\Entities\Properties">
       <UniqueIdentifier>{4b26e973-bb51-4f36-bdde-16076b8d1c89}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Archivos de código fuente\StateMachine">
+      <UniqueIdentifier>{0a5dea75-7205-47ee-8127-bab08b308da4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Log.cpp">
@@ -132,8 +135,14 @@
     <ClCompile Include="VerticalSpriteScrollComponent.cpp">
       <Filter>Archivos de código fuente\Entities\Properties</Filter>
     </ClCompile>
+    <ClCompile Include="StateMachine.cpp">
+      <Filter>Archivos de código fuente\StateMachine</Filter>
+    </ClCompile>
+    <ClCompile Include="StateTransition.cpp">
+      <Filter>Archivos de código fuente\StateMachine</Filter>
+    </ClCompile>
     <ClCompile Include="Timer.cpp">
-      <Filter>Archivos de código fuente</Filter>
+      <Filter>Archivos de código fuente\Utilities</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -236,8 +245,14 @@
     <ClInclude Include="VerticalSpriteScrollComponent.h">
       <Filter>Archivos de código fuente\Entities\Properties</Filter>
     </ClInclude>
+    <ClInclude Include="StateTransition.h">
+      <Filter>Archivos de código fuente\StateMachine</Filter>
+    </ClInclude>
+    <ClInclude Include="StateMachine.h">
+      <Filter>Archivos de código fuente\StateMachine</Filter>
+    </ClInclude>
     <ClInclude Include="Timer.h">
-      <Filter>Archivos de encabezado</Filter>
+      <Filter>Archivos de código fuente\Utilities</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

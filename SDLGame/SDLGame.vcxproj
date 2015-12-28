@@ -46,6 +46,8 @@
     <ClCompile Include="FirstLevel.cpp" />
     <ClCompile Include="SceneNode.cpp" />
     <ClCompile Include="SpriteComponent.cpp" />
+    <ClCompile Include="StateMachine.cpp" />
+    <ClCompile Include="StateTransition.cpp" />
     <ClCompile Include="Timer.cpp" />
     <ClCompile Include="Transform.cpp" />
     <ClCompile Include="VerticalSpriteScrollComponent.cpp" />
@@ -82,6 +84,8 @@
     <ClInclude Include="FirstLevel.h" />
     <ClInclude Include="SceneNode.h" />
     <ClInclude Include="SpriteComponent.h" />
+    <ClInclude Include="StateMachine.h" />
+    <ClInclude Include="StateTransition.h" />
     <ClInclude Include="Timer.h" />
     <ClInclude Include="Transform.h" />
     <ClInclude Include="VerticalSpriteScrollComponent.h" />

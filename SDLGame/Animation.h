@@ -4,7 +4,7 @@
 
 #include <vector>
 #include "SDL/SDL_rect.h"
-
+//TODO check every include guards
 class Animation {
 public:
 	//TODO make an animator with a state machine
