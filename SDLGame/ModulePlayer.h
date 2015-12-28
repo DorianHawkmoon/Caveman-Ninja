@@ -5,7 +5,7 @@
 #include "Animation.h"
 #include "Globals.h"
 #include "Point.h"
-
+#include "StateMachine.h"
 struct SDL_Texture;
 
 class ModulePlayer : public Module
@@ -22,10 +22,7 @@ public:
 public:
 
 	SDL_Texture* graphics = nullptr;
-	Animation idle;
-	Animation backward;
-	Animation forward;
-	Animation* actual;
+	StateMachine<Animation>* animations;
 	iPoint position;
 };
 

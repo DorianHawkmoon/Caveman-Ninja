@@ -47,8 +47,9 @@ bool ModuleAudio::cleanUp() {
 		Mix_FreeMusic(music);
 	}
 
-	for (std::vector<Mix_Chunk*>::iterator it = effects.begin(); it != effects.end(); ++it)
+	for (std::vector<Mix_Chunk*>::iterator it = effects.begin(); it != effects.end(); ++it) {
 		Mix_FreeChunk(*it);
+	}
 
 	effects.clear();
 	Mix_CloseAudio();

@@ -90,7 +90,7 @@ bool ModuleRender::cleanUp() {
 	return true;
 }
 
-bool ModuleRender::blit(SDL_Texture * texture, iPoint position, SDL_Rect* sectionTexture, float speed) {
+bool ModuleRender::blit(SDL_Texture * texture, iPoint position, const SDL_Rect* sectionTexture, float speed) {
 	bool result = true;
 
 	SDL_Rect cam = camera.getViewArea(speed);

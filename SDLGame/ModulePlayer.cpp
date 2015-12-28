@@ -6,6 +6,8 @@
 #include "ModuleTextures.h"
 #include "SDL/SDL.h"
 
+#include "State.h"
+
 // Reference at https://www.youtube.com/watch?v=OEhmUuehGOA
 ModulePlayer::ModulePlayer(bool start_enabled) : Module(start_enabled)
 {
@@ -14,13 +16,19 @@ ModulePlayer::ModulePlayer(bool start_enabled) : Module(start_enabled)
 	//hasta donde quiero poner a joe
 	position.y = 256-28;
 
+	Animation idle;
+	/*Animation backward;
+	Animation forward;
+	Animation* actual;*/
 	// idle animation (arcade sprite sheet)
 	idle.frames.push_back({0, 102, 42, 48});
 	idle.frames.push_back({42, 102, 42, 48});
 	idle.frames.push_back({84, 102, 42, 48});
 	idle.frames.push_back({126, 102, 42, 48});
 	idle.speed = 0.05f;
-
+	State<Animation>* idleAnimation = new State<Animation>(idle);
+	animations = new StateMachine<Animation>(idleAnimation);
+	//animations.addState();
 
 }
 
@@ -34,7 +42,7 @@ bool ModulePlayer::start(){
 	LOG("Loading player");
 
 	graphics = App->textures->load("joe.png"); // arcade version
-	actual = &idle;
+	//actual = &idle;
 	return true;
 }
 
@@ -78,13 +86,14 @@ update_status ModulePlayer::update(){
 update_status ModulePlayer::postUpdate() {
 	// position while cycling the animation(check Animation.h)
 	iPoint pos = position;
-	pos.y -= actual->GetCurrentFrame().h;
-	App->renderer->blit(graphics, pos, &(actual->GetCurrentFrame()));
+	Animation* anim = animations->getState()->getValue();
+	pos.y -= anim->GetCurrentFrame().h;
+	App->renderer->blit(graphics, pos, &(anim->GetCurrentFrame()));
 	SDL_Color color;
 	color.r = 255;
 	color.g = 165;
 	color.b = 0;
 	color.a = 127;
-	App->renderer->paintRectangle(color, pos, actual->GetCurrentFrame());
+	App->renderer->paintRectangle(color, pos, anim->GetCurrentFrame());
 	return UPDATE_CONTINUE;
 }

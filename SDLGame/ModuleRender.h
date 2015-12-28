@@ -22,7 +22,7 @@ public:
 	update_status postUpdate();
 	bool cleanUp();
 
-	bool blit(SDL_Texture* texture, iPoint position, SDL_Rect* sectionTexture, float speed = 1.0f);
+	bool blit(SDL_Texture* texture, iPoint position, const SDL_Rect* sectionTexture, float speed = 1.0f);
 	bool paintCollision(const ICollider* collision);
 	bool paintRectangle(const SDL_Color& color, const iPoint& position, const SDL_Rect& rect, float speed=1.0f);
 	//TODO pintar pixeles

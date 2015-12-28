@@ -2,49 +2,68 @@
 #ifndef STATE_MACHINE_H
 #define	STATE_MACHINE_H
 
-#include <vector>
+#include <list>
 #include "StateTransition.h"
+template <class T>
+class State;
 
 /**
 * Máquina de estados finitos
 */
+template <class T>
 class StateMachine {
 public:
 	/**
 	* Constructor con el número de estados totales de la máquina
 	* @param numberStates numero de estados que tiene
 	*/
-	StateMachine(int numberStates);
+	StateMachine<T>(State<T>* initialState);
 	virtual ~StateMachine();
-
-	/**
-	* Añadir transición a la máquina
-	* @param transition
-	*/
-	void addTransition(Transition &transition);
 
 	/**
 	* devuelve el estado actual de la maquina
 	* @return estado actual de la maquina
 	*/
-	inline int getState() { return state; }
-	/**
-	* Procesa la entrada y devuelve el nuevo estado
-	* @param entry entrada para la maquina
-	* @return nuevo estado de la máquina si hay transición o -1 si no lo hay
-	*/
-	int processEntry(int entry);
+	inline State<T>* getState() { return state; }
+	void proccessState();
+	void addState(State<T>* state);
 
 private:
+	std::list<State<T> *> states;
 	/**
 	* estado actual de la maquina
 	*/
-	int state;
-	/**
-	* lista de transiciones
-	*/
-	std::vector< std::vector<Transition> > transitions;
+	State<T>* state;
 };
 
-#endif	/* STATE_MACHINE_H */
+template<class T>
+StateMachine<T>::StateMachine(State<T> * initialState) : state(initialState) {
+	states.push_back(state);
+}
 
+template<class T>
+StateMachine<T>::~StateMachine() {
+
+}
+
+template<class T>
+void StateMachine<T>::proccessState() {
+	State<T>* result = nullptr;
+
+	for (std::list<const State*>::iterator it = states.begin; it != states.end() && result == nullptr; ++it) {
+		result = (*it)->process();
+	}
+
+	if (result != nullptr) {
+		state = result;
+		state->onTransition();
+	}
+}
+
+template<class T>
+void StateMachine<T>::addState(State<T> * state) {
+	if (std::find(states.begin(), states.end(), state) == state.end()) {
+		states.push_back(state);
+	}
+}
+#endif	/* STATE_MACHINE_H */

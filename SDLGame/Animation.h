@@ -23,7 +23,7 @@ private:
 public:
 	Animation() : frames(), speed(1.0f), current_frame(0.0f), loop(-1) {}
 
-	SDL_Rect& GetCurrentFrame() {
+	const SDL_Rect& GetCurrentFrame() {
 		current_frame += speed;
 		//TODO improve loops
 		if (current_frame >= frames.size() && (loop > 1 || loop<=-1)) {

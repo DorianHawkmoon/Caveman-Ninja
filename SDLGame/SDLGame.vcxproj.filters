@@ -46,6 +46,9 @@
     <Filter Include="Archivos de código fuente\StateMachine">
       <UniqueIdentifier>{0a5dea75-7205-47ee-8127-bab08b308da4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Archivos de código fuente\StateMachine\Conditions">
+      <UniqueIdentifier>{88dea11d-e009-44c2-9840-c5ca455a9621}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Log.cpp">
@@ -135,14 +138,17 @@
     <ClCompile Include="VerticalSpriteScrollComponent.cpp">
       <Filter>Archivos de código fuente\Entities\Properties</Filter>
     </ClCompile>
-    <ClCompile Include="StateMachine.cpp">
-      <Filter>Archivos de código fuente\StateMachine</Filter>
-    </ClCompile>
-    <ClCompile Include="StateTransition.cpp">
-      <Filter>Archivos de código fuente\StateMachine</Filter>
-    </ClCompile>
     <ClCompile Include="Timer.cpp">
       <Filter>Archivos de código fuente\Utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="Condition.cpp">
+      <Filter>Archivos de código fuente\StateMachine\Conditions</Filter>
+    </ClCompile>
+    <ClCompile Include="ConditionCallback.cpp">
+      <Filter>Archivos de código fuente\StateMachine\Conditions</Filter>
+    </ClCompile>
+    <ClCompile Include="ConditionEqual.cpp">
+      <Filter>Archivos de código fuente</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -253,6 +259,18 @@
     </ClInclude>
     <ClInclude Include="Timer.h">
       <Filter>Archivos de código fuente\Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="State.h">
+      <Filter>Archivos de código fuente\StateMachine</Filter>
+    </ClInclude>
+    <ClInclude Include="Condition.h">
+      <Filter>Archivos de código fuente\StateMachine\Conditions</Filter>
+    </ClInclude>
+    <ClInclude Include="ConditionCallback.h">
+      <Filter>Archivos de código fuente\StateMachine\Conditions</Filter>
+    </ClInclude>
+    <ClInclude Include="ConditionEqual.h">
+      <Filter>Archivos de encabezado</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -1,24 +1,62 @@
 #pragma once
-#ifndef TRANSITION_H
-#define TRANSITION_H
+#ifndef STATE_TRANSITION_H
+#define STATE_TRANSITION_H
+
+#include <list>
+template <class T>
+class State;
+class Condition;
+
 /**
 * Estructura de transición para la máquina de estados finitos
 */
-struct Transition {
-	Transition(int state, int entry, int newState) :
-		state(state), entry(entry), newState(newState) {};
+template <class T>
+class StateTransition {
+public:
+	StateTransition(State<T>* newState);
+	~StateTransition();
 
+	inline State<T>* getNextState() const {
+		return newState;
+	}
+	void addCondition(Condition* condition);
+	bool checkCondition() ;
+
+private:
 	/**
-	* Estado previo
+	* Condiciones
 	*/
-	int state;
-	/**
-	* Entrada
-	*/
-	int entry;
+	std::list<Condition*> conditions;
 	/**
 	* Nuevo estado
 	*/
-	int newState;
+	State<T>* newState;
 };
-#endif // TRANSITION_H
+
+#include "Condition.h"
+
+template <class T>
+StateTransition<T>::StateTransition(State<T> * newState) : conditions(), newState(newState) {}
+
+template <class T>
+StateTransition<T>::~StateTransition() {
+	conditions.clear();
+}
+
+template <class T>
+void StateTransition<T>::addCondition(Condition * condition) {
+	if (std::find(conditions.begin(), conditions.end(), condition) == conditions.end()) {
+		conditions.push_back(condition);
+	}
+}
+
+template <class T>
+bool StateTransition<T>::checkCondition() {
+	bool result = true;
+	for (std::list<Condition*>::iterator it = conditions.begin(); it != conditions.end() && result; ++it) {
+		result = (*it)->check();
+	}
+	return result;
+}
+
+#endif // STATE_TRANSITION_H
