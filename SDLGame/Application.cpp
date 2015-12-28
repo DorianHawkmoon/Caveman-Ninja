@@ -7,8 +7,8 @@
 #include "ModuleAudio.h"
 #include "ModulePlayer.h"
 #include "ModuleFadeToBlack.h"
-#include "ModuleParticles.h"
-#include "ModuleCollision.h"
+//#include "ModuleParticles.h"
+//#include "ModuleCollision.h"
 #include "SDL/SDL.h"
 
 Application::Application() {

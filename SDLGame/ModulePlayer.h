@@ -7,6 +7,7 @@
 #include "Point.h"
 #include "StateMachine.h"
 struct SDL_Texture;
+class Entity;
 
 class ModulePlayer : public Module
 {
@@ -20,7 +21,7 @@ public:
 	bool cleanUp();
 
 public:
-
+	Entity* player;
 	SDL_Texture* graphics = nullptr;
 	StateMachine<Animation>* animations;
 	iPoint position;

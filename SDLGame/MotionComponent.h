@@ -4,6 +4,7 @@
 
 #include "IComponent.h"
 #include "Point.h"
+#include "Entity.h"
 
 class MotionComponent :
 	public IComponent {
@@ -16,8 +17,12 @@ public:
 	update_status update();
 	update_status postUpdate();
 
+	//TODO make clone
+	IComponent* makeClone() {
+		return nullptr;
+	}
+
 public:
-	//TODO maybe public
 	fPoint velocity;
 };
 

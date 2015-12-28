@@ -5,7 +5,7 @@
 #include "Module.h"
 #include "SDL/SDL.h"
 #include "Point.h"
-#include "ICollider.h"
+//#include "ICollider.h"
 #include "Camera.h"
 struct SDL_Texture;
 struct SDL_Renderer;
@@ -23,7 +23,7 @@ public:
 	bool cleanUp();
 
 	bool blit(SDL_Texture* texture, iPoint position, const SDL_Rect* sectionTexture, float speed = 1.0f);
-	bool paintCollision(const ICollider* collision);
+	//bool paintCollision(const ICollider* collision);
 	bool paintRectangle(const SDL_Color& color, const iPoint& position, const SDL_Rect& rect, float speed=1.0f);
 	//TODO pintar pixeles
 

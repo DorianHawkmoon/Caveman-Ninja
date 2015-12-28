@@ -5,9 +5,12 @@
 #include "ModuleRender.h"
 #include "ModuleTextures.h"
 #include "SDL/SDL.h"
-
+#include "Entity.h"
 #include "State.h"
 #include "ConditionCallback.h"
+
+#include "MotionComponent.h"
+#include "SpriteComponent.h"
 
 // Reference at https://www.youtube.com/watch?v=OEhmUuehGOA
 ModulePlayer::ModulePlayer(bool start_enabled) : Module(start_enabled)
@@ -30,7 +33,20 @@ ModulePlayer::ModulePlayer(bool start_enabled) : Module(start_enabled)
 	forward.frames.push_back({126, 102, 42, 48});
 	forward.speed = 0.05f;
 
-	State<Animation>* forwardAnimation = new State<Animation>(forward);
+	player = new Entity();
+	player->transform.position.x = 100;
+	player->transform.position.y = 256-38*SCREEN_SIZE;
+
+	SpriteComponent* sprite = new SpriteComponent("Joe", "Joe.png");
+	sprite->rect = {0, 0, 28, 47};
+	player->addComponent(sprite);
+
+	MotionComponent* motion = new MotionComponent("motion");
+	motion->velocity.x = 0.8;
+	motion->velocity.y = 0;
+	player->addComponent(motion);
+
+	/*State<Animation>* forwardAnimation = new State<Animation>(forward);
 	State<Animation>* idleAnimation = new State<Animation>(idle);
 	animations = new StateMachine<Animation>(idleAnimation);
 	animations->addState(forwardAnimation);
@@ -53,7 +69,7 @@ ModulePlayer::ModulePlayer(bool start_enabled) : Module(start_enabled)
 
 	StateTransition<Animation>* transitionIdle = new StateTransition<Animation>(idleAnimation);
 	transitionIdle->addCondition(conditionIdle);
-	forwardAnimation->addTransition(transitionIdle);
+	forwardAnimation->addTransition(transitionIdle);*/
 }
 
 ModulePlayer::~ModulePlayer()
@@ -66,6 +82,7 @@ bool ModulePlayer::start(){
 	LOG("Loading player");
 
 	graphics = App->textures->load("joe.png"); // arcade version
+	player->start();
 	//actual = &idle;
 	return true;
 }
@@ -81,6 +98,7 @@ bool ModulePlayer::cleanUp(){
 
 // Update
 update_status ModulePlayer::update(){
+	player->update();
 	// TODO 9: Draw the player with its animation
 	// make sure to detect player movement and change its
 	
@@ -104,14 +122,16 @@ update_status ModulePlayer::update(){
 			break;
 	}*/
 
-	animations->proccessState();
+	//animations->proccessState();
 
 	return UPDATE_CONTINUE;
 }
 
 update_status ModulePlayer::postUpdate() {
 	// position while cycling the animation(check Animation.h)
-	iPoint pos = position;
+	//TODO postupdate of entity joe
+	player->postUpdate();
+	/*iPoint pos = position;
 	Animation* anim = animations->getState()->getValue();
 	pos.y -= anim->GetCurrentFrame().h;
 	App->renderer->blit(graphics, pos, &(anim->GetCurrentFrame()));
@@ -120,6 +140,6 @@ update_status ModulePlayer::postUpdate() {
 	color.g = 165;
 	color.b = 0;
 	color.a = 127;
-	App->renderer->paintRectangle(color, pos, anim->GetCurrentFrame());
+	App->renderer->paintRectangle(color, pos, anim->GetCurrentFrame());*/
 	return UPDATE_CONTINUE;
 }

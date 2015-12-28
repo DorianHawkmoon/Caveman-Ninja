@@ -15,6 +15,7 @@ update_status MotionComponent::preUpdate() {
 }
 
 update_status MotionComponent::update() {
+	parent->transform.position += velocity;
 	return update_status();
 }
 
