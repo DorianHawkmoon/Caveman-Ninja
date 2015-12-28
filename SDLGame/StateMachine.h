@@ -36,6 +36,8 @@ private:
 	State<T>* state;
 };
 
+#include "State.h"
+
 template<class T>
 StateMachine<T>::StateMachine(State<T> * initialState) : state(initialState) {
 	states.push_back(state);
@@ -50,8 +52,8 @@ template<class T>
 void StateMachine<T>::proccessState() {
 	State<T>* result = nullptr;
 
-	for (std::list<const State*>::iterator it = states.begin; it != states.end() && result == nullptr; ++it) {
-		result = (*it)->process();
+	for (std::list<State<T>*>::iterator it = states.begin(); it != states.end() && result == nullptr; ++it) {
+		result = (*it)->processTransition();
 	}
 
 	if (result != nullptr) {
@@ -62,7 +64,7 @@ void StateMachine<T>::proccessState() {
 
 template<class T>
 void StateMachine<T>::addState(State<T> * state) {
-	if (std::find(states.begin(), states.end(), state) == state.end()) {
+	if (std::find(states.begin(), states.end(), state) == states.end()) {
 		states.push_back(state);
 	}
 }

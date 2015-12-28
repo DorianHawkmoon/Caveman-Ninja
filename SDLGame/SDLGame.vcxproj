@@ -23,7 +23,6 @@
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="CircleCollider.cpp" />
     <ClCompile Include="Condition.cpp" />
-    <ClCompile Include="ConditionCallback.cpp" />
     <ClCompile Include="ConditionEqual.cpp" />
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="HorizontalSpriteScrollComponent.cpp" />

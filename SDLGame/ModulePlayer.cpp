@@ -7,6 +7,7 @@
 #include "SDL/SDL.h"
 
 #include "State.h"
+#include "ConditionCallback.h"
 
 // Reference at https://www.youtube.com/watch?v=OEhmUuehGOA
 ModulePlayer::ModulePlayer(bool start_enabled) : Module(start_enabled)
@@ -16,20 +17,43 @@ ModulePlayer::ModulePlayer(bool start_enabled) : Module(start_enabled)
 	//hasta donde quiero poner a joe
 	position.y = 256-28;
 
+	Animation forward;
 	Animation idle;
 	/*Animation backward;
 	Animation forward;
 	Animation* actual;*/
-	// idle animation (arcade sprite sheet)
-	idle.frames.push_back({0, 102, 42, 48});
-	idle.frames.push_back({42, 102, 42, 48});
-	idle.frames.push_back({84, 102, 42, 48});
-	idle.frames.push_back({126, 102, 42, 48});
-	idle.speed = 0.05f;
+	idle.frames.push_back({0, 0, 28, 47});
+
+	forward.frames.push_back({0, 102, 42, 48});
+	forward.frames.push_back({42, 102, 42, 48});
+	forward.frames.push_back({84, 102, 42, 48});
+	forward.frames.push_back({126, 102, 42, 48});
+	forward.speed = 0.05f;
+
+	State<Animation>* forwardAnimation = new State<Animation>(forward);
 	State<Animation>* idleAnimation = new State<Animation>(idle);
 	animations = new StateMachine<Animation>(idleAnimation);
-	//animations.addState();
+	animations->addState(forwardAnimation);
 
+
+	auto toForward = []() {
+		return App->input->GetKey(SDL_SCANCODE_D) == (KEY_DOWN || KEY_REPEAT);
+	};
+	auto toIdle = []() {
+		return (App->input->GetKey(SDL_SCANCODE_D) == KEY_IDLE);
+	};
+
+
+	Condition* conditionForward = new ConditionCallback(toForward);
+	Condition* conditionIdle = new ConditionCallback(toIdle);
+
+	StateTransition<Animation>* transitionForward = new StateTransition<Animation>(forwardAnimation);
+	transitionForward->addCondition(conditionForward);
+	idleAnimation->addTransition(transitionForward);
+
+	StateTransition<Animation>* transitionIdle = new StateTransition<Animation>(idleAnimation);
+	transitionIdle->addCondition(conditionIdle);
+	forwardAnimation->addTransition(transitionIdle);
 }
 
 ModulePlayer::~ModulePlayer()
@@ -79,6 +103,8 @@ update_status ModulePlayer::update(){
 			actual = &backward;
 			break;
 	}*/
+
+	animations->proccessState();
 
 	return UPDATE_CONTINUE;
 }

@@ -144,9 +144,6 @@
     <ClCompile Include="Condition.cpp">
       <Filter>Archivos de código fuente\StateMachine\Conditions</Filter>
     </ClCompile>
-    <ClCompile Include="ConditionCallback.cpp">
-      <Filter>Archivos de código fuente\StateMachine\Conditions</Filter>
-    </ClCompile>
     <ClCompile Include="ConditionEqual.cpp">
       <Filter>Archivos de código fuente</Filter>
     </ClCompile>
