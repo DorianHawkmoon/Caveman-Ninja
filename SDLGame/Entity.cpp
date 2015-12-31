@@ -80,7 +80,7 @@ IComponent * Entity::getComponent(const std::string& id) {
 	std::list<IComponent*>::iterator it = std::find_if(properties.begin(), properties.end(),
 		[&id](IComponent* comp) { return comp->getID().compare(id) == 0; });
 
-	if (it == properties.end()) {
+	if (it != properties.end()) {
 		result = *it;
 	}
 	return result;

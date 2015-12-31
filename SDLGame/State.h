@@ -31,7 +31,7 @@ public:
 
 	//TODO que variables paso y vigilo
 	State<T>* processTransition() const;
-	virtual void onTransition() {};
+	void onTransition(State<T>* newState) {};
 
 	inline T* getValue() {
 		return &value;
@@ -57,6 +57,13 @@ State<T>* State<T>::processTransition() const {
 		}
 	}
 	return result;
+}
+
+#include "Animation.h"
+void State<Animation>::onTransition(State<Animation>* newState){
+	LOG("Cambio de estado");
+	value.cleanUp();
+	newState->getValue()->start();
 }
 
 #endif //STATE_H

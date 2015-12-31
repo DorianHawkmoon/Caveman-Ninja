@@ -1,13 +1,33 @@
 #pragma once
-#include "IComponent.h"
+#ifndef ANIMATION_COMPONENT_H
+#define ANIMATION_COMPONENT_H
 
-//TODO guardar una maquina de animaciones con su textura y listos
-//se encarga de pintarse a si mismo igualmente usando la posicion de su transformada en entity
-//class AnimationComponent : public IComponent {
-//public:
-//	AnimationComponent();
-//	~AnimationComponent();
-//
-//	//TODO make clone
-//};
-//
+#include "IComponent.h"
+#include "Animation.h"
+#include "StateMachine.h"
+#include <string.h>
+
+struct SDL_Texture;
+
+class AnimationComponent : public IComponent {
+public:
+	AnimationComponent(const std::string& nameComponent, const std::string& texture, StateMachine<Animation>* stateMachine);
+	~AnimationComponent();
+
+	bool start();
+
+	update_status update();
+	update_status postUpdate();
+
+	bool cleanUp();
+
+	//TODO make clone
+	IComponent* makeClone();
+
+private:
+	std::string nameTexture;
+	StateMachine<Animation>* state;
+	SDL_Texture* texture;
+};
+
+#endif // ANIMATION_COMPONENT_H

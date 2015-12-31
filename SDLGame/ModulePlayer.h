@@ -6,7 +6,7 @@
 #include "Globals.h"
 #include "Point.h"
 #include "StateMachine.h"
-struct SDL_Texture;
+class MotionComponent;
 class Entity;
 
 class ModulePlayer : public Module
@@ -16,15 +16,14 @@ public:
 	~ModulePlayer();
 
 	bool start();
+	update_status preUpdate();
 	update_status update();
 	update_status postUpdate();
 	bool cleanUp();
 
 public:
 	Entity* player;
-	SDL_Texture* graphics = nullptr;
-	StateMachine<Animation>* animations;
-	iPoint position;
+	MotionComponent* motion;
 };
 
 #endif // __MODULEPLAYER_H__

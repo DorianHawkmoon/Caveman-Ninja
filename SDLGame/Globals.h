@@ -14,7 +14,7 @@ enum update_status {
 
 
 // Configuration -----------
-#define SCREEN_WIDTH 320
+#define SCREEN_WIDTH 260
 #define SCREEN_HEIGHT 256
 #define SCREEN_SIZE 2
 
@@ -24,6 +24,6 @@ enum update_status {
 #define FULLSCREEN_DESKTOP false
 #define VSYNC true
 
-#define TITLE "Super Awesome Game"
+#define TITLE "Caveman Ninja"
 
 #endif // !GLOBALS_H

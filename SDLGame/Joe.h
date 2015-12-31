@@ -2,13 +2,14 @@
 #ifndef JOE_H
 #define JOE_H
 
-#include "Entity.h"
+#include "Animation.h"
+class Entity;
 
 struct Joe {
-	static Entity* makeJoe() {
-		//prepare the entity for the player
-		return nullptr;
-	}
+	static Entity* makeJoe();
+
+private:
+	static void makeAnimations(Entity* entity);
 };
 
 #endif // JOE_H

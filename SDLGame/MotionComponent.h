@@ -12,10 +12,8 @@ public:
 	MotionComponent(std::string nameComponent);
 	~MotionComponent();
 
-	update_status preUpdate();
 	//TODO: en update pilla el transform del entity (es miembro) y le actualiza la velocidad
 	update_status update();
-	update_status postUpdate();
 
 	//TODO make clone
 	IComponent* makeClone() {

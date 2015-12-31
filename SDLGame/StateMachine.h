@@ -25,7 +25,7 @@ public:
 	* @return estado actual de la maquina
 	*/
 	inline State<T>* getState() { return state; }
-	void proccessState();
+	void update();
 	void addState(State<T>* state);
 
 private:
@@ -49,16 +49,14 @@ StateMachine<T>::~StateMachine() {
 }
 
 template<class T>
-void StateMachine<T>::proccessState() {
+void StateMachine<T>::update() {
 	State<T>* result = nullptr;
 
-	for (std::list<State<T>*>::iterator it = states.begin(); it != states.end() && result == nullptr; ++it) {
-		result = (*it)->processTransition();
-	}
+	result = state->processTransition();
 
 	if (result != nullptr) {
+		state->onTransition(result);
 		state = result;
-		state->onTransition();
 	}
 }
 
