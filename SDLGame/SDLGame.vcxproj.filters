@@ -120,6 +120,15 @@
     <ClCompile Include="Joe.cpp">
       <Filter>Archivos de código fuente\Entities\Factories</Filter>
     </ClCompile>
+    <ClCompile Include="ModuleTimer.cpp">
+      <Filter>Archivos de código fuente\Core Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="JumpComponent.cpp">
+      <Filter>Archivos de código fuente\Entities\Properties</Filter>
+    </ClCompile>
+    <ClCompile Include="Gravity.cpp">
+      <Filter>Archivos de código fuente\Entities\Properties</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Module.h">
@@ -212,14 +221,26 @@
     <ClInclude Include="ConditionCallback.h">
       <Filter>Archivos de código fuente\StateMachine\Conditions</Filter>
     </ClInclude>
-    <ClInclude Include="ConditionEqual.h">
-      <Filter>Archivos de código fuente\StateMachine\Conditions</Filter>
-    </ClInclude>
     <ClInclude Include="AnimationComponent.h">
       <Filter>Archivos de código fuente\Entities\Properties</Filter>
     </ClInclude>
     <ClInclude Include="Joe.h">
       <Filter>Archivos de código fuente\Entities\Factories</Filter>
+    </ClInclude>
+    <ClInclude Include="ConditionComparison.h">
+      <Filter>Archivos de código fuente\StateMachine\Conditions</Filter>
+    </ClInclude>
+    <ClInclude Include="ModuleTimer.h">
+      <Filter>Archivos de código fuente\Core Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="JumpComponent.h">
+      <Filter>Archivos de código fuente\Entities\Properties</Filter>
+    </ClInclude>
+    <ClInclude Include="Gravity.h">
+      <Filter>Archivos de código fuente\Entities\Properties</Filter>
+    </ClInclude>
+    <ClInclude Include="TimerCondition.h">
+      <Filter>Archivos de código fuente\StateMachine\Conditions</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

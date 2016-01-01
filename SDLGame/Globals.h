@@ -4,6 +4,10 @@
 
 #define LOG(format, ...) log(__FILE__, __LINE__, format, __VA_ARGS__);
 
+#if true
+#define DEBUG
+#endif
+
 void log(const char file[], int line, const char* format, ...);
 
 enum update_status {
@@ -16,7 +20,8 @@ enum update_status {
 // Configuration -----------
 #define SCREEN_WIDTH 260
 #define SCREEN_HEIGHT 256
-#define SCREEN_SIZE 2
+#define SCREEN_SIZE 3
+#define FPS 60
 
 #define FULLSCREEN false
 #define BORDERLESS false

@@ -25,7 +25,7 @@ update_status SpriteComponent::postUpdate() {
 	finalPosition.x= static_cast<int>(parent->transform.position.x + offset.x);
 	finalPosition.y = static_cast<int>(parent->transform.position.y + offset.y);
 	
-	App->renderer->blit(texture, finalPosition, &rect, speedCamera);
+	App->renderer->blit(texture, finalPosition, &rect, iPoint(0,0), speedCamera);
 	return UPDATE_CONTINUE;
 }
 

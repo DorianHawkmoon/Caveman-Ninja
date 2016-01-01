@@ -60,19 +60,19 @@ update_status ModuleRender::update() {
 	// debug camera
 	int speed = 1;
 
-	if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT) {
+	if (App->input->getKey(SDL_SCANCODE_UP) == KEY_REPEAT) {
 		camera.setY(camera.getY() - speed);
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT) {
+	if (App->input->getKey(SDL_SCANCODE_DOWN) == KEY_REPEAT) {
 		camera.setY(camera.getY() + speed);
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT) {
+	if (App->input->getKey(SDL_SCANCODE_LEFT) == KEY_REPEAT) {
 		camera.setX(camera.getX() - speed);
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT) {
+	if (App->input->getKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT) {
 		camera.setX(camera.getX() + speed);
 	}
 
@@ -90,14 +90,17 @@ bool ModuleRender::cleanUp() {
 	return true;
 }
 
-bool ModuleRender::blit(SDL_Texture * texture, iPoint position, const SDL_Rect* sectionTexture, float speed) {
+bool ModuleRender::blit(SDL_Texture * texture, const iPoint& position, const SDL_Rect* sectionTexture, 
+	const iPoint& offsetImage, float speed, const SDL_RendererFlip& flip, const iPoint& offsetFlip) {
 	bool result = true;
 
 	SDL_Rect cam = camera.getViewArea(speed);
 
 	SDL_Rect rectDestiny;
-	rectDestiny.x = static_cast<int>( position.x * SCREEN_SIZE - cam.x);
-	rectDestiny.y = static_cast<int>( position.y * SCREEN_SIZE - cam.y);
+	iPoint pos = position;
+	pos += offsetImage;
+	rectDestiny.x = static_cast<int>( pos.x  * SCREEN_SIZE - cam.x);
+	rectDestiny.y = static_cast<int>( pos.y  * SCREEN_SIZE - cam.y);
 	rectDestiny.w = 0;
 	rectDestiny.h = 0;
 
@@ -112,11 +115,19 @@ bool ModuleRender::blit(SDL_Texture * texture, iPoint position, const SDL_Rect* 
 	rectDestiny.w *= SCREEN_SIZE;
 	rectDestiny.h *= SCREEN_SIZE;
 
+	
+
 	//check if are inside the view
 	SDL_Rect sizeWindows = camera.getWindowsSize();
 	if (SDL_HasIntersection(&sizeWindows, &rectDestiny) == SDL_TRUE) {
 		//paint
-		if (SDL_RenderCopy(renderer, texture, sectionTexture, &rectDestiny) != 0) {
+		//check flip
+		if (flip!=SDL_FLIP_NONE) {
+			rectDestiny.x += offsetFlip.x*SCREEN_SIZE;
+			rectDestiny.y += offsetFlip.y*SCREEN_SIZE;
+		}
+		if (SDL_RenderCopyEx(renderer, texture, sectionTexture, &rectDestiny,
+								0.0f, nullptr, flip) != 0) {
 			LOG("Cannot blit to screen. SDL_RenderCopy error: %s", SDL_GetError());
 			result = false;
 		}

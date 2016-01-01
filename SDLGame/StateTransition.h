@@ -14,6 +14,7 @@ template <class T>
 class StateTransition {
 public:
 	StateTransition(State<T>* newState);
+	StateTransition(State<T>* newState, Condition* condition);
 	~StateTransition();
 
 	inline State<T>* getNextState() const {
@@ -21,6 +22,9 @@ public:
 	}
 	void addCondition(Condition* condition);
 	bool checkCondition() ;
+
+	bool start();
+	bool cleanUp();
 
 private:
 	/**
@@ -38,6 +42,11 @@ private:
 template <class T>
 StateTransition<T>::StateTransition(State<T> * newState) : conditions(), newState(newState) {}
 
+template<class T>
+inline StateTransition<T>::StateTransition(State<T>* newState, Condition * condition) : conditions(), newState(newState) {
+	conditions.push_back(condition);
+}
+
 template <class T>
 StateTransition<T>::~StateTransition() {
 	conditions.clear();
@@ -45,6 +54,9 @@ StateTransition<T>::~StateTransition() {
 
 template <class T>
 void StateTransition<T>::addCondition(Condition * condition) {
+	if (condition == nullptr) {
+		return;
+	}
 	if (std::find(conditions.begin(), conditions.end(), condition) == conditions.end()) {
 		conditions.push_back(condition);
 	}
@@ -55,6 +67,24 @@ bool StateTransition<T>::checkCondition() {
 	bool result = true;
 	for (std::list<Condition*>::iterator it = conditions.begin(); it != conditions.end() && result; ++it) {
 		result = (*it)->check();
+	}
+	return result;
+}
+
+template<class T>
+bool StateTransition<T>::start() {
+	bool result = true;
+	for (std::list<Condition*>::iterator it = conditions.begin(); it != conditions.end() && result; ++it) {
+		result = (*it)->start();
+	}
+	return result;
+}
+
+template<class T>
+bool StateTransition<T>::cleanUp() {
+	bool result = true;
+	for (std::list<Condition*>::iterator it = conditions.begin(); it != conditions.end() && result; ++it) {
+		result = (*it)->cleanUp();
 	}
 	return result;
 }

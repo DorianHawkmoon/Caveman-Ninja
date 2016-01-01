@@ -15,6 +15,7 @@ public:
 	bool isStopped();
 
 	unsigned int value();
+	float miliToSeconds(unsigned int miliseconds);
 
 private:
 	bool paused;

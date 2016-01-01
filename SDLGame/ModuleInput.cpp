@@ -1,11 +1,6 @@
 #include "ModuleInput.h"
 #include "Globals.h"
-#include "SDL/SDL.h"
-
-#include "Application.h"
-
-#include "ModuleScene.h"
-#include "FirstLevel.h"
+#include <algorithm>
 
 
 
@@ -72,11 +67,6 @@ update_status ModuleInput::preUpdate() {
 		return UPDATE_STOP;
 	}
 
-	if (keyboard[SDL_SCANCODE_T]) {
-		//debug
-		//App->scene->changeScene(new FirstLevel());
-	}
-
 	SDL_Event events;
 	while (SDL_PollEvent(&events)) {
 		switch (events.type) {
@@ -87,7 +77,7 @@ update_status ModuleInput::preUpdate() {
 		}
 	}
 
-	if (GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN) {
+	if (getKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN) {
 		return UPDATE_STOP;
 	}
 
@@ -99,4 +89,46 @@ bool ModuleInput::cleanUp() {
 	LOG("Disabling SDL input event subsystem");
 	memset(keyboard, KEY_IDLE, sizeof(KeyState) * MAX_KEYS);
 	return true;
+}
+
+bool ModuleInput::singleKey(const SDL_Scancode & key, const std::list<SDL_Scancode>& exceptions) const {
+	bool result = getKey(key) != KEY_IDLE;
+	for (int i = 0; i < MAX_KEYS && result; ++i) {
+		if (i != key) {
+			std::list<SDL_Scancode>::const_iterator it = std::find(exceptions.begin(), exceptions.end(), i);
+			if (it == exceptions.end()) {
+				result &= !(getKey(i));
+			}
+		}
+	}
+	return result;
+}
+
+
+	bool ModuleInput::keyActive(const SDL_Scancode & key) const {
+	return getKey(key) != KEY_IDLE;
+}
+
+bool ModuleInput::singleCombination(const std::list<SDL_Scancode>& keys, const std::list<SDL_Scancode>& exceptions)const  {
+	bool result = combinationActive(keys);
+	//TODO EXCEPTIONS
+	for (int i = 0; i < MAX_KEYS && result; ++i) {
+		bool parcial = !(getKey(i)); // !pressed
+		if (!parcial) { //means is pressed
+			//look if is one of the selected keys to be pressed
+			std::list<SDL_Scancode>::const_iterator it = std::find(keys.begin(), keys.end(), i);
+			if (it == keys.end()) {
+				result = false;
+			}
+		}
+	}
+	return result;
+}
+
+bool ModuleInput::combinationActive(const std::list<SDL_Scancode>& keys) const {
+	bool result = true;
+	for (std::list<SDL_Scancode>::const_iterator it = keys.begin(); it != keys.end() && result; ++it) {
+		result &= keyActive(*it);
+	}
+	return result;
 }

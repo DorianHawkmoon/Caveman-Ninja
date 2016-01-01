@@ -89,3 +89,7 @@ unsigned int Timer::value() {
 
 	return time;
 }
+
+float Timer::miliToSeconds(unsigned int miliseconds) {
+	return static_cast<float>(miliseconds / 1000.0);
+}

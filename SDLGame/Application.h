@@ -15,6 +15,7 @@ class ModuleScene;
 class ModuleAudio;
 class ModuleFadeToBlack;
 class ModulePlayer;
+class ModuleTimer;
 class ModuleCollision;
 
 class Application {
@@ -37,10 +38,11 @@ public:
 	ModuleParticles* particles;
 	ModuleCollision* collisions;
 	ModulePlayer* player;
+	ModuleTimer* timer;
 
 private:
-
 	std::list<Module*> modules;
+
 };
 
 extern Application* App;

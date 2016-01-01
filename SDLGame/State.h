@@ -29,10 +29,15 @@ public:
 		return false;
 	}
 
-	//TODO que variables paso y vigilo
 	State<T>* processTransition() const;
-	void onTransition(State<T>* newState) {};
-
+	void onTransition(State<T>* newState) {
+		cleanUp();
+		value.cleanUp();
+		newState->getValue()->start();
+		newState->start();
+	};
+	bool start();
+	bool cleanUp();
 	inline T* getValue() {
 		return &value;
 	}
@@ -59,11 +64,31 @@ State<T>* State<T>::processTransition() const {
 	return result;
 }
 
+template<class T>
+bool State<T>::start() {
+	bool result = true;
+	for (auto it = transitions.begin(); it != transitions.end() && result; ++it) {
+		result = (*it)->start();
+	}
+	return result;
+}
+
+template<class T>
+inline bool State<T>::cleanUp() {
+	bool result = true;
+	for (auto it = transitions.begin(); it != transitions.end() && result; ++it) {
+		result = (*it)->cleanUp();
+	}
+	return result;
+}
+
 #include "Animation.h"
 void State<Animation>::onTransition(State<Animation>* newState){
-	LOG("Cambio de estado");
+	//LOG("Cambio de estado");
+	cleanUp();
 	value.cleanUp();
 	newState->getValue()->start();
+	newState->start();
 }
 
 #endif //STATE_H

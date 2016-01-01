@@ -7,7 +7,9 @@ public:
 	Condition() {};
 	~Condition() {};
 
+	virtual bool start() { return true; }
 	virtual bool check() const = 0;
+	virtual bool cleanUp() { return true; }
 };
 
 #endif // CONDITION_H

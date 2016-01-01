@@ -6,6 +6,9 @@
 #include "Globals.h"
 #include "Point.h"
 #include "StateMachine.h"
+#include "Joe.h"
+
+class JumpComponent;
 class MotionComponent;
 class Entity;
 
@@ -24,6 +27,7 @@ public:
 public:
 	Entity* player;
 	MotionComponent* motion;
+	JumpComponent* jump;
 };
 
 #endif // __MODULEPLAYER_H__

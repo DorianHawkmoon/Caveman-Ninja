@@ -22,6 +22,7 @@ Entity::~Entity() {
 
 bool Entity::start() {
 	bool result = true;
+	transform.setToZero();
 	for (std::list<IComponent*>::iterator it = properties.begin(); it != properties.end() && result; ++it) {
 		result &= (*it)->start();
 	}

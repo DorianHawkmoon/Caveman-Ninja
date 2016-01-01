@@ -1,5 +1,6 @@
 #include "MotionComponent.h"
-
+#include "Application.h"
+#include "ModuleTimer.h"
 
 
 MotionComponent::MotionComponent(std::string nameComponent): IComponent(nameComponent) {
@@ -12,6 +13,8 @@ MotionComponent::~MotionComponent() {}
 
 
 update_status MotionComponent::update() {
-	parent->transform.position += velocity;
+	float seconds = App->timer->getDeltaFrame()/1000.0f;
+    parent->transform.position.x += velocity.x * seconds;
+	parent->transform.position.y += velocity.y * seconds;
 	return UPDATE_CONTINUE;
 }

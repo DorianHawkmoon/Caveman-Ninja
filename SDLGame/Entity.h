@@ -15,6 +15,29 @@ enum class Category {
 	PROYECTIL = 1 << 3
 };
 
+enum JumpType {
+	NONE,
+	JUMP,
+	JUMP_DOWN,
+	DOUBLE_JUMP,
+	FALL
+};
+struct ControlEntity {
+	ControlEntity() {
+		moveX = 0;
+		moveY = 0;
+		attack = 0;
+		stateJump = JumpType::NONE;
+	}
+
+	~ControlEntity() {}
+
+	int moveX;
+	int moveY;
+	JumpType stateJump;
+	int attack;
+};
+
 class Entity  {
 public:
 	Entity(Category category=Category::NONE_CATEGORY);
@@ -61,6 +84,7 @@ public:
 
 public:
 	Transform transform;
+	ControlEntity controller;
 
 private:
 	/**

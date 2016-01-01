@@ -7,12 +7,12 @@
 #include "ModuleAudio.h"
 #include "ModulePlayer.h"
 #include "ModuleFadeToBlack.h"
-//#include "ModuleParticles.h"
-//#include "ModuleCollision.h"
+#include "ModuleTimer.h"
 #include "SDL/SDL.h"
 
 Application::Application() {
 	// Order matters: they will init/start/update in this order
+	modules.push_back(timer = new ModuleTimer());
 	modules.push_back(input = new ModuleInput());
 	modules.push_back(window = new ModuleWindow());
 	modules.push_back(textures = new ModuleTextures());
@@ -79,6 +79,8 @@ update_status Application::update() {
 		}
 	}
 
+	//control fps
+	//SDL_Delay(static_cast<int>(1.0 / FPS ) - (timer->getDeltaFrame()/1000));
 	return ret;
 }
 

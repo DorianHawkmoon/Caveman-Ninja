@@ -55,10 +55,10 @@ update_status VerticalSpriteScrollComponent::postUpdate() {
 	finalPosition.y = static_cast<int>(parent->transform.position.y + offset.y);
 
 	finalPosition.x += rect.h*(scrollingOffset - 1);
-	App->renderer->blit(texture, finalPosition, &rect, speedCamera);
+	App->renderer->blit(texture, finalPosition, &rect, iPoint(0,0), speedCamera);
 	finalPosition.x += rect.h;
 	for (int i = 0; i < numberToCover; ++i) {
-		App->renderer->blit(texture, finalPosition, &rect, speedCamera);
+		App->renderer->blit(texture, finalPosition, &rect, iPoint(0, 0), speedCamera);
 		finalPosition.x += rect.h;
 	}
 	return UPDATE_CONTINUE;

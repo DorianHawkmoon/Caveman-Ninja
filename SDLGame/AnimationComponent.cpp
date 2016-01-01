@@ -29,8 +29,9 @@ update_status AnimationComponent::postUpdate() {
 	fPoint fpos = parent->transform.position;
 	iPoint pos(static_cast<int>(fpos.x), static_cast<int>(fpos.y));
 	Animation* anim = state->getState()->getValue();
-	pos.y -= anim->GetCurrentFrame().h;
-	App->renderer->blit(texture, pos, &(anim->GetCurrentFrame()));
+	pos.y -= anim->GetCurrentFrame().h; //the point I use to position is top left, not bottom left
+
+	App->renderer->blit(texture, pos, &(anim->GetCurrentFrame()), anim->getCurrentOffset(), 1.0, parent->transform.flip, anim->flippedOffset);
 	return UPDATE_CONTINUE;
 }
 
