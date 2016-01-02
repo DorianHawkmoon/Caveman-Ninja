@@ -32,7 +32,7 @@ public:
 	State<T>* processTransition() const;
 	void onTransition(State<T>* newState) {
 		cleanUp();
-		value.cleanUp();
+		//value.cleanUp();
 		newState->getValue()->start();
 		newState->start();
 	};

@@ -60,6 +60,7 @@ void Joe::makeAnimations(Entity* entity) {
 	jump.sizeFrame = {0,150,40,51};
 	jump.repeat = 1;
 	jump.speed = 0.05f;
+	jump.flippedOffset = {-10,0};
 
 	forward.sizeFrame={0, 102, 42, 48};
 	forward.speed = 0.1f;
@@ -85,6 +86,15 @@ void Joe::makeAnimations(Entity* entity) {
 	Condition* conditionFall = new ConditionComparison<JumpType>(&controller->stateJump, JumpType::FALL); //TODO
 	Condition* conditionJumpDown = new ConditionComparison<JumpType>(&controller->stateJump, JumpType::JUMP_DOWN);
 	Condition* conditionJump = new ConditionComparison<JumpType>(&controller->stateJump, JumpType::JUMP);
+	Condition* conditionFallToIdle = new ConditionCallback([entity]() {
+		bool result = false;
+		IComponent* component = entity->getComponent("gravity");
+		if (component != nullptr) {
+			Gravity* gravity = static_cast<Gravity*>(component);
+			result = !gravity->isFalling();
+		}
+		return result;
+	});
 
 	//transitions
 	StateTransition<Animation>* transitionForward = new StateTransition<Animation>(forwardAnimation, conditionForward);
@@ -98,6 +108,7 @@ void Joe::makeAnimations(Entity* entity) {
 	StateTransition<Animation>* transitionForwardToIdle = new StateTransition<Animation>(idleAnimation, conditionIdle1);
 	StateTransition<Animation>* transitionJumpDown = new StateTransition<Animation>(fallAnimation, conditionJumpDown);
 	StateTransition<Animation>* transitionFall = new StateTransition<Animation>(fallAnimation, conditionFall);
+	StateTransition<Animation>* transitionFallToIdle = new StateTransition<Animation>(idleAnimation, conditionFallToIdle);
 	
 
 	//add the transitions to the states
@@ -127,7 +138,7 @@ void Joe::makeAnimations(Entity* entity) {
 
 	jumpAnimation->addTransition(transitionFall);
 	//jumpAnimation->addTransition(transitionIdle);
-	//fallAnimation->addTransition(transitionIdle);
+	fallAnimation->addTransition(transitionFallToIdle);
 
 
 	//add the states;

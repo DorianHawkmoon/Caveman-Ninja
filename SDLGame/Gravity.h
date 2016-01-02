@@ -15,9 +15,13 @@ public:
 	IComponent* makeClone();
 
 	update_status update() {
-		MotionComponent* motion = static_cast<MotionComponent*>(parent->getComponent("motion"));
-		if (motion != nullptr && isFalling()) {
-			motion->velocity.y += 1 * gravity;
+		if (!isFalling()) {
+			parent->controller.stateJump = JumpType::NONE;
+		} else {
+			MotionComponent* motion = static_cast<MotionComponent*>(parent->getComponent("motion"));
+			if (motion != nullptr) {
+				motion->velocity.y += 1 * gravity;
+			}
 		}
 		return UPDATE_CONTINUE;
 	};
