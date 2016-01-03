@@ -18,11 +18,7 @@ public:
 	}
 
 	bool deleteTransition(StateTransition<T>* transition) {
-		//TODO la otra funcion
-		std::list<StateTransition<T>>::iterator it = std::find_if(transitions.begin(), transitions.end(),
-			[&transition](StateTransition& loaded) { return loaded==transition; });
-
-		if (it != transitions.end()) {
+		if (find(transitions.begin(), transitions.end(), transition) != transitions.end()) {
 			erase it;
 			return true;
 		}
@@ -32,7 +28,7 @@ public:
 	State<T>* processTransition() const;
 	void onTransition(State<T>* newState) {
 		cleanUp();
-		//value.cleanUp();
+		value.cleanUp();
 		newState->getValue()->start();
 		newState->start();
 	};
@@ -51,7 +47,11 @@ template<class T>
 State<T>::State(T & value) : value(value) {}
 
 template<class T>
-State<T>::~State() {}
+State<T>::~State() {
+	for (auto it = transitions.begin(); it != transitions.end(); ++it) {
+		delete *it;
+	}
+}
 
 template<class T>
 State<T>* State<T>::processTransition() const {
@@ -82,14 +82,6 @@ inline bool State<T>::cleanUp() {
 	return result;
 }
 
-#include "Animation.h"
-void State<Animation>::onTransition(State<Animation>* newState){
-	//LOG("Cambio de estado");
-	cleanUp();
-	value.cleanUp();
-	newState->getValue()->start();
-	newState->start();
-}
 
 #endif //STATE_H
 

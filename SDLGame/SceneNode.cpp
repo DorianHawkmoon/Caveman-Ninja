@@ -54,7 +54,7 @@ Transform SceneNode::getWorldTransform() const {
 	//initialize a transform
 	Transform transform;//TODO hacer transform= sf::Transform::Identity;
 
-						//iterate the scene graph to the root to get the absolute transforms
+	//iterate the scene graph to the root to get the absolute transforms
 	for (const SceneNode* node = this; node != nullptr; node = node->parent) {
 		//transform = node->getTransform() * transform;
 	}

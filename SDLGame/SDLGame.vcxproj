@@ -22,6 +22,9 @@
     <ClCompile Include="AnimationComponent.cpp" />
     <ClCompile Include="Application.cpp" />
     <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="CircleCollider.cpp" />
+    <ClCompile Include="Collider.cpp" />
+    <ClCompile Include="CollisionComponent.cpp" />
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="Gravity.cpp" />
     <ClCompile Include="HorizontalSpriteScrollComponent.cpp" />
@@ -31,6 +34,7 @@
     <ClCompile Include="Log.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="ModuleAudio.cpp" />
+    <ClCompile Include="ModuleCollision.cpp" />
     <ClCompile Include="ModuleFadeToBlack.cpp" />
     <ClCompile Include="ModuleInput.cpp" />
     <ClCompile Include="ModulePlayer.cpp" />
@@ -40,6 +44,7 @@
     <ClCompile Include="ModuleTimer.cpp" />
     <ClCompile Include="ModuleWindow.cpp" />
     <ClCompile Include="MotionComponent.cpp" />
+    <ClCompile Include="RectangleCollider.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="FirstLevel.cpp" />
     <ClCompile Include="SceneNode.cpp" />
@@ -53,10 +58,15 @@
     <ClInclude Include="AnimationComponent.h" />
     <ClInclude Include="Application.h" />
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="CircleCollider.h" />
+    <ClInclude Include="Collider.h" />
+    <ClInclude Include="CollisionComponent.h" />
+    <ClInclude Include="CollisionListener.h" />
     <ClInclude Include="Condition.h" />
     <ClInclude Include="ConditionCallback.h" />
     <ClInclude Include="ConditionComparison.h" />
     <ClInclude Include="Gravity.h" />
+    <ClInclude Include="IUpdater.h" />
     <ClInclude Include="HorizontalSpriteScrollComponent.h" />
     <ClInclude Include="Entity.h" />
     <ClInclude Include="Globals.h" />
@@ -65,6 +75,7 @@
     <ClInclude Include="JumpComponent.h" />
     <ClInclude Include="Module.h" />
     <ClInclude Include="ModuleAudio.h" />
+    <ClInclude Include="ModuleCollision.h" />
     <ClInclude Include="ModuleFadeToBlack.h" />
     <ClInclude Include="ModuleInput.h" />
     <ClInclude Include="ModulePlayer.h" />
@@ -75,6 +86,7 @@
     <ClInclude Include="ModuleWindow.h" />
     <ClInclude Include="MotionComponent.h" />
     <ClInclude Include="Point.h" />
+    <ClInclude Include="RectangleCollider.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="FirstLevel.h" />
     <ClInclude Include="SceneNode.h" />

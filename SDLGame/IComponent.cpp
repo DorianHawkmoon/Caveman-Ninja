@@ -1,7 +1,7 @@
 #include "IComponent.h"
 #include "Entity.h"
 
-IComponent::IComponent(const std::string id) : componentID(id) {}
+IComponent::IComponent(const std::string id) : componentID(id), componentEnabled(true) {}
 
 IComponent::~IComponent() {}
 

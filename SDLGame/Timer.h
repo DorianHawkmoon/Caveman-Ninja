@@ -14,7 +14,7 @@ public:
 	bool isPaused();
 	bool isStopped();
 
-	unsigned int value();
+	unsigned int value() const;
 	float miliToSeconds(unsigned int miliseconds);
 
 private:

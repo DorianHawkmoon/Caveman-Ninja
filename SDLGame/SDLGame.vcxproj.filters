@@ -43,6 +43,9 @@
     <Filter Include="Archivos de código fuente\Entities\Factories">
       <UniqueIdentifier>{c0b58aa8-01ea-42bf-a80b-b9840f583f82}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Archivos de código fuente\Colliders">
+      <UniqueIdentifier>{a60a20ce-9275-4ea0-b2a6-9e63929a7c9e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Log.cpp">
@@ -127,6 +130,21 @@
       <Filter>Archivos de código fuente\Entities\Properties</Filter>
     </ClCompile>
     <ClCompile Include="Gravity.cpp">
+      <Filter>Archivos de código fuente\Entities\Properties</Filter>
+    </ClCompile>
+    <ClCompile Include="ModuleCollision.cpp">
+      <Filter>Archivos de código fuente\Core Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="Collider.cpp">
+      <Filter>Archivos de código fuente\Colliders</Filter>
+    </ClCompile>
+    <ClCompile Include="CircleCollider.cpp">
+      <Filter>Archivos de código fuente\Colliders</Filter>
+    </ClCompile>
+    <ClCompile Include="RectangleCollider.cpp">
+      <Filter>Archivos de código fuente\Colliders</Filter>
+    </ClCompile>
+    <ClCompile Include="CollisionComponent.cpp">
       <Filter>Archivos de código fuente\Entities\Properties</Filter>
     </ClCompile>
   </ItemGroup>
@@ -241,6 +259,27 @@
     </ClInclude>
     <ClInclude Include="TimerCondition.h">
       <Filter>Archivos de código fuente\StateMachine\Conditions</Filter>
+    </ClInclude>
+    <ClInclude Include="ModuleCollision.h">
+      <Filter>Archivos de código fuente\Core Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Collider.h">
+      <Filter>Archivos de código fuente\Colliders</Filter>
+    </ClInclude>
+    <ClInclude Include="CircleCollider.h">
+      <Filter>Archivos de código fuente\Colliders</Filter>
+    </ClInclude>
+    <ClInclude Include="RectangleCollider.h">
+      <Filter>Archivos de código fuente\Colliders</Filter>
+    </ClInclude>
+    <ClInclude Include="CollisionComponent.h">
+      <Filter>Archivos de código fuente\Entities\Properties</Filter>
+    </ClInclude>
+    <ClInclude Include="CollisionListener.h">
+      <Filter>Archivos de código fuente\Colliders</Filter>
+    </ClInclude>
+    <ClInclude Include="IUpdater.h">
+      <Filter>Archivos de código fuente\Utilities</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

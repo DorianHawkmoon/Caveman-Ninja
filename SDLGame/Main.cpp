@@ -2,10 +2,10 @@
 #include "Globals.h"
 #include "Application.h"
 
-// TODO colisiones
-// TODO entities
 //TODO particles
-
+//TODO check every include guards
+//TODO repasar los const y referencias del codigo
+//TODO leaks!
 
 enum main_states {
 	MAIN_CREATION,

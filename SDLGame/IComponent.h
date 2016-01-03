@@ -4,14 +4,13 @@
 
 #include <string>
 #include "Globals.h"
+#include "IUpdater.h"
 class Entity;
-
-//TODO repasar los const y referencias del codigo
 
 /*
 *  Provides the interface for all properties
 */
-class IComponent {
+class IComponent : public IUpdater {
 public:
 	/**
 	* IProperty default constructor
@@ -45,11 +44,7 @@ public:
 	*/
 	virtual IComponent* makeClone() = 0;
 
-	virtual bool start() { return true; };
-	virtual update_status preUpdate() { return UPDATE_CONTINUE;  };
-	virtual update_status update() { return UPDATE_CONTINUE; };
-	virtual update_status postUpdate() { return UPDATE_CONTINUE; };
-	virtual bool cleanUp() { return true; };
+	bool componentEnabled;
 
 protected:
 	Entity* parent;

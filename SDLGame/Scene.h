@@ -4,11 +4,11 @@
 
 #include "Globals.h"
 #include <list>
-
+#include "IUpdater.h"
 class Entity;
 class SceneNode;
 
-class Scene {
+class Scene : public IUpdater{
 public:
 	Scene();
 	virtual ~Scene();

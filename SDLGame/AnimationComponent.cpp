@@ -29,9 +29,9 @@ update_status AnimationComponent::postUpdate() {
 	fPoint fpos = parent->transform.position;
 	iPoint pos(static_cast<int>(fpos.x), static_cast<int>(fpos.y));
 	Animation* anim = state->getState()->getValue();
-	pos.y -= anim->GetCurrentFrame().h; //the point I use to position is top left, not bottom left
+	pos.y -= anim->GetCurrentFrame().h; //the point I use to position is top left, not bottom left which i want to draw
 
-	App->renderer->blit(texture, pos, &(anim->GetCurrentFrame()), anim->getCurrentOffset(), 1.0, parent->transform.flip, anim->flippedOffset);
+	App->renderer->blit(texture, pos, &(anim->GetCurrentFrame()), anim->offset, 1.0, parent->transform.flip);
 	return UPDATE_CONTINUE;
 }
 
@@ -40,7 +40,10 @@ bool AnimationComponent::cleanUp() {
 	return true;
 }
 
+//can't be cloned!!! shared pointers inside
 IComponent * AnimationComponent::makeClone() {
+	//std::string name = getID();
+	//AnimationComponent* clone=new AnimationComponent(name, nameTexture,state);
 	//TODO clone animationComponent
 	return nullptr;
 }

@@ -6,20 +6,17 @@
 #include "Point.h"
 #include "SDL/SDL.h"
 #include <math.h>
+#include "IUpdater.h"
 #include "Globals.h"
-//TODO check every include guards
-class Animation {
+
+class Animation : public IUpdater{
 
 public:
-	Animation(int numberFrames) : numberFrames(numberFrames), sizeFrame(), offset(numberFrames), speed(1.0f), current_frame(0.0f), repeat(-1), flippedOffset(0,0) {
-		for (int i = 0; i < numberFrames; ++i) {
-			offset[i].x = 0;
-			offset[i].y = 0;
-		}
+	Animation(int numberFrames) : numberFrames(numberFrames), sizeFrame(), offset(0,0), speed(1.0f), current_frame(0.0f), repeat(-1) {
+
 	}
 
 	~Animation() {
-		offset.clear();
 	}
 
 	bool start() { 
@@ -60,23 +57,16 @@ public:
 		return{sizeFrame.x + (sizeFrame.w*frame), sizeFrame.y, sizeFrame.w, sizeFrame.h};
 	}
 
-	const iPoint& getCurrentOffset() const {
-		int frame = static_cast<int>(trunc(current_frame));
-		return offset[frame];
-	}
-
 
 private:
 	float current_frame;
 
 public:
-	//TODO add an offset for every frame
 	float speed;
 	int repeat;
-	iPoint flippedOffset;
 	SDL_Rect sizeFrame;
 	int numberFrames;
-	std::vector<iPoint> offset;
+	iPoint offset;
 };
 
 #endif // !ANIMATION_H

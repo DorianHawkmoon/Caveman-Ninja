@@ -48,9 +48,7 @@ bool ModulePlayer::cleanUp(){
 
 // Update
 update_status ModulePlayer::update(){
-	// TODO 9: Draw the player with its animation
-	// make sure to detect player movement and change its
-	motion->velocity.setToZero();
+	//motion->velocity.setToZero();
 	ControlEntity* controller = &player->controller;
 	Transform* trans = &player->transform;
 	controller->moveX = 0;
@@ -76,9 +74,15 @@ update_status ModulePlayer::update(){
 		controller->moveY += 1;
 	}
 
+	
+
 	//don't jump again when jumping or falling
 	if (App->input->getKey(SDL_SCANCODE_KP_0) && controller->stateJump==JumpType::NONE) {
+		if (App->input->getKey(SDL_SCANCODE_W)) {
+			controller->stateJump = JumpType::DOUBLE_JUMP;
+		} else {
 			controller->stateJump = JumpType::JUMP;
+		}
 	}
 
 	if (controller->moveY != 1) {

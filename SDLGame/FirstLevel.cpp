@@ -10,6 +10,9 @@
 
 #include "SpriteComponent.h"
 #include "HorizontalSpriteScrollComponent.h"
+#include "CollisionComponent.h"
+#include "CircleCollider.h"
+#include "Point.h"
 
 FirstLevel::FirstLevel() {
 	
@@ -58,6 +61,13 @@ bool FirstLevel::start() {
 	buffer->addComponent(sprite);
 
 	root->addChild(buffer);
+
+	Entity* collisions = new Entity();
+	CollisionComponent* coll = new CollisionComponent("name",
+		new CircleCollider(fPoint(250, 250), 10.0f, TypeCollider::NONE_COLLIDER));
+	collisions->addComponent(coll);
+	collisions->transform.position = {0,0};
+	root->addChild(collisions);
 
 	root->start();
 	return true;

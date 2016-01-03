@@ -6,6 +6,8 @@
 #include "MotionComponent.h"
 #include <string>
 #include "Entity.h"
+#include "Application.h"
+#include "ModuleTimer.h"
 
 class Gravity :	public IComponent {
 public:
@@ -14,22 +16,9 @@ public:
 
 	IComponent* makeClone();
 
-	update_status update() {
-		if (!isFalling()) {
-			parent->controller.stateJump = JumpType::NONE;
-		} else {
-			MotionComponent* motion = static_cast<MotionComponent*>(parent->getComponent("motion"));
-			if (motion != nullptr) {
-				motion->velocity.y += 1 * gravity;
-			}
-		}
-		return UPDATE_CONTINUE;
-	};
+	update_status update();
 	
-	bool isFalling() const {
-		//need to check if has ground (collision) TODO
-		return parent->transform.position.y < (256 - 30);
-	}
+	bool isFalling() const;
 
 public:
 	float gravity;

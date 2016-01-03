@@ -15,7 +15,7 @@ public:
 		return true;
 	}
 	bool check() const {
-		return timer.value >= milliseconds;
+		return timer.value() >= milliseconds;
 	}
 
 	bool cleanUp() { 

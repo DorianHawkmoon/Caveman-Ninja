@@ -35,7 +35,7 @@ public:
 	ModuleScene* scene;
 	ModuleAudio* audio;
 	ModuleFadeToBlack* fade;
-	ModuleParticles* particles;
+	//ModuleParticles* particles;
 	ModuleCollision* collisions;
 	ModulePlayer* player;
 	ModuleTimer* timer;

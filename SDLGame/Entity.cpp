@@ -5,7 +5,7 @@
 
 Entity::Entity(Category category) : destroyed(false), category(category), transform()
 {
-
+	transform.setToZero();
 }
 
 
@@ -22,9 +22,10 @@ Entity::~Entity() {
 
 bool Entity::start() {
 	bool result = true;
-	transform.setToZero();
 	for (std::list<IComponent*>::iterator it = properties.begin(); it != properties.end() && result; ++it) {
-		result &= (*it)->start();
+		if ((*it)->componentEnabled) {
+			result &= (*it)->start();
+		}
 	}
 	return result;
 }
@@ -32,7 +33,9 @@ bool Entity::start() {
 update_status Entity::preUpdate() {
 	update_status result = UPDATE_CONTINUE;
 	for (std::list<IComponent*>::iterator it = properties.begin(); it != properties.end() && result==UPDATE_CONTINUE; ++it) {
-		result = (*it)->preUpdate();
+		if ((*it)->componentEnabled) {
+			result = (*it)->preUpdate();
+		}
 	}
 	return result;
 }
@@ -40,7 +43,9 @@ update_status Entity::preUpdate() {
 update_status Entity::update() {
 	update_status result = UPDATE_CONTINUE;
 	for (std::list<IComponent*>::iterator it = properties.begin(); it != properties.end() && result == UPDATE_CONTINUE; ++it) {
-		result = (*it)->update();
+		if ((*it)->componentEnabled) {
+			result = (*it)->update();
+		}
 	}
 	return result;
 }
@@ -48,7 +53,9 @@ update_status Entity::update() {
 update_status Entity::postUpdate() {
 	update_status result=UPDATE_CONTINUE;
 	for (std::list<IComponent*>::iterator it = properties.begin(); it != properties.end() && result == UPDATE_CONTINUE; ++it) {
-		result = (*it)->postUpdate();
+		if ((*it)->componentEnabled) {
+			result = (*it)->postUpdate();
+		}
 	}
 	return result;
 }
@@ -56,7 +63,9 @@ update_status Entity::postUpdate() {
 bool Entity::cleanUp() {
 	bool result = true;
 	for (std::list<IComponent*>::iterator it = properties.begin(); it != properties.end() && result; ++it) {
-		result &= (*it)->cleanUp();
+		if ((*it)->componentEnabled) {
+			result &= (*it)->cleanUp();
+		}
 	}
 	return result;
 }
@@ -81,14 +90,16 @@ IComponent * Entity::getComponent(const std::string& id) {
 	std::list<IComponent*>::iterator it = std::find_if(properties.begin(), properties.end(),
 		[&id](IComponent* comp) { return comp->getID().compare(id) == 0; });
 
-	if (it != properties.end()) {
-		result = *it;
+	if (it != properties.end() && (*it)->componentEnabled) {
+			result = *it;
 	}
 	return result;
 }
 
 bool Entity::removeComponent(IComponent * component) {
 	properties.remove(component);
+	component->cleanUp();
+	delete component;
 	return false;
 }
 

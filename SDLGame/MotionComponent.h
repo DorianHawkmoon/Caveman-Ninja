@@ -12,13 +12,9 @@ public:
 	MotionComponent(std::string nameComponent);
 	~MotionComponent();
 
-	//TODO: en update pilla el transform del entity (es miembro) y le actualiza la velocidad
 	update_status update();
 
-	//TODO make clone
-	IComponent* makeClone() {
-		return nullptr;
-	}
+	IComponent* makeClone();
 
 public:
 	fPoint velocity;

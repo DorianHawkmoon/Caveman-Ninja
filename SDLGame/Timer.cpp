@@ -71,7 +71,7 @@ bool Timer::isStopped() {
 	return stopped;
 }
 
-unsigned int Timer::value() {
+unsigned int Timer::value() const {
 	//The actual timer time
 	unsigned int time = 0;
 

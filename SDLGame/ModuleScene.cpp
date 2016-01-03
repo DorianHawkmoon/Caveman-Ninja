@@ -9,7 +9,9 @@
 ModuleScene::ModuleScene(bool started):Module(started), currentScene(false), nextScene(nullptr) {}
 
 
-ModuleScene::~ModuleScene() {}
+ModuleScene::~ModuleScene() {
+	delete currentScene;
+}
 
 bool ModuleScene::start() {
 	SDL_SetRenderDrawBlendMode(App->renderer->renderer, SDL_BLENDMODE_BLEND);

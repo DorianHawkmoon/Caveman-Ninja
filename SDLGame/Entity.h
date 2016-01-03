@@ -5,6 +5,7 @@
 #include <list>
 #include "Globals.h"
 #include "Transform.h"
+#include "IUpdater.h"
 class IComponent;
 
 enum class Category {
@@ -22,6 +23,7 @@ enum JumpType {
 	DOUBLE_JUMP,
 	FALL
 };
+
 struct ControlEntity {
 	ControlEntity() {
 		moveX = 0;
@@ -38,7 +40,7 @@ struct ControlEntity {
 	int attack;
 };
 
-class Entity  {
+class Entity : public IUpdater {
 public:
 	Entity(Category category=Category::NONE_CATEGORY);
 	~Entity();

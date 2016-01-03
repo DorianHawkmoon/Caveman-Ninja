@@ -111,14 +111,19 @@ bool ModuleInput::singleKey(const SDL_Scancode & key, const std::list<SDL_Scanco
 
 bool ModuleInput::singleCombination(const std::list<SDL_Scancode>& keys, const std::list<SDL_Scancode>& exceptions)const  {
 	bool result = combinationActive(keys);
-	//TODO EXCEPTIONS
 	for (int i = 0; i < MAX_KEYS && result; ++i) {
 		bool parcial = !(getKey(i)); // !pressed
 		if (!parcial) { //means is pressed
 			//look if is one of the selected keys to be pressed
 			std::list<SDL_Scancode>::const_iterator it = std::find(keys.begin(), keys.end(), i);
 			if (it == keys.end()) {
-				result = false;
+				//pressed without being one of be pressed! exception?
+				std::list<SDL_Scancode>::const_iterator it2 = std::find(exceptions.begin(), exceptions.end(), *it);
+				if (it2 == exceptions.end()) {
+					//not an exception
+					result = false;
+				}
+				
 			}
 		}
 	}

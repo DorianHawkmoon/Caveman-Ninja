@@ -31,7 +31,6 @@ public:
 	void unload(SDL_Texture* texture);
 
 private:
-	//TODO comprobar como se alloca dinamicamente string y si es mejor a punteros o no
 	std::list<LoadedTexture*> textures;
 
 };

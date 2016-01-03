@@ -18,3 +18,10 @@ update_status MotionComponent::update() {
 	parent->transform.position.y += velocity.y * seconds;
 	return UPDATE_CONTINUE;
 }
+
+IComponent * MotionComponent::makeClone() {
+	std::string name = getID();
+	MotionComponent* result = new MotionComponent(name);
+	result->velocity = velocity;
+	return result;
+}

@@ -8,31 +8,24 @@
 
 class JumpComponent : public IComponent {
 public:
-	JumpComponent(std::string nameComponent, int height, int doubleHeight) : IComponent(nameComponent), height(height), doubleHeight(doubleHeight) {};
+	JumpComponent(std::string nameComponent) : IComponent(nameComponent), speed(1), doubleSpeed(1) {};
 	~JumpComponent() {};
 
 	bool start();
 	
 	update_status update();
 
-	bool cleanUp() { 
-		jumping = 0;
-		return true;
-	};
+	bool cleanUp();
 
-	IComponent* makeClone() {
-		return nullptr;
-	};
+	IComponent* makeClone();
 
 public:
 	float speed;
+	float doubleSpeed;
 
 private:
 	JumpType* jump;
-	int height; //normal jump
-	int doubleHeight; //double jump
-
-	int jumping; //height jumped
+	bool jumpAccelerated;
 };
 
 #endif // !JUMP_COMPONENT_H

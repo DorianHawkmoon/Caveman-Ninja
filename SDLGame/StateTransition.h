@@ -30,11 +30,11 @@ private:
 	/**
 	* Condiciones
 	*/
-	std::list<Condition*> conditions;
+	std::list<Condition*> conditions; //conditions owned TODO CAN'T DELETED, SHARED POINTERS!!
 	/**
 	* Nuevo estado
 	*/
-	State<T>* newState;
+	State<T>* newState; //i don't own the state
 };
 
 #include "Condition.h"

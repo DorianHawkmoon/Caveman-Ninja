@@ -10,12 +10,6 @@
 
 void log(const char file[], int line, const char* format, ...);
 
-enum update_status {
-	UPDATE_CONTINUE = 1,
-	UPDATE_STOP,
-	UPDATE_ERROR
-};
-
 
 // Configuration -----------
 #define SCREEN_WIDTH 260

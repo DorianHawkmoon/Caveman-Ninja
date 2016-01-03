@@ -6,6 +6,7 @@
 #include "Globals.h"
 #include "ModuleInput.h"
 #include "SDL/SDL.h"
+#include "ModuleTextures.h"
 #include <math.h>
 
 ModuleRender::ModuleRender(bool started ): 
@@ -44,6 +45,7 @@ bool ModuleRender::init() {
 }
 
 bool ModuleRender::start() {
+	circle = App->textures->load("circle_64.png");
 	return true;
 }
 
@@ -91,7 +93,7 @@ bool ModuleRender::cleanUp() {
 }
 
 bool ModuleRender::blit(SDL_Texture * texture, const iPoint& position, const SDL_Rect* sectionTexture, 
-	const iPoint& offsetImage, float speed, const SDL_RendererFlip& flip, const iPoint& offsetFlip) {
+	const iPoint& offsetImage, float speed, const SDL_RendererFlip& flip) {
 	bool result = true;
 
 	SDL_Rect cam = camera.getViewArea(speed);
@@ -121,11 +123,6 @@ bool ModuleRender::blit(SDL_Texture * texture, const iPoint& position, const SDL
 	SDL_Rect sizeWindows = camera.getWindowsSize();
 	if (SDL_HasIntersection(&sizeWindows, &rectDestiny) == SDL_TRUE) {
 		//paint
-		//check flip
-		if (flip!=SDL_FLIP_NONE) {
-			rectDestiny.x += offsetFlip.x*SCREEN_SIZE;
-			rectDestiny.y += offsetFlip.y*SCREEN_SIZE;
-		}
 		if (SDL_RenderCopyEx(renderer, texture, sectionTexture, &rectDestiny,
 								0.0f, nullptr, flip) != 0) {
 			LOG("Cannot blit to screen. SDL_RenderCopy error: %s", SDL_GetError());
@@ -136,9 +133,10 @@ bool ModuleRender::blit(SDL_Texture * texture, const iPoint& position, const SDL
 	return result;
 }
 
-//inline bool ModuleRender::paintCollision(const ICollider * collision) {
-//	collision->paintCollider();
-//}
+bool ModuleRender::paintCollision(const Collider * collision) {
+	collision->paintCollider();
+	return true;
+}
 
 bool ModuleRender::paintRectangle(const SDL_Color& color, const iPoint& position, const SDL_Rect& rect, float speed) {
 	bool result = true;
@@ -158,7 +156,35 @@ bool ModuleRender::paintRectangle(const SDL_Color& color, const iPoint& position
 		result = false;
 	}
 
+	return result;
+}
 
+bool ModuleRender::paintCircle(const SDL_Color & color, const fPoint & position, float radius, float speed) {
+	bool result = true; 
+
+	iPoint pos;
+	pos.x = static_cast<int>(position.x-radius * SCREEN_SIZE - camera.getX(speed));
+	pos.y = static_cast<int>(position.y-radius * SCREEN_SIZE - camera.getY(speed));
+
+	float scale = radius / 32;
+
+	SDL_Rect rectDestiny;
+	rectDestiny.x = pos.x;
+	rectDestiny.y = pos.y;
+	SDL_QueryTexture(circle, nullptr, nullptr, &rectDestiny.w, &rectDestiny.h);
+
+	rectDestiny.w = static_cast<int>(rectDestiny.w * scale * SCREEN_SIZE);
+	rectDestiny.h = static_cast<int>(rectDestiny.h * scale * SCREEN_SIZE);
+
+	if (SDL_SetTextureColorMod(circle, color.r, color.g, color.b)) {
+		LOG("Cannot tint texture. SDL_SetTextureColorMod error: %s", SDL_GetError());
+		result = false;
+	}
+
+	if (SDL_RenderCopy(renderer, circle, nullptr, &rectDestiny) != 0) {
+		LOG("Cannot draw circle to screen. Error: %s", SDL_GetError());
+		result = false;
+	}
 
 	return result;
 }

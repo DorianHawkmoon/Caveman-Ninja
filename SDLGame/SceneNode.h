@@ -5,9 +5,10 @@
 #include <vector>
 #include "Transform.h"
 #include "Globals.h"
+#include "IUpdater.h"
 class Entity;
 
-class SceneNode {
+class SceneNode : public IUpdater {
 public:
 	SceneNode(Entity* entity);
 	~SceneNode();

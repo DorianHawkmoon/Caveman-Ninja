@@ -45,7 +45,10 @@ StateMachine<T>::StateMachine(State<T> * initialState) : state(initialState) {
 
 template<class T>
 StateMachine<T>::~StateMachine() {
-
+	for (auto it = states.begin(); it != states.end(); ++it) {
+		delete *it;
+	}
+	states.clear();
 }
 
 template<class T>

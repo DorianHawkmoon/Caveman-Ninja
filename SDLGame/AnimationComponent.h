@@ -21,7 +21,6 @@ public:
 
 	bool cleanUp();
 
-	//TODO make clone
 	IComponent* makeClone();
 
 private:

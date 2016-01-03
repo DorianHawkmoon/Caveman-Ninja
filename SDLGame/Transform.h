@@ -12,8 +12,8 @@ struct Transform {
 	SDL_RendererFlip flip;
 	float speed;
 	fPoint position;
-	float rotation;
-	fPoint scale;
+	float rotation; // not used
+	fPoint scale; //not used
 
 	// Math ------------------------------------------------
 	Transform operator -(const Transform &v) const {
