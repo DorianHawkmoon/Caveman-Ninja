@@ -11,10 +11,6 @@ Scene::Scene(): root(nullptr), entities() {
 }
 
 Scene::~Scene() {
-	if (rootE != nullptr) {
-		delete rootE;
-	}
-
 	if (root != nullptr) {
 		delete root;
 	}

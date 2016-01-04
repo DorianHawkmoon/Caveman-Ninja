@@ -10,7 +10,7 @@
 class VerticalSpriteScrollComponent : public IComponent {
 public:
 	VerticalSpriteScrollComponent(std::string nameComponent, std::string nameTexture);
-	~VerticalSpriteScrollComponent();
+	virtual ~VerticalSpriteScrollComponent();
 
 	bool start();
 	update_status update();

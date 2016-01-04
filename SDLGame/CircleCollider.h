@@ -15,7 +15,7 @@ public:
 	CircleCollider(fPoint position, float radius, TypeCollider type) : Collider(position, type), radius(radius) {
 		
 	}
-	~CircleCollider();
+	virtual ~CircleCollider();
 
 	virtual void paintCollider() const {
 		// Determina el color y opacidad del dibujo

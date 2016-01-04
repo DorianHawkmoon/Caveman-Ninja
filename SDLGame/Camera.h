@@ -11,7 +11,7 @@ public:
 	Camera(int width, int height) : camera({0,0,width,height}) {
 
 	}
-	~Camera() {}
+	virtual ~Camera() {}
 
 	inline void setX(int x) {
 		camera.x = x;

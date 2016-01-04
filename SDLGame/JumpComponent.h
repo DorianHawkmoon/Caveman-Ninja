@@ -9,7 +9,7 @@
 class JumpComponent : public IComponent {
 public:
 	JumpComponent(std::string nameComponent) : IComponent(nameComponent), speed(1), doubleSpeed(1) {};
-	~JumpComponent() {};
+	virtual ~JumpComponent() {};
 
 	bool start();
 	

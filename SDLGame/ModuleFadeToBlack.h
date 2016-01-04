@@ -8,7 +8,7 @@
 class ModuleFadeToBlack : public Module {
 public:
 	ModuleFadeToBlack(bool started=true);
-	~ModuleFadeToBlack();
+	virtual ~ModuleFadeToBlack();
 
 	bool start();
 	bool cleanUp();

@@ -23,5 +23,5 @@ update_status Gravity::update() {
 
 bool Gravity::isFalling() const {
 	//TODO need to check if has ground (collision) TODO
-	return parent->transform.position.y < (256 - 30);
+	return parent->transform.position.y < (256 - 60);
 }

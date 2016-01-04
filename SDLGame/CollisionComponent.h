@@ -10,13 +10,14 @@
 class CollisionComponent : public IComponent, CollisionListener {
 public:
 	CollisionComponent(const std::string& name, Collider *collider);
-	~CollisionComponent();
+	virtual ~CollisionComponent();
 
 	virtual IComponent* makeClone();
 
 	virtual bool start();
 	virtual update_status update();
 	virtual update_status postUpdate();
+	virtual bool cleanUp();
 
 private:
 	Collider* collider;

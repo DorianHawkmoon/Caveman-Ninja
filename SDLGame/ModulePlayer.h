@@ -16,7 +16,7 @@ class ModulePlayer : public Module
 {
 public:
 	ModulePlayer(bool start_enabled = true);
-	~ModulePlayer();
+	virtual ~ModulePlayer();
 
 	bool start();
 	update_status preUpdate();

@@ -7,7 +7,7 @@
 class FirstLevel : public Scene {
 public:
 	FirstLevel();
-	~FirstLevel();
+	virtual ~FirstLevel();
 
 	bool start();
 	update_status preUpdate();

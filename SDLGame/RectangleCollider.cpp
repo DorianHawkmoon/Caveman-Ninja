@@ -2,8 +2,9 @@
 #include "Application.h"
 #include "ModuleRender.h"
 #include "CircleCollider.h"
+#include "SDL\SDL_rect.h"
 
-RectangleCollider::RectangleCollider(fPoint& position, SDL_Rect& rectangle, TypeCollider type) : Collider(position, type), rect(rectangle) {}
+RectangleCollider::RectangleCollider(fPoint& position, fPoint& rectangle, TypeCollider type) : Collider(position, type), rect(rectangle) {}
 
 void RectangleCollider::paintCollider() const {
 	iPoint pos(static_cast<int>(position.x), static_cast<int>(position.y));
@@ -15,10 +16,6 @@ void RectangleCollider::paintCollider() const {
 	App->renderer->paintRectangle(color, pos, rect);
 }
 
-update_status RectangleCollider::update() {
-	position.y -= rect.h;
-	return Collider::update();
-}
 
 Collider * RectangleCollider::clone() {
 	RectangleCollider* result = new RectangleCollider(position, rect, type);
@@ -30,18 +27,24 @@ bool RectangleCollider::checkSpecificCollision(const Collider * self) const {
 }
 
 bool RectangleCollider::checkCollision(const RectangleCollider * other) const {
-	return SDL_HasIntersection(&rect, &(other->rect)) == SDL_TRUE;
+	const SDL_Rect rectOther = {static_cast<int>(other->position.x), 
+								static_cast<int>(other->position.y),
+								static_cast<int>(other->rect.x),
+								static_cast<int>(other->rect.y)};
+	const SDL_Rect rectThis = {position.x,position.y,
+						rect.x,rect.y};
+	return SDL_HasIntersection(&rectThis, &rectOther) == SDL_TRUE;
 }
 
 bool RectangleCollider::checkCollision(const CircleCollider * other) const {
 	//Closest point on collision box
 	iPoint closestPoint;
-	iPoint circle(static_cast<int>(other->position.x+other->radius), static_cast<int>(other->position.y+other->radius));
-	SDL_Rect positionRect = {position.x, position.y,rect.w, rect.h};
+	iPoint circle(static_cast<int>(other->position.x), -static_cast<int>(other->position.y));
+	SDL_Rect positionRect = {position.x, -position.y, rect.x, rect.y};
 	//Find closest x offset
 	if (circle.x < positionRect.x) {
 		closestPoint.x = static_cast<int>(positionRect.x);
-	} else if (circle.x > positionRect.x + positionRect.w) {
+	} else if (circle.x > positionRect.x + positionRect.w) { 
 		closestPoint.x = static_cast<int>(positionRect.x + positionRect.w);
 	} else {
 		closestPoint.x = circle.x;
@@ -57,7 +60,7 @@ bool RectangleCollider::checkCollision(const CircleCollider * other) const {
 	}
 
 	//If the closest point is inside the circle
-	if (circle.distanceTo(closestPoint) < pow(other->radius,2)) {
+	if (closestPoint.distanceTo(circle) < other->radius) {
 		return true;
 	}
 	//If the shapes have not collided

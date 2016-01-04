@@ -15,7 +15,7 @@ template <class T>
 class ConditionComparison : public Condition {
 public:
 	ConditionComparison(const T* watch, const T& trigger, Compare comparison=EQUAL) : watch(watch), trigger(trigger), comparison(comparison) {}
-	~ConditionComparison() {};
+	virtual ~ConditionComparison() {};
 
 	bool check() const {
 		bool result;
@@ -39,9 +39,13 @@ public:
 		return result;
 	}
 
+	Condition* clone() const {
+		return new ConditionComparison(watch, trigger, comparison);
+	}
+
 private:
 	const Compare comparison;
-	const T* watch;
+	const T* watch; //not owned
 	const T trigger;
 };
 

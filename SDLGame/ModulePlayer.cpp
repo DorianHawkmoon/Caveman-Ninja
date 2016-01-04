@@ -9,7 +9,6 @@
 #include "SDL\SDL_keycode.h"
 #include "JumpComponent.h"
 
-// Reference at https://www.youtube.com/watch?v=OEhmUuehGOA
 ModulePlayer::ModulePlayer(bool start_enabled) : Module(start_enabled)
 {
 	player = Joe::makeJoe();	
@@ -24,7 +23,8 @@ ModulePlayer::~ModulePlayer()
 // Load assets
 bool ModulePlayer::start(){
 	LOG("Loading player");
-	bool started=player->start();
+	bool started = true;
+	player->start();
 	started = started & ((motion = static_cast<MotionComponent*>(player->getComponent("motion")))!=nullptr);
 	started = started & ((jump = static_cast<JumpComponent*>(player->getComponent("jump"))) != nullptr);
 	player->transform.position.x = 100;

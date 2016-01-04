@@ -8,7 +8,7 @@
 class ModuleTimer :	public Module {
 public:
 	ModuleTimer();
-	~ModuleTimer();
+	virtual ~ModuleTimer();
 
 	bool start();
 

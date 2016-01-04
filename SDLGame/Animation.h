@@ -16,7 +16,7 @@ public:
 
 	}
 
-	~Animation() {
+	virtual ~Animation() {
 	}
 
 	bool start() { 

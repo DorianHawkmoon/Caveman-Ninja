@@ -10,7 +10,7 @@ class Collider;
 class ModuleCollision :	public Module {
 public:
 	ModuleCollision(bool started=true) :Module(started), colliders() {}
-	~ModuleCollision(){}
+	virtual ~ModuleCollision(){}
 
 	virtual bool start();
 	virtual update_status update();

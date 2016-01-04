@@ -7,7 +7,7 @@
 
 struct Transform {
 	Transform();
-	~Transform();
+	virtual ~Transform();
 
 	SDL_RendererFlip flip;
 	float speed;

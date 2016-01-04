@@ -37,7 +37,7 @@ public:
 	bool combinationActive(const std::list<SDL_Scancode>& keys) const;
 
 private:
-	KeyState *keyboard;
+	KeyState keyboard[MAX_KEYS];
 };
 
 #endif // !MODULE_INPUT_H

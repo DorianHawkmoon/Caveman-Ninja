@@ -13,6 +13,9 @@ public:
 
 	}
 
+	virtual ~Module() {
+	}
+
 	bool enable() {
 		if (active == false) {
 			return active = start();

@@ -8,7 +8,7 @@ struct SDL_Texture;
 class HorizontalSpriteScrollComponent :	public IComponent {
 public:
 	HorizontalSpriteScrollComponent(std::string nameComponent, std::string nameTexture);
-	~HorizontalSpriteScrollComponent();
+	virtual ~HorizontalSpriteScrollComponent();
 
 	bool start();
 	update_status update();

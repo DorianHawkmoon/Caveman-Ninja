@@ -1,7 +1,6 @@
 #include "CircleCollider.h"
 #include "RectangleCollider.h"
 
-
 CircleCollider::~CircleCollider() {}
 
 Collider * CircleCollider::clone() {

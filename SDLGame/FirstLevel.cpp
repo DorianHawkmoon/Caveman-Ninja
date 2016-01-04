@@ -13,13 +13,15 @@
 #include "CollisionComponent.h"
 #include "CircleCollider.h"
 #include "Point.h"
+#include "RectangleCollider.h"
 
 FirstLevel::FirstLevel() {
 	
 }
 
 
-FirstLevel::~FirstLevel() {}
+FirstLevel::~FirstLevel() {
+}
 
 
 // Load assets
@@ -60,15 +62,12 @@ bool FirstLevel::start() {
 	sprite->speedCamera = 1;
 	buffer->addComponent(sprite);
 
+	fPoint rectGround = {1088, 10};
+	RectangleCollider* groundCollider = new RectangleCollider(fPoint(0, 50), rectGround, TypeCollider::WALL);
+	CollisionComponent* ground = new CollisionComponent("ground", groundCollider);
+	buffer->addComponent(ground);
+	
 	root->addChild(buffer);
-
-	Entity* collisions = new Entity();
-	CollisionComponent* coll = new CollisionComponent("name",
-		new CircleCollider(fPoint(250, 250), 10.0f, TypeCollider::NONE_COLLIDER));
-	collisions->addComponent(coll);
-	collisions->transform.position = {0,0};
-	root->addChild(collisions);
-
 	root->start();
 	return true;
 }

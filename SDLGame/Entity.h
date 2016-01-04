@@ -32,7 +32,7 @@ struct ControlEntity {
 		stateJump = JumpType::NONE;
 	}
 
-	~ControlEntity() {}
+	virtual ~ControlEntity() {}
 
 	int moveX;
 	int moveY;
@@ -43,7 +43,7 @@ struct ControlEntity {
 class Entity : public IUpdater {
 public:
 	Entity(Category category=Category::NONE_CATEGORY);
-	~Entity();
+	virtual ~Entity();
 
 	bool start();
 	update_status preUpdate();

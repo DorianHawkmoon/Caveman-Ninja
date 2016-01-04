@@ -9,15 +9,16 @@ template <class T>
 class State {
 public:
 	State(T& value);
-	~State();
+	virtual ~State();
 
-	void addTransition(StateTransition<T>* transition) {
+	void addTransition(const StateTransition<T>* transition) {
 		if (std::find(transitions.begin(), transitions.end(), transition) == transitions.end()) {
-			transitions.push_back(transition);
+			StateTransition<T>* copy = transition->clone();
+			transitions.push_back(copy);
 		}
 	}
 
-	bool deleteTransition(StateTransition<T>* transition) {
+	bool deleteTransition(const StateTransition<T>* transition) {
 		if (find(transitions.begin(), transitions.end(), transition) != transitions.end()) {
 			erase it;
 			return true;

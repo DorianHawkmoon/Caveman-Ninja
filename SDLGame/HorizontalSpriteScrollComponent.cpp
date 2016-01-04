@@ -13,6 +13,7 @@ HorizontalSpriteScrollComponent::HorizontalSpriteScrollComponent(std::string nam
 
 
 HorizontalSpriteScrollComponent::~HorizontalSpriteScrollComponent() {
+	LOG("destroy one component");
 	//unload just in case
 	cleanUp();
 }

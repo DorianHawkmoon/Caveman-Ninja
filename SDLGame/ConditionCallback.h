@@ -7,18 +7,24 @@
 
 class ConditionCallback : public Condition {
 public:
-	ConditionCallback(const std::function<bool()>& functionCheck) :functionCheck(functionCheck) {}
-	~ConditionCallback() {};
+	ConditionCallback(const std::function<bool()>& functionCheck)  {
+		this->functionCheck = functionCheck;
+	}
+	virtual ~ConditionCallback() {};
 
 	bool check() const {
 		return functionCheck();
+	}
+
+	Condition* clone() const{
+		return new ConditionCallback(functionCheck);
 	}
 
 private:
 	/**
 	* variable donde guardar la función a ejecutar
 	*/
-	const std::function<bool()> functionCheck;
+	std::function<bool()> functionCheck;
 };
 
 #endif // CONDITION_CALLBACK_H

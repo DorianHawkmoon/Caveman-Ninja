@@ -8,7 +8,7 @@
 class TimerCondition : public Condition {
 public:
 	TimerCondition(unsigned int milliseconds) : milliseconds(milliseconds), timer() {}
-	~TimerCondition() {}
+	virtual ~TimerCondition() {}
 
 	bool start() { 
 		timer.start();
@@ -21,6 +21,10 @@ public:
 	bool cleanUp() { 
 		timer.stop();
 		return true; 
+	}
+
+	virtual Condition* clone() const {
+		return new TimerCondition(milliseconds);
 	}
 
 private:

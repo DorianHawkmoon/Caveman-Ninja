@@ -11,7 +11,7 @@ class Entity;
 class SceneNode : public IUpdater {
 public:
 	SceneNode(Entity* entity);
-	~SceneNode();
+	virtual ~SceneNode();
 
 	/**
 	* Add a node to this node

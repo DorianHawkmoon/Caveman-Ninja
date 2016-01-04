@@ -12,9 +12,8 @@ Entity::Entity(Category category) : destroyed(false), category(category), transf
 Entity::~Entity() {
 	//just in case, clean up
 	cleanUp();
-
 	//destroy entities
-	for (std::list<IComponent*>::iterator it = properties.begin(); it != properties.end(); ++it) {
+	for (auto it = properties.begin(); it != properties.end(); ++it) {
 		delete (*it);
 	}
 	properties.clear();
@@ -22,7 +21,7 @@ Entity::~Entity() {
 
 bool Entity::start() {
 	bool result = true;
-	for (std::list<IComponent*>::iterator it = properties.begin(); it != properties.end() && result; ++it) {
+	for (auto it = properties.begin(); it != properties.end() && result; ++it) {
 		if ((*it)->componentEnabled) {
 			result &= (*it)->start();
 		}
@@ -32,7 +31,7 @@ bool Entity::start() {
 
 update_status Entity::preUpdate() {
 	update_status result = UPDATE_CONTINUE;
-	for (std::list<IComponent*>::iterator it = properties.begin(); it != properties.end() && result==UPDATE_CONTINUE; ++it) {
+	for (auto it = properties.begin(); it != properties.end() && result==UPDATE_CONTINUE; ++it) {
 		if ((*it)->componentEnabled) {
 			result = (*it)->preUpdate();
 		}
@@ -42,7 +41,7 @@ update_status Entity::preUpdate() {
 
 update_status Entity::update() {
 	update_status result = UPDATE_CONTINUE;
-	for (std::list<IComponent*>::iterator it = properties.begin(); it != properties.end() && result == UPDATE_CONTINUE; ++it) {
+	for (auto it = properties.begin(); it != properties.end() && result == UPDATE_CONTINUE; ++it) {
 		if ((*it)->componentEnabled) {
 			result = (*it)->update();
 		}
@@ -52,7 +51,7 @@ update_status Entity::update() {
 
 update_status Entity::postUpdate() {
 	update_status result=UPDATE_CONTINUE;
-	for (std::list<IComponent*>::iterator it = properties.begin(); it != properties.end() && result == UPDATE_CONTINUE; ++it) {
+	for (auto it = properties.begin(); it != properties.end() && result == UPDATE_CONTINUE; ++it) {
 		if ((*it)->componentEnabled) {
 			result = (*it)->postUpdate();
 		}
@@ -62,7 +61,7 @@ update_status Entity::postUpdate() {
 
 bool Entity::cleanUp() {
 	bool result = true;
-	for (std::list<IComponent*>::iterator it = properties.begin(); it != properties.end() && result; ++it) {
+	for (auto it = properties.begin(); it != properties.end() && result; ++it) {
 		if ((*it)->componentEnabled) {
 			result &= (*it)->cleanUp();
 		}
@@ -73,7 +72,7 @@ bool Entity::cleanUp() {
 bool Entity::addComponent(IComponent * component) {
 	bool result = false;
 	if (component != nullptr) {
-		std::list<IComponent*>::iterator it = std::find_if(properties.begin(), properties.end(),
+		auto it = std::find_if(properties.begin(), properties.end(),
 			[&component](IComponent* comp) { return comp->getID().compare(component->getID()) == 0; });
 
 		if (it == properties.end()) {

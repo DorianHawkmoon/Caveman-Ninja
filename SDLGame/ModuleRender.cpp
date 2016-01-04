@@ -9,6 +9,9 @@
 #include "ModuleTextures.h"
 #include <math.h>
 
+#include <string>
+#include <sstream>
+
 ModuleRender::ModuleRender(bool started ): 
 	Module(started), renderer(nullptr), camera(SCREEN_WIDTH * SCREEN_SIZE, SCREEN_HEIGHT* SCREEN_SIZE) {
 
@@ -138,24 +141,30 @@ bool ModuleRender::paintCollision(const Collider * collision) {
 	return true;
 }
 
-bool ModuleRender::paintRectangle(const SDL_Color& color, const iPoint& position, const SDL_Rect& rect, float speed) {
+bool ModuleRender::paintRectangle(const SDL_Color& color, const iPoint& position, const fPoint& rect, float speed) {
 	bool result = true;
 
 	SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
 	SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, color.a);
 
-	SDL_Rect rec(rect);
-	rec.x = static_cast<int>(position.x * SCREEN_SIZE -  camera.getX(speed));
-	rec.y = static_cast<int>(position.y * SCREEN_SIZE - camera.getY(speed));
-	rec.w *= SCREEN_SIZE;
-	rec.h *= SCREEN_SIZE;
-	
+	int x = static_cast<int>(position.x * SCREEN_SIZE - camera.getX(speed));
+	int y = static_cast<int>(position.y * SCREEN_SIZE - camera.getY(speed));
+	int w = static_cast<int>(rect.x * SCREEN_SIZE);
+	int h = static_cast<int>(rect.y * SCREEN_SIZE);
 
-	if (SDL_RenderFillRect(renderer, &rec) != 0) {
+	SDL_Rect rectResult = {0,0,0,0};
+	rectResult.w = w;
+	rectResult.h = h;
+	rectResult.x = x;
+	rectResult.y = y;
+
+
+	if (SDL_RenderFillRect(renderer, &rectResult) != 0) {
 		LOG("Cannot draw rectangle to screen. SDL_RenderFillRect error: %s", SDL_GetError());
 		result = false;
 	}
 
+	
 	return result;
 }
 
@@ -163,10 +172,10 @@ bool ModuleRender::paintCircle(const SDL_Color & color, const fPoint & position,
 	bool result = true; 
 
 	iPoint pos;
-	pos.x = static_cast<int>(position.x-radius * SCREEN_SIZE - camera.getX(speed));
-	pos.y = static_cast<int>(position.y-radius * SCREEN_SIZE - camera.getY(speed));
+	pos.x = static_cast<int>((position.x-radius) * SCREEN_SIZE - camera.getX(speed));
+	pos.y = static_cast<int>((position.y-radius) * SCREEN_SIZE - camera.getY(speed));
 
-	float scale = radius / 32;
+	float scale = radius*SCREEN_SIZE / 32;
 
 	SDL_Rect rectDestiny;
 	rectDestiny.x = pos.x;

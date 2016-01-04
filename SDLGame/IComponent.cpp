@@ -3,7 +3,8 @@
 
 IComponent::IComponent(const std::string id) : componentID(id), componentEnabled(true) {}
 
-IComponent::~IComponent() {}
+IComponent::~IComponent() {
+}
 
 void IComponent::setParent(Entity * entity) {
 	this->parent = entity;

@@ -12,7 +12,7 @@
 class Gravity :	public IComponent {
 public:
 	Gravity(std::string nameComponent) : IComponent(nameComponent), gravity(0) {}
-	~Gravity() {}
+	virtual ~Gravity() {}
 
 	IComponent* makeClone();
 

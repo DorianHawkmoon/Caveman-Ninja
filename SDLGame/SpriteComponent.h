@@ -12,7 +12,7 @@ struct SDL_Texture;
 class SpriteComponent : public IComponent {
 public:
 	SpriteComponent(std::string nameComponent, std::string nameTexture);
-	~SpriteComponent();
+	virtual ~SpriteComponent();
 
 	bool start();
 	update_status postUpdate();

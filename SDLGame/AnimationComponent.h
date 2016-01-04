@@ -12,7 +12,7 @@ struct SDL_Texture;
 class AnimationComponent : public IComponent {
 public:
 	AnimationComponent(const std::string& nameComponent, const std::string& texture, StateMachine<Animation>* stateMachine);
-	~AnimationComponent();
+	virtual ~AnimationComponent();
 
 	bool start();
 

@@ -5,11 +5,13 @@
 class Condition {
 public:
 	Condition() {};
-	~Condition() {};
+	virtual ~Condition() {};
 
 	virtual bool start() { return true; }
 	virtual bool check() const = 0;
 	virtual bool cleanUp() { return true; }
+
+	virtual Condition* clone() const = 0;
 };
 
 #endif // CONDITION_H

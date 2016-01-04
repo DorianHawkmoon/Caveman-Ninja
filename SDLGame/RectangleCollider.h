@@ -5,16 +5,15 @@
 #include "Collider.h"
 #include "Globals.h"
 #include "SDL\SDL_rect.h"
+class FloorCollider;
 class CircleCollider;
 
 class RectangleCollider : public Collider {
 public:
-	RectangleCollider(fPoint& position, SDL_Rect& rectangle, TypeCollider type);
-	~RectangleCollider(){}
+	RectangleCollider(fPoint& position, fPoint& rectangle, TypeCollider type);
+	virtual ~RectangleCollider(){}
 
 	virtual void paintCollider() const;
-
-	update_status update();
 
 	bool checkCollision(const Collider* r) const {
 		return r->checkSpecificCollision(this);
@@ -22,11 +21,11 @@ public:
 	bool checkSpecificCollision(const Collider* self) const;
 	bool checkCollision(const RectangleCollider* other) const;
 	bool checkCollision(const CircleCollider* other) const;
-
+	bool checkCollision(const FloorCollider* other) const {return false;};
 	Collider* clone();
 
 private:
-	SDL_Rect rect;
+	fPoint rect;
 };
 
 

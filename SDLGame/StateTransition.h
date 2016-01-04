@@ -15,22 +15,30 @@ class StateTransition {
 public:
 	StateTransition(State<T>* newState);
 	StateTransition(State<T>* newState, Condition* condition);
-	~StateTransition();
+	virtual ~StateTransition();
 
 	inline State<T>* getNextState() const {
 		return newState;
 	}
-	void addCondition(Condition* condition);
+	void addCondition(const Condition* condition);
 	bool checkCondition() ;
 
 	bool start();
 	bool cleanUp();
 
+	StateTransition<T>* clone() const {
+		StateTransition<T>* result = new StateTransition<T>(newState);
+		for (auto it = conditions.begin(); it != conditions.end(); ++it) {
+			result->addCondition(*it);
+		}
+		return result;
+	}
+
 private:
 	/**
 	* Condiciones
 	*/
-	std::list<Condition*> conditions; //conditions owned TODO CAN'T DELETED, SHARED POINTERS!!
+	std::list<Condition*> conditions; //conditions owned
 	/**
 	* Nuevo estado
 	*/
@@ -43,22 +51,26 @@ template <class T>
 StateTransition<T>::StateTransition(State<T> * newState) : conditions(), newState(newState) {}
 
 template<class T>
-inline StateTransition<T>::StateTransition(State<T>* newState, Condition * condition) : conditions(), newState(newState) {
-	conditions.push_back(condition);
+StateTransition<T>::StateTransition(State<T>* newState, Condition * condition) : conditions(), newState(newState) {
+	addCondition(condition);
 }
 
 template <class T>
 StateTransition<T>::~StateTransition() {
+	for (auto it = conditions.begin(); it != conditions.end(); ++it) {
+		delete *it;
+	}
 	conditions.clear();
 }
 
 template <class T>
-void StateTransition<T>::addCondition(Condition * condition) {
+void StateTransition<T>::addCondition(const Condition * condition) {
 	if (condition == nullptr) {
 		return;
 	}
-	if (std::find(conditions.begin(), conditions.end(), condition) == conditions.end()) {
-		conditions.push_back(condition);
+	Condition* copy = condition->clone(); //owned condition
+	if (std::find(conditions.begin(), conditions.end(), copy) == conditions.end()) {
+		conditions.push_back(copy);
 	}
 }
 

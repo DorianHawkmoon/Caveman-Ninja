@@ -38,11 +38,10 @@ Entity * Joe::makeJoe() {
 	motion->velocity.x = 0;
 	motion->velocity.y = 0;
 	result->addComponent(motion);
-	SDL_Rect coll = {0, 0, 28, 47};
-	RectangleCollider* rectangle= new RectangleCollider(fPoint(0, 0), coll, TypeCollider::PLAYER);
+	fPoint coll = {28, 47};
+	RectangleCollider* rectangle= new RectangleCollider(fPoint(0,0), coll, TypeCollider::PLAYER);
 	CollisionComponent* collider = new CollisionComponent("collider", rectangle);
 	
-	//App->collisions->addCollider(rectangle);
 	result->addComponent(collider);
 
 	makeAnimations(result);
@@ -68,31 +67,28 @@ void Joe::makeAnimations(Entity* entity) {
 	Animation frontHit(1);*/
 
 	down.sizeFrame = {128, 0, 64, 64};
-	down.offset.x = -18;
+	down.offset = {-18,-17};
 	lookingUp.sizeFrame = {64, 0, 64, 64};
-	lookingUp.offset.x = -18;
+	lookingUp.offset = {-18,-17};
 	idle.sizeFrame={0, 0, 64, 64};
-	idle.offset.x = -18;
+	idle.offset = {-18,-17};
 	fall.sizeFrame = {320, 0, 64, 64};
-	fall.offset.x = -18;
+	fall.offset = {-18,-17};
 	/*backHit.sizeFrame = {0, 201, 55, 53};
 	frontHit.sizeFrame = {55, 206, 46, 48};*/
 	startJump.sizeFrame = {192,0,64,64};
-	startJump.offset.x = -18;
+	startJump.offset = {-18,-17};
 
 	jump.sizeFrame = {256,0,64,64};
-	//jump.flippedOffset = {-10,0};
-	jump.offset.x = -18;
+	jump.offset = {-18, -17};
 
 	doubleJump.sizeFrame = {0,320,64,64};
 	doubleJump.speed = 0.35f;
-	doubleJump.offset.x = -18;
-	doubleJump.offset.y = 5;
+	doubleJump.offset = {-18, -12};
 
 	forward.sizeFrame={128, 128, 64, 64};
-	forward.offset.x = -18;
+	forward.offset = {-18,-17};
 	forward.speed = 0.1f;
-	//forward.flippedOffset.x = -7;
 
 	//states
 	State<Animation>* forwardAnimation = new State<Animation>(forward);
@@ -107,13 +103,13 @@ void Joe::makeAnimations(Entity* entity) {
 	//State<Animation>* frontHitAnimation = new State<Animation>(frontHit);
 
 	//condiciones
-	Condition* conditionForward = new ConditionComparison<int>(&controller->moveX, 1);
-	Condition* conditionBackward = new ConditionComparison<int>(&controller->moveX, -1);
-	Condition* conditionIdle1 = new ConditionComparison<int>(&controller->moveX, 0);
-	Condition* conditionIdle2 = new ConditionComparison<int>(&controller->moveY, 0);
-	Condition* conditionDown = new ConditionComparison<int>(&controller->moveY, 1);
-	Condition* conditionLookingUp = new ConditionComparison<int>(&controller->moveY, -1);
-	Condition* conditionFall = new ConditionCallback([entity, controller](){
+	ConditionComparison<int> conditionForward = ConditionComparison<int>(&controller->moveX, 1);
+	ConditionComparison<int> conditionBackward =  ConditionComparison<int>(&controller->moveX, -1);
+	ConditionComparison<int> conditionIdle1 =  ConditionComparison<int>(&controller->moveX, 0);
+	ConditionComparison<int> conditionIdle2 = ConditionComparison<int>(&controller->moveY, 0);
+	ConditionComparison<int> conditionDown = ConditionComparison<int>(&controller->moveY, 1);
+	ConditionComparison<int> conditionLookingUp = ConditionComparison<int>(&controller->moveY, -1);
+	ConditionCallback conditionFall = ConditionCallback([entity, controller](){
 		bool result = false;
 		result = controller->stateJump == JumpType::FALL;
 		IComponent* component = entity->getComponent("motion");
@@ -123,19 +119,14 @@ void Joe::makeAnimations(Entity* entity) {
 		}
 		return result;
 	});
+	ConditionComparison<JumpType> conditionJumpDown = ConditionComparison<JumpType>(&controller->stateJump, JumpType::JUMP_DOWN);
 
-	Condition* conditionJumpDown = new ConditionComparison<JumpType>(&controller->stateJump, JumpType::JUMP_DOWN);
-
-	
-	Condition* conditionStartJump1 = new ConditionComparison<JumpType>(&controller->stateJump, JumpType::JUMP);
-	Condition* conditionStartJump2 = new ConditionComparison<JumpType>(&controller->stateJump, JumpType::DOUBLE_JUMP);
-
-	Condition* conditionJump = new ConditionComparison<JumpType>(&controller->stateJump, JumpType::JUMP);
-	Condition* conditionJump2 = new TimerCondition(150);
-
-	Condition* conditionDoubleJump = new ConditionComparison<JumpType>(&controller->stateJump, JumpType::DOUBLE_JUMP);
-	
-	Condition* conditionFallToIdle = new ConditionCallback([entity]() {
+	ConditionComparison<JumpType> conditionStartJump1 = ConditionComparison<JumpType>(&controller->stateJump, JumpType::JUMP);
+	ConditionComparison<JumpType> conditionStartJump2 = ConditionComparison<JumpType>(&controller->stateJump, JumpType::DOUBLE_JUMP);
+	ConditionComparison<JumpType> conditionJump = ConditionComparison<JumpType>(&controller->stateJump, JumpType::JUMP);
+	TimerCondition conditionJump2 = TimerCondition(150);
+	ConditionComparison<JumpType> conditionDoubleJump = ConditionComparison<JumpType>(&controller->stateJump, JumpType::DOUBLE_JUMP);
+	ConditionCallback conditionFallToIdle = ConditionCallback([entity]() {
 		bool result = false;
 		IComponent* component = entity->getComponent("gravity");
 		if (component != nullptr) {
@@ -146,64 +137,61 @@ void Joe::makeAnimations(Entity* entity) {
 	});
 
 	//transitions
-	StateTransition<Animation>* transitionForward = new StateTransition<Animation>(forwardAnimation, conditionForward);
-	StateTransition<Animation>* transitionBackward = new StateTransition<Animation>(forwardAnimation, conditionBackward);
-	StateTransition<Animation>* transitionIdle1 = new StateTransition<Animation>(idleAnimation, conditionIdle1);
-	StateTransition<Animation>* transitionIdle2 = new StateTransition<Animation>(idleAnimation, conditionIdle2);
-	StateTransition<Animation>* transitionDown = new StateTransition<Animation>(downAnimation, conditionDown);
-	StateTransition<Animation>* transitionLookingUp = new StateTransition<Animation>(lookingUpAnimation, conditionLookingUp);
-	StateTransition<Animation>* transitionDownToIdle = new StateTransition<Animation>(idleAnimation, conditionIdle2);
-	StateTransition<Animation>* transitionForwardToIdle = new StateTransition<Animation>(idleAnimation, conditionIdle1);
-	StateTransition<Animation>* transitionJumpDown = new StateTransition<Animation>(fallAnimation, conditionJumpDown);
-	StateTransition<Animation>* transitionFall = new StateTransition<Animation>(fallAnimation, conditionFall);
-	StateTransition<Animation>* transitionFallToIdle = new StateTransition<Animation>(idleAnimation, conditionFallToIdle);
+	StateTransition<Animation> transitionForward = StateTransition<Animation>(forwardAnimation, &conditionForward);
+	StateTransition<Animation> transitionBackward =  StateTransition<Animation>(forwardAnimation, &conditionBackward);
+	StateTransition<Animation> transitionIdle1 = StateTransition<Animation>(idleAnimation, &conditionIdle1);
+	StateTransition<Animation> transitionIdle2 = StateTransition<Animation>(idleAnimation, &conditionIdle2);
+	StateTransition<Animation> transitionDown = StateTransition<Animation>(downAnimation, &conditionDown);
+	StateTransition<Animation> transitionLookingUp = StateTransition<Animation>(lookingUpAnimation, &conditionLookingUp);
+	StateTransition<Animation> transitionDownToIdle = StateTransition<Animation>(idleAnimation, &conditionIdle2);
+	StateTransition<Animation> transitionJumpDown = StateTransition<Animation>(fallAnimation, &conditionJumpDown);
+	StateTransition<Animation> transitionFall = StateTransition<Animation>(fallAnimation, &conditionFall);
+	StateTransition<Animation> transitionFallToIdle = StateTransition<Animation>(idleAnimation, &conditionFallToIdle);
 	//jump
-	StateTransition<Animation>* transitionStartJump1 = new StateTransition<Animation>(startJumpAnimation, conditionStartJump1);
-	StateTransition<Animation>* transitionStartJump2 = new StateTransition<Animation>(startJumpAnimation, conditionStartJump2);
-	StateTransition<Animation>* transitionJump = new StateTransition<Animation>(jumpAnimation, conditionJump);
-								transitionJump->addCondition(conditionJump2);
-								transitionJump->addCondition(conditionStartJump1); //esta transition solo pasa con el salto normal
+	StateTransition<Animation> transitionStartJump1 = StateTransition<Animation>(startJumpAnimation, &conditionStartJump1);
+	StateTransition<Animation> transitionStartJump2 = StateTransition<Animation>(startJumpAnimation, &conditionStartJump2);
+	StateTransition<Animation> transitionJump = StateTransition<Animation>(jumpAnimation, &conditionJump);
+								transitionJump.addCondition(&conditionJump2);
+								transitionJump.addCondition(&conditionStartJump1); //esta transition solo pasa con el salto normal
 
-	StateTransition<Animation>* transitionDoubleJump = new StateTransition<Animation>(doubleJumpAnimation, conditionDoubleJump);
-								transitionDoubleJump->addCondition(conditionJump2);
-								transitionDoubleJump->addCondition(conditionStartJump2); //esta transition solo pasa con el salto doble
-	/*StateTransition<Animation>* transitionJump = new StateTransition<Animation>(jumpAnimation, conditionJump);
-	StateTransition<Animation>* transitionJump = new StateTransition<Animation>(jumpAnimation, conditionJump);*/
+	StateTransition<Animation> transitionDoubleJump = StateTransition<Animation>(doubleJumpAnimation, &conditionDoubleJump);
+								transitionDoubleJump.addCondition(&conditionJump2);
+								transitionDoubleJump.addCondition(&conditionStartJump2); //esta transition solo pasa con el salto doble
+								
 
 	//add the transitions to the states
-	idleAnimation->addTransition(transitionForward);
-	idleAnimation->addTransition(transitionDown);
-	idleAnimation->addTransition(transitionBackward);
-	idleAnimation->addTransition(transitionLookingUp);
-	idleAnimation->addTransition(transitionStartJump1);
-	idleAnimation->addTransition(transitionStartJump2);
-	idleAnimation->addTransition(transitionJumpDown);
-	idleAnimation->addTransition(transitionFall);
+	idleAnimation->addTransition(&transitionForward);
+	idleAnimation->addTransition(&transitionDown);
+	idleAnimation->addTransition(&transitionBackward);
+	idleAnimation->addTransition(&transitionLookingUp);
+	idleAnimation->addTransition(&transitionStartJump1);
+	idleAnimation->addTransition(&transitionStartJump2);
+	idleAnimation->addTransition(&transitionJumpDown);
+	idleAnimation->addTransition(&transitionFall);
+	
+	forwardAnimation->addTransition(&transitionDown);
+	forwardAnimation->addTransition(&transitionStartJump1);
+	forwardAnimation->addTransition(&transitionStartJump2);
+	forwardAnimation->addTransition(&transitionFall);
+	forwardAnimation->addTransition(&transitionIdle1);
 
-	forwardAnimation->addTransition(transitionDown);
-	forwardAnimation->addTransition(transitionStartJump1);
-	forwardAnimation->addTransition(transitionStartJump2);
-	forwardAnimation->addTransition(transitionFall);
-	forwardAnimation->addTransition(transitionIdle1);
+	downAnimation->addTransition(&transitionDownToIdle);
+	downAnimation->addTransition(&transitionIdle2);
+	downAnimation->addTransition(&transitionFall);
+	downAnimation->addTransition(&transitionJumpDown);
+	
+	lookingUpAnimation->addTransition(&transitionIdle2);
+	lookingUpAnimation->addTransition(&transitionForward);
+	lookingUpAnimation->addTransition(&transitionBackward);
+	lookingUpAnimation->addTransition(&transitionFall);
+	lookingUpAnimation->addTransition(&transitionStartJump2);
 
-	downAnimation->addTransition(transitionDownToIdle);
-	downAnimation->addTransition(transitionIdle2);
-	downAnimation->addTransition(transitionFall);
-	downAnimation->addTransition(transitionJumpDown);
-	downAnimation->addTransition(transitionFall);
+	startJumpAnimation->addTransition(&transitionJump);//solo desde start animation pasa a jump o double jump
+	startJumpAnimation->addTransition(&transitionDoubleJump);
 
-	lookingUpAnimation->addTransition(transitionIdle2);
-	lookingUpAnimation->addTransition(transitionForward);
-	lookingUpAnimation->addTransition(transitionBackward);
-	lookingUpAnimation->addTransition(transitionFall);
-	lookingUpAnimation->addTransition(transitionStartJump2);
-
-	startJumpAnimation->addTransition(transitionJump);//solo desde start animation pasa a jump o double jump
-	startJumpAnimation->addTransition(transitionDoubleJump);
-
-	jumpAnimation->addTransition(transitionFall);
-	doubleJumpAnimation->addTransition(transitionFall);
-	fallAnimation->addTransition(transitionFallToIdle);
+	jumpAnimation->addTransition(&transitionFall);
+	doubleJumpAnimation->addTransition(&transitionFall);
+	fallAnimation->addTransition(&transitionFallToIdle);
 
 
 	//add the states;

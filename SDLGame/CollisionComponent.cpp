@@ -7,7 +7,12 @@ CollisionComponent::CollisionComponent(const std::string & name, Collider * coll
 	collider->addListener(this);
 }
 
-CollisionComponent::~CollisionComponent() {}
+CollisionComponent::~CollisionComponent() {
+	cleanUp();
+	if (collider != nullptr) {
+		delete collider;
+	}
+}
 
 IComponent * CollisionComponent::makeClone() {
 	std::string name = getID();
@@ -30,4 +35,9 @@ update_status CollisionComponent::update() {
 update_status CollisionComponent::postUpdate() {
 	collider->paintCollider();
 	return UPDATE_CONTINUE;
+}
+
+bool CollisionComponent::cleanUp() {
+	App->collisions->removeCollider(collider);
+	return true;
 }

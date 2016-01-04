@@ -7,7 +7,15 @@
 SceneNode::SceneNode(Entity* entity) : children(), parent(nullptr), entity(entity) {}
 
 
-SceneNode::~SceneNode() {}
+SceneNode::~SceneNode() {
+	//TODO check about remove the node, deleting entity....
+	//delete the entity
+	delete entity;
+	//delete the childs
+	for (auto it = children.begin(); it != children.end(); ++it) {
+		delete *it;
+	}
+}
 
 void SceneNode::addChild(SceneNode* child) {
 	//set the parent of the child

@@ -31,8 +31,9 @@ Application::Application() {
 }
 
 Application::~Application() {
-	for (std::list<Module*>::iterator it = modules.begin(); it != modules.end(); ++it) {
+	for (auto it = modules.begin(); it != modules.end(); ++it) {
 		delete (*it);
+		*it = nullptr;
 	}
 	modules.clear();
 	SDL_Quit();
@@ -41,11 +42,11 @@ Application::~Application() {
 bool Application::init() {
 	bool ret = true;
 
-	for (std::list<Module*>::iterator it = modules.begin(); it != modules.end() && ret; ++it) {
+	for (auto it = modules.begin(); it != modules.end() && ret; ++it) {
 		ret = (*it)->init();
 	}
 	
-	for(std::list<Module*>::iterator it = modules.begin(); it != modules.end() && ret; ++it){
+	for(auto it = modules.begin(); it != modules.end() && ret; ++it){
 		if ((*it)->isEnabled()) {
 			ret = (*it)->start();
 		}

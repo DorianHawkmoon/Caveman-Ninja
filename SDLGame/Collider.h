@@ -22,7 +22,7 @@ enum class TypeCollider {
 class Collider : public IUpdater {
 public:
 	Collider(fPoint position, const TypeCollider type = TypeCollider::NONE_COLLIDER);
-	~Collider();
+	virtual ~Collider();
 	
 	virtual bool cleanUp();
 	virtual update_status preUpdate();
