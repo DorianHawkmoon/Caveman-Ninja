@@ -33,9 +33,10 @@ update_status VerticalSpriteScrollComponent::update() {
 	SDL_Rect cam = App->renderer->camera.getViewArea();
 	int yCam = static_cast<int>(cam.y * speedCamera); //actual position of camera
 
+	Transform global = parent->transform->getGlobalTransform();
 									//actual absolute position of sprite
-	int yPosition = static_cast<int>(parent->transform.position.x + rect.h*scrollingOffset);
-	int yPositionWidth = static_cast<int>(parent->transform.position.x + rect.h*(scrollingOffset + 1));
+	int yPosition = static_cast<int>(global.position.x + rect.h*scrollingOffset);
+	int yPositionWidth = static_cast<int>(global.position.x + rect.h*(scrollingOffset + 1));
 
 	yPosition = (int) yPosition * SCREEN_SIZE - yCam; //coordenada local
 	yPositionWidth = (int) yPositionWidth * SCREEN_SIZE - yCam; //coordenada local
@@ -51,8 +52,9 @@ update_status VerticalSpriteScrollComponent::update() {
 update_status VerticalSpriteScrollComponent::postUpdate() {
 	//paint the sprite
 	iPoint finalPosition(0, 0);
-	finalPosition.x = static_cast<int>(parent->transform.position.x + offset.x);
-	finalPosition.y = static_cast<int>(parent->transform.position.y + offset.y);
+	Transform global = parent->transform->getGlobalTransform();
+	finalPosition.x = static_cast<int>(global.position.x + offset.x);
+	finalPosition.y = static_cast<int>(global.position.y + offset.y);
 
 	finalPosition.x += rect.h*(scrollingOffset - 1);
 	App->renderer->blit(texture, finalPosition, &rect, iPoint(0,0), speedCamera);

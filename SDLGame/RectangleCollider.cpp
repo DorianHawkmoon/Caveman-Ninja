@@ -3,11 +3,15 @@
 #include "ModuleRender.h"
 #include "CircleCollider.h"
 #include "SDL\SDL_rect.h"
+#include "Transform.h"
 
 RectangleCollider::RectangleCollider(fPoint& position, fPoint& rectangle, TypeCollider type) : Collider(position, type), rect(rectangle) {}
 
 void RectangleCollider::paintCollider() const {
-	iPoint pos(static_cast<int>(position.x), static_cast<int>(position.y));
+	//get global
+	fPoint global = parentTransform->position;
+	global += position;
+	iPoint pos(static_cast<int>(global.x), static_cast<int>(global.y));
 	SDL_Color color;
 	color.b = 255;
 	color.r = 255;
@@ -31,8 +35,11 @@ bool RectangleCollider::checkCollision(const RectangleCollider * other) const {
 								static_cast<int>(other->position.y),
 								static_cast<int>(other->rect.x),
 								static_cast<int>(other->rect.y)};
-	const SDL_Rect rectThis = {position.x,position.y,
-						rect.x,rect.y};
+	const SDL_Rect rectThis = {
+		static_cast<int>(position.x),
+		static_cast<int>(position.y),
+		static_cast<int>(rect.x),
+		static_cast<int>(rect.y)};
 	return SDL_HasIntersection(&rectThis, &rectOther) == SDL_TRUE;
 }
 

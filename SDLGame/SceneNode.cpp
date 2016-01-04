@@ -3,14 +3,22 @@
 #include <algorithm> //for lambda find_if
 #include <functional> // for lambda std::mem_fn(&SceneNode::isMarkedForRemoval)
 #include "Entity.h"
+#include "Transform.h"
 
-SceneNode::SceneNode(Entity* entity) : children(), parent(nullptr), entity(entity) {}
+SceneNode::SceneNode(Entity* entity) : children(), parent(nullptr), entity(entity) {
+	if (this->entity != nullptr) {
+		transform = this->entity->transform;
+		transform->node = this;
+	}
+}
 
 
 SceneNode::~SceneNode() {
 	//TODO check about remove the node, deleting entity....
 	//delete the entity
-	delete entity;
+	if (entity != nullptr) {
+		delete entity;
+	}
 	//delete the childs
 	for (auto it = children.begin(); it != children.end(); ++it) {
 		delete *it;
@@ -60,14 +68,16 @@ void SceneNode::remove() {
 
 Transform SceneNode::getWorldTransform() const {
 	//initialize a transform
-	Transform transform;//TODO hacer transform= sf::Transform::Identity;
+	Transform transform = getLocalTransform();
 
-	//iterate the scene graph to the root to get the absolute transforms
-	for (const SceneNode* node = this; node != nullptr; node = node->parent) {
-		//transform = node->getTransform() * transform;
+	if (parent != nullptr) {
+		transform += parent->getWorldTransform();
 	}
-
 	return transform;
+}
+
+Transform SceneNode::getLocalTransform() const {
+	return transform->getLocalTransform();
 }
 
 void SceneNode::removeDead() {
@@ -84,28 +94,36 @@ bool SceneNode::isDestroyed() const {
 }
 
 bool SceneNode::start() {
-	entity->start();
+	if (entity != nullptr) {
+		entity->start();
+	}
 	// Call function recursively for all remaining children
 	std::for_each(children.begin(), children.end(), std::mem_fn(&SceneNode::start));
 	return true;
 }
 
 update_status SceneNode::preUpdate() {
-	entity->preUpdate();
+	if (entity != nullptr) {
+		entity->preUpdate();
+	}
 	// Call function recursively for all remaining children
 	std::for_each(children.begin(), children.end(), std::mem_fn(&SceneNode::preUpdate));
 	return UPDATE_CONTINUE;
 }
 
 update_status SceneNode::update() {
-	entity->update();
+	if (entity != nullptr) {
+		entity->update();
+	}
 	// Call function recursively for all remaining children
 	std::for_each(children.begin(), children.end(), std::mem_fn(&SceneNode::update));
 	return UPDATE_CONTINUE;
 }
 
 update_status SceneNode::postUpdate() {
-	entity->postUpdate();
+	if (entity != nullptr) {
+		entity->postUpdate();
+	}
 	// Call function recursively for all remaining children
 	std::for_each(children.begin(), children.end(), std::mem_fn(&SceneNode::postUpdate));
 
@@ -114,7 +132,9 @@ update_status SceneNode::postUpdate() {
 }
 
 bool SceneNode::cleanUp() {
-	entity->cleanUp();
+	if (entity != nullptr) {
+		entity->cleanUp();
+	}
 	// Call function recursively for all remaining children
 	std::for_each(children.begin(), children.end(), std::mem_fn(&SceneNode::cleanUp));
 	return true;

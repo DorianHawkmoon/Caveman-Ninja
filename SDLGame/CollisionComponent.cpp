@@ -4,7 +4,7 @@
 #include "ModuleCollision.h"
 
 CollisionComponent::CollisionComponent(const std::string & name, Collider * collider) : IComponent(name), collider(collider) {
-	collider->addListener(this);
+	
 }
 
 CollisionComponent::~CollisionComponent() {
@@ -21,14 +21,16 @@ IComponent * CollisionComponent::makeClone() {
 }
 
 bool CollisionComponent::start() {
+	collider->addListener(this);
+	collider->parentTransform = parent->transform;
 	App->collisions->addCollider(collider);
 	return true;
 }
 
 update_status CollisionComponent::update() {
-	if (parent != nullptr) {
+	/*if (parent != nullptr) {
 		collider->position = parent->transform.position;
-	}
+	}*/
 	return UPDATE_CONTINUE;
 }
 

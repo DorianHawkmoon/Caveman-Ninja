@@ -66,8 +66,25 @@ bool FirstLevel::start() {
 	RectangleCollider* groundCollider = new RectangleCollider(fPoint(0, 50), rectGround, TypeCollider::WALL);
 	CollisionComponent* ground = new CollisionComponent("ground", groundCollider);
 	buffer->addComponent(ground);
+
+	Entity* enti = new Entity();
+	enti->transform->position.x = 100;
+	SpriteComponent* sprite2 = new SpriteComponent("uu","baseFirstLevel.png");
+	sprite2->rect.x = 0;
+	sprite2->rect.y = 0;
+	sprite2->rect.w = 256;
+	sprite2->rect.h = 256;
+	enti->addComponent(sprite2);
 	
-	root->addChild(buffer);
+	SceneNode* child = new SceneNode(enti);
+	SceneNode* parent = new SceneNode(buffer);
+
+	buffer->transform->position.x = 50;
+	
+	parent->addChild(child);
+	//child->addChild(buffer);
+	root->addChild(parent);
+	//root->addChild(child);
 	root->start();
 	return true;
 }

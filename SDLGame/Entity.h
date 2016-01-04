@@ -84,8 +84,9 @@ public:
 		return category;
 	}
 
+	
 public:
-	Transform transform;
+	Transform* transform;
 	ControlEntity controller;
 
 private:

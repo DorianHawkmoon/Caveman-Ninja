@@ -3,9 +3,9 @@
 #include <functional>
 #include "IComponent.h"
 
-Entity::Entity(Category category) : destroyed(false), category(category), transform()
-{
-	transform.setToZero();
+Entity::Entity(Category category) : destroyed(false), category(category) {
+	transform = new Transform();
+	transform->setToZero();
 }
 
 
@@ -17,6 +17,9 @@ Entity::~Entity() {
 		delete (*it);
 	}
 	properties.clear();
+	if (transform != nullptr) {
+		delete transform;
+	}
 }
 
 bool Entity::start() {

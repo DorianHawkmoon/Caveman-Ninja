@@ -27,9 +27,8 @@ bool ModulePlayer::start(){
 	player->start();
 	started = started & ((motion = static_cast<MotionComponent*>(player->getComponent("motion")))!=nullptr);
 	started = started & ((jump = static_cast<JumpComponent*>(player->getComponent("jump"))) != nullptr);
-	player->transform.position.x = 100;
-	player->transform.position.y = 150;
-	player->transform.speed = 50;
+	player->transform->position = {100, 150};
+	player->transform->speed=50;
 
 	return started;
 }
@@ -50,7 +49,7 @@ bool ModulePlayer::cleanUp(){
 update_status ModulePlayer::update(){
 	//motion->velocity.setToZero();
 	ControlEntity* controller = &player->controller;
-	Transform* trans = &player->transform;
+	Transform* trans = player->transform;
 	controller->moveX = 0;
 	controller->moveY = 0;
 
@@ -86,7 +85,7 @@ update_status ModulePlayer::update(){
 	}
 
 	if (controller->moveY != 1) {
-		motion->velocity.x = controller->moveX * player->transform.speed;
+		motion->velocity.x = controller->moveX * player->transform->speed;
 	} else {
 		motion->velocity.x = 0.0f;
 	}

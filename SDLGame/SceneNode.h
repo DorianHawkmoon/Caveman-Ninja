@@ -3,10 +3,10 @@
 #define SCENE_NODE_H
 
 #include <vector>
-#include "Transform.h"
 #include "Globals.h"
 #include "IUpdater.h"
 class Entity;
+struct Transform;
 
 class SceneNode : public IUpdater {
 public:
@@ -32,6 +32,8 @@ public:
 	* @return the absolute transform
 	*/
 	Transform getWorldTransform() const;
+
+	Transform getLocalTransform() const;
 
 
 	void remove();
@@ -68,6 +70,10 @@ private:
 	* The entity asociated
 	*/
 	Entity* entity;
+	/**
+	* Transform of the entity
+	*/
+	Transform* transform;
 };
 
 

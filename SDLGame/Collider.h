@@ -8,6 +8,7 @@
 class CircleCollider;
 class RectangleCollider;
 class CollisionListener;
+struct Transform;
 
 enum class TypeCollider {
 	NONE_COLLIDER = 0,
@@ -45,6 +46,7 @@ public:
 public:
 	fPoint position;
 	TypeCollider type;
+	Transform* parentTransform;
 
 protected:
 	Collider* clone(Collider* cloning) {

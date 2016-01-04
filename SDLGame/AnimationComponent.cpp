@@ -29,12 +29,11 @@ update_status AnimationComponent::update() {
 }
 
 update_status AnimationComponent::postUpdate() {
-	fPoint fpos = parent->transform.position;
+	fPoint fpos = parent->transform->getGlobalTransform().position;
 	iPoint pos(static_cast<int>(fpos.x), static_cast<int>(fpos.y));
 	Animation* anim = state->getState()->getValue();
-	//pos.y -= anim->GetCurrentFrame().h; //the point I use to position is top left, not bottom left which i want to draw
 
-	App->renderer->blit(texture, pos, &(anim->GetCurrentFrame()), anim->offset, 1.0, parent->transform.flip);
+	App->renderer->blit(texture, pos, &(anim->GetCurrentFrame()), anim->offset, 1.0, parent->transform->flip);
 	return UPDATE_CONTINUE;
 }
 

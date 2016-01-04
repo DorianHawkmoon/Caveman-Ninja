@@ -4,6 +4,7 @@
 
 #include "Point.h"
 #include "SDL/SDL.h"
+#include "SceneNode.h"
 
 struct Transform {
 	Transform();
@@ -12,8 +13,41 @@ struct Transform {
 	SDL_RendererFlip flip;
 	float speed;
 	fPoint position;
-	float rotation; // not used
-	fPoint scale; //not used
+	//float rotation; // not used
+	//fPoint scale; //not used
+	SceneNode* node;
+
+	//copy
+	Transform getLocalTransform() const {
+		Transform result;
+		result.position = position;
+		result.speed = speed;
+		//result.rotation = rotation;
+		//result.scale = scale;
+		result.node = nullptr;
+		return result;
+	}
+
+	//copy
+	Transform getGlobalTransform() const {
+		if (node != nullptr) {
+			return node->getWorldTransform();
+		} else {
+			return getLocalTransform();
+		}
+	}
+
+	Transform operator =(const Transform &v) const {
+		Transform r;
+		r.setToZero();
+		r.flip =  v.flip;
+		r.speed = v.speed;
+		r.position = v.position;
+		//r.scale = v.scale;
+		//r.rotation = v.rotation;
+
+		return(r);
+	}
 
 	// Math ------------------------------------------------
 	Transform operator -(const Transform &v) const {
@@ -21,8 +55,8 @@ struct Transform {
 		r.flip = static_cast<SDL_RendererFlip>(flip & (!v.flip));
 		r.speed = speed - v.speed;
 		r.position = position - v.position;
-		r.scale = scale - v.scale;
-		r.rotation = rotation - v.rotation;
+		//r.scale = scale - v.scale;
+		//r.rotation = rotation - v.rotation;
 
 		return(r);
 	}
@@ -32,8 +66,8 @@ struct Transform {
 		r.flip = static_cast<SDL_RendererFlip>(flip | v.flip);
 		r.speed = speed + v.speed;
 		r.position = position + v.position;
-		r.scale = scale + v.scale;
-		r.rotation = rotation + v.rotation;
+		//r.scale = scale + v.scale;
+		//r.rotation = rotation + v.rotation;
 
 		return(r);
 	}
@@ -42,8 +76,8 @@ struct Transform {
 		flip = static_cast<SDL_RendererFlip>(flip & (!v.flip));
 		speed -= v.speed;
 		position -= v.position;
-		scale -= v.scale;
-		rotation -= v.rotation;
+		//scale -= v.scale;
+		//rotation -= v.rotation;
 
 		return(*this);
 	}
@@ -52,25 +86,16 @@ struct Transform {
 		flip = static_cast<SDL_RendererFlip>(flip | v.flip);
 		speed += v.speed;
 		position += v.position;
-		scale += v.scale;
-		rotation += v.rotation;
+		//scale += v.scale;
+		//rotation += v.rotation;
 
 		return(*this);
 	}
 
 	// Utils ------------------------------------------------
-	bool IsZero() const {
-		return rotation == 0 && position.isZero() && scale.isZero() && speed == 0 && flip==SDL_FLIP_NONE;
-	}
+	bool IsZero() const;
 
-	Transform& setToZero() {
-		speed = 0;
-		flip = SDL_FLIP_NONE;
-		position.setToZero();
-		scale.setToZero();
-		rotation = 0;
-		return(*this);
-	}
+	Transform& setToZero();
 };
 
 #endif // !TRANSFORM_H
