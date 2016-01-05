@@ -63,28 +63,24 @@ bool FirstLevel::start() {
 	buffer->addComponent(sprite);
 
 	fPoint rectGround = {1088, 10};
-	RectangleCollider* groundCollider = new RectangleCollider(fPoint(0, 50), rectGround, TypeCollider::WALL);
+	RectangleCollider* groundCollider = new RectangleCollider(fPoint(0, 226), rectGround, TypeCollider::WALL);
 	CollisionComponent* ground = new CollisionComponent("ground", groundCollider);
 	buffer->addComponent(ground);
 
-	Entity* enti = new Entity();
-	enti->transform->position.x = 100;
-	SpriteComponent* sprite2 = new SpriteComponent("uu","baseFirstLevel.png");
-	sprite2->rect.x = 0;
-	sprite2->rect.y = 0;
-	sprite2->rect.w = 256;
-	sprite2->rect.h = 256;
-	enti->addComponent(sprite2);
+	//adding collisions tests
+	/*Entity* collisions = new Entity();
 	
-	SceneNode* child = new SceneNode(enti);
-	SceneNode* parent = new SceneNode(buffer);
+	RectangleCollider* rectangle = new RectangleCollider(fPoint(50, 100), fPoint(28,47), TypeCollider::NONE_COLLIDER);
+	CollisionComponent* collider = new CollisionComponent("collider", rectangle);
+	collisions->addComponent(collider);
 
-	buffer->transform->position.x = 50;
+	CircleCollider* circle = new CircleCollider(fPoint(170, 190), 5, TypeCollider::NONE_COLLIDER);
+	collider = new CollisionComponent("collider2", circle);
+	collisions->addComponent(collider);*/
+
 	
-	parent->addChild(child);
-	//child->addChild(buffer);
-	root->addChild(parent);
-	//root->addChild(child);
+	root->addChild(buffer);
+	//root->addChild(collisions);
 	root->start();
 	return true;
 }

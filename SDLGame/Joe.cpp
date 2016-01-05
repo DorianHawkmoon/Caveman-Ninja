@@ -31,19 +31,19 @@ Entity * Joe::makeJoe() {
 	result->addComponent(jump);
 
 	Gravity* gravity = new Gravity("gravity");
-	gravity->gravity = 600;
+	gravity->gravity = 550;
+	gravity->maxVelocity = 500;
 	result->addComponent(gravity);
+
+	RectangleCollider* rectangle= new RectangleCollider(fPoint(0,0), fPoint(28,47), TypeCollider::PLAYER);
+	CollisionComponent* collider = new CollisionComponent("collider", rectangle);
+	result->addComponent(collider);
 
 	MotionComponent* motion = new MotionComponent("motion");
 	motion->velocity.x = 0;
 	motion->velocity.y = 0;
 	result->addComponent(motion);
-	fPoint coll = {28, 47};
-	RectangleCollider* rectangle= new RectangleCollider(fPoint(0,0), coll, TypeCollider::PLAYER);
-	CollisionComponent* collider = new CollisionComponent("collider", rectangle);
 	
-	result->addComponent(collider);
-
 	makeAnimations(result);
 
 	return result;

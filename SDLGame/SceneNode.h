@@ -32,7 +32,6 @@ public:
 	* @return the absolute transform
 	*/
 	Transform getWorldTransform() const;
-
 	Transform getLocalTransform() const;
 
 

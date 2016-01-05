@@ -19,6 +19,7 @@ bool Collider::cleanUp() {
 }
 
 update_status Collider::preUpdate() {
+	
 	return UPDATE_CONTINUE;
 }
 
@@ -53,7 +54,7 @@ void Collider::notify(Collider * other) {
 
 void Collider::addListener(CollisionListener * newListener) {
 	auto it = find(listeners.begin(), listeners.end(), newListener);
-	if (it != listeners.end()) {
+	if (it == listeners.end()) {
 		listeners.push_back(newListener);
 	}
 }

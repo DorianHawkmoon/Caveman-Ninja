@@ -21,6 +21,7 @@ public:
 	void removeCollider(Collider* collider);
 
 	void checkCollisions();
+	const std::list<Collider*> checkCollisions(Collider* check);
 
 private:
 	std::list<Collider*> colliders;

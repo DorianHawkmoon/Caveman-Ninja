@@ -115,3 +115,15 @@ bool Entity::removeComponent(const std::string & name) {
 	}
 	return result;
 }
+
+void Entity::onCollisionEnter(Collider * one, Collider * another) {
+	std::for_each(properties.begin(), properties.end(), [&](auto collider) {collider->onCollisionEnter(one, another); });
+}
+
+void Entity::onCollisionExit(Collider * one, Collider * another) {
+	std::for_each(properties.begin(), properties.end(), [&](auto collider) {collider->onCollisionExit(one, another); });
+}
+
+void Entity::onCollisionStay(Collider * one, Collider * another) {
+	std::for_each(properties.begin(), properties.end(), [&](auto collider) {collider->onCollisionStay(one, another); });
+}

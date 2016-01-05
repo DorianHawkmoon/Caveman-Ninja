@@ -21,16 +21,13 @@ IComponent * CollisionComponent::makeClone() {
 }
 
 bool CollisionComponent::start() {
-	collider->addListener(this);
+	collider->addListener(parent);
 	collider->parentTransform = parent->transform;
 	App->collisions->addCollider(collider);
 	return true;
 }
 
 update_status CollisionComponent::update() {
-	/*if (parent != nullptr) {
-		collider->position = parent->transform.position;
-	}*/
 	return UPDATE_CONTINUE;
 }
 

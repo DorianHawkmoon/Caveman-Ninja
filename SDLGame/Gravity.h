@@ -17,11 +17,16 @@ public:
 	IComponent* makeClone();
 
 	update_status update();
-	
-	bool isFalling() const;
+
+	virtual void onCollisionEnter(Collider* one, Collider* another);
+	virtual void onCollisionExit(Collider* one, Collider* another) {};
+	virtual void onCollisionStay(Collider* one, Collider* another) {};
+
+	bool isFalling();
 
 public:
 	float gravity;
+	float maxVelocity;
 };
 
 #endif // !GRAVITY_H

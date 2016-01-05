@@ -6,6 +6,7 @@
 #include "Globals.h"
 #include "Transform.h"
 #include "IUpdater.h"
+#include "CollisionListener.h"
 class IComponent;
 
 enum class Category {
@@ -40,7 +41,7 @@ struct ControlEntity {
 	int attack;
 };
 
-class Entity : public IUpdater {
+class Entity : public IUpdater, public CollisionListener {
 public:
 	Entity(Category category=Category::NONE_CATEGORY);
 	virtual ~Entity();
@@ -84,6 +85,9 @@ public:
 		return category;
 	}
 
+	virtual void onCollisionEnter(Collider* one, Collider* another);
+	virtual void onCollisionExit(Collider* one, Collider* another);
+	virtual void onCollisionStay(Collider* one, Collider* another);
 	
 public:
 	Transform* transform;

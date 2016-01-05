@@ -5,9 +5,8 @@
 #include "IComponent.h"
 #include "Collider.h"
 #include <string>
-#include "CollisionListener.h"
 
-class CollisionComponent : public IComponent, CollisionListener {
+class CollisionComponent : public IComponent {
 public:
 	CollisionComponent(const std::string& name, Collider *collider);
 	virtual ~CollisionComponent();
@@ -18,6 +17,10 @@ public:
 	virtual update_status update();
 	virtual update_status postUpdate();
 	virtual bool cleanUp();
+
+	const Collider* getCollider() const {
+		return collider;
+	}
 
 private:
 	Collider* collider;

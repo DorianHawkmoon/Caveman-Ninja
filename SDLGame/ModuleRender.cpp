@@ -175,7 +175,7 @@ bool ModuleRender::paintCircle(const SDL_Color & color, const fPoint & position,
 	pos.x = static_cast<int>((position.x-radius) * SCREEN_SIZE - camera.getX(speed));
 	pos.y = static_cast<int>((position.y-radius) * SCREEN_SIZE - camera.getY(speed));
 
-	float scale = radius*SCREEN_SIZE / 32;
+	float scale = radius / 32;
 
 	SDL_Rect rectDestiny;
 	rectDestiny.x = pos.x;

@@ -59,7 +59,6 @@ void ModuleCollision::checkCollisions() {
 
 		while (two != colliders.end()) {
 			if ((*one)->checkCollision(*two)) {
-				LOG("Collision!!! HAHAHAHAHAHAHAHA! OH YEAH!!! XDD");
 				(*one)->notify(*two);
 				(*two)->notify(*one);
 			}
@@ -69,4 +68,22 @@ void ModuleCollision::checkCollisions() {
 		two = std::next(one);
 
 	}
+}
+
+const std::list<Collider*> ModuleCollision::checkCollisions(Collider * check) {
+	std::list<Collider*> result;
+
+#ifdef DEBUG
+	check->paintCollider();
+#endif
+
+	for (auto it = colliders.begin(); it != colliders.end(); ++it) {
+		if (check != *it) {
+			if (check->checkCollision(*it)) {
+				result.push_back(*it);
+			}
+		}
+	}
+
+	return result;
 }

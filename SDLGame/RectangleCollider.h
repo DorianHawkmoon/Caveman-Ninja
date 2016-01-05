@@ -24,8 +24,11 @@ public:
 	bool checkCollision(const FloorCollider* other) const {return false;};
 	Collider* clone();
 
+	SDL_Rect getGlobalRectangle() const;
 private:
 	fPoint rect;
+
+	
 };
 
 

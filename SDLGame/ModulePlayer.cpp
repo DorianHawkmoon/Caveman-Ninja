@@ -47,7 +47,6 @@ bool ModulePlayer::cleanUp(){
 
 // Update
 update_status ModulePlayer::update(){
-	//motion->velocity.setToZero();
 	ControlEntity* controller = &player->controller;
 	Transform* trans = player->transform;
 	controller->moveX = 0;

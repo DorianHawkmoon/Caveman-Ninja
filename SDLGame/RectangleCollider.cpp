@@ -9,7 +9,10 @@ RectangleCollider::RectangleCollider(fPoint& position, fPoint& rectangle, TypeCo
 
 void RectangleCollider::paintCollider() const {
 	//get global
-	fPoint global = parentTransform->position;
+	fPoint global;
+	if (parentTransform != nullptr) {
+		global = parentTransform->position;
+	}
 	global += position;
 	iPoint pos(static_cast<int>(global.x), static_cast<int>(global.y));
 	SDL_Color color;
@@ -26,28 +29,38 @@ Collider * RectangleCollider::clone() {
 	return Collider::clone(result);
 }
 
+SDL_Rect RectangleCollider::getGlobalRectangle() const {
+	fPoint global = position;
+	if (parentTransform != nullptr) {
+		global += parentTransform->getGlobalTransform().position;
+	}
+	
+	SDL_Rect result = {static_cast<int>(global.x),
+					static_cast<int>(global.y),
+					static_cast<int>(rect.x),
+					static_cast<int>(rect.y)};
+	return result;
+}
+
 bool RectangleCollider::checkSpecificCollision(const Collider * self) const {
 	return  self->checkCollision(this);
 }
 
 bool RectangleCollider::checkCollision(const RectangleCollider * other) const {
-	const SDL_Rect rectOther = {static_cast<int>(other->position.x), 
-								static_cast<int>(other->position.y),
-								static_cast<int>(other->rect.x),
-								static_cast<int>(other->rect.y)};
-	const SDL_Rect rectThis = {
-		static_cast<int>(position.x),
-		static_cast<int>(position.y),
-		static_cast<int>(rect.x),
-		static_cast<int>(rect.y)};
+	const SDL_Rect rectOther = other->getGlobalRectangle();
+	const SDL_Rect rectThis = getGlobalRectangle();
 	return SDL_HasIntersection(&rectThis, &rectOther) == SDL_TRUE;
 }
 
 bool RectangleCollider::checkCollision(const CircleCollider * other) const {
+	fPoint globalCircle = other->getGlobalPoint();
+
 	//Closest point on collision box
 	iPoint closestPoint;
-	iPoint circle(static_cast<int>(other->position.x), -static_cast<int>(other->position.y));
-	SDL_Rect positionRect = {position.x, -position.y, rect.x, rect.y};
+	iPoint circle(static_cast<int>(globalCircle.x), 
+				static_cast<int>(globalCircle.y));
+	SDL_Rect positionRect = getGlobalRectangle();
+
 	//Find closest x offset
 	if (circle.x < positionRect.x) {
 		closestPoint.x = static_cast<int>(positionRect.x);

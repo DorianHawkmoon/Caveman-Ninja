@@ -61,24 +61,38 @@ bool Application::init() {
 update_status Application::update() {
 	update_status ret = UPDATE_CONTINUE;
 
-	for (std::list<Module*>::iterator it = modules.begin(); it != modules.end() && ret == UPDATE_CONTINUE; ++it) {
-		if ((*it)->isEnabled() == true) {
-			ret = (*it)->preUpdate();
+	//todo improve pause system
+	if (input->getWindowEvent(WE_PAUSE)) {
+		renderer->preUpdate();
+		timer->preUpdate();
+		input->preUpdate();
+
+		renderer->update();
+		timer->update();
+		input->update();
+
+		renderer->postUpdate();
+		timer->postUpdate();
+		input->postUpdate();
+	} else {
+		for (std::list<Module*>::iterator it = modules.begin(); it != modules.end() && ret == UPDATE_CONTINUE; ++it) {
+			if ((*it)->isEnabled() == true) {
+				ret = (*it)->preUpdate();
+			}
+		}
+
+		for (std::list<Module*>::iterator it = modules.begin(); it != modules.end() && ret == UPDATE_CONTINUE; ++it) {
+			if ((*it)->isEnabled() == true) {
+				ret = (*it)->update();
+			}
+		}
+
+		for (std::list<Module*>::iterator it = modules.begin(); it != modules.end() && ret == UPDATE_CONTINUE; ++it) {
+			if ((*it)->isEnabled() == true) {
+				ret = (*it)->postUpdate();
+			}
 		}
 	}
-
-	for (std::list<Module*>::iterator it = modules.begin(); it != modules.end() && ret == UPDATE_CONTINUE; ++it) {
-		if ((*it)->isEnabled() == true) {
-			ret = (*it)->update();
-		}
-	}
-
-	for (std::list<Module*>::iterator it = modules.begin(); it != modules.end() && ret == UPDATE_CONTINUE; ++it) {
-		if ((*it)->isEnabled() == true) {
-			ret = (*it)->postUpdate();
-		}
-	}
-
 	//control fps
 	//SDL_Delay(static_cast<int>(1.0 / FPS ) - (timer->getDeltaFrame()/1000));
 	return ret;

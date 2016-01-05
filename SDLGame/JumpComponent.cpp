@@ -22,13 +22,14 @@ update_status JumpComponent::update() {
 				if (motion != nullptr) {
 					motion->velocity.y -= 1 * finalSpeed;
 				}
-			} else {
+			} 
+			/*else {
 				if (motion != nullptr && motion->velocity.y >= 0) {
 						*jump = JumpType::FALL;
 						jumpAccelerated = false;
 				
 				}
-			}
+			}*/
 		}
 			break;
 
@@ -41,15 +42,11 @@ update_status JumpComponent::update() {
 				if (motion != nullptr) {
 					motion->velocity.y += 1 * (finalSpeed/2);
 				}
-			} else {
-				/*if (motion != nullptr && motion->velocity.y >= 0) {
-					*jump = JumpType::FALL;
-					jumpAccelerated = false;
-
-				}*/
 			}
 		}
 			break;
+		case FALL:
+			jumpAccelerated = false;
 		case NONE:
 			break;
 	}

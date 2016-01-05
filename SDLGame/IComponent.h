@@ -5,12 +5,13 @@
 #include <string>
 #include "Globals.h"
 #include "IUpdater.h"
+#include "CollisionListener.h"
 class Entity;
 
 /*
 *  Provides the interface for all properties
 */
-class IComponent : public IUpdater {
+class IComponent : public IUpdater, public CollisionListener {
 public:
 	/**
 	* IProperty default constructor
@@ -45,6 +46,10 @@ public:
 	virtual IComponent* makeClone() = 0;
 
 	bool componentEnabled;
+
+	virtual void onCollisionEnter(Collider* one, Collider* another) {};
+	virtual void onCollisionExit(Collider* one, Collider* another) {};
+	virtual void onCollisionStay(Collider* one, Collider* another) {};
 
 protected:
 	Entity* parent;

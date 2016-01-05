@@ -17,24 +17,16 @@ public:
 	}
 	virtual ~CircleCollider();
 
-	virtual void paintCollider() const {
-		// Determina el color y opacidad del dibujo
-		SDL_Color renderColor;
-		renderColor.r = 0;
-		renderColor.g = 179;
-		renderColor.b = 0;
-		renderColor.a = 128;
+	virtual void paintCollider() const;
 
-		//const SDL_Texture* texture, const SDL_Color& color, const iPoint& position, float radius, float speed = 1.0f
-		App->renderer->paintCircle(renderColor, position, radius);
-	}
-
-	bool checkCollision(const Collider* r) const {
+	inline bool checkCollision(const Collider* r) const {
 		return r->checkSpecificCollision(this);
 	}
 
 	Collider* clone();
 	float radius;
+
+	fPoint getGlobalPoint() const;
 private:
 
 	bool checkSpecificCollision(const Collider* self) const;

@@ -44,6 +44,7 @@ update_status ModuleInput::preUpdate() {
 	SDL_PumpEvents();
 
 	const Uint8* keys = SDL_GetKeyboardState(NULL);
+	memset(windowEvents, false, WE_COUNT * sizeof(bool));
 
 	//store the whole state of the keyboard
 	for (int i = 0; i < MAX_KEYS; ++i) {
@@ -73,6 +74,31 @@ update_status ModuleInput::preUpdate() {
 			case SDL_QUIT:
 				return UPDATE_STOP;
 			break;
+			case SDL_WINDOWEVENT:
+				switch (events.window.event) {
+					//case SDL_WINDOWEVENT_LEAVE:
+					case SDL_WINDOWEVENT_HIDDEN:
+					case SDL_WINDOWEVENT_MINIMIZED:
+					//case SDL_WINDOWEVENT_FOCUS_LOST:
+						windowEvents[WE_HIDE] = true;
+						break;
+
+						//case SDL_WINDOWEVENT_ENTER:
+					case SDL_WINDOWEVENT_SHOWN:
+					case SDL_WINDOWEVENT_FOCUS_GAINED:
+					case SDL_WINDOWEVENT_MAXIMIZED:
+					case SDL_WINDOWEVENT_RESTORED:
+						windowEvents[WE_SHOW] = true;
+						break;
+
+					case SDL_WINDOWEVENT_MOVED:
+					case SDL_WINDOWEVENT_RESIZED:
+					case SDL_WINDOWEVENT_SIZE_CHANGED:
+					//case SDL_WINDOWEVENT_FOCUS_LOST:
+						windowEvents[WE_PAUSE] = true;
+
+				}
+				break;
 
 		}
 	}
