@@ -19,7 +19,7 @@ update_status Gravity::update() {
 		//if falling, check tolerance under the entity
 		if (motion->velocity.y > 0) {
 			//TODO 10,10 sería la tolerancia -> la posición tendría que ser desde bottom left y no top left
-			RectangleCollider rectangle = RectangleCollider(parent->transform->getGlobalTransform().position, fPoint(5,57), TypeCollider::PLAYER);
+			RectangleCollider rectangle = RectangleCollider(parent->transform->getGlobalTransform().position, iPoint(5,57), 0, TypeCollider::PLAYER);
 			std::list<Collider*> collisions=App->collisions->checkCollisions(&rectangle);
 			//si la lista está vacia, está cayendo, setear FALL
 			//si no lo esta ... nada, las colisiones especificas se mirara en onCollision
@@ -47,7 +47,7 @@ void Gravity::onCollisionEnter(Collider * one, Collider * another) {
 	}
 
 	//wall/ground type?
-	if (another->type != TypeCollider::WALL) {
+	if (another->type != TypeCollider::GROUND) {
 		return;
 	}
 
@@ -66,14 +66,13 @@ void Gravity::onCollisionEnter(Collider * one, Collider * another) {
 	int count = 0;
 	do {
 		parent->transform->position.y--;
-		//entity->transform->SetGlobalPosition(entity->transform->GetGlobalPosition().x, entity->transform->GetGlobalPosition().y - step_size);
 	} while (one->checkCollision(another) && ++count < 100);
 
 }
 
 bool Gravity::isFalling() {
 	//TODO 10,10 sería la tolerancia -> la posición tendría que ser desde bottom left y no top left
-	RectangleCollider rectangle = RectangleCollider(parent->transform->getGlobalTransform().position, fPoint(5, 57), TypeCollider::PLAYER);
+	RectangleCollider rectangle = RectangleCollider(parent->transform->getGlobalTransform().position, iPoint(5, 57), 0, TypeCollider::PLAYER);
 	std::list<Collider*> collisions = App->collisions->checkCollisions(&rectangle);
 	//TODO  tener en cuenta el jump down (mover la tolerancia? checkear la tolerancia en jump?) -> variable y cuando la distancia recorrida sea mayor que la tolerancia, considerar la gravedad normal
 	return collisions.size() == 0;

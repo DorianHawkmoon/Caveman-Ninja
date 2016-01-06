@@ -62,25 +62,36 @@ bool FirstLevel::start() {
 	sprite->speedCamera = 1;
 	buffer->addComponent(sprite);
 
-	fPoint rectGround = {1088, 10};
-	RectangleCollider* groundCollider = new RectangleCollider(fPoint(0, 226), rectGround, TypeCollider::WALL);
-	CollisionComponent* ground = new CollisionComponent("ground", groundCollider);
-	buffer->addComponent(ground);
+	iPoint rectCollider = {1088, 20};
+	RectangleCollider* collider = new RectangleCollider(fPoint(0, 226), rectCollider, 0, TypeCollider::GROUND);
+	CollisionComponent* colliderComponent = new CollisionComponent("ground", collider);
+	buffer->addComponent(colliderComponent);
+
+	rectCollider = {20,256};
+	collider = new RectangleCollider(fPoint(-10, 0), rectCollider, 0, TypeCollider::WALL);
+	colliderComponent = new CollisionComponent("leftLateral", collider);
+	buffer->addComponent(colliderComponent);
+
+	rectCollider = {20,256};
+	collider = new RectangleCollider(fPoint(1080, 0), rectCollider, 0, TypeCollider::WALL);
+	colliderComponent = new CollisionComponent("rightLateral", collider);
+	buffer->addComponent(colliderComponent);
+
 
 	//adding collisions tests
-	/*Entity* collisions = new Entity();
+	Entity* collisions = new Entity();
 	
-	RectangleCollider* rectangle = new RectangleCollider(fPoint(50, 100), fPoint(28,47), TypeCollider::NONE_COLLIDER);
-	CollisionComponent* collider = new CollisionComponent("collider", rectangle);
-	collisions->addComponent(collider);
+	RectangleCollider* rectangle = new RectangleCollider(fPoint(50, 100), iPoint(28,47), 0, TypeCollider::NONE_COLLIDER);
+	CollisionComponent* collider2 = new CollisionComponent("collider", rectangle);
+	collisions->addComponent(collider2);
 
 	CircleCollider* circle = new CircleCollider(fPoint(170, 190), 5, TypeCollider::NONE_COLLIDER);
-	collider = new CollisionComponent("collider2", circle);
-	collisions->addComponent(collider);*/
+	collider2 = new CollisionComponent("collider2", circle);
+	collisions->addComponent(collider2);
 
 	
 	root->addChild(buffer);
-	//root->addChild(collisions);
+	root->addChild(collisions);
 	root->start();
 	return true;
 }

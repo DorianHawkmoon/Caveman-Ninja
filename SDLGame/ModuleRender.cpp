@@ -141,7 +141,7 @@ bool ModuleRender::paintCollision(const Collider * collision) {
 	return true;
 }
 
-bool ModuleRender::paintRectangle(const SDL_Color& color, const iPoint& position, const fPoint& rect, float speed) {
+bool ModuleRender::paintRectangle(const SDL_Color& color, const iPoint& position, const iPoint& rect, float speed) {
 	bool result = true;
 
 	SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);

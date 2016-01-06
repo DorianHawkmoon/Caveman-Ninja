@@ -35,7 +35,7 @@ Entity * Joe::makeJoe() {
 	gravity->maxVelocity = 500;
 	result->addComponent(gravity);
 
-	RectangleCollider* rectangle= new RectangleCollider(fPoint(0,0), fPoint(28,47), TypeCollider::PLAYER);
+	RectangleCollider* rectangle= new RectangleCollider(fPoint(0,0), iPoint(28,47), 0, TypeCollider::PLAYER);
 	CollisionComponent* collider = new CollisionComponent("collider", rectangle);
 	result->addComponent(collider);
 

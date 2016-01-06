@@ -5,7 +5,7 @@
 #include "SDL\SDL_rect.h"
 #include "Transform.h"
 
-RectangleCollider::RectangleCollider(fPoint& position, fPoint& rectangle, TypeCollider type) : Collider(position, type), rect(rectangle) {}
+RectangleCollider::RectangleCollider(fPoint& position, iPoint& rectangle, float rotation, TypeCollider type) : Collider(position, type), rect(rectangle), rotation(rotation) {}
 
 void RectangleCollider::paintCollider() const {
 	//get global
@@ -25,7 +25,7 @@ void RectangleCollider::paintCollider() const {
 
 
 Collider * RectangleCollider::clone() {
-	RectangleCollider* result = new RectangleCollider(position, rect, type);
+	RectangleCollider* result = new RectangleCollider(position, rect, rotation, type);
 	return Collider::clone(result);
 }
 

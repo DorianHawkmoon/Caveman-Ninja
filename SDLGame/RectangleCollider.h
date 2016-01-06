@@ -10,7 +10,7 @@ class CircleCollider;
 
 class RectangleCollider : public Collider {
 public:
-	RectangleCollider(fPoint& position, fPoint& rectangle, TypeCollider type);
+	RectangleCollider(fPoint& position, iPoint& rectangle, float rotation, TypeCollider type);
 	virtual ~RectangleCollider(){}
 
 	virtual void paintCollider() const;
@@ -25,9 +25,10 @@ public:
 	Collider* clone();
 
 	SDL_Rect getGlobalRectangle() const;
-private:
-	fPoint rect;
 
+	float rotation;
+private:
+	iPoint rect;
 	
 };
 
