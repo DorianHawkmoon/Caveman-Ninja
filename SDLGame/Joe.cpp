@@ -144,7 +144,7 @@ void Joe::makeAnimations(Entity* entity) {
 	StateTransition<Animation> transitionIdle2 = StateTransition<Animation>(idleAnimation, &conditionIdle2);
 	StateTransition<Animation> transitionDown = StateTransition<Animation>(downAnimation, &conditionDown);
 	StateTransition<Animation> transitionLookingUp = StateTransition<Animation>(lookingUpAnimation, &conditionLookingUp);
-	StateTransition<Animation> transitionDownToIdle = StateTransition<Animation>(idleAnimation, &conditionIdle2);
+	//StateTransition<Animation> transitionDownToIdle = StateTransition<Animation>(idleAnimation, &conditionIdle2);
 	StateTransition<Animation> transitionJumpDown = StateTransition<Animation>(fallAnimation, &conditionJumpDown);
 	StateTransition<Animation> transitionFall = StateTransition<Animation>(fallAnimation, &conditionFall);
 	StateTransition<Animation> transitionFallToIdle = StateTransition<Animation>(idleAnimation, &conditionFallToIdle);
@@ -176,7 +176,7 @@ void Joe::makeAnimations(Entity* entity) {
 	forwardAnimation->addTransition(&transitionFall);
 	forwardAnimation->addTransition(&transitionIdle1);
 
-	downAnimation->addTransition(&transitionDownToIdle);
+	//downAnimation->addTransition(&transitionDownToIdle);
 	downAnimation->addTransition(&transitionIdle2);
 	downAnimation->addTransition(&transitionFall);
 	downAnimation->addTransition(&transitionJumpDown);

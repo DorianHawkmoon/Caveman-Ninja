@@ -116,14 +116,40 @@ void Enemy::makeAnimations(Entity* entity) {
 	//conditions
 	ConditionComparison<int> conditionForward = ConditionComparison<int>(&controller->moveX, 1);
 	ConditionComparison<int> conditionBackward = ConditionComparison<int>(&controller->moveX, -1);
+	ConditionComparison<int> conditionIdle1 = ConditionComparison<int>(&controller->moveX, 0);
+	ConditionComparison<int> conditionIdle2 = ConditionComparison<int>(&controller->moveY, 0);
+	ConditionComparison<int> conditionDown = ConditionComparison<int>(&controller->moveY, 1);
+	ConditionComparison<int> conditionLookingUp = ConditionComparison<int>(&controller->moveY, -1);
+	ConditionComparison<bool> conditionRun = ConditionComparison<bool>(&controller->run, true);
+	ConditionComparison<bool> conditionNotRun = ConditionComparison<bool>(&controller->run, false);
 
 	//transitions
 	StateTransition<Animation> transitionForward = StateTransition<Animation>(forwardAnimation, &conditionForward);
 	StateTransition<Animation> transitionBackward = StateTransition<Animation>(forwardAnimation, &conditionBackward);
+	StateTransition<Animation> transitionIdle1 = StateTransition<Animation>(idleAnimation, &conditionIdle1);
+	StateTransition<Animation> transitionIdle2 = StateTransition<Animation>(idleAnimation, &conditionIdle2);
+	StateTransition<Animation> transitionDown = StateTransition<Animation>(downAnimation, &conditionDown);
+	StateTransition<Animation> transitionLookingUp = StateTransition<Animation>(lookingUpAnimation, &conditionLookingUp);
+	StateTransition<Animation> transitionRun = StateTransition<Animation>(runAnimation, &conditionRun);
+	StateTransition<Animation> transitionRunIddle = StateTransition<Animation>(runAnimation, &conditionNotRun);
 
 	//add the transitions to the states
 	idleAnimation->addTransition(&transitionForward);
 	idleAnimation->addTransition(&transitionBackward);
+	idleAnimation->addTransition(&transitionDown);
+	idleAnimation->addTransition(&transitionLookingUp);
+	idleAnimation->addTransition(&transitionRun);
+
+	forwardAnimation->addTransition(&transitionRun);
+	forwardAnimation->addTransition(&transitionIdle1);
+
+	downAnimation->addTransition(&transitionIdle2);
+
+	lookingUpAnimation->addTransition(&transitionIdle2);
+	lookingUpAnimation->addTransition(&transitionForward);
+	lookingUpAnimation->addTransition(&transitionBackward);
+
+	runAnimation->addTransition(&transitionRunIddle);
 
 	//add the states;
 	animations = new StateMachine<Animation>(idleAnimation);

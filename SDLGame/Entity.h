@@ -30,6 +30,7 @@ struct ControlEntity {
 		moveX = 0;
 		moveY = 0;
 		attack = 0;
+		run = false;
 		stateJump = JumpType::NONE;
 	}
 
@@ -39,6 +40,7 @@ struct ControlEntity {
 	int moveY;
 	JumpType stateJump;
 	int attack;
+	bool run;
 };
 
 class Entity : public IUpdater, public CollisionListener {

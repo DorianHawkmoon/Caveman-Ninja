@@ -3,6 +3,7 @@
 #include "MotionComponent.h"
 #include "ModulePlayer.h"
 #include "Application.h"
+#include <cmath>
 
 ModuleEnemy::ModuleEnemy(bool start_enabled) : Module(start_enabled) {
 	
@@ -56,15 +57,21 @@ update_status ModuleEnemy::update() {
 		controller->attack = 0;
 
 		Transform player = App->player->player->transform->getGlobalTransform();
-
+		float distance = abs(player.position.x - globalEnemy.position.x);
 		if (player.position.x < globalEnemy.position.x) {
 			controller->moveX -= 1;
 			trans->flip = SDL_FLIP_NONE;
+			if (distance > 150) {
+				controller->run = true;
+			}
 		}
 
 		if (player.position.x > globalEnemy.position.x) {
 			controller->moveX += 1;
 			trans->flip = SDL_FLIP_HORIZONTAL;
+			if (distance > 80) {
+				controller->run=true;
+			}
 		}
 
 		/*if (App->input->getKey(SDL_SCANCODE_W)) {
@@ -87,7 +94,7 @@ update_status ModuleEnemy::update() {
 		}*/
 
 		if (controller->moveY != 1) {
-			motion->velocity.x = controller->moveX * motion->speed;
+			motion->velocity.x = (controller->run)? (controller->moveX + 0.7) *motion->speed : controller->moveX * motion->speed;
 		} else {
 			motion->velocity.x = 0.0f;
 		}
