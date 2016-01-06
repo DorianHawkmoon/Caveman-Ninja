@@ -20,6 +20,7 @@ struct Transform {
 		Transform result;
 		result.position = position;
 		result.rotation = rotation;
+		result.flip = flip;
 		result.node = node;
 		return result;
 	}

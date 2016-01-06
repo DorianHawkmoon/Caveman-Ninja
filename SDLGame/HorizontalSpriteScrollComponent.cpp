@@ -52,17 +52,16 @@ update_status HorizontalSpriteScrollComponent::update() {
 
 update_status HorizontalSpriteScrollComponent::postUpdate() {
 	//paint the sprite
-	iPoint finalPosition(0,0);
-	fPoint fpos = parent->transform->getGlobalTransform().position;
-	finalPosition.x = static_cast<int>(fpos.x + offset.x);
-	finalPosition.y = static_cast<int>(fpos.y + offset.y);
+	Transform global = parent->transform->getGlobalTransform();
+	global.position.x += offset.x;
+	global.position.y += offset.y;
 
-	finalPosition.x += rect.w*(scrollingOffset-1);
-	App->renderer->blit(texture, finalPosition, &rect, iPoint(0,0), speedCamera);
-	finalPosition.x += rect.w;
+	global.position.x += rect.w*(scrollingOffset-1);
+	App->renderer->blit(texture, global, &rect, speedCamera);
+	global.position.x += rect.w;
 	for (int i = 0; i < numberToCover; ++i) {
-		App->renderer->blit(texture, finalPosition, &rect, iPoint(0, 0), speedCamera);
-		finalPosition.x += rect.w;
+		App->renderer->blit(texture, global, &rect, speedCamera);
+		global.position.x += rect.w;
 	}
 	return UPDATE_CONTINUE;
 }

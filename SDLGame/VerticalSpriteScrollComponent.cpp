@@ -51,17 +51,16 @@ update_status VerticalSpriteScrollComponent::update() {
 
 update_status VerticalSpriteScrollComponent::postUpdate() {
 	//paint the sprite
-	iPoint finalPosition(0, 0);
 	Transform global = parent->transform->getGlobalTransform();
-	finalPosition.x = static_cast<int>(global.position.x + offset.x);
-	finalPosition.y = static_cast<int>(global.position.y + offset.y);
+	global.position.x += offset.x;
+	global.position.y += offset.y;
 
-	finalPosition.x += rect.h*(scrollingOffset - 1);
-	App->renderer->blit(texture, finalPosition, &rect, iPoint(0,0), speedCamera);
-	finalPosition.x += rect.h;
+	global.position.y += rect.h*(scrollingOffset - 1);
+	App->renderer->blit(texture, global, &rect, speedCamera);
+	global.position.y += rect.h;
 	for (int i = 0; i < numberToCover; ++i) {
-		App->renderer->blit(texture, finalPosition, &rect, iPoint(0, 0), speedCamera);
-		finalPosition.x += rect.h;
+		App->renderer->blit(texture, global, &rect, speedCamera);
+		global.position.y += rect.h;
 	}
 	return UPDATE_CONTINUE;
 }

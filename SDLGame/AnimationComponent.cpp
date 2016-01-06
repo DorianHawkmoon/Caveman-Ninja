@@ -29,11 +29,11 @@ update_status AnimationComponent::update() {
 }
 
 update_status AnimationComponent::postUpdate() {
-	fPoint fpos = parent->transform->getGlobalTransform().position;
-	iPoint pos(static_cast<int>(fpos.x), static_cast<int>(fpos.y));
+	Transform global = parent->transform->getGlobalTransform();
 	Animation* anim = state->getState()->getValue();
-
-	App->renderer->blit(texture, pos, &(anim->GetCurrentFrame()), anim->offset, 1.0, parent->transform->flip);
+	global.position.x += anim->offset.x;
+	global.position.y += anim->offset.y;
+	App->renderer->blit(texture, global, &(anim->GetCurrentFrame()), 1.0);
 	return UPDATE_CONTINUE;
 }
 

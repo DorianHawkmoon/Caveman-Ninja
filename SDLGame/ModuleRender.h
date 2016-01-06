@@ -7,6 +7,7 @@
 #include "Point.h"
 #include "Collider.h"
 #include "Camera.h"
+#include "Transform.h"
 struct SDL_Texture;
 struct SDL_Renderer;
 
@@ -22,7 +23,7 @@ public:
 	update_status postUpdate();
 	bool cleanUp();
 
-	bool blit(SDL_Texture* texture, const iPoint& position, const SDL_Rect* sectionTexture,  const iPoint& offsetImage, float speed = 1.0f, const SDL_RendererFlip& flip = SDL_FLIP_NONE);
+	bool blit(SDL_Texture* texture, const Transform& transform, const SDL_Rect* sectionTexture, float speed = 1.0f);
 	bool paintCollision(const Collider* collision);
 	bool paintRectangle(const SDL_Color& color, const iPoint& position, const iPoint& rect, float speed=1.0f);
 	bool paintCircle(const SDL_Color& color, const fPoint& position, float radius, float speed = 1.0f);

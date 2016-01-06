@@ -9,8 +9,6 @@
 #include "ModuleTextures.h"
 #include <math.h>
 
-#include <string>
-#include <sstream>
 
 ModuleRender::ModuleRender(bool started ): 
 	Module(started), renderer(nullptr), camera({SCREEN_WIDTH * SCREEN_SIZE, SCREEN_HEIGHT* SCREEN_SIZE}) {
@@ -95,15 +93,13 @@ bool ModuleRender::cleanUp() {
 	return true;
 }
 
-bool ModuleRender::blit(SDL_Texture * texture, const iPoint& position, const SDL_Rect* sectionTexture, 
-	const iPoint& offsetImage, float speed, const SDL_RendererFlip& flip) {
+bool ModuleRender::blit(SDL_Texture * texture, const Transform& transform, const SDL_Rect* sectionTexture,  float speed) {
 	bool result = true;
 
 	SDL_Rect cam = camera.getViewArea(speed);
 
 	SDL_Rect rectDestiny;
-	iPoint pos = position;
-	pos += offsetImage;
+	iPoint pos = {(int)transform.position.x, (int)transform.position.y};
 	rectDestiny.x = static_cast<int>( pos.x  * SCREEN_SIZE - cam.x);
 	rectDestiny.y = static_cast<int>( pos.y  * SCREEN_SIZE - cam.y);
 	rectDestiny.w = 0;
@@ -127,7 +123,7 @@ bool ModuleRender::blit(SDL_Texture * texture, const iPoint& position, const SDL
 	if (SDL_HasIntersection(&sizeWindows, &rectDestiny) == SDL_TRUE) {
 		//paint
 		if (SDL_RenderCopyEx(renderer, texture, sectionTexture, &rectDestiny,
-								0.0f, nullptr, flip) != 0) {
+								0.0f, nullptr, transform.flip) != 0) {
 			LOG("Cannot blit to screen. SDL_RenderCopy error: %s", SDL_GetError());
 			result = false;
 		}

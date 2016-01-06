@@ -24,10 +24,10 @@ update_status SpriteComponent::postUpdate() {
 	iPoint finalPosition;
 	Transform* parentTransform = parent->transform;
 	Transform global = parentTransform->getGlobalTransform();
-	finalPosition.x= static_cast<int>(global.position.x + offset.x);
-	finalPosition.y = static_cast<int>(global.position.y + offset.y);
+	global.position.x += offset.x;
+	global.position.y += offset.y;
 	
-	App->renderer->blit(texture, finalPosition, &rect, iPoint(0,0), speedCamera);
+	App->renderer->blit(texture, global, &rect, speedCamera);
 	return UPDATE_CONTINUE;
 }
 
