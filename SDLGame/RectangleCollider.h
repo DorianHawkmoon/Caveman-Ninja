@@ -24,12 +24,13 @@ public:
 	bool checkCollision(const FloorCollider* other) const {return false;};
 	Collider* clone();
 
-	SDL_Rect getGlobalRectangle() const;
-
 	float rotation;
 private:
 	iPoint rect;
 	
+	bool checkCollisionRotated(const RectangleCollider* other, const Transform & otherTrans, const Transform & self) const;
+	std::vector<fPoint> getPoints(float totalRotation) const;
+	fPoint getCenter() const;
 };
 
 

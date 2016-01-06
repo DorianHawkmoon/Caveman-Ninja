@@ -7,7 +7,7 @@
 #include "ModuleTextures.h"
 #include "Camera.h"
 #include "Entity.h"
-#include <math.h>
+#include <cmath>
 
 VerticalSpriteScrollComponent::VerticalSpriteScrollComponent(std::string nameComponent, std::string nameTexture)
 	: IComponent(nameComponent), name(nameTexture), scrollingOffset(0), offset(0, 0), speedCamera(1.0f),

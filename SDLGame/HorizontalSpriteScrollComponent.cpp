@@ -5,7 +5,7 @@
 #include "ModuleTextures.h"
 #include "Camera.h"
 #include "Entity.h"
-#include <math.h>
+#include <cmath>
 
 HorizontalSpriteScrollComponent::HorizontalSpriteScrollComponent(std::string nameComponent, std::string nameTexture) 
 	: IComponent(nameComponent), name(nameTexture), scrollingOffset(0), offset(0,0), speedCamera(1.0f),
@@ -13,7 +13,6 @@ HorizontalSpriteScrollComponent::HorizontalSpriteScrollComponent(std::string nam
 
 
 HorizontalSpriteScrollComponent::~HorizontalSpriteScrollComponent() {
-	LOG("destroy one component");
 	//unload just in case
 	cleanUp();
 }

@@ -7,7 +7,7 @@
 #include "ModuleInput.h"
 #include "SDL/SDL.h"
 #include "ModuleTextures.h"
-#include <math.h>
+#include <cmath>
 
 
 ModuleRender::ModuleRender(bool started ): 

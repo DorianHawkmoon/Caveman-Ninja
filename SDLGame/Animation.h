@@ -5,7 +5,7 @@
 #include <vector>
 #include "Point.h"
 #include "SDL/SDL.h"
-#include <math.h>
+#include <cmath>
 #include "IUpdater.h"
 #include "Globals.h"
 

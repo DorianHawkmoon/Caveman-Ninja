@@ -46,9 +46,14 @@ public:
 
 	Transform getGlobalTransform() const{
 		if (parentTransform != nullptr) {
-			return parentTransform->getGlobalTransform();
+			Transform global=parentTransform->getGlobalTransform();
+			global.position += position;
+			return global;
+
 		} else {
-			return Transform();
+			Transform result;
+			result.position += position;
+			return result;
 		}
 	}
 

@@ -2,7 +2,8 @@
 #ifndef POINT_H
 #define POINT_H
 
-#include <math.h>
+#include <cmath>
+#define PI 3.141592653589793238463
 
 template<class TYPE>
 class Point {
@@ -54,6 +55,13 @@ public:
 		return (x != v.x || y != v.y);
 	}
 
+	Point operator * (TYPE f) const {
+		Point r;
+		r.x = f * x;
+		r.y = f * y;
+		return(r);
+	}
+
 	// Utils ------------------------------------------------
 	bool isZero() const {
 		return (x == 0 && y == 0);
@@ -67,6 +75,20 @@ public:
 	Point& negate() {
 		x = -x;
 		y = -y;
+
+		return(*this);
+	}
+
+	Point& rotate(float degrees) {
+		double rads = degrees * 2 * PI / 360.0;
+
+		double cosine = cos(rads);
+		double sine = sin(rads);
+		float tx = (float) (x * cosine - y * sine);
+		float ty = (float) (x * sine + y * cosine);
+
+		x = tx;
+		y = ty;
 
 		return(*this);
 	}
