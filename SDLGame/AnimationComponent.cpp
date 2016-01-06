@@ -33,6 +33,10 @@ update_status AnimationComponent::postUpdate() {
 	Animation* anim = state->getState()->getValue();
 	global.position.x += anim->offset.x;
 	global.position.y += anim->offset.y;
+	if (global.flip!=SDL_FLIP_NONE) {
+		global.position.x += anim->flippedOffset.x;
+		global.position.y += anim->flippedOffset.y;
+	}
 	App->renderer->blit(texture, global, &(anim->GetCurrentFrame()), 1.0);
 	return UPDATE_CONTINUE;
 }

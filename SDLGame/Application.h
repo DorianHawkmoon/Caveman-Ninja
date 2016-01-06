@@ -15,6 +15,7 @@ class ModuleScene;
 class ModuleAudio;
 class ModuleFadeToBlack;
 class ModulePlayer;
+class ModuleEnemy;
 class ModuleTimer;
 class ModuleCollision;
 
@@ -35,6 +36,7 @@ public:
 	ModuleScene* scene;
 	ModuleAudio* audio;
 	ModuleFadeToBlack* fade;
+	ModuleEnemy* enemies;
 	//ModuleParticles* particles;
 	ModuleCollision* collisions;
 	ModulePlayer* player;

@@ -47,7 +47,7 @@ void Gravity::onCollisionEnter(Collider * one, Collider * another) {
 	}
 
 	//wall/ground type?
-	if (another->type != TypeCollider::GROUND) {
+	if (another->type != TypeCollider::GROUND && another->type != TypeCollider::FLOOR) {
 		return;
 	}
 

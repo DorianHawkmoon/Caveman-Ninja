@@ -18,7 +18,8 @@ enum class TypeCollider {
 	PLAYER_SHOT = 1 << 3,
 	ENEMY_SHOT = 1 << 4,
 	ITEM = 1 << 5,
-	GROUND = 1 << 6
+	GROUND = 1 << 6,
+	FLOOR = 1 << 7,
 };
 
 class Collider : public IUpdater {

@@ -35,6 +35,7 @@ Collider * RectangleCollider::clone() {
 
 
 bool RectangleCollider::checkCollisionRotated(const RectangleCollider * other, const Transform & otherTrans, const Transform & self) const {
+	//Code from Ignacio Astorga
 	// Obtiene los puntos de los rectángulos
 	std::vector<fPoint> thisPoints = getPoints(self.rotation);
 	std::vector<fPoint> otherPoints = other->getPoints(otherTrans.rotation);
@@ -147,10 +148,18 @@ bool RectangleCollider::checkCollision(const CircleCollider * other) const {
 
 	//Closest point on collision box
 	iPoint closestPoint;
+
+
 	iPoint circle(static_cast<int>(globalCircle.x), 
 				static_cast<int>(globalCircle.y));
 
 	Transform rectTransform = getGlobalTransform();
+	rectTransform.rotation += rotation;
+	if (rectTransform.rotation != 0) {
+		fPoint thisCenter = {rectTransform.position.x+(rect.x/2.0f), rectTransform.position.y+(rect.y / 2.0f)};
+		circle.x = cos(rectTransform.rotation) * (globalCircle.x - thisCenter.x) - sin(rectTransform.rotation) * (globalCircle.y - thisCenter.y) + thisCenter.x;
+		circle.y = sin(rectTransform.rotation) * (globalCircle.x - thisCenter.x) + cos(rectTransform.rotation) * (globalCircle.y - thisCenter.y) + thisCenter.y;
+	}
 	fPoint global = rectTransform.position;
 	SDL_Rect positionRect = {static_cast<int>(global.x),
 		static_cast<int>(global.y),
@@ -185,7 +194,10 @@ bool RectangleCollider::checkCollision(const CircleCollider * other) const {
 
 
 std::vector<fPoint> RectangleCollider::getPoints(float totalRotation) const {
-	fPoint center = getCenter();
+	fPoint center = position;
+	if (parentTransform != nullptr) {
+		center += parentTransform->getGlobalTransform().position;
+	}
 	float pointOffsetX = rect.x / 2.0f;
 	float pointOffsetY = rect.y / 2.0f;
 	std::vector<fPoint> points = {

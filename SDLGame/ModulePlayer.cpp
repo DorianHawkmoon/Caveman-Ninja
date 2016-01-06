@@ -27,7 +27,7 @@ bool ModulePlayer::start(){
 	player->start();
 	started = started & ((motion = static_cast<MotionComponent*>(player->getComponent("motion")))!=nullptr);
 	started = started & ((jump = static_cast<JumpComponent*>(player->getComponent("jump"))) != nullptr);
-	player->transform->position = {100, 150};
+	player->transform->position = {100, 170};
 
 	App->renderer->camera.setCamera(player->transform);
 

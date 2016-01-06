@@ -46,6 +46,9 @@
     <Filter Include="Archivos de código fuente\Colliders">
       <UniqueIdentifier>{a60a20ce-9275-4ea0-b2a6-9e63929a7c9e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Archivos de código fuente\Entities\EnemyProperties">
+      <UniqueIdentifier>{39c7245a-dc98-437c-b65e-589a50f69de7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Log.cpp">
@@ -146,6 +149,12 @@
     </ClCompile>
     <ClCompile Include="CollisionComponent.cpp">
       <Filter>Archivos de código fuente\Entities\Properties</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy.cpp">
+      <Filter>Archivos de código fuente\Entities\Factories</Filter>
+    </ClCompile>
+    <ClCompile Include="ModuleEnemy.cpp">
+      <Filter>Archivos de código fuente\Game Modules</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -280,6 +289,12 @@
     </ClInclude>
     <ClInclude Include="IUpdater.h">
       <Filter>Archivos de código fuente\Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy.h">
+      <Filter>Archivos de código fuente\Entities\Factories</Filter>
+    </ClInclude>
+    <ClInclude Include="ModuleEnemy.h">
+      <Filter>Archivos de código fuente\Game Modules</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

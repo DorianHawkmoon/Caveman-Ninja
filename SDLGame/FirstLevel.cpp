@@ -15,6 +15,10 @@
 #include "Point.h"
 #include "RectangleCollider.h"
 
+#include "Transform.h"
+#include "Enemy.h"
+#include "ModuleEnemy.h"
+
 FirstLevel::FirstLevel() {
 	
 }
@@ -63,7 +67,7 @@ bool FirstLevel::start() {
 	buffer->addComponent(sprite);
 
 	iPoint rectCollider = {1088, 20};
-	RectangleCollider* collider = new RectangleCollider(fPoint(0, 226), rectCollider, 0, TypeCollider::GROUND);
+	RectangleCollider* collider = new RectangleCollider(fPoint(0, 226), rectCollider, 0, TypeCollider::FLOOR);
 	CollisionComponent* colliderComponent = new CollisionComponent("ground", collider);
 	buffer->addComponent(colliderComponent);
 
@@ -77,21 +81,53 @@ bool FirstLevel::start() {
 	colliderComponent = new CollisionComponent("rightLateral", collider);
 	buffer->addComponent(colliderComponent);
 
+	/*rectCollider = {50,15};
+	collider = new RectangleCollider(fPoint(512, 125), rectCollider, -30, TypeCollider::GROUND);
+	colliderComponent = new CollisionComponent("pata", collider);
+	buffer->addComponent(colliderComponent);
+	rectCollider = {25,15};
+	collider = new RectangleCollider(fPoint(550, 115), rectCollider, 0, TypeCollider::GROUND);
+	colliderComponent = new CollisionComponent("pata2", collider);
+	buffer->addComponent(colliderComponent);
+	rectCollider = {40,15};*/
+	/*
+	fPoint(520, 129),
+	fPoint(550, 115),
+	fPoint(562, 115),
+	fPoint(576, 124),
+	fPoint(587, 145)
+	*/
+	/*collider = new RectangleCollider(fPoint(560, 120), rectCollider, 45, TypeCollider::GROUND);
+	colliderComponent = new CollisionComponent("pata3", collider);
+	buffer->addComponent(colliderComponent);*/
 
 	//adding collisions tests
-	Entity* collisions = new Entity();
+	/*Entity* collisions = new Entity();
 	
 	RectangleCollider* rectangle = new RectangleCollider(fPoint(100, 100), iPoint(28,47), 45, TypeCollider::NONE_COLLIDER);
 	CollisionComponent* collider2 = new CollisionComponent("collider", rectangle);
 	collisions->addComponent(collider2);
 
-	CircleCollider* circle = new CircleCollider(fPoint(170, 190), 5, TypeCollider::NONE_COLLIDER);
+	CircleCollider* circle = new CircleCollider(fPoint(180, 190), 5, TypeCollider::NONE_COLLIDER);
 	collider2 = new CollisionComponent("collider2", circle);
-	collisions->addComponent(collider2);
-
+	collisions->addComponent(collider2);*/
 	
 	root->addChild(buffer);
-	root->addChild(collisions);
+	//root->addChild(collisions);
+
+	buffer = Enemy::makeEnemy();
+	//buffer->transform->flip = SDL_FLIP_HORIZONTAL;
+	buffer->transform->position = {150, 170};
+	App->enemies->registerEnemy(buffer);
+	root->addChild(buffer);
+
+	buffer = Enemy::makeEnemy();
+	buffer->transform->flip = SDL_FLIP_HORIZONTAL;
+	buffer->transform->position = {20, 170};
+	App->enemies->registerEnemy(buffer);
+	root->addChild(buffer);
+
+
 	root->start();
 	return true;
 }

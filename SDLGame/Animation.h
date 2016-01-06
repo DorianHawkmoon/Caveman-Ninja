@@ -12,7 +12,7 @@
 class Animation : public IUpdater{
 
 public:
-	Animation(int numberFrames) : numberFrames(numberFrames), sizeFrame(), offset(0,0), speed(1.0f), current_frame(0.0f), repeat(-1) {
+	Animation(int numberFrames) : numberFrames(numberFrames), sizeFrame(), offset(0,0), speed(1.0f), current_frame(0.0f), repeat(-1), flippedOffset(0,0) {
 
 	}
 
@@ -67,6 +67,7 @@ public:
 	SDL_Rect sizeFrame;
 	int numberFrames;
 	iPoint offset;
+	iPoint flippedOffset;
 };
 
 #endif // !ANIMATION_H
