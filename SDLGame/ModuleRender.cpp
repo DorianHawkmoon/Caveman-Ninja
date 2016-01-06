@@ -47,6 +47,7 @@ bool ModuleRender::init() {
 
 bool ModuleRender::start() {
 	circle = App->textures->load("circle_64.png");
+	rectangle = App->textures->load("square_64.png");
 	return true;
 }
 
@@ -161,6 +162,53 @@ bool ModuleRender::paintRectangle(const SDL_Color& color, const iPoint& position
 	}
 
 	
+	return result;
+}
+
+bool ModuleRender::paintRectangle(const SDL_Color & color, const Transform & transform, const iPoint & rect, float speed) {
+	// Determina la posición del dibujo en pantalla
+	//renderPosition += offset.Rotate(transform->GetGlobalRotation());
+	//escala de la textura con tamaño real
+	fPoint renderScale = fPoint(rect.x / 64.0f, rect.y/ 64.0f);
+
+
+
+	// Determina el área donde pintar en función de la escala
+	SDL_Rect cam = camera.getViewArea(speed);
+
+	SDL_Rect rectDestiny;
+	iPoint pos = {(int) transform.position.x, (int) transform.position.y};
+	rectDestiny.x = static_cast<int>(pos.x  * SCREEN_SIZE - cam.x);
+	rectDestiny.y = static_cast<int>(pos.y  * SCREEN_SIZE - cam.y);
+	rectDestiny.w = 0;
+	rectDestiny.h = 0;
+
+	//if not, ask the whole texture
+	SDL_QueryTexture(rectangle, nullptr, nullptr, &rectDestiny.w, &rectDestiny.h);
+	
+	rectDestiny.w *= SCREEN_SIZE * renderScale.x;
+	rectDestiny.h *= SCREEN_SIZE * renderScale.y;
+
+	// Determina el color de la textura
+	bool result = true;
+	if (SDL_SetTextureColorMod(rectangle, color.r, color.g, color.b)) {
+		LOG("Cannot tint texture. SDL_SetTextureColorMod error: %s", SDL_GetError());
+		result = false;
+	}
+
+	// Determina la transparencia de la textura
+	if (SDL_SetTextureAlphaMod(rectangle, color.a)) {
+		LOG("Cannot change texture opacity. SDL_SetTextureAlphaMod error: %s", SDL_GetError());
+		result = false;
+	}
+
+	// Renderiza la textura
+	//pivot is nullptr because is middle of rectangle
+	if (SDL_RenderCopyEx(renderer, rectangle, nullptr, &rectDestiny, transform.rotation, nullptr, transform.flip) != 0) {
+		LOG("Cannot blit to screen. SDL_RenderCopyEx error: %s", SDL_GetError());
+		result = false;
+	}
+
 	return result;
 }
 

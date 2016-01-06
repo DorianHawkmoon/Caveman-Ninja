@@ -5,10 +5,10 @@
 #include "Point.h"
 #include <list>
 #include "IUpdater.h"
+#include "Transform.h"
 class CircleCollider;
 class RectangleCollider;
 class CollisionListener;
-struct Transform;
 
 enum class TypeCollider {
 	NONE_COLLIDER = 0,
@@ -43,6 +43,14 @@ public:
 	virtual bool checkSpecificCollision(const Collider* self) const = 0;
 	virtual bool checkCollision(const RectangleCollider* other) const = 0;
 	virtual bool checkCollision(const CircleCollider* other) const = 0;
+
+	Transform getGlobalTransform() const{
+		if (parentTransform != nullptr) {
+			return parentTransform->getGlobalTransform();
+		} else {
+			return Transform();
+		}
+	}
 
 public:
 	fPoint position;

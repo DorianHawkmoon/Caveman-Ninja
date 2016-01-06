@@ -81,7 +81,7 @@ bool FirstLevel::start() {
 	//adding collisions tests
 	Entity* collisions = new Entity();
 	
-	RectangleCollider* rectangle = new RectangleCollider(fPoint(50, 100), iPoint(28,47), 0, TypeCollider::NONE_COLLIDER);
+	RectangleCollider* rectangle = new RectangleCollider(fPoint(50, 100), iPoint(28,47), 45, TypeCollider::NONE_COLLIDER);
 	CollisionComponent* collider2 = new CollisionComponent("collider", rectangle);
 	collisions->addComponent(collider2);
 

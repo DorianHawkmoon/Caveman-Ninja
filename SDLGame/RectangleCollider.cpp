@@ -9,18 +9,23 @@ RectangleCollider::RectangleCollider(fPoint& position, iPoint& rectangle, float 
 
 void RectangleCollider::paintCollider() const {
 	//get global
-	fPoint global;
-	if (parentTransform != nullptr) {
-		global = parentTransform->position;
-	}
-	global += position;
-	iPoint pos(static_cast<int>(global.x), static_cast<int>(global.y));
+	Transform global = getGlobalTransform();
+	global.position += position;
+	global.rotation += rotation;
 	SDL_Color color;
 	color.b = 255;
 	color.r = 255;
 	color.g = 255;
 	color.a = 150;
-	App->renderer->paintRectangle(color, pos, rect);
+
+	if (global.rotation == 0) {
+		iPoint pos(static_cast<int>(global.position.x), static_cast<int>(global.position.y));
+
+		App->renderer->paintRectangle(color, pos, rect);
+	} else {
+		//const SDL_Color & color, const Transform & transform, const iPoint & rect, float speed
+		App->renderer->paintRectangle(color, global, rect);
+	}
 }
 
 
