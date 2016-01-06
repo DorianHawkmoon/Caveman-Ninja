@@ -42,6 +42,7 @@ Entity * Joe::makeJoe() {
 	MotionComponent* motion = new MotionComponent("motion");
 	motion->velocity.x = 0;
 	motion->velocity.y = 0;
+	motion->speed = 50;
 	result->addComponent(motion);
 	
 	makeAnimations(result);

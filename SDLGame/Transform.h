@@ -11,20 +11,16 @@ struct Transform {
 	virtual ~Transform();
 
 	SDL_RendererFlip flip;
-	float speed;
 	fPoint position;
-	//float rotation; // not used
-	//fPoint scale; //not used
+	float rotation;
 	SceneNode* node;
 
 	//copy
 	Transform getLocalTransform() const {
 		Transform result;
 		result.position = position;
-		result.speed = speed;
-		//result.rotation = rotation;
-		//result.scale = scale;
-		result.node = nullptr;
+		result.rotation = rotation;
+		result.node = node;
 		return result;
 	}
 
@@ -39,12 +35,9 @@ struct Transform {
 
 	Transform operator =(const Transform &v) const {
 		Transform r;
-		r.setToZero();
 		r.flip =  v.flip;
-		r.speed = v.speed;
 		r.position = v.position;
-		//r.scale = v.scale;
-		//r.rotation = v.rotation;
+		r.rotation = v.rotation;
 
 		return(r);
 	}
@@ -53,10 +46,8 @@ struct Transform {
 	Transform operator -(const Transform &v) const {
 		Transform r;
 		r.flip = static_cast<SDL_RendererFlip>(flip & (!v.flip));
-		r.speed = speed - v.speed;
 		r.position = position - v.position;
-		//r.scale = scale - v.scale;
-		//r.rotation = rotation - v.rotation;
+		r.rotation = rotation - v.rotation;
 
 		return(r);
 	}
@@ -64,30 +55,24 @@ struct Transform {
 	Transform operator + (const Transform &v) const {
 		Transform r;
 		r.flip = static_cast<SDL_RendererFlip>(flip | v.flip);
-		r.speed = speed + v.speed;
 		r.position = position + v.position;
-		//r.scale = scale + v.scale;
-		//r.rotation = rotation + v.rotation;
+		r.rotation = rotation + v.rotation;
 
 		return(r);
 	}
 
 	const Transform& operator -=(const Transform &v) {
 		flip = static_cast<SDL_RendererFlip>(flip & (!v.flip));
-		speed -= v.speed;
 		position -= v.position;
-		//scale -= v.scale;
-		//rotation -= v.rotation;
+		rotation -= v.rotation;
 
 		return(*this);
 	}
 
 	const Transform& operator +=(const Transform &v) {
 		flip = static_cast<SDL_RendererFlip>(flip | v.flip);
-		speed += v.speed;
 		position += v.position;
-		//scale += v.scale;
-		//rotation += v.rotation;
+		rotation += v.rotation;
 
 		return(*this);
 	}

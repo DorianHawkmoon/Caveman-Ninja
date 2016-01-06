@@ -3,7 +3,7 @@
 #include "Entity.h"
 #include "Joe.h"
 #include "MotionComponent.h"
-
+#include "ModuleRender.h"
 #include "Application.h"
 #include "ModuleInput.h"
 #include "SDL\SDL_keycode.h"
@@ -28,7 +28,8 @@ bool ModulePlayer::start(){
 	started = started & ((motion = static_cast<MotionComponent*>(player->getComponent("motion")))!=nullptr);
 	started = started & ((jump = static_cast<JumpComponent*>(player->getComponent("jump"))) != nullptr);
 	player->transform->position = {100, 150};
-	player->transform->speed=50;
+
+	App->renderer->camera.setCamera(player->transform);
 
 	return started;
 }
@@ -84,7 +85,7 @@ update_status ModulePlayer::update(){
 	}
 
 	if (controller->moveY != 1) {
-		motion->velocity.x = controller->moveX * player->transform->speed;
+		motion->velocity.x = controller->moveX * motion->speed;
 	} else {
 		motion->velocity.x = 0.0f;
 	}

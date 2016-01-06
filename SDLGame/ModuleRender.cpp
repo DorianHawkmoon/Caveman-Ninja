@@ -13,7 +13,7 @@
 #include <sstream>
 
 ModuleRender::ModuleRender(bool started ): 
-	Module(started), renderer(nullptr), camera(SCREEN_WIDTH * SCREEN_SIZE, SCREEN_HEIGHT* SCREEN_SIZE) {
+	Module(started), renderer(nullptr), camera({SCREEN_WIDTH * SCREEN_SIZE, SCREEN_HEIGHT* SCREEN_SIZE}) {
 
 }
 
