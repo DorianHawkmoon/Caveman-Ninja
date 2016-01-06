@@ -29,6 +29,7 @@
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="Gravity.cpp" />
     <ClCompile Include="HorizontalSpriteScrollComponent.cpp" />
+    <ClCompile Include="IAComponent.cpp" />
     <ClCompile Include="IComponent.cpp" />
     <ClCompile Include="Joe.cpp" />
     <ClCompile Include="JumpComponent.cpp" />
@@ -36,7 +37,6 @@
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="ModuleAudio.cpp" />
     <ClCompile Include="ModuleCollision.cpp" />
-    <ClCompile Include="ModuleEnemy.cpp" />
     <ClCompile Include="ModuleFadeToBlack.cpp" />
     <ClCompile Include="ModuleInput.cpp" />
     <ClCompile Include="ModulePlayer.cpp" />
@@ -69,6 +69,7 @@
     <ClInclude Include="ConditionComparison.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="Gravity.h" />
+    <ClInclude Include="IAComponent.h" />
     <ClInclude Include="IUpdater.h" />
     <ClInclude Include="HorizontalSpriteScrollComponent.h" />
     <ClInclude Include="Entity.h" />
@@ -79,7 +80,6 @@
     <ClInclude Include="Module.h" />
     <ClInclude Include="ModuleAudio.h" />
     <ClInclude Include="ModuleCollision.h" />
-    <ClInclude Include="ModuleEnemy.h" />
     <ClInclude Include="ModuleFadeToBlack.h" />
     <ClInclude Include="ModuleInput.h" />
     <ClInclude Include="ModulePlayer.h" />
@@ -101,6 +101,7 @@
     <ClInclude Include="Timer.h" />
     <ClInclude Include="TimerCondition.h" />
     <ClInclude Include="Transform.h" />
+    <ClInclude Include="Utils.h" />
     <ClInclude Include="VerticalSpriteScrollComponent.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

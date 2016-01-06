@@ -153,8 +153,8 @@
     <ClCompile Include="Enemy.cpp">
       <Filter>Archivos de código fuente\Entities\Factories</Filter>
     </ClCompile>
-    <ClCompile Include="ModuleEnemy.cpp">
-      <Filter>Archivos de código fuente\Game Modules</Filter>
+    <ClCompile Include="IAComponent.cpp">
+      <Filter>Archivos de código fuente</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -293,8 +293,11 @@
     <ClInclude Include="Enemy.h">
       <Filter>Archivos de código fuente\Entities\Factories</Filter>
     </ClInclude>
-    <ClInclude Include="ModuleEnemy.h">
-      <Filter>Archivos de código fuente\Game Modules</Filter>
+    <ClInclude Include="Utils.h">
+      <Filter>Archivos de código fuente\Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="IAComponent.h">
+      <Filter>Archivos de encabezado</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

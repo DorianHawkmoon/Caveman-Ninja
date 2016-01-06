@@ -17,7 +17,6 @@
 
 #include "Transform.h"
 #include "Enemy.h"
-#include "ModuleEnemy.h"
 
 FirstLevel::FirstLevel() {
 	
@@ -118,13 +117,11 @@ bool FirstLevel::start() {
 	buffer = Enemy::makeEnemy();
 	//buffer->transform->flip = SDL_FLIP_HORIZONTAL;
 	buffer->transform->position = {150, 170};
-	App->enemies->registerEnemy(buffer);
 	root->addChild(buffer);
 
 	buffer = Enemy::makeEnemy();
 	buffer->transform->flip = SDL_FLIP_HORIZONTAL;
 	buffer->transform->position = {20, 170};
-	App->enemies->registerEnemy(buffer);
 	root->addChild(buffer);
 
 

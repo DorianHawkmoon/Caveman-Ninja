@@ -9,7 +9,6 @@
 #include "ModuleFadeToBlack.h"
 #include "ModuleTimer.h"
 #include "ModuleCollision.h"
-#include "ModuleEnemy.h"
 #include "SDL/SDL.h"
 
 Application::Application() {
@@ -22,7 +21,6 @@ Application::Application() {
 
 	// Game Modules
 	modules.push_back(scene = new ModuleScene());
-	modules.push_back(enemies = new ModuleEnemy());
 	modules.push_back(player = new ModulePlayer());
 
 	/*modules.push_back(particles = new ModuleParticles());*/

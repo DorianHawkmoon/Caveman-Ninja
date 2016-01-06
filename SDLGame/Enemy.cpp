@@ -20,6 +20,9 @@
 #include "CircleCollider.h"
 #include "CollisionComponent.h"
 #include "SDL\SDL_rect.h"
+#include "IAComponent.h"
+#include "Utils.h"
+#include "ModulePlayer.h"
 
 Entity * Enemy::makeEnemy() {
 	//prepare the entity for the player
@@ -46,6 +49,7 @@ Entity * Enemy::makeEnemy() {
 	result->addComponent(motion);
 
 	makeAnimations(result);
+	makeBehaviour(result);
 
 	return result;
 }
@@ -165,4 +169,83 @@ void Enemy::makeAnimations(Entity* entity) {
 	//create the component
 	AnimationComponent* component = new AnimationComponent("animations", "troglodita.png", animations);
 	entity->addComponent(component);
+}
+
+void Enemy::makeBehaviour(Entity * entity) {
+	IAComponent* IA = new IAComponent("IA");
+	entity->addComponent(IA);
+
+	IA->ticks = 1000;
+
+	IA->functionUpdate = [](Entity* entity, bool ticked) {
+		ControlEntity* controller = &entity->controller;
+		Transform* trans = entity->transform;
+		Transform globalEnemy = trans->getGlobalTransform();
+
+		//check collision with player
+		//fPoint& position, iPoint& rectangle, float rotation, TypeCollider type
+		//ancho negativo o positivo, rectangulo, 0, none
+		/* fPoint position = {0,0};
+		iPoint rectangle = {0,0};
+		RectangleCollider colliderCheck = RectangleCollider(position, rectangle, 0, TypeCollider::ENEMY);
+		const Collider* colliderPlayer = static_cast<CollisionComponent*>(App->player->player->getComponent("collider"))->getCollider();
+
+		if (colliderPlayer->checkCollision(&colliderCheck)) {
+		//inmediatly react attacking
+
+		}*/
+
+		if (ticked) {
+			MotionComponent* motion = static_cast<MotionComponent*>(entity->getComponent("motion"));
+
+			controller->moveX = 0;
+			controller->moveY = 0;
+			controller->attack = 0;
+
+			Transform player = App->player->player->transform->getGlobalTransform();
+			float distance = abs(player.position.x - globalEnemy.position.x);
+			if (player.position.x < globalEnemy.position.x) {
+				controller->moveX -= 1;
+				trans->flip = SDL_FLIP_NONE;
+				if (distance > 150) {
+					controller->run = true;
+				}
+			}
+
+			if (player.position.x > globalEnemy.position.x) {
+				controller->moveX += 1;
+				trans->flip = SDL_FLIP_HORIZONTAL;
+				if (distance > 80) {
+					controller->run = true;
+				}
+			}
+
+			/*if (App->input->getKey(SDL_SCANCODE_W)) {
+			controller->moveY -= 1;
+			}
+
+			if (App->input->getKey(SDL_SCANCODE_S)) {
+			controller->moveY += 1;
+			}*/
+
+
+			//don't jump again when jumping or falling
+			/*if (App->input->getKey(SDL_SCANCODE_KP_0) && controller->stateJump == JumpType::NONE) {
+			if (App->input->getKey(SDL_SCANCODE_W)) {
+			controller->stateJump = JumpType::DOUBLE_JUMP;
+			} else {
+			controller->stateJump = JumpType::JUMP;
+			}
+			}*/
+
+			if (controller->moveY != 1) {
+				motion->velocity.x = (controller->run) ?
+					(controller->moveX + 0.7 * sgn(controller->moveX)) * motion->speed
+					: controller->moveX * motion->speed;
+			} else {
+				motion->velocity.x = 0.0f;
+			}
+		}
+	};
+
 }
