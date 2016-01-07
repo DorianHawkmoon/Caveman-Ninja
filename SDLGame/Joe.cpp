@@ -49,6 +49,7 @@ Entity * Joe::makeJoe() {
 	motion->velocity.x = 0;
 	motion->velocity.y = 0;
 	motion->speed = 50;
+	motion->doubleSpeed = 50;
 	result->addComponent(motion);
 
 	LifeComponent* life = new LifeComponent("life",100);
@@ -197,7 +198,7 @@ void Joe::makeAnimations(Entity* entity) {
 
 	startJumpAnimation->addTransition(&transitionJump);//solo desde start animation pasa a jump o double jump
 	startJumpAnimation->addTransition(&transitionDoubleJump);
-	startJumpAnimation->addTransition(&transitionFallToIdle);
+	//startJumpAnimation->addTransition(&transitionFallToIdle);
 
 	jumpAnimation->addTransition(&transitionFall);
 	doubleJumpAnimation->addTransition(&transitionFall);

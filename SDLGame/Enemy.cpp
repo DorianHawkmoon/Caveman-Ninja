@@ -42,11 +42,12 @@ Entity * Enemy::makeEnemy() {
 	motion->velocity.x = 0;
 	motion->velocity.y = 0;
 	motion->speed = 25;
+	motion->doubleSpeed = 75;
 	result->addComponent(motion);
 
 	IAComponent* IA = new EnemyBehaviour("IA");
 	result->addComponent(IA);
-	IA->ticks = 2000;
+	IA->ticks = 100;
 
 	makeAnimations(result);
 
@@ -69,6 +70,19 @@ void Enemy::makeAnimations(Entity* entity) {
 	Animation endFall(1);
 	Animation run(4);
 	Animation attack(3);
+	Animation startRunningAway(3);
+	Animation runningAway(5);
+
+	runningAway.sizeFrame = {384,640,128,128};
+	runningAway.offset = {-53,-82};
+	runningAway.flippedOffset.x = 3;
+	runningAway.speed = 0.4f;
+
+	startRunningAway.sizeFrame = {0,640,128,128};
+	startRunningAway.offset = {-53, -82};
+	startRunningAway.flippedOffset.x = 3;
+	startRunningAway.repeat = 2;
+	startRunningAway.speed = 0.3f;
 
 	down.sizeFrame = {128, 384, 128, 128};
 	down.offset = {-51,-82};
@@ -90,7 +104,7 @@ void Enemy::makeAnimations(Entity* entity) {
 	attack.sizeFrame = {0,256,128,128};
 	attack.offset = {-53,-82};
 	attack.flippedOffset.x = 3;
-	attack.speed = 0.05f;
+	attack.speed = 0.18f;
 	attack.repeat = 1;
 
 	startFall.sizeFrame = {640,0,128,128};
@@ -121,6 +135,8 @@ void Enemy::makeAnimations(Entity* entity) {
 	State<Animation>* endFallAnimation = new State<Animation>(endFall);
 	State<Animation>* runAnimation = new State<Animation>(run);
 	State<Animation>* attackAnimation = new State<Animation>(attack);
+	State<Animation>* startRunningAwayAnimation = new State<Animation>(startRunningAway);
+	State<Animation>* runningAwayAnimation = new State<Animation>(runningAway);
 
 	//conditions
 	ConditionComparison<int> conditionForward = ConditionComparison<int>(&controller->moveX, 1);
@@ -130,6 +146,8 @@ void Enemy::makeAnimations(Entity* entity) {
 	ConditionComparison<int> conditionDown = ConditionComparison<int>(&controller->moveY, 1);
 	ConditionComparison<int> conditionLookingUp = ConditionComparison<int>(&controller->moveY, -1);
 	ConditionComparison<int> conditionAttack = ConditionComparison<int>(&controller->attack, 1);
+	ConditionComparison<int> conditionStartRunningAway = ConditionComparison<int>(&controller->attack, 2);
+	ConditionComparison<int> conditionRunningAway = ConditionComparison<int>(&controller->attack, 3);
 	ConditionComparison<bool> conditionRun = ConditionComparison<bool>(&controller->run, true);
 	ConditionComparison<bool> conditionNotRun = ConditionComparison<bool>(&controller->run, false);
 
@@ -143,6 +161,8 @@ void Enemy::makeAnimations(Entity* entity) {
 	StateTransition<Animation> transitionRun = StateTransition<Animation>(runAnimation, &conditionRun);
 	StateTransition<Animation> transitionRunIddle = StateTransition<Animation>(runAnimation, &conditionNotRun);
 	StateTransition<Animation> transitionAttack = StateTransition<Animation>(attackAnimation, &conditionAttack);
+	StateTransition<Animation> transitionStartRunningAway = StateTransition<Animation>(startRunningAwayAnimation, &conditionStartRunningAway);
+	StateTransition<Animation> transitionRunningAway = StateTransition<Animation>(runningAwayAnimation, &conditionRunningAway);
 
 	//add the transitions to the states
 	idleAnimation->addTransition(&transitionForward);
@@ -167,6 +187,9 @@ void Enemy::makeAnimations(Entity* entity) {
 	runAnimation->addTransition(&transitionRunIddle);
 	runAnimation->addTransition(&transitionAttack);
 
+	attackAnimation->addTransition(&transitionStartRunningAway);
+	startRunningAwayAnimation->addTransition(&transitionRunningAway);
+
 	//add the states;
 	animations = new StateMachine<Animation>(idleAnimation);
 	animations->addState(forwardAnimation);
@@ -178,6 +201,8 @@ void Enemy::makeAnimations(Entity* entity) {
 	animations->addState(endFallAnimation);
 	animations->addState(runAnimation);
 	animations->addState(attackAnimation);
+	animations->addState(startRunningAwayAnimation);
+	animations->addState(runningAwayAnimation);
 
 	//create the component
 	AnimationComponent* component = new AnimationComponent("animations", "troglodita.png", animations);

@@ -19,6 +19,7 @@ public:
 public:
 	fPoint velocity;
 	float speed;
+	float doubleSpeed;
 };
 
 
