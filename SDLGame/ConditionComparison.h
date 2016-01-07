@@ -5,6 +5,7 @@
 #include "Condition.h"
 enum Compare {
 	EQUAL,
+	NON_EQUAL,
 	GREATER,
 	LESS,
 	GREATER_EQUAL,
@@ -22,6 +23,9 @@ public:
 		switch (comparison) {
 			case EQUAL:
 				result =*watch == trigger;
+				break;
+			case NON_EQUAL:
+				result = *watch != trigger;
 				break;
 			case GREATER:
 				result = *watch > trigger;

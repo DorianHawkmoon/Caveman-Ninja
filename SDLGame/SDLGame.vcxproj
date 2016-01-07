@@ -25,9 +25,11 @@
     <ClCompile Include="CircleCollider.cpp" />
     <ClCompile Include="Collider.cpp" />
     <ClCompile Include="CollisionComponent.cpp" />
+    <ClCompile Include="DisappearOutCamera.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="EnemyBehaviour.cpp" />
     <ClCompile Include="Entity.cpp" />
+    <ClCompile Include="EntryScene.cpp" />
     <ClCompile Include="Gravity.cpp" />
     <ClCompile Include="HorizontalSpriteScrollComponent.cpp" />
     <ClCompile Include="IAComponent.cpp" />
@@ -70,8 +72,10 @@
     <ClInclude Include="Condition.h" />
     <ClInclude Include="ConditionCallback.h" />
     <ClInclude Include="ConditionComparison.h" />
+    <ClInclude Include="DisappearOutCamera.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="EnemyBehaviour.h" />
+    <ClInclude Include="EntryScene.h" />
     <ClInclude Include="Gravity.h" />
     <ClInclude Include="IAComponent.h" />
     <ClInclude Include="IUpdater.h" />

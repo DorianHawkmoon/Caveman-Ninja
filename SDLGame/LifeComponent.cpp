@@ -24,6 +24,6 @@ int LifeComponent::getMaxLife() const {
 	return maxLife;
 }
 
-inline bool LifeComponent::isDead() const {
-	return actualLife <= 0;
+bool LifeComponent::isAlive() const {
+	return actualLife > 0;
 }

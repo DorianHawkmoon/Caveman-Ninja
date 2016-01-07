@@ -39,8 +39,6 @@ public:
 		return true;
 	}
 
-	
-
 private:
 	bool active;
 };

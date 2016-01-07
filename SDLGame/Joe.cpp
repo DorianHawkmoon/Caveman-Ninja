@@ -62,7 +62,6 @@ Entity * Joe::makeJoe() {
 
 
 void Joe::makeAnimations(Entity* entity) {
-	//TODO align images and center collider to image
 	ControlEntity* controller = &entity->controller;
 	StateMachine<Animation>* animations;
 
@@ -74,21 +73,26 @@ void Joe::makeAnimations(Entity* entity) {
 	Animation jump(1);
 	Animation doubleJump(8);
 	Animation fall(1);
-	/*Animation backHit(1);
-	Animation frontHit(1);*/
+	Animation backHit(1);
+	Animation frontHit(1);
 
 	down.sizeFrame = {128, 0, 64, 64};
 	down.offset = {-18,-17};
+
 	lookingUp.sizeFrame = {64, 0, 64, 64};
 	lookingUp.offset = {-18,-17};
+
 	idle.sizeFrame={0, 0, 64, 64};
 	idle.offset = {-18,-17};
+
 	fall.sizeFrame = {320, 0, 64, 64};
 	fall.offset = {-18,-17};
-	/*backHit.sizeFrame = {0, 201, 55, 53};
-	frontHit.sizeFrame = {55, 206, 46, 48};*/
+
 	startJump.sizeFrame = {192,0,64,64};
 	startJump.offset = {-18,-17};
+
+	backHit.sizeFrame = {0, 201, 55, 53};
+	frontHit.sizeFrame = {55, 206, 46, 48};
 
 	jump.sizeFrame = {256,0,64,64};
 	jump.offset = {-18, -17};
@@ -110,8 +114,8 @@ void Joe::makeAnimations(Entity* entity) {
 	State<Animation>* jumpAnimation = new State<Animation>(jump);
 	State<Animation>* doubleJumpAnimation = new State<Animation>(doubleJump);
 	State<Animation>* fallAnimation = new State<Animation>(fall);
-	//State<Animation>* backHitAnimation = new State<Animation>(backHit);
-	//State<Animation>* frontHitAnimation = new State<Animation>(frontHit);
+	State<Animation>* backHitAnimation = new State<Animation>(backHit);
+	State<Animation>* frontHitAnimation = new State<Animation>(frontHit);
 
 	//condiciones
 	ConditionComparison<int> conditionForward = ConditionComparison<int>(&controller->moveX, 1);
@@ -131,7 +135,6 @@ void Joe::makeAnimations(Entity* entity) {
 		return result;
 	});
 	ConditionComparison<JumpType> conditionJumpDown = ConditionComparison<JumpType>(&controller->stateJump, JumpType::JUMP_DOWN);
-
 	ConditionComparison<JumpType> conditionStartJump1 = ConditionComparison<JumpType>(&controller->stateJump, JumpType::JUMP);
 	ConditionComparison<JumpType> conditionStartJump2 = ConditionComparison<JumpType>(&controller->stateJump, JumpType::DOUBLE_JUMP);
 	ConditionComparison<JumpType> conditionJump = ConditionComparison<JumpType>(&controller->stateJump, JumpType::JUMP);
@@ -146,6 +149,8 @@ void Joe::makeAnimations(Entity* entity) {
 		}
 		return result;
 	});
+	ConditionComparison<int> conditionBackDamage = ConditionComparison<int>(&controller->damage, -1);
+	ConditionComparison<int> conditionFrontDamage = ConditionComparison<int>(&controller->damage, 1);
 
 	//transitions
 	StateTransition<Animation> transitionForward = StateTransition<Animation>(forwardAnimation, &conditionForward);
@@ -157,7 +162,9 @@ void Joe::makeAnimations(Entity* entity) {
 	StateTransition<Animation> transitionJumpDown = StateTransition<Animation>(fallAnimation, &conditionJumpDown);
 	StateTransition<Animation> transitionFall = StateTransition<Animation>(fallAnimation, &conditionFall);
 	StateTransition<Animation> transitionFallToIdle = StateTransition<Animation>(idleAnimation, &conditionFallToIdle);
-	//jump
+	StateTransition<Animation> transitionBackDamage = StateTransition<Animation>(backHitAnimation, &conditionBackDamage);
+	StateTransition<Animation> transitionFrontDamage = StateTransition<Animation>(backHitAnimation, &conditionFrontDamage);
+	
 	StateTransition<Animation> transitionStartJump1 = StateTransition<Animation>(startJumpAnimation, &conditionStartJump1);
 	StateTransition<Animation> transitionStartJump2 = StateTransition<Animation>(startJumpAnimation, &conditionStartJump2);
 	StateTransition<Animation> transitionJump = StateTransition<Animation>(jumpAnimation, &conditionJump);
@@ -174,6 +181,9 @@ void Joe::makeAnimations(Entity* entity) {
 	idleAnimation->addTransition(&transitionDown);
 	idleAnimation->addTransition(&transitionBackward);
 	idleAnimation->addTransition(&transitionLookingUp);
+	idleAnimation->addTransition(&transitionBackDamage);
+	idleAnimation->addTransition(&transitionFrontDamage);
+
 	idleAnimation->addTransition(&transitionStartJump1);
 	idleAnimation->addTransition(&transitionStartJump2);
 	idleAnimation->addTransition(&transitionJumpDown);
@@ -184,25 +194,41 @@ void Joe::makeAnimations(Entity* entity) {
 	forwardAnimation->addTransition(&transitionStartJump2);
 	forwardAnimation->addTransition(&transitionFall);
 	forwardAnimation->addTransition(&transitionIdle1);
+	forwardAnimation->addTransition(&transitionBackDamage);
+	forwardAnimation->addTransition(&transitionFrontDamage);
 
 	//downAnimation->addTransition(&transitionDownToIdle);
 	downAnimation->addTransition(&transitionIdle2);
 	downAnimation->addTransition(&transitionFall);
 	downAnimation->addTransition(&transitionJumpDown);
+	downAnimation->addTransition(&transitionBackDamage);
+	downAnimation->addTransition(&transitionFrontDamage);
 	
 	lookingUpAnimation->addTransition(&transitionIdle2);
 	lookingUpAnimation->addTransition(&transitionForward);
 	lookingUpAnimation->addTransition(&transitionBackward);
 	lookingUpAnimation->addTransition(&transitionFall);
 	lookingUpAnimation->addTransition(&transitionStartJump2);
+	lookingUpAnimation->addTransition(&transitionBackDamage);
+	lookingUpAnimation->addTransition(&transitionFrontDamage);
 
 	startJumpAnimation->addTransition(&transitionJump);//solo desde start animation pasa a jump o double jump
 	startJumpAnimation->addTransition(&transitionDoubleJump);
+	startJumpAnimation->addTransition(&transitionBackDamage);
+	startJumpAnimation->addTransition(&transitionFrontDamage);
 	//startJumpAnimation->addTransition(&transitionFallToIdle);
 
 	jumpAnimation->addTransition(&transitionFall);
+	jumpAnimation->addTransition(&transitionBackDamage);
+	jumpAnimation->addTransition(&transitionFrontDamage);
+
 	doubleJumpAnimation->addTransition(&transitionFall);
+	doubleJumpAnimation->addTransition(&transitionBackDamage);
+	doubleJumpAnimation->addTransition(&transitionFrontDamage);
+
 	fallAnimation->addTransition(&transitionFallToIdle);
+	fallAnimation->addTransition(&transitionBackDamage);
+	fallAnimation->addTransition(&transitionFrontDamage);
 
 
 	//add the states;
@@ -214,6 +240,8 @@ void Joe::makeAnimations(Entity* entity) {
 	animations->addState(jumpAnimation);
 	animations->addState(doubleJumpAnimation);
 	animations->addState(fallAnimation);
+	animations->addState(backHitAnimation);
+	animations->addState(frontHitAnimation);
 
 	//create the component
 	AnimationComponent* component=new AnimationComponent("animations", "Joe.png", animations);

@@ -19,6 +19,9 @@
 #include "SDL\SDL_rect.h"
 #include "IAComponent.h"
 #include "EnemyBehaviour.h"
+#include "DisappearOutCamera.h"
+#include "ConditionCallback.h"
+#include "LifeComponent.h"
 
 Entity * Enemy::makeEnemy() {
 	//prepare the entity for the player
@@ -45,9 +48,29 @@ Entity * Enemy::makeEnemy() {
 	motion->doubleSpeed = 75;
 	result->addComponent(motion);
 
+	LifeComponent* life = new LifeComponent("life",1);
+	result->addComponent(life);
+
+	ControlEntity* controller = &result->controller;
+	DisappearOutCamera* disappear = new DisappearOutCamera("runningAway");
+	ConditionComparison<int> conditionRunningAway = ConditionComparison<int>(&controller->attack, 3);
+	disappear->addCondition(&conditionRunningAway);
+	result->addComponent(disappear);
+
+	disappear = new DisappearOutCamera("runningDead");
+	ConditionCallback conditionDead= ConditionCallback([result]() {
+		LifeComponent* life = static_cast<LifeComponent*>(result->getComponent("life"));
+		if (life != nullptr) {
+			return !life->isAlive();
+		}
+		return false;
+	});
+	disappear->addCondition(&conditionDead);
+	result->addComponent(disappear);
+
 	IAComponent* IA = new EnemyBehaviour("IA");
 	result->addComponent(IA);
-	IA->ticks = 100;
+	IA->ticks = 5000;
 
 	makeAnimations(result);
 
@@ -72,6 +95,8 @@ void Enemy::makeAnimations(Entity* entity) {
 	Animation attack(3);
 	Animation startRunningAway(3);
 	Animation runningAway(5);
+	Animation backHit(1);
+	Animation frontHit(1);
 
 	runningAway.sizeFrame = {384,640,128,128};
 	runningAway.offset = {-53,-82};
@@ -137,6 +162,7 @@ void Enemy::makeAnimations(Entity* entity) {
 	State<Animation>* attackAnimation = new State<Animation>(attack);
 	State<Animation>* startRunningAwayAnimation = new State<Animation>(startRunningAway);
 	State<Animation>* runningAwayAnimation = new State<Animation>(runningAway);
+	//State<Animation>* frontDamage = new State<Animation>();
 
 	//conditions
 	ConditionComparison<int> conditionForward = ConditionComparison<int>(&controller->moveX, 1);
@@ -150,6 +176,8 @@ void Enemy::makeAnimations(Entity* entity) {
 	ConditionComparison<int> conditionRunningAway = ConditionComparison<int>(&controller->attack, 3);
 	ConditionComparison<bool> conditionRun = ConditionComparison<bool>(&controller->run, true);
 	ConditionComparison<bool> conditionNotRun = ConditionComparison<bool>(&controller->run, false);
+	/*ConditionComparison<int> conditionBackDamage = ConditionComparison<int>(&controller->damage, -1);
+	ConditionComparison<int> conditionFrontDamage = ConditionComparison<int>(&controller->damage, 1);*/
 
 	//transitions
 	StateTransition<Animation> transitionForward = StateTransition<Animation>(forwardAnimation, &conditionForward);
@@ -163,6 +191,7 @@ void Enemy::makeAnimations(Entity* entity) {
 	StateTransition<Animation> transitionAttack = StateTransition<Animation>(attackAnimation, &conditionAttack);
 	StateTransition<Animation> transitionStartRunningAway = StateTransition<Animation>(startRunningAwayAnimation, &conditionStartRunningAway);
 	StateTransition<Animation> transitionRunningAway = StateTransition<Animation>(runningAwayAnimation, &conditionRunningAway);
+	//StateTransition<Animation> transitionBackDamage = StateTransition<Animation>();
 
 	//add the transitions to the states
 	idleAnimation->addTransition(&transitionForward);

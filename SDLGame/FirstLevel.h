@@ -10,10 +10,6 @@ public:
 	virtual ~FirstLevel();
 
 	bool start();
-	update_status preUpdate();
-	update_status update();
-	update_status postUpdate();
-	bool cleanUp();
 };
 #endif // ! FIRST_LEVEL_H
 

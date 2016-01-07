@@ -20,7 +20,7 @@ public:
 
 	int getMaxLife() const;
 
-	bool isDead() const;
+	bool isAlive() const;
 
 private:
 	int actualLife;

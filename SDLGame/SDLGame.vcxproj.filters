@@ -37,9 +37,6 @@
     <Filter Include="Archivos de código fuente\StateMachine">
       <UniqueIdentifier>{0a5dea75-7205-47ee-8127-bab08b308da4}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Archivos de código fuente\StateMachine\Conditions">
-      <UniqueIdentifier>{88dea11d-e009-44c2-9840-c5ca455a9621}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Archivos de código fuente\Entities\Factories">
       <UniqueIdentifier>{c0b58aa8-01ea-42bf-a80b-b9840f583f82}</UniqueIdentifier>
     </Filter>
@@ -48,6 +45,12 @@
     </Filter>
     <Filter Include="Archivos de código fuente\Entities\EnemyProperties">
       <UniqueIdentifier>{39c7245a-dc98-437c-b65e-589a50f69de7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de código fuente\Entities\PlayerProperties">
+      <UniqueIdentifier>{6ff225dc-5aec-45bd-99cf-e17f2fe0ca68}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de código fuente\Conditions">
+      <UniqueIdentifier>{88dea11d-e009-44c2-9840-c5ca455a9621}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -156,14 +159,20 @@
     <ClCompile Include="IAComponent.cpp">
       <Filter>Archivos de código fuente\Entities\EnemyProperties</Filter>
     </ClCompile>
-    <ClCompile Include="EnemyBehaviour.cpp">
-      <Filter>Archivos de código fuente\Entities\Factories</Filter>
-    </ClCompile>
     <ClCompile Include="LifeComponent.cpp">
       <Filter>Archivos de código fuente\Entities\Properties</Filter>
     </ClCompile>
     <ClCompile Include="WallCollisionComponent.cpp">
       <Filter>Archivos de código fuente\Entities\Properties</Filter>
+    </ClCompile>
+    <ClCompile Include="EntryScene.cpp">
+      <Filter>Archivos de código fuente\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyBehaviour.cpp">
+      <Filter>Archivos de código fuente\Entities\EnemyProperties</Filter>
+    </ClCompile>
+    <ClCompile Include="DisappearOutCamera.cpp">
+      <Filter>Archivos de código fuente\Entities\EnemyProperties</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -252,10 +261,10 @@
       <Filter>Archivos de código fuente\StateMachine</Filter>
     </ClInclude>
     <ClInclude Include="Condition.h">
-      <Filter>Archivos de código fuente\StateMachine\Conditions</Filter>
+      <Filter>Archivos de código fuente\Conditions</Filter>
     </ClInclude>
     <ClInclude Include="ConditionCallback.h">
-      <Filter>Archivos de código fuente\StateMachine\Conditions</Filter>
+      <Filter>Archivos de código fuente\Conditions</Filter>
     </ClInclude>
     <ClInclude Include="AnimationComponent.h">
       <Filter>Archivos de código fuente\Entities\Properties</Filter>
@@ -264,7 +273,7 @@
       <Filter>Archivos de código fuente\Entities\Factories</Filter>
     </ClInclude>
     <ClInclude Include="ConditionComparison.h">
-      <Filter>Archivos de código fuente\StateMachine\Conditions</Filter>
+      <Filter>Archivos de código fuente\Conditions</Filter>
     </ClInclude>
     <ClInclude Include="ModuleTimer.h">
       <Filter>Archivos de código fuente\Core Modules</Filter>
@@ -276,7 +285,7 @@
       <Filter>Archivos de código fuente\Entities\Properties</Filter>
     </ClInclude>
     <ClInclude Include="TimerCondition.h">
-      <Filter>Archivos de código fuente\StateMachine\Conditions</Filter>
+      <Filter>Archivos de código fuente\Conditions</Filter>
     </ClInclude>
     <ClInclude Include="ModuleCollision.h">
       <Filter>Archivos de código fuente\Core Modules</Filter>
@@ -308,14 +317,20 @@
     <ClInclude Include="IAComponent.h">
       <Filter>Archivos de código fuente\Entities\EnemyProperties</Filter>
     </ClInclude>
-    <ClInclude Include="EnemyBehaviour.h">
-      <Filter>Archivos de código fuente\Entities\Factories</Filter>
-    </ClInclude>
     <ClInclude Include="LifeComponent.h">
       <Filter>Archivos de código fuente\Entities\Properties</Filter>
     </ClInclude>
     <ClInclude Include="WallCollisionComponent.h">
       <Filter>Archivos de código fuente\Entities\Properties</Filter>
+    </ClInclude>
+    <ClInclude Include="EntryScene.h">
+      <Filter>Archivos de código fuente\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyBehaviour.h">
+      <Filter>Archivos de código fuente\Entities\EnemyProperties</Filter>
+    </ClInclude>
+    <ClInclude Include="DisappearOutCamera.h">
+      <Filter>Archivos de código fuente\Entities\EnemyProperties</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

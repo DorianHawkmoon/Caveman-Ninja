@@ -117,8 +117,6 @@ bool ModuleRender::blit(SDL_Texture * texture, const Transform& transform, const
 	rectDestiny.w *= SCREEN_SIZE;
 	rectDestiny.h *= SCREEN_SIZE;
 
-	
-
 	//check if are inside the view
 	SDL_Rect sizeWindows = camera.getWindowsSize();
 	if (SDL_HasIntersection(&sizeWindows, &rectDestiny) == SDL_TRUE) {
@@ -244,7 +242,20 @@ bool ModuleRender::paintCircle(const SDL_Color & color, const fPoint & position,
 	return result;
 }
 
-SDL_Rect ModuleRender::getCorrectCamera(float speed) {
+bool ModuleRender::insideCamera(const SDL_Rect & one, float speed) const {
+	SDL_Rect cam = getCorrectCamera(speed);
+
+	SDL_Rect rectDestiny=one;
+	rectDestiny.x = static_cast<int>(one.x  * SCREEN_SIZE - cam.x);
+	rectDestiny.y = static_cast<int>(one.y  * SCREEN_SIZE - cam.y);
+	rectDestiny.w *= SCREEN_SIZE;
+	rectDestiny.h *= SCREEN_SIZE;
+
+	SDL_Rect sizeWindows = camera.getWindowsSize();
+	return SDL_HasIntersection(&sizeWindows, &rectDestiny) == SDL_TRUE;
+}
+
+SDL_Rect ModuleRender::getCorrectCamera(float speed) const {
 	SDL_Rect cam = camera.getViewArea(speed);
 	iPoint rightLimit = camera.rightLimit*SCREEN_SIZE;
 	iPoint leftLimit = camera.leftLimit*SCREEN_SIZE;
@@ -265,3 +276,5 @@ SDL_Rect ModuleRender::getCorrectCamera(float speed) {
 	cam.y += offset.y;
 	return cam;
 }
+
+

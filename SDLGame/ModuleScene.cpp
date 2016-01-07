@@ -3,8 +3,8 @@
 #include "ModuleRender.h"
 #include "ModuleTextures.h"
 #include "ModuleAudio.h"
-#include "FirstLevel.h"
 #include "ModuleInput.h"
+#include "EntryScene.h"
 
 ModuleScene::ModuleScene(bool started):Module(started), currentScene(false), nextScene(nullptr) {}
 
@@ -15,7 +15,7 @@ ModuleScene::~ModuleScene() {
 
 bool ModuleScene::start() {
 	SDL_SetRenderDrawBlendMode(App->renderer->renderer, SDL_BLENDMODE_BLEND);
-	currentScene = new FirstLevel();
+	currentScene = new EntryScene();
 	currentScene->start();
 	return true;
 }

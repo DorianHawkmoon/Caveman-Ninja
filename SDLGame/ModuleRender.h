@@ -28,7 +28,7 @@ public:
 	bool paintRectangle(const SDL_Color& color, const iPoint& position, const iPoint& rect, float speed=1.0f);
 	bool paintRectangle(const SDL_Color& color, const Transform& transform, const iPoint& rect, float speed = 1.0f);
 	bool paintCircle(const SDL_Color& color, const fPoint& position, float radius, float speed = 1.0f);
-	//TODO pintar pixeles
+	bool insideCamera(const SDL_Rect& one, float speed=1.0f) const;
 
 public:
 	SDL_Texture* circle;
@@ -37,7 +37,7 @@ public:
 	Camera camera;
 
 private:
-	SDL_Rect getCorrectCamera(float speed);
+	SDL_Rect getCorrectCamera(float speed) const;
 };
 
 

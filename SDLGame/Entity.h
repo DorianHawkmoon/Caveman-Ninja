@@ -30,16 +30,23 @@ struct ControlEntity {
 		moveX = 0;
 		moveY = 0;
 		attack = 0;
+		damage = 0;
 		run = false;
 		stateJump = JumpType::NONE;
 	}
 
 	virtual ~ControlEntity() {}
 
+	//direction move
 	int moveX;
 	int moveY;
+	//state of the jump jump, double jump, fall...
 	JumpType stateJump;
+	//state of attack attacking, running...
 	int attack;
+	//state of damage (from left or rigth)
+	int damage;
+	//running (enemy)
 	bool run;
 };
 
@@ -76,6 +83,7 @@ public:
 	* Setea la entidad como destruida
 	*/
 	inline void destroy() {
+		LOG("yeah");
 		destroyed = true;
 	}
 
@@ -87,9 +95,9 @@ public:
 		return category;
 	}
 
-	virtual void onCollisionEnter(Collider* one, Collider* another);
-	virtual void onCollisionExit(Collider* one, Collider* another);
-	virtual void onCollisionStay(Collider* one, Collider* another);
+	virtual void onCollisionEnter(const Collider* self, const Collider* another);
+	virtual void onCollisionExit(const Collider* self, const Collider* another);
+	virtual void onCollisionStay(const Collider* self, const Collider* another);
 	
 public:
 	Transform* transform;

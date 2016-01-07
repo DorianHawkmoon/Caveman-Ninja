@@ -77,8 +77,7 @@ void EnemyBehaviour::attacking(Transform & globalMine, Transform& globalPlayer) 
 					//damage player and notify him of the collision so he can react
 					App->player->life->modifyActualLife(-10);
 					LOG("Enemy damage!!");
-					//colliderPlayer->notify(myCollider);
-					//parent->getComponent("collider")->onCollisionEnter()
+					App->player->player->onCollisionEnter(colliderPlayer, myCollider);
 				}
 
 
@@ -100,7 +99,7 @@ void EnemyBehaviour::attacking(Transform & globalMine, Transform& globalPlayer) 
 					direction = -1;
 					entityTransform->flip = SDL_FLIP_NONE;
 				}
-				motion->velocity.x += motion->doubleSpeed * direction * 1.2;
+				motion->velocity.x += motion->doubleSpeed * direction * 1.2f;
 			}
 			break;
 	}

@@ -18,9 +18,9 @@ public:
 
 	update_status update();
 
-	virtual void onCollisionEnter(Collider* one, Collider* another);
-	virtual void onCollisionExit(Collider* one, Collider* another) {};
-	virtual void onCollisionStay(Collider* one, Collider* another) {};
+	virtual void onCollisionEnter(const Collider* self, const Collider* another);
+	virtual void onCollisionExit(const Collider* self, const Collider* another) {};
+	virtual void onCollisionStay(const Collider* self, const Collider* another) {};
 
 	bool isFalling();
 

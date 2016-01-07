@@ -6,9 +6,9 @@ class Collider;
 
 class CollisionListener {
 public:
-	virtual void onCollisionEnter(Collider* self, Collider* another) {};
-	virtual void onCollisionExit(Collider* self, Collider* another) {};
-	virtual void onCollisionStay(Collider* self, Collider* another) {};
+	virtual void onCollisionEnter(const Collider* self, const Collider* another) {};
+	virtual void onCollisionExit(const Collider* self, const Collider* another) {};
+	virtual void onCollisionStay(const Collider* self, const Collider* another) {};
 };
 #endif // !COLLISION_LISTENER_H
 

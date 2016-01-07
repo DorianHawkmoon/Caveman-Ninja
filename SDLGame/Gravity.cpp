@@ -39,10 +39,10 @@ update_status Gravity::update() {
 	return UPDATE_CONTINUE;
 }
 
-void Gravity::onCollisionEnter(Collider * one, Collider * another) {
+void Gravity::onCollisionEnter(const Collider * self, const Collider * another) {
 	CollisionComponent* collider= static_cast<CollisionComponent*>(parent->getComponent("collider"));
 	//is from my entity?
-	if (one != collider->getCollider()){
+	if (self != collider->getCollider()){
 		return;
 	}
 
@@ -66,7 +66,7 @@ void Gravity::onCollisionEnter(Collider * one, Collider * another) {
 	int count = 0;
 	do {
 		parent->transform->position.y--;
-	} while (one->checkCollision(another) && ++count < 100);
+	} while (self->checkCollision(another) && ++count < 100);
 
 }
 

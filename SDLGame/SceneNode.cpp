@@ -16,9 +16,9 @@ SceneNode::SceneNode(Entity* entity) : children(), parent(nullptr), entity(entit
 SceneNode::~SceneNode() {
 	//TODO check about remove the node, deleting entity....
 	//delete the entity
-	if (entity != nullptr) {
+	/*if (entity != nullptr) {
 		delete entity;
-	}
+	}*/
 	//delete the childs
 	for (auto it = children.begin(); it != children.end(); ++it) {
 		delete *it;

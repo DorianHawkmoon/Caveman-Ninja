@@ -26,7 +26,6 @@ FirstLevel::FirstLevel() {
 FirstLevel::~FirstLevel() {
 }
 
-
 // Load assets
 bool FirstLevel::start() {
 	LOG("Loading scene");
@@ -115,6 +114,7 @@ bool FirstLevel::start() {
 	collisions->addComponent(collider2);*/
 	
 	root->addChild(buffer);
+	entities.push_back(buffer);
 	//root->addChild(collisions);
 
 	//buffer = Enemy::makeEnemy();
@@ -124,32 +124,10 @@ bool FirstLevel::start() {
 	buffer = Enemy::makeEnemy();
 	buffer->transform->flip = SDL_FLIP_HORIZONTAL;
 	buffer->transform->position = {20, 170};
-	root->addChild(buffer);
 
+	root->addChild(buffer);
+	entities.push_back(buffer);
 
 	root->start();
 	return true;
-}
-
-update_status FirstLevel::preUpdate() {
-	root->preUpdate();
-	return UPDATE_CONTINUE;
-}
-
-// UnLoad assets
-bool FirstLevel::cleanUp() {
-	LOG("Unloading first scene");
-	root->cleanUp();
-	return true;
-}
-
-// Update: draw background
-update_status FirstLevel::update() {
-	root->update();
-	return UPDATE_CONTINUE;
-}
-
-update_status FirstLevel::postUpdate() {
-	root->postUpdate();
-	return UPDATE_CONTINUE;
 }
