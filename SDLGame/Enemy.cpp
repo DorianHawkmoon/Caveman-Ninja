@@ -3,12 +3,9 @@
 #include "Animation.h"
 #include "StateMachine.h"
 #include "State.h"
-#include "ConditionCallback.h"
 #include "MotionComponent.h"
-#include "SpriteComponent.h"
 #include "AnimationComponent.h" 
 #include "Application.h"
-#include "ModuleInput.h"
 #include "SDL\SDL.h"
 #include "StateMachine.h"
 #include "JumpComponent.h"
@@ -21,8 +18,7 @@
 #include "CollisionComponent.h"
 #include "SDL\SDL_rect.h"
 #include "IAComponent.h"
-#include "Utils.h"
-#include "ModulePlayer.h"
+#include "EnemyBehaviour.h"
 
 Entity * Enemy::makeEnemy() {
 	//prepare the entity for the player
@@ -48,8 +44,11 @@ Entity * Enemy::makeEnemy() {
 	motion->speed = 25;
 	result->addComponent(motion);
 
+	IAComponent* IA = new EnemyBehaviour("IA");
+	result->addComponent(IA);
+	IA->ticks = 2000;
+
 	makeAnimations(result);
-	makeBehaviour(result);
 
 	return result;
 }
@@ -69,6 +68,7 @@ void Enemy::makeAnimations(Entity* entity) {
 	Animation fall(1);
 	Animation endFall(1);
 	Animation run(4);
+	Animation attack(3);
 
 	down.sizeFrame = {128, 384, 128, 128};
 	down.offset = {-51,-82};
@@ -87,7 +87,11 @@ void Enemy::makeAnimations(Entity* entity) {
 	jump.offset = {-46,-65};
 	jump.flippedOffset.x = -6;
 
-	
+	attack.sizeFrame = {0,256,128,128};
+	attack.offset = {-53,-82};
+	attack.flippedOffset.x = 3;
+	attack.speed = 0.05f;
+	attack.repeat = 1;
 
 	startFall.sizeFrame = {640,0,128,128};
 	startFall.offset = {-48,-82};
@@ -116,6 +120,7 @@ void Enemy::makeAnimations(Entity* entity) {
 	State<Animation>* fallAnimation = new State<Animation>(fall);
 	State<Animation>* endFallAnimation = new State<Animation>(endFall);
 	State<Animation>* runAnimation = new State<Animation>(run);
+	State<Animation>* attackAnimation = new State<Animation>(attack);
 
 	//conditions
 	ConditionComparison<int> conditionForward = ConditionComparison<int>(&controller->moveX, 1);
@@ -124,6 +129,7 @@ void Enemy::makeAnimations(Entity* entity) {
 	ConditionComparison<int> conditionIdle2 = ConditionComparison<int>(&controller->moveY, 0);
 	ConditionComparison<int> conditionDown = ConditionComparison<int>(&controller->moveY, 1);
 	ConditionComparison<int> conditionLookingUp = ConditionComparison<int>(&controller->moveY, -1);
+	ConditionComparison<int> conditionAttack = ConditionComparison<int>(&controller->attack, 1);
 	ConditionComparison<bool> conditionRun = ConditionComparison<bool>(&controller->run, true);
 	ConditionComparison<bool> conditionNotRun = ConditionComparison<bool>(&controller->run, false);
 
@@ -136,6 +142,7 @@ void Enemy::makeAnimations(Entity* entity) {
 	StateTransition<Animation> transitionLookingUp = StateTransition<Animation>(lookingUpAnimation, &conditionLookingUp);
 	StateTransition<Animation> transitionRun = StateTransition<Animation>(runAnimation, &conditionRun);
 	StateTransition<Animation> transitionRunIddle = StateTransition<Animation>(runAnimation, &conditionNotRun);
+	StateTransition<Animation> transitionAttack = StateTransition<Animation>(attackAnimation, &conditionAttack);
 
 	//add the transitions to the states
 	idleAnimation->addTransition(&transitionForward);
@@ -143,17 +150,22 @@ void Enemy::makeAnimations(Entity* entity) {
 	idleAnimation->addTransition(&transitionDown);
 	idleAnimation->addTransition(&transitionLookingUp);
 	idleAnimation->addTransition(&transitionRun);
+	idleAnimation->addTransition(&transitionAttack);
 
 	forwardAnimation->addTransition(&transitionRun);
 	forwardAnimation->addTransition(&transitionIdle1);
+	forwardAnimation->addTransition(&transitionAttack);
 
 	downAnimation->addTransition(&transitionIdle2);
+
 
 	lookingUpAnimation->addTransition(&transitionIdle2);
 	lookingUpAnimation->addTransition(&transitionForward);
 	lookingUpAnimation->addTransition(&transitionBackward);
+	lookingUpAnimation->addTransition(&transitionAttack);
 
 	runAnimation->addTransition(&transitionRunIddle);
+	runAnimation->addTransition(&transitionAttack);
 
 	//add the states;
 	animations = new StateMachine<Animation>(idleAnimation);
@@ -165,87 +177,9 @@ void Enemy::makeAnimations(Entity* entity) {
 	animations->addState(fallAnimation);
 	animations->addState(endFallAnimation);
 	animations->addState(runAnimation);
+	animations->addState(attackAnimation);
 
 	//create the component
 	AnimationComponent* component = new AnimationComponent("animations", "troglodita.png", animations);
 	entity->addComponent(component);
-}
-
-void Enemy::makeBehaviour(Entity * entity) {
-	IAComponent* IA = new IAComponent("IA");
-	entity->addComponent(IA);
-
-	IA->ticks = 1000;
-
-	IA->functionUpdate = [](Entity* entity, bool ticked) {
-		ControlEntity* controller = &entity->controller;
-		Transform* trans = entity->transform;
-		Transform globalEnemy = trans->getGlobalTransform();
-
-		//check collision with player
-		//fPoint& position, iPoint& rectangle, float rotation, TypeCollider type
-		//ancho negativo o positivo, rectangulo, 0, none
-		/* fPoint position = {0,0};
-		iPoint rectangle = {0,0};
-		RectangleCollider colliderCheck = RectangleCollider(position, rectangle, 0, TypeCollider::ENEMY);
-		const Collider* colliderPlayer = static_cast<CollisionComponent*>(App->player->player->getComponent("collider"))->getCollider();
-
-		if (colliderPlayer->checkCollision(&colliderCheck)) {
-		//inmediatly react attacking
-
-		}*/
-
-		if (ticked) {
-			MotionComponent* motion = static_cast<MotionComponent*>(entity->getComponent("motion"));
-
-			controller->moveX = 0;
-			controller->moveY = 0;
-			controller->attack = 0;
-
-			Transform player = App->player->player->transform->getGlobalTransform();
-			float distance = abs(player.position.x - globalEnemy.position.x);
-			if (player.position.x < globalEnemy.position.x) {
-				controller->moveX -= 1;
-				trans->flip = SDL_FLIP_NONE;
-				if (distance > 150) {
-					controller->run = true;
-				}
-			}
-
-			if (player.position.x > globalEnemy.position.x) {
-				controller->moveX += 1;
-				trans->flip = SDL_FLIP_HORIZONTAL;
-				if (distance > 80) {
-					controller->run = true;
-				}
-			}
-
-			/*if (App->input->getKey(SDL_SCANCODE_W)) {
-			controller->moveY -= 1;
-			}
-
-			if (App->input->getKey(SDL_SCANCODE_S)) {
-			controller->moveY += 1;
-			}*/
-
-
-			//don't jump again when jumping or falling
-			/*if (App->input->getKey(SDL_SCANCODE_KP_0) && controller->stateJump == JumpType::NONE) {
-			if (App->input->getKey(SDL_SCANCODE_W)) {
-			controller->stateJump = JumpType::DOUBLE_JUMP;
-			} else {
-			controller->stateJump = JumpType::JUMP;
-			}
-			}*/
-
-			if (controller->moveY != 1) {
-				motion->velocity.x = (controller->run) ?
-					(controller->moveX + 0.7 * sgn(controller->moveX)) * motion->speed
-					: controller->moveX * motion->speed;
-			} else {
-				motion->velocity.x = 0.0f;
-			}
-		}
-	};
-
 }

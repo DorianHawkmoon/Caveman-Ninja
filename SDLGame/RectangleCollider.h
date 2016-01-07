@@ -25,9 +25,12 @@ public:
 	Collider* clone();
 
 	float rotation;
+	inline iPoint getSize()const {
+		return rect;
+	}
+
 private:
 	iPoint rect;
-	
 	bool checkCollisionRotated(const RectangleCollider* other, const Transform & otherTrans, const Transform & self) const;
 	std::vector<fPoint> getPoints(float totalRotation) const;
 	fPoint getCenter() const;

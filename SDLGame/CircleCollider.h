@@ -25,7 +25,9 @@ public:
 
 	Collider* clone();
 	float radius;
-
+	inline iPoint getSize() const {
+		return iPoint(static_cast<int>(radius * 2), static_cast<int>(radius * 2));
+	}
 	fPoint getGlobalPoint() const;
 private:
 

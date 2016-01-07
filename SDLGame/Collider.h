@@ -58,6 +58,8 @@ public:
 		}
 	}
 
+	virtual iPoint getSize() const = 0;
+
 public:
 	fPoint position;
 	TypeCollider type;

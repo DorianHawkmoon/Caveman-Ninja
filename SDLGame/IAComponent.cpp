@@ -1,16 +1,18 @@
 #include "IAComponent.h"
+#include "Application.h"
+#include "ModuleTimer.h"
 
 IAComponent::IAComponent(const std::string & name) : IComponent(name) {
 	ticks = 0;
 	ticked = false;
+}
 
-	functionUpdate = doNothing();
-	functionPreUpdate = doNothing();
-	functionPostUpdate = doNothing();
+IAComponent::~IAComponent() {
+
 }
 
 bool IAComponent::start() {
-	ticksPassed = 0;
+	ticksPassed = ticks;
 	return true;
 }
 
@@ -21,31 +23,19 @@ update_status IAComponent::preUpdate() {
 		ticksPassed -= ticks;
 		ticked = true;
 	}
-	functionPreUpdate(this->parent, ticked);
+	delegatedPreUpdate();
 
 	return UPDATE_CONTINUE;
 }
 
-update_status IAComponent::update() {
-	functionUpdate(this->parent, ticked);
-	return UPDATE_CONTINUE;
-}
 
-update_status IAComponent::postUpdate() {
-	functionPostUpdate(this->parent, ticked);
-	return UPDATE_CONTINUE;
+bool IAComponent::cleanUp() {
+	return false;
 }
 
 IComponent * IAComponent::makeClone() {
 	IAComponent* ia = new IAComponent(getID());
 	ia->ticks = ticks;
-	ia->functionUpdate = functionUpdate;
-	ia->functionPreUpdate = functionPreUpdate;
-	ia->functionPostUpdate = functionPostUpdate;
 
 	return ia;
-}
-
-void IAComponent::clearFunction(std::function<void(Entity*, bool)>& function) {
-	function = doNothing();
 }

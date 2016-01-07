@@ -57,6 +57,10 @@ public:
 		return{sizeFrame.x + (sizeFrame.w*frame), sizeFrame.y, sizeFrame.w, sizeFrame.h};
 	}
 
+	bool isFinished() const {
+		return repeat == 0;
+	}
+
 
 private:
 	float current_frame;

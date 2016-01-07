@@ -114,10 +114,9 @@ bool FirstLevel::start() {
 	root->addChild(buffer);
 	//root->addChild(collisions);
 
-	buffer = Enemy::makeEnemy();
-	//buffer->transform->flip = SDL_FLIP_HORIZONTAL;
+	/*buffer = Enemy::makeEnemy();
 	buffer->transform->position = {150, 170};
-	root->addChild(buffer);
+	root->addChild(buffer);*/
 
 	buffer = Enemy::makeEnemy();
 	buffer->transform->flip = SDL_FLIP_HORIZONTAL;

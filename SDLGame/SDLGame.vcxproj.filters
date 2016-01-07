@@ -154,7 +154,13 @@
       <Filter>Archivos de código fuente\Entities\Factories</Filter>
     </ClCompile>
     <ClCompile Include="IAComponent.cpp">
-      <Filter>Archivos de código fuente</Filter>
+      <Filter>Archivos de código fuente\Entities\EnemyProperties</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyBehaviour.cpp">
+      <Filter>Archivos de código fuente\Entities\Factories</Filter>
+    </ClCompile>
+    <ClCompile Include="LifeComponent.cpp">
+      <Filter>Archivos de código fuente\Entities\Properties</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -297,7 +303,13 @@
       <Filter>Archivos de código fuente\Utilities</Filter>
     </ClInclude>
     <ClInclude Include="IAComponent.h">
-      <Filter>Archivos de encabezado</Filter>
+      <Filter>Archivos de código fuente\Entities\EnemyProperties</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyBehaviour.h">
+      <Filter>Archivos de código fuente\Entities\Factories</Filter>
+    </ClInclude>
+    <ClInclude Include="LifeComponent.h">
+      <Filter>Archivos de código fuente\Entities\Properties</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

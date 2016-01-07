@@ -60,11 +60,11 @@ void ModuleCollision::checkCollisions() {
 		while (two != colliders.end()) {
 			if ((*one)->checkCollision(*two)) {
 
-				if ((*one)->type != TypeCollider::GROUND && (*two)->type != TypeCollider::GROUND
+				/*if ((*one)->type != TypeCollider::GROUND && (*two)->type != TypeCollider::GROUND
 					&& (*one)->type != TypeCollider::WALL && (*two)->type != TypeCollider::WALL
 					&& (*one)->type != TypeCollider::FLOOR && (*two)->type != TypeCollider::FLOOR) {
 					LOG("collision");
-				}
+				}*/
 
 				(*one)->notify(*two);
 				(*two)->notify(*one);

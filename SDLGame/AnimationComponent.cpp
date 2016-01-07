@@ -53,3 +53,8 @@ IComponent * AnimationComponent::makeClone() {
 	//TODO clone animationComponent
 	return nullptr;
 }
+
+const Animation* AnimationComponent::getActualAnimation() const {
+	Animation* anim = state->getState()->getValue();
+	return anim;
+}

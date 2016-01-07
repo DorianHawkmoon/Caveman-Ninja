@@ -20,6 +20,7 @@
 #include "CircleCollider.h"
 #include "CollisionComponent.h"
 #include "SDL\SDL_rect.h"
+#include "LifeComponent.h"
 
 Entity * Joe::makeJoe() {
 	//prepare the entity for the player
@@ -44,6 +45,9 @@ Entity * Joe::makeJoe() {
 	motion->velocity.y = 0;
 	motion->speed = 50;
 	result->addComponent(motion);
+
+	LifeComponent* life = new LifeComponent("life",100);
+	result->addComponent(life);
 	
 	makeAnimations(result);
 

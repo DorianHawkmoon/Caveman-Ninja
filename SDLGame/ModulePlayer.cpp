@@ -8,6 +8,7 @@
 #include "ModuleInput.h"
 #include "SDL\SDL_keycode.h"
 #include "JumpComponent.h"
+#include "LifeComponent.h"
 
 ModulePlayer::ModulePlayer(bool start_enabled) : Module(start_enabled)
 {
@@ -27,6 +28,7 @@ bool ModulePlayer::start(){
 	player->start();
 	started = started & ((motion = static_cast<MotionComponent*>(player->getComponent("motion")))!=nullptr);
 	started = started & ((jump = static_cast<JumpComponent*>(player->getComponent("jump"))) != nullptr);
+	started = started & ((life = static_cast<LifeComponent*>(player->getComponent("life"))) != nullptr);
 	player->transform->position = {100, 170};
 
 	App->renderer->camera.setCamera(player->transform);

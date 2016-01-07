@@ -157,8 +157,8 @@ bool RectangleCollider::checkCollision(const CircleCollider * other) const {
 	rectTransform.rotation += rotation;
 	if (rectTransform.rotation != 0) {
 		fPoint thisCenter = {rectTransform.position.x+(rect.x/2.0f), rectTransform.position.y+(rect.y / 2.0f)};
-		circle.x = cos(rectTransform.rotation) * (globalCircle.x - thisCenter.x) - sin(rectTransform.rotation) * (globalCircle.y - thisCenter.y) + thisCenter.x;
-		circle.y = sin(rectTransform.rotation) * (globalCircle.x - thisCenter.x) + cos(rectTransform.rotation) * (globalCircle.y - thisCenter.y) + thisCenter.y;
+		circle.x = static_cast<int>(cos(rectTransform.rotation) * (globalCircle.x - thisCenter.x) - sin(rectTransform.rotation) * (globalCircle.y - thisCenter.y) + thisCenter.x);
+		circle.y = static_cast<int>(sin(rectTransform.rotation) * (globalCircle.x - thisCenter.x) + cos(rectTransform.rotation) * (globalCircle.y - thisCenter.y) + thisCenter.y);
 	}
 	fPoint global = rectTransform.position;
 	SDL_Rect positionRect = {static_cast<int>(global.x),

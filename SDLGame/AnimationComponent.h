@@ -23,6 +23,8 @@ public:
 
 	IComponent* makeClone();
 
+	const Animation* getActualAnimation() const;
+
 private:
 	std::string nameTexture;
 	StateMachine<Animation>* state;

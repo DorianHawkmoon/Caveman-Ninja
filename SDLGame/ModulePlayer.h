@@ -8,6 +8,7 @@
 #include "StateMachine.h"
 #include "Joe.h"
 
+class LifeComponent;
 class JumpComponent;
 class MotionComponent;
 class Entity;
@@ -28,6 +29,7 @@ public:
 	Entity* player;
 	MotionComponent* motion;
 	JumpComponent* jump;
+	LifeComponent* life;
 };
 
 #endif // __MODULEPLAYER_H__
