@@ -10,6 +10,8 @@
 #include "AnimationComponent.h"
 #include "Animation.h"
 #include "LifeComponent.h"
+#include "Collider.h"
+#include "ModuleRender.h"
 
 IComponent* EnemyBehaviour::clone() {
 	EnemyBehaviour* result = new EnemyBehaviour(getID());
@@ -32,8 +34,7 @@ update_status EnemyBehaviour::update() {
 
 	}else if(attack==3){
 		//motion run
-		runningAway();
-
+		runningAway(globalMine);
 	} 
 
 	//put the enemy thinking what to do
@@ -116,7 +117,7 @@ void EnemyBehaviour::checkCollisions(Transform& globalMine, Transform& globalPla
 	fPoint position = globalMine.position;
 	//NONE -> looking left
 	iPoint size = myCollider->getSize();
-	position.x += (entityTransform->flip == SDL_FLIP_NONE) ? -size.x : size.x;
+	position.x += (entityTransform->flip == SDL_FLIP_NONE) ? -size.x+10 : size.x;
 
 	iPoint rectangle = {10,size.y};
 	RectangleCollider colliderCheck = RectangleCollider(position, rectangle, 0, TypeCollider::ENEMY);
@@ -184,7 +185,13 @@ void EnemyBehaviour::updateMotion(Transform& globalMine, Transform& globalPlayer
 	}
 }
 
-void EnemyBehaviour::runningAway() {
+void EnemyBehaviour::runningAway(Transform& globalMine) {
 	//check if dead to set corresponding motion
-
+	const Collider* myCollider = (static_cast<CollisionComponent*>(parent->getComponent("collider")))->getCollider();
+	iPoint size = myCollider->getSize();
+	fPoint position = globalMine.position;
+	SDL_Rect rect = {position.x,position.y, size.x, size.y};
+	if (!App->renderer->insideCamera(rect)) {
+		parent->destroy();
+	}
 }

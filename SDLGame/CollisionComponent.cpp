@@ -32,7 +32,6 @@ update_status CollisionComponent::update() {
 }
 
 update_status CollisionComponent::postUpdate() {
-	collider->paintCollider();
 	return UPDATE_CONTINUE;
 }
 

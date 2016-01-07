@@ -114,19 +114,18 @@ bool FirstLevel::start() {
 	collisions->addComponent(collider2);*/
 	
 	root->addChild(buffer);
-	entities.push_back(buffer);
 	//root->addChild(collisions);
 
 	//buffer = Enemy::makeEnemy();
 	//buffer->transform->position = {150, 170};
 	//root->addChild(buffer);
 
-	buffer = Enemy::makeEnemy();
+	/*buffer = Enemy::makeEnemy();
 	buffer->transform->flip = SDL_FLIP_HORIZONTAL;
-	buffer->transform->position = {20, 170};
+	buffer->transform->position = {30, 170};
 
-	root->addChild(buffer);
-	entities.push_back(buffer);
+	root->addChild(buffer);*/
+	//entities.push_back(buffer);
 
 	root->start();
 	return true;

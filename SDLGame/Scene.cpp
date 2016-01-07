@@ -37,6 +37,8 @@ update_status Scene::postUpdate() {
 	//elimino entidades destruidas
 	auto wreckfieldBegin = std::remove_if(entities.begin(), entities.end(), std::mem_fn(&Entity::isDestroyed));
 	entities.erase(wreckfieldBegin, entities.end());
+
+	//TODO limpiar de la lista entidades muertas? dejar que lo haga el scene?
 	return UPDATE_CONTINUE;
 }
 

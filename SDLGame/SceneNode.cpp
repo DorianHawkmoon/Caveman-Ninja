@@ -16,9 +16,9 @@ SceneNode::SceneNode(Entity* entity) : children(), parent(nullptr), entity(entit
 SceneNode::~SceneNode() {
 	//TODO check about remove the node, deleting entity....
 	//delete the entity
-	/*if (entity != nullptr) {
+	if (entity != nullptr) {
 		delete entity;
-	}*/
+	}
 	//delete the childs
 	for (auto it = children.begin(); it != children.end(); ++it) {
 		delete *it;
@@ -81,12 +81,15 @@ Transform SceneNode::getLocalTransform() const {
 }
 
 void SceneNode::removeDead() {
-	// Remove all children which request so
-	auto wreckfieldBegin = std::remove_if(children.begin(), children.end(), std::mem_fn(&SceneNode::isDestroyed));
-	children.erase(wreckfieldBegin, children.end()); //erase the vector from the new end to the last end (remove the positions removed)
-
-	// Call function recursively for all remaining children
-	//std::for_each(children.begin(), children.end(), std::mem_fn(&SceneNode::removeDead));
+	//delete the dead children
+	for (auto it = children.begin(); it != children.end(); ) {
+		if ((*it)->isDestroyed()) {
+			delete *it;
+			it = children.erase(it);
+		} else {
+			++it;
+		}
+	}
 }
 
 bool SceneNode::isDestroyed() const {

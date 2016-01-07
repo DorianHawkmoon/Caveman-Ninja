@@ -28,7 +28,7 @@ private:
 	void attacking(Transform& globalMine, Transform& globalPlayer);
 	void checkCollisions(Transform& globalMine, Transform& globalPlayer);
 	void updateMotion(Transform& globalMine, Transform& globalPlayer);
-	void runningAway();
+	void runningAway(Transform& globalMine);
 };
 
 #endif // !ENEMY_BEHAVIOUR_H

@@ -47,9 +47,9 @@ public:
 
 	bool componentEnabled;
 
-	virtual void onCollisionEnter(const Collider* one, const Collider* another) {};
-	virtual void onCollisionExit(const Collider* one, const Collider* another) {};
-	virtual void onCollisionStay(const Collider* one, const Collider* another) {};
+	virtual void onCollisionEnter(const Collider* self, const Collider* another) {};
+	virtual void onCollisionExit(const Collider* self, const Collider* another) {};
+	virtual void onCollisionStay(const Collider* self, const Collider* another) {};
 
 protected:
 	Entity* parent;

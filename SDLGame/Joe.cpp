@@ -22,10 +22,14 @@
 #include "SDL\SDL_rect.h"
 #include "LifeComponent.h"
 #include "WallCollisionComponent.h"
+#include "PlayerHittedComponent.h"
 
 Entity * Joe::makeJoe() {
 	//prepare the entity for the player
 	Entity* result = new Entity();
+
+	PlayerHittedComponent* hitted = new PlayerHittedComponent("hitted");
+	result->addComponent(hitted);
 
 	JumpComponent* jump = new JumpComponent("jump");
 	jump->speed = 300;
@@ -40,7 +44,6 @@ Entity * Joe::makeJoe() {
 	WallCollisionComponent* walls = new WallCollisionComponent("walls");
 	result->addComponent(walls);
 
-
 	RectangleCollider* rectangle= new RectangleCollider(fPoint(0,0), iPoint(28,47), 0, TypeCollider::PLAYER);
 	CollisionComponent* collider = new CollisionComponent("collider", rectangle);
 	result->addComponent(collider);
@@ -54,6 +57,8 @@ Entity * Joe::makeJoe() {
 
 	LifeComponent* life = new LifeComponent("life",100);
 	result->addComponent(life);
+
+	
 	
 	makeAnimations(result);
 
@@ -91,8 +96,11 @@ void Joe::makeAnimations(Entity* entity) {
 	startJump.sizeFrame = {192,0,64,64};
 	startJump.offset = {-18,-17};
 
-	backHit.sizeFrame = {0, 201, 55, 53};
-	frontHit.sizeFrame = {55, 206, 46, 48};
+	backHit.sizeFrame = {0, 128, 64, 64};
+	backHit.offset = {-12,-17};
+	backHit.flippedOffset.x = -13;
+	frontHit.sizeFrame = {64, 128, 64,64};
+	frontHit.offset = {-18,-17};
 
 	jump.sizeFrame = {256,0,64,64};
 	jump.offset = {-18, -17};
@@ -140,17 +148,37 @@ void Joe::makeAnimations(Entity* entity) {
 	ConditionComparison<JumpType> conditionJump = ConditionComparison<JumpType>(&controller->stateJump, JumpType::JUMP);
 	TimerCondition conditionJump2 = TimerCondition(150);
 	ConditionComparison<JumpType> conditionDoubleJump = ConditionComparison<JumpType>(&controller->stateJump, JumpType::DOUBLE_JUMP);
-	ConditionCallback conditionFallToIdle = ConditionCallback([entity]() {
+	ConditionCallback conditionFallToIdle = ConditionCallback([entity,controller]() {
 		bool result = false;
 		IComponent* component = entity->getComponent("gravity");
 		if (component != nullptr) {
 			Gravity* gravity = static_cast<Gravity*>(component);
-			result = !gravity->isFalling();
+			MotionComponent* motion = static_cast<MotionComponent*>(entity->getComponent("motion"));
+			result = (controller->stateJump != JumpType::FALL && controller->stateJump != JumpType::JUMP_DOWN);// !gravity->isFalling();//motion->velocity.y == 0; //
 		}
 		return result;
 	});
 	ConditionComparison<int> conditionBackDamage = ConditionComparison<int>(&controller->damage, -1);
 	ConditionComparison<int> conditionFrontDamage = ConditionComparison<int>(&controller->damage, 1);
+	ConditionComparison<int> conditionDamageToIdle = ConditionComparison<int>(&controller->damage, 0);
+	ConditionCallback isAlive = ConditionCallback([entity]() {
+		bool result = false;
+		IComponent* component = entity->getComponent("life");
+		if (component != nullptr) {
+			LifeComponent* life= static_cast<LifeComponent*>(component);
+			result = life->isAlive();
+		}
+		return result;
+	});
+	ConditionCallback isNotAlive = ConditionCallback([entity]() {
+		bool result = false;
+		IComponent* component = entity->getComponent("life");
+		if (component != nullptr) {
+			LifeComponent* life = static_cast<LifeComponent*>(component);
+			result = !life->isAlive();
+		}
+		return result;
+	});
 
 	//transitions
 	StateTransition<Animation> transitionForward = StateTransition<Animation>(forwardAnimation, &conditionForward);
@@ -163,7 +191,7 @@ void Joe::makeAnimations(Entity* entity) {
 	StateTransition<Animation> transitionFall = StateTransition<Animation>(fallAnimation, &conditionFall);
 	StateTransition<Animation> transitionFallToIdle = StateTransition<Animation>(idleAnimation, &conditionFallToIdle);
 	StateTransition<Animation> transitionBackDamage = StateTransition<Animation>(backHitAnimation, &conditionBackDamage);
-	StateTransition<Animation> transitionFrontDamage = StateTransition<Animation>(backHitAnimation, &conditionFrontDamage);
+	StateTransition<Animation> transitionFrontDamage = StateTransition<Animation>(frontHitAnimation, &conditionFrontDamage);
 	
 	StateTransition<Animation> transitionStartJump1 = StateTransition<Animation>(startJumpAnimation, &conditionStartJump1);
 	StateTransition<Animation> transitionStartJump2 = StateTransition<Animation>(startJumpAnimation, &conditionStartJump2);
@@ -175,6 +203,10 @@ void Joe::makeAnimations(Entity* entity) {
 								transitionDoubleJump.addCondition(&conditionJump2);
 								transitionDoubleJump.addCondition(&conditionStartJump2); //esta transition solo pasa con el salto doble
 								
+	StateTransition<Animation> transitionDamageIdle = StateTransition<Animation>(idleAnimation, &conditionDamageToIdle);
+								transitionDamageIdle.addCondition(&isAlive);
+	//StateTransition<Animation> transitionDead
+
 
 	//add the transitions to the states
 	idleAnimation->addTransition(&transitionForward);
@@ -197,7 +229,6 @@ void Joe::makeAnimations(Entity* entity) {
 	forwardAnimation->addTransition(&transitionBackDamage);
 	forwardAnimation->addTransition(&transitionFrontDamage);
 
-	//downAnimation->addTransition(&transitionDownToIdle);
 	downAnimation->addTransition(&transitionIdle2);
 	downAnimation->addTransition(&transitionFall);
 	downAnimation->addTransition(&transitionJumpDown);
@@ -216,7 +247,6 @@ void Joe::makeAnimations(Entity* entity) {
 	startJumpAnimation->addTransition(&transitionDoubleJump);
 	startJumpAnimation->addTransition(&transitionBackDamage);
 	startJumpAnimation->addTransition(&transitionFrontDamage);
-	//startJumpAnimation->addTransition(&transitionFallToIdle);
 
 	jumpAnimation->addTransition(&transitionFall);
 	jumpAnimation->addTransition(&transitionBackDamage);
@@ -229,6 +259,9 @@ void Joe::makeAnimations(Entity* entity) {
 	fallAnimation->addTransition(&transitionFallToIdle);
 	fallAnimation->addTransition(&transitionBackDamage);
 	fallAnimation->addTransition(&transitionFrontDamage);
+
+	frontHitAnimation->addTransition(&transitionDamageIdle);
+	backHitAnimation->addTransition(&transitionDamageIdle);
 
 
 	//add the states;

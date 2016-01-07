@@ -58,14 +58,7 @@ void ModuleCollision::checkCollisions() {
 		#endif
 
 		while (two != colliders.end()) {
-			if ((*one)->checkCollision(*two)) {
-
-				/*if ((*one)->type != TypeCollider::GROUND && (*two)->type != TypeCollider::GROUND
-					&& (*one)->type != TypeCollider::WALL && (*two)->type != TypeCollider::WALL
-					&& (*one)->type != TypeCollider::FLOOR && (*two)->type != TypeCollider::FLOOR) {
-					LOG("collision");
-				}*/
-
+			if (interaction.permission((*one)->type,(*two)->type) && (*one)->checkCollision(*two)) {
 				(*one)->notify(*two);
 				(*two)->notify(*one);
 			}

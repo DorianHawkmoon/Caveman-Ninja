@@ -4,6 +4,7 @@
 
 #include "Module.h"
 #include <list>
+#include "ColliderInteraction.h"
 class Collider;
 
 
@@ -25,6 +26,7 @@ public:
 
 private:
 	std::list<Collider*> colliders;
+	ColliderInteraction interaction;
 };
 
 #endif // !MODULE_COLLISION_H

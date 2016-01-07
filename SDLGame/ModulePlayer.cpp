@@ -53,46 +53,49 @@ bool ModulePlayer::cleanUp(){
 update_status ModulePlayer::update(){
 	ControlEntity* controller = &player->controller;
 	Transform* trans = player->transform;
-	controller->moveX = 0;
-	controller->moveY = 0;
 
-	controller->attack = 0;
-	
-	if (App->input->getKey(SDL_SCANCODE_A)) {
-		controller->moveX -= 1;
-		trans->flip = SDL_FLIP_HORIZONTAL;
-	}
+	//don't move while receiving damage
+	if (controller->damage == 0) {
+		controller->moveX = 0;
+		controller->moveY = 0;
 
-	if (App->input->getKey(SDL_SCANCODE_D)) {
- 		controller->moveX += 1;
-		trans->flip = SDL_FLIP_NONE;
-	}
+		controller->attack = 0;
 
-	if (App->input->getKey(SDL_SCANCODE_W)) {
-		controller->moveY -= 1;
-	}
+		if (App->input->getKey(SDL_SCANCODE_A)) {
+			controller->moveX -= 1;
+			trans->flip = SDL_FLIP_HORIZONTAL;
+		}
 
-	if (App->input->getKey(SDL_SCANCODE_S)) {
-		controller->moveY += 1;
-	}
+		if (App->input->getKey(SDL_SCANCODE_D)) {
+			controller->moveX += 1;
+			trans->flip = SDL_FLIP_NONE;
+		}
 
-	
+		if (App->input->getKey(SDL_SCANCODE_W)==KEY_DOWN) {
+			controller->moveY -= 1;
+		}
 
-	//don't jump again when jumping or falling
-	if (App->input->getKey(SDL_SCANCODE_KP_0) && controller->stateJump==JumpType::NONE) {
-		if (App->input->getKey(SDL_SCANCODE_W)) {
-			controller->stateJump = JumpType::DOUBLE_JUMP;
+		if (App->input->getKey(SDL_SCANCODE_S)) {
+			controller->moveY += 1;
+		}
+
+
+
+		//don't jump again when jumping or falling
+		if (App->input->getKey(SDL_SCANCODE_KP_0) && controller->stateJump == JumpType::NONE) {
+			if (App->input->getKey(SDL_SCANCODE_W)) {
+				controller->stateJump = JumpType::DOUBLE_JUMP;
+			} else {
+				controller->stateJump = JumpType::JUMP;
+			}
+		}
+
+		if (controller->moveY != 1) {
+			motion->velocity.x = controller->moveX * motion->speed;
 		} else {
-			controller->stateJump = JumpType::JUMP;
+			motion->velocity.x = 0.0f;
 		}
 	}
-
-	if (controller->moveY != 1) {
-		motion->velocity.x = controller->moveX * motion->speed;
-	} else {
-		motion->velocity.x = 0.0f;
-	}
-
 
 	player->update();
 	return UPDATE_CONTINUE;

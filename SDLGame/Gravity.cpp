@@ -24,10 +24,10 @@ update_status Gravity::update() {
 			//si la lista está vacia, está cayendo, setear FALL
 			//si no lo esta ... nada, las colisiones especificas se mirara en onCollision
 			//TODO  tener en cuenta el jump down (mover la tolerancia? checkear la tolerancia en jump?) -> variable y cuando la distancia recorrida sea mayor que la tolerancia, considerar la gravedad normal
-			if (collisions.size() > 0) {
-				parent->controller.stateJump = JumpType::FALL;
-			} else {
+			if (collisions.size() > 1) {
 				parent->controller.stateJump = JumpType::NONE;
+			} else {
+				parent->controller.stateJump = JumpType::FALL;
 			}
 		}
 

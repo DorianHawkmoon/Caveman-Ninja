@@ -6,21 +6,12 @@
 #include <list>
 #include "IUpdater.h"
 #include "Transform.h"
+#include "ColliderInteraction.h"
 class CircleCollider;
 class RectangleCollider;
 class CollisionListener;
 
-enum class TypeCollider {
-	NONE_COLLIDER = 0,
-	WALL = 1 << 0,
-	PLAYER = 1 << 1,
-	ENEMY = 1 << 2,
-	PLAYER_SHOT = 1 << 3,
-	ENEMY_SHOT = 1 << 4,
-	ITEM = 1 << 5,
-	GROUND = 1 << 6,
-	FLOOR = 1 << 7,
-};
+
 
 class Collider : public IUpdater {
 public:

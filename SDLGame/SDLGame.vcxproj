@@ -31,6 +31,7 @@
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="EntryScene.cpp" />
     <ClCompile Include="Gravity.cpp" />
+    <ClCompile Include="PlayerHittedComponent.cpp" />
     <ClCompile Include="HorizontalSpriteScrollComponent.cpp" />
     <ClCompile Include="IAComponent.cpp" />
     <ClCompile Include="IComponent.cpp" />
@@ -67,6 +68,7 @@
     <ClInclude Include="Camera.h" />
     <ClInclude Include="CircleCollider.h" />
     <ClInclude Include="Collider.h" />
+    <ClInclude Include="ColliderInteraction.h" />
     <ClInclude Include="CollisionComponent.h" />
     <ClInclude Include="CollisionListener.h" />
     <ClInclude Include="Condition.h" />
@@ -77,6 +79,7 @@
     <ClInclude Include="EnemyBehaviour.h" />
     <ClInclude Include="EntryScene.h" />
     <ClInclude Include="Gravity.h" />
+    <ClInclude Include="PlayerHittedComponent.h" />
     <ClInclude Include="IAComponent.h" />
     <ClInclude Include="IUpdater.h" />
     <ClInclude Include="HorizontalSpriteScrollComponent.h" />

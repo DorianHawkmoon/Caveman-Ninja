@@ -127,3 +127,13 @@ void Entity::onCollisionExit(const Collider * self, const Collider * another) {
 void Entity::onCollisionStay(const Collider * self, const Collider * another) {
 	std::for_each(properties.begin(), properties.end(), [&](auto collider) {collider->onCollisionStay(self, another); });
 }
+
+Entity * Entity::clone() const {
+	Entity* result = new Entity();
+	result->category = category;
+	result->destroyed = destroyed;
+	for (auto it = properties.begin(); it != properties.end(); ++it) {
+		result->properties.push_back((*it)->makeClone());
+	}
+	return result;
+}

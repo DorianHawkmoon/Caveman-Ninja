@@ -44,7 +44,7 @@ struct ControlEntity {
 	JumpType stateJump;
 	//state of attack attacking, running...
 	int attack;
-	//state of damage (from left or rigth)
+	//state of damage (from front or back) 1 front -1 back
 	int damage;
 	//running (enemy)
 	bool run;
@@ -83,7 +83,6 @@ public:
 	* Setea la entidad como destruida
 	*/
 	inline void destroy() {
-		LOG("yeah");
 		destroyed = true;
 	}
 
@@ -98,6 +97,8 @@ public:
 	virtual void onCollisionEnter(const Collider* self, const Collider* another);
 	virtual void onCollisionExit(const Collider* self, const Collider* another);
 	virtual void onCollisionStay(const Collider* self, const Collider* another);
+
+	Entity* clone() const;
 	
 public:
 	Transform* transform;

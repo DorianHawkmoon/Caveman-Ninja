@@ -52,6 +52,9 @@
     <Filter Include="Archivos de código fuente\Conditions">
       <UniqueIdentifier>{88dea11d-e009-44c2-9840-c5ca455a9621}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Archivos de código fuente\Entities\SpecificProperties">
+      <UniqueIdentifier>{f6896b50-5633-4a1d-bfe1-c18e4a09ce5e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Log.cpp">
@@ -173,6 +176,9 @@
     </ClCompile>
     <ClCompile Include="DisappearOutCamera.cpp">
       <Filter>Archivos de código fuente\Entities\EnemyProperties</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerHittedComponent.cpp">
+      <Filter>Archivos de código fuente\Entities\PlayerProperties</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -331,6 +337,12 @@
     </ClInclude>
     <ClInclude Include="DisappearOutCamera.h">
       <Filter>Archivos de código fuente\Entities\EnemyProperties</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerHittedComponent.h">
+      <Filter>Archivos de código fuente\Entities\PlayerProperties</Filter>
+    </ClInclude>
+    <ClInclude Include="ColliderInteraction.h">
+      <Filter>Archivos de código fuente\Colliders</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

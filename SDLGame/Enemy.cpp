@@ -70,7 +70,7 @@ Entity * Enemy::makeEnemy() {
 
 	IAComponent* IA = new EnemyBehaviour("IA");
 	result->addComponent(IA);
-	IA->ticks = 5000;
+	IA->ticks = 500;
 
 	makeAnimations(result);
 
