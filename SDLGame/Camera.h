@@ -9,20 +9,13 @@ struct Transform;
 
 class Camera {
 public:
-	Camera(const iPoint& size) : size(size),cameraDebug(0,0) {
+	Camera(const iPoint& size) : size(size),offset(0,0) {
 
 	}
 	virtual ~Camera() {}
 
 	void setCamera(const Transform* camera) {
 		transform = camera;
-	}
-
-	inline void setX(int x) {
-		cameraDebug.x = x;
-	}
-	inline void setY(int y) {
-		cameraDebug.y = y;
 	}
 
 	int getX(float speed = 1.0f) const;
@@ -33,7 +26,9 @@ public:
 	SDL_Rect getViewArea(float speed = 1.0f) const;
 
 public:
-	iPoint cameraDebug;
+	iPoint offset;
+	iPoint leftLimit;
+	iPoint rightLimit;
 
 private:
 	const Transform* transform;

@@ -32,6 +32,9 @@ bool FirstLevel::start() {
 	LOG("Loading scene");
 	App->player->enable();
 
+	App->renderer->camera.leftLimit = {0,0};
+	App->renderer->camera.rightLimit = {1088,256};
+
 	Entity* buffer = new Entity(Category::NONE_CATEGORY);
 	HorizontalSpriteScrollComponent* background = new HorizontalSpriteScrollComponent("sky", "cielo.png");
 	background->rect.x = 0;

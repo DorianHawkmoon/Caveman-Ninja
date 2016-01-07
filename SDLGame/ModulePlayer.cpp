@@ -32,6 +32,7 @@ bool ModulePlayer::start(){
 	player->transform->position = {100, 170};
 
 	App->renderer->camera.setCamera(player->transform);
+	App->renderer->camera.offset.x = 30;
 
 	return started;
 }

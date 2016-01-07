@@ -65,19 +65,19 @@ update_status ModuleRender::update() {
 	int speed = 1;
 
 	if (App->input->getKey(SDL_SCANCODE_UP) == KEY_REPEAT) {
-		camera.setY(camera.getY() - speed);
+		camera.offset.y -= speed;
 	}
 
 	if (App->input->getKey(SDL_SCANCODE_DOWN) == KEY_REPEAT) {
-		camera.setY(camera.getY() + speed);
+		camera.offset.y += speed;
 	}
 
 	if (App->input->getKey(SDL_SCANCODE_LEFT) == KEY_REPEAT) {
-		camera.setX(camera.getX() - speed);
+		camera.offset.x -= speed;
 	}
 
 	if (App->input->getKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT) {
-		camera.setX(camera.getX() + speed);
+		camera.offset.x += speed;
 	}
 
 	return UPDATE_CONTINUE;
@@ -97,7 +97,7 @@ bool ModuleRender::cleanUp() {
 bool ModuleRender::blit(SDL_Texture * texture, const Transform& transform, const SDL_Rect* sectionTexture,  float speed) {
 	bool result = true;
 
-	SDL_Rect cam = camera.getViewArea(speed);
+	SDL_Rect cam = getCorrectCamera(speed);
 
 	SDL_Rect rectDestiny;
 	iPoint pos = {(int)transform.position.x, (int)transform.position.y};
@@ -144,8 +144,10 @@ bool ModuleRender::paintRectangle(const SDL_Color& color, const iPoint& position
 	SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
 	SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, color.a);
 
-	int x = static_cast<int>(position.x * SCREEN_SIZE - camera.getX(speed));
-	int y = static_cast<int>(position.y * SCREEN_SIZE - camera.getY(speed));
+	SDL_Rect cam = getCorrectCamera(speed);
+
+	int x = static_cast<int>(position.x * SCREEN_SIZE - cam.x);
+	int y = static_cast<int>(position.y * SCREEN_SIZE - cam.y);
 	int w = static_cast<int>(rect.x * SCREEN_SIZE);
 	int h = static_cast<int>(rect.y * SCREEN_SIZE);
 
@@ -171,10 +173,8 @@ bool ModuleRender::paintRectangle(const SDL_Color & color, const Transform & tra
 	//escala de la textura con tamaño real
 	fPoint renderScale = fPoint(rect.x / 64.0f, rect.y/ 64.0f);
 
-
-
 	// Determina el área donde pintar en función de la escala
-	SDL_Rect cam = camera.getViewArea(speed);
+	SDL_Rect cam = getCorrectCamera(speed);
 
 	SDL_Rect rectDestiny;
 	iPoint pos = {(int) transform.position.x, (int) transform.position.y};
@@ -215,9 +215,11 @@ bool ModuleRender::paintRectangle(const SDL_Color & color, const Transform & tra
 bool ModuleRender::paintCircle(const SDL_Color & color, const fPoint & position, float radius, float speed) {
 	bool result = true; 
 
+	SDL_Rect cam = getCorrectCamera(speed);
+
 	iPoint pos;
-	pos.x = static_cast<int>((position.x-radius) * SCREEN_SIZE - camera.getX(speed));
-	pos.y = static_cast<int>((position.y-radius) * SCREEN_SIZE - camera.getY(speed));
+	pos.x = static_cast<int>((position.x-radius) * SCREEN_SIZE - cam.x);
+	pos.y = static_cast<int>((position.y-radius) * SCREEN_SIZE - cam.y);
 
 	float scale = radius / 32;
 
@@ -240,4 +242,26 @@ bool ModuleRender::paintCircle(const SDL_Color & color, const fPoint & position,
 	}
 
 	return result;
+}
+
+SDL_Rect ModuleRender::getCorrectCamera(float speed) {
+	SDL_Rect cam = camera.getViewArea(speed);
+	iPoint rightLimit = camera.rightLimit*SCREEN_SIZE;
+	iPoint leftLimit = camera.leftLimit*SCREEN_SIZE;
+	iPoint offset = {0,0};
+	if (cam.x > rightLimit.x) {
+		offset.x = cam.x - rightLimit.x;
+	} else if (cam.x < leftLimit.x) {
+		offset.x = leftLimit.x - cam.x;
+	}
+
+	if (cam.y > rightLimit.y) {
+		offset.y = cam.y - rightLimit.y;
+	} else if (cam.x < leftLimit.y) {
+		offset.x = leftLimit.y - cam.x;
+	}
+
+	cam.x += offset.x;
+	cam.y += offset.y;
+	return cam;
 }

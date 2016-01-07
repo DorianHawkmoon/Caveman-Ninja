@@ -35,6 +35,9 @@ public:
 	SDL_Texture* rectangle;
 	SDL_Renderer* renderer;
 	Camera camera;
+
+private:
+	SDL_Rect getCorrectCamera(float speed);
 };
 
 
