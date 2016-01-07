@@ -21,6 +21,7 @@
 #include "CollisionComponent.h"
 #include "SDL\SDL_rect.h"
 #include "LifeComponent.h"
+#include "WallCollisionComponent.h"
 
 Entity * Joe::makeJoe() {
 	//prepare the entity for the player
@@ -35,6 +36,10 @@ Entity * Joe::makeJoe() {
 	gravity->gravity = 550;
 	gravity->maxVelocity = 500;
 	result->addComponent(gravity);
+
+	WallCollisionComponent* walls = new WallCollisionComponent("walls");
+	result->addComponent(walls);
+
 
 	RectangleCollider* rectangle= new RectangleCollider(fPoint(0,0), iPoint(28,47), 0, TypeCollider::PLAYER);
 	CollisionComponent* collider = new CollisionComponent("collider", rectangle);
@@ -148,7 +153,6 @@ void Joe::makeAnimations(Entity* entity) {
 	StateTransition<Animation> transitionIdle2 = StateTransition<Animation>(idleAnimation, &conditionIdle2);
 	StateTransition<Animation> transitionDown = StateTransition<Animation>(downAnimation, &conditionDown);
 	StateTransition<Animation> transitionLookingUp = StateTransition<Animation>(lookingUpAnimation, &conditionLookingUp);
-	//StateTransition<Animation> transitionDownToIdle = StateTransition<Animation>(idleAnimation, &conditionIdle2);
 	StateTransition<Animation> transitionJumpDown = StateTransition<Animation>(fallAnimation, &conditionJumpDown);
 	StateTransition<Animation> transitionFall = StateTransition<Animation>(fallAnimation, &conditionFall);
 	StateTransition<Animation> transitionFallToIdle = StateTransition<Animation>(idleAnimation, &conditionFallToIdle);
@@ -193,6 +197,7 @@ void Joe::makeAnimations(Entity* entity) {
 
 	startJumpAnimation->addTransition(&transitionJump);//solo desde start animation pasa a jump o double jump
 	startJumpAnimation->addTransition(&transitionDoubleJump);
+	startJumpAnimation->addTransition(&transitionFallToIdle);
 
 	jumpAnimation->addTransition(&transitionFall);
 	doubleJumpAnimation->addTransition(&transitionFall);

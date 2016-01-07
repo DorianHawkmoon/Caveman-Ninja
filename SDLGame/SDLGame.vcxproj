@@ -56,6 +56,7 @@
     <ClCompile Include="Timer.cpp" />
     <ClCompile Include="Transform.cpp" />
     <ClCompile Include="VerticalSpriteScrollComponent.cpp" />
+    <ClCompile Include="WallCollisionComponent.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animation.h" />
@@ -107,6 +108,7 @@
     <ClInclude Include="Transform.h" />
     <ClInclude Include="Utils.h" />
     <ClInclude Include="VerticalSpriteScrollComponent.h" />
+    <ClInclude Include="WallCollisionComponent.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{1C26C921-73BE-4D82-ADDF-EA4D5B581FC4}</ProjectGuid>

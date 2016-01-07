@@ -162,6 +162,9 @@
     <ClCompile Include="LifeComponent.cpp">
       <Filter>Archivos de código fuente\Entities\Properties</Filter>
     </ClCompile>
+    <ClCompile Include="WallCollisionComponent.cpp">
+      <Filter>Archivos de código fuente\Entities\Properties</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Module.h">
@@ -309,6 +312,9 @@
       <Filter>Archivos de código fuente\Entities\Factories</Filter>
     </ClInclude>
     <ClInclude Include="LifeComponent.h">
+      <Filter>Archivos de código fuente\Entities\Properties</Filter>
+    </ClInclude>
+    <ClInclude Include="WallCollisionComponent.h">
       <Filter>Archivos de código fuente\Entities\Properties</Filter>
     </ClInclude>
   </ItemGroup>
