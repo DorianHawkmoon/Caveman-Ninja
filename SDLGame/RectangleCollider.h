@@ -5,7 +5,7 @@
 #include "Collider.h"
 #include "Globals.h"
 #include "SDL\SDL_rect.h"
-class FloorCollider;
+class LineCollider;
 class CircleCollider;
 
 class RectangleCollider : public Collider {
@@ -14,6 +14,7 @@ public:
 	virtual ~RectangleCollider(){}
 
 	virtual void paintCollider() const;
+	void paintCollider(const iPoint& pivot) const;
 
 	bool checkCollision(const Collider* r) const {
 		return r->checkSpecificCollision(this);
@@ -21,7 +22,7 @@ public:
 	bool checkSpecificCollision(const Collider* self) const;
 	bool checkCollision(const RectangleCollider* other) const;
 	bool checkCollision(const CircleCollider* other) const;
-	bool checkCollision(const FloorCollider* other) const {return false;};
+	bool checkCollision(const LineCollider* other) const;;
 	Collider* clone();
 
 	float rotation;

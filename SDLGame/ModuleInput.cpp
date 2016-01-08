@@ -131,7 +131,7 @@ bool ModuleInput::singleKey(const SDL_Scancode & key, const std::list<SDL_Scanco
 }
 
 
-	bool ModuleInput::keyActive(const SDL_Scancode & key) const {
+bool ModuleInput::keyActive(const SDL_Scancode & key) const {
 	return getKey(key) != KEY_IDLE;
 }
 

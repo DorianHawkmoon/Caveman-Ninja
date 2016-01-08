@@ -149,6 +149,11 @@ void Enemy::makeAnimations(Entity* entity) {
 	run.flippedOffset.x = -9;
 	run.speed = 0.17f;
 
+	backHit.sizeFrame = {512,512,128,128};
+	backHit.offset = {-51,-82};
+	frontHit.sizeFrame = {512,384,128,128};
+	frontHit.offset = {-51,-82};
+
 	//states
 	State<Animation>* forwardAnimation = new State<Animation>(forward);
 	State<Animation>* idleAnimation = new State<Animation>(idle);
@@ -162,7 +167,8 @@ void Enemy::makeAnimations(Entity* entity) {
 	State<Animation>* attackAnimation = new State<Animation>(attack);
 	State<Animation>* startRunningAwayAnimation = new State<Animation>(startRunningAway);
 	State<Animation>* runningAwayAnimation = new State<Animation>(runningAway);
-	//State<Animation>* frontDamage = new State<Animation>();
+	State<Animation>* backHitAnimation = new State<Animation>(backHit);
+	State<Animation>* frontHitAnimation = new State<Animation>(frontHit);
 
 	//conditions
 	ConditionComparison<int> conditionForward = ConditionComparison<int>(&controller->moveX, 1);
@@ -176,8 +182,10 @@ void Enemy::makeAnimations(Entity* entity) {
 	ConditionComparison<int> conditionRunningAway = ConditionComparison<int>(&controller->attack, 3);
 	ConditionComparison<bool> conditionRun = ConditionComparison<bool>(&controller->run, true);
 	ConditionComparison<bool> conditionNotRun = ConditionComparison<bool>(&controller->run, false);
-	/*ConditionComparison<int> conditionBackDamage = ConditionComparison<int>(&controller->damage, -1);
-	ConditionComparison<int> conditionFrontDamage = ConditionComparison<int>(&controller->damage, 1);*/
+	ConditionComparison<int> conditionBackDamage = ConditionComparison<int>(&controller->damage, -1);
+	ConditionComparison<int> conditionFrontDamage = ConditionComparison<int>(&controller->damage, 1);
+	ConditionComparison<int> conditionDamageToIdle = ConditionComparison<int>(&controller->damage, 0);
+
 
 	//transitions
 	StateTransition<Animation> transitionForward = StateTransition<Animation>(forwardAnimation, &conditionForward);
@@ -191,7 +199,8 @@ void Enemy::makeAnimations(Entity* entity) {
 	StateTransition<Animation> transitionAttack = StateTransition<Animation>(attackAnimation, &conditionAttack);
 	StateTransition<Animation> transitionStartRunningAway = StateTransition<Animation>(startRunningAwayAnimation, &conditionStartRunningAway);
 	StateTransition<Animation> transitionRunningAway = StateTransition<Animation>(runningAwayAnimation, &conditionRunningAway);
-	//StateTransition<Animation> transitionBackDamage = StateTransition<Animation>();
+	StateTransition<Animation> transitionBackDamage = StateTransition<Animation>(backHitAnimation, &conditionBackDamage);
+	StateTransition<Animation> transitionFrontDamage = StateTransition<Animation>(frontHitAnimation, &conditionFrontDamage);
 
 	//add the transitions to the states
 	idleAnimation->addTransition(&transitionForward);
@@ -200,24 +209,39 @@ void Enemy::makeAnimations(Entity* entity) {
 	idleAnimation->addTransition(&transitionLookingUp);
 	idleAnimation->addTransition(&transitionRun);
 	idleAnimation->addTransition(&transitionAttack);
+	idleAnimation->addTransition(&transitionBackDamage);
+	idleAnimation->addTransition(&transitionFrontDamage);
 
 	forwardAnimation->addTransition(&transitionRun);
 	forwardAnimation->addTransition(&transitionIdle1);
 	forwardAnimation->addTransition(&transitionAttack);
+	forwardAnimation->addTransition(&transitionBackDamage);
+	forwardAnimation->addTransition(&transitionFrontDamage);
 
 	downAnimation->addTransition(&transitionIdle2);
+	downAnimation->addTransition(&transitionBackDamage);
+	downAnimation->addTransition(&transitionFrontDamage);
 
 
 	lookingUpAnimation->addTransition(&transitionIdle2);
 	lookingUpAnimation->addTransition(&transitionForward);
 	lookingUpAnimation->addTransition(&transitionBackward);
 	lookingUpAnimation->addTransition(&transitionAttack);
+	lookingUpAnimation->addTransition(&transitionBackDamage);
+	lookingUpAnimation->addTransition(&transitionFrontDamage);
 
 	runAnimation->addTransition(&transitionRunIddle);
 	runAnimation->addTransition(&transitionAttack);
+	runAnimation->addTransition(&transitionBackDamage);
+	runAnimation->addTransition(&transitionFrontDamage);
 
 	attackAnimation->addTransition(&transitionStartRunningAway);
+	attackAnimation->addTransition(&transitionBackDamage);
+	attackAnimation->addTransition(&transitionFrontDamage);
+
 	startRunningAwayAnimation->addTransition(&transitionRunningAway);
+	startRunningAwayAnimation->addTransition(&transitionBackDamage);
+	startRunningAwayAnimation->addTransition(&transitionFrontDamage);
 
 	//add the states;
 	animations = new StateMachine<Animation>(idleAnimation);
@@ -232,6 +256,8 @@ void Enemy::makeAnimations(Entity* entity) {
 	animations->addState(attackAnimation);
 	animations->addState(startRunningAwayAnimation);
 	animations->addState(runningAwayAnimation);
+	animations->addState(backHitAnimation);
+	animations->addState(frontHitAnimation);
 
 	//create the component
 	AnimationComponent* component = new AnimationComponent("animations", "troglodita.png", animations);

@@ -50,3 +50,9 @@ bool Scene::cleanUp() {
 	entities.clear();
 	return true;
 }
+
+void Scene::addNode(Entity * entity) {
+	if (root != nullptr) {
+		root->addChild(entity);
+	}
+}

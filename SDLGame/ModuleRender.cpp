@@ -165,7 +165,7 @@ bool ModuleRender::paintRectangle(const SDL_Color& color, const iPoint& position
 	return result;
 }
 
-bool ModuleRender::paintRectangle(const SDL_Color & color, const Transform & transform, const iPoint & rect, float speed) {
+bool ModuleRender::paintRectangle(const SDL_Color & color, const Transform & transform, const iPoint & rect, const iPoint& pivot, float speed) {
 	// Determina la posición del dibujo en pantalla
 	//escala de la textura con tamaño real
 	fPoint renderScale = fPoint(rect.x / 64.0f, rect.y/ 64.0f);
@@ -201,7 +201,8 @@ bool ModuleRender::paintRectangle(const SDL_Color & color, const Transform & tra
 
 	// Renderiza la textura
 	//pivot is nullptr because is middle of rectangle
-	if (SDL_RenderCopyEx(renderer, rectangle, nullptr, &rectDestiny, transform.rotation, nullptr, transform.flip) != 0) {
+	SDL_Point point = {pivot.x,pivot.y};
+	if (SDL_RenderCopyEx(renderer, rectangle, nullptr, &rectDestiny, transform.rotation, &point, transform.flip) != 0) {
 		LOG("Cannot blit to screen. SDL_RenderCopyEx error: %s", SDL_GetError());
 		result = false;
 	}

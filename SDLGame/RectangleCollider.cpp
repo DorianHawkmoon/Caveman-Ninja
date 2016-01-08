@@ -4,6 +4,7 @@
 #include "CircleCollider.h"
 #include "SDL\SDL_rect.h"
 #include "Transform.h"
+#include "LineCollider.h"
 
 RectangleCollider::RectangleCollider(fPoint& position, iPoint& rectangle, float rotation, TypeCollider type) : Collider(position, type), rect(rectangle), rotation(rotation) {}
 
@@ -15,8 +16,8 @@ void RectangleCollider::paintCollider() const {
 	SDL_Color color;
 	color.b = 255;
 	color.r = 255;
-	color.g = 255;
-	color.a = 150;
+	color.g = 200;
+	color.a = 100;
 
 	if (global.rotation == 0) {
 		iPoint pos(static_cast<int>(global.position.x), static_cast<int>(global.position.y));
@@ -24,6 +25,25 @@ void RectangleCollider::paintCollider() const {
 		App->renderer->paintRectangle(color, pos, rect);
 	} else {
 		App->renderer->paintRectangle(color, global, rect);
+	}
+}
+
+void RectangleCollider::paintCollider(const iPoint & pivot) const {
+	//get global
+	Transform global = getGlobalTransform();
+	global.rotation += rotation;
+	SDL_Color color;
+	color.b = 255;
+	color.r = 255;
+	color.g = 200;
+	color.a = 100;
+
+	if (global.rotation == 0) {
+		iPoint pos(static_cast<int>(global.position.x), static_cast<int>(global.position.y));
+
+		App->renderer->paintRectangle(color, pos, rect);
+	} else {
+		App->renderer->paintRectangle(color, global, rect, pivot);
 	}
 }
 
@@ -191,6 +211,8 @@ bool RectangleCollider::checkCollision(const CircleCollider * other) const {
 	//If the shapes have not collided
 	return false;
 }
+
+bool RectangleCollider::checkCollision(const LineCollider * other) const { return other->checkCollision(this); }
 
 
 std::vector<fPoint> RectangleCollider::getPoints(float totalRotation) const {

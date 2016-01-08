@@ -29,13 +29,12 @@ public:
 		return iPoint(static_cast<int>(radius * 2), static_cast<int>(radius * 2));
 	}
 	fPoint getGlobalPoint() const;
-private:
+
 
 	bool checkSpecificCollision(const Collider* self) const;
-
 	bool checkCollision(const RectangleCollider* other) const;
-
 	bool checkCollision(const CircleCollider* other) const;
+	bool checkCollision(const LineCollider* other) const;;
 };
 
 

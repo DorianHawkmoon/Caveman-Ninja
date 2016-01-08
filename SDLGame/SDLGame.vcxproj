@@ -25,12 +25,16 @@
     <ClCompile Include="CircleCollider.cpp" />
     <ClCompile Include="Collider.cpp" />
     <ClCompile Include="CollisionComponent.cpp" />
+    <ClCompile Include="DestroyOnCollisionComponent.cpp" />
     <ClCompile Include="DisappearOutCamera.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="EnemyBehaviour.cpp" />
+    <ClCompile Include="EnemyHittedComponent.cpp" />
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="EntryScene.cpp" />
     <ClCompile Include="Gravity.cpp" />
+    <ClCompile Include="LifespanComponent.cpp" />
+    <ClCompile Include="LineCollider.cpp" />
     <ClCompile Include="PlayerHittedComponent.cpp" />
     <ClCompile Include="HorizontalSpriteScrollComponent.cpp" />
     <ClCompile Include="IAComponent.cpp" />
@@ -51,15 +55,18 @@
     <ClCompile Include="ModuleTimer.cpp" />
     <ClCompile Include="ModuleWindow.cpp" />
     <ClCompile Include="MotionComponent.cpp" />
+    <ClCompile Include="PlayerWeapon.cpp" />
     <ClCompile Include="RectangleCollider.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="FirstLevel.cpp" />
     <ClCompile Include="SceneNode.cpp" />
+    <ClCompile Include="SingleAnimationComponent.cpp" />
     <ClCompile Include="SpriteComponent.cpp" />
     <ClCompile Include="Timer.cpp" />
     <ClCompile Include="Transform.cpp" />
     <ClCompile Include="VerticalSpriteScrollComponent.cpp" />
     <ClCompile Include="WallCollisionComponent.cpp" />
+    <ClCompile Include="WeaponComponent.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animation.h" />
@@ -74,11 +81,15 @@
     <ClInclude Include="Condition.h" />
     <ClInclude Include="ConditionCallback.h" />
     <ClInclude Include="ConditionComparison.h" />
+    <ClInclude Include="DestroyOnCollisionComponent.h" />
     <ClInclude Include="DisappearOutCamera.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="EnemyBehaviour.h" />
+    <ClInclude Include="EnemyHittedComponent.h" />
     <ClInclude Include="EntryScene.h" />
     <ClInclude Include="Gravity.h" />
+    <ClInclude Include="LifespanComponent.h" />
+    <ClInclude Include="LineCollider.h" />
     <ClInclude Include="PlayerHittedComponent.h" />
     <ClInclude Include="IAComponent.h" />
     <ClInclude Include="IUpdater.h" />
@@ -101,11 +112,13 @@
     <ClInclude Include="ModuleTimer.h" />
     <ClInclude Include="ModuleWindow.h" />
     <ClInclude Include="MotionComponent.h" />
+    <ClInclude Include="PlayerWeapon.h" />
     <ClInclude Include="Point.h" />
     <ClInclude Include="RectangleCollider.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="FirstLevel.h" />
     <ClInclude Include="SceneNode.h" />
+    <ClInclude Include="SingleAnimationComponent.h" />
     <ClInclude Include="SpriteComponent.h" />
     <ClInclude Include="State.h" />
     <ClInclude Include="StateMachine.h" />
@@ -116,6 +129,7 @@
     <ClInclude Include="Utils.h" />
     <ClInclude Include="VerticalSpriteScrollComponent.h" />
     <ClInclude Include="WallCollisionComponent.h" />
+    <ClInclude Include="WeaponComponent.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{1C26C921-73BE-4D82-ADDF-EA4D5B581FC4}</ProjectGuid>

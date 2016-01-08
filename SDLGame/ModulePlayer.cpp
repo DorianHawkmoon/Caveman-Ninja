@@ -9,6 +9,10 @@
 #include "SDL\SDL_keycode.h"
 #include "JumpComponent.h"
 #include "LifeComponent.h"
+#include "PlayerWeapon.h"
+#include "WeaponComponent.h"
+#include "CollisionComponent.h"
+#include "MotionComponent.h"
 
 ModulePlayer::ModulePlayer(bool start_enabled) : Module(start_enabled)
 {
@@ -29,6 +33,7 @@ bool ModulePlayer::start(){
 	started = started & ((motion = static_cast<MotionComponent*>(player->getComponent("motion")))!=nullptr);
 	started = started & ((jump = static_cast<JumpComponent*>(player->getComponent("jump"))) != nullptr);
 	started = started & ((life = static_cast<LifeComponent*>(player->getComponent("life"))) != nullptr);
+	started = started & ((weapon = static_cast<WeaponComponent*>(player->getComponent("weapon"))) != nullptr);
 	player->transform->position = {100, 170};
 
 	App->renderer->camera.setCamera(player->transform);
@@ -48,6 +53,7 @@ bool ModulePlayer::cleanUp(){
 	player->cleanUp();
 	return true;
 }
+
 
 // Update
 update_status ModulePlayer::update(){
@@ -77,6 +83,10 @@ update_status ModulePlayer::update(){
 
 		if (App->input->getKey(SDL_SCANCODE_S)) {
 			controller->moveY += 1;
+		}
+
+		if (App->input->getKey(SDL_SCANCODE_KP_ENTER)) {
+			weapon->throwWeapon();
 		}
 
 

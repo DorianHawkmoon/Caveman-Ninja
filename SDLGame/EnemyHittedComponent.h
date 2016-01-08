@@ -1,14 +1,14 @@
 #pragma once
-#ifndef PLAYER_HITTED_COMPONENT_H
-#define PLAYER_HITTED_COMPONENT_H
+#ifndef ENEMY_HITTED_COMPONENT_H
+#define ENEMY_HITTED_COMPONENT_H
 
 #include "IComponent.h"
 #include "Timer.h"
-class PlayerHittedComponent : public IComponent {
+class EnemyHittedComponent : public IComponent {
 public:
-	PlayerHittedComponent(const std::string& name);
-	~PlayerHittedComponent();
-	
+	EnemyHittedComponent(const std::string& name);
+	~EnemyHittedComponent();
+
 	bool start();
 	virtual update_status update();
 
@@ -19,9 +19,9 @@ public:
 
 private:
 	bool hitted;
-	Timer timer;
 	bool dead;
+	Timer timer;
 };
 
+#endif // !ENEMY_HITTED_COMPONENT_H
 
-#endif // !HITTED_COMPONENT_H

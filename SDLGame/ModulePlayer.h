@@ -7,9 +7,11 @@
 #include "Point.h"
 #include "StateMachine.h"
 #include "Joe.h"
+#include <vector>
 
 class LifeComponent;
 class JumpComponent;
+class WeaponComponent;
 class MotionComponent;
 class Entity;
 
@@ -30,6 +32,8 @@ public:
 	MotionComponent* motion;
 	JumpComponent* jump;
 	LifeComponent* life;
+	WeaponComponent* weapon;
+
 };
 
 #endif // __MODULEPLAYER_H__

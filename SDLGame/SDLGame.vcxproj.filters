@@ -180,6 +180,27 @@
     <ClCompile Include="PlayerHittedComponent.cpp">
       <Filter>Archivos de código fuente\Entities\PlayerProperties</Filter>
     </ClCompile>
+    <ClCompile Include="EnemyHittedComponent.cpp">
+      <Filter>Archivos de código fuente\Entities\EnemyProperties</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerWeapon.cpp">
+      <Filter>Archivos de código fuente\Entities\Factories</Filter>
+    </ClCompile>
+    <ClCompile Include="SingleAnimationComponent.cpp">
+      <Filter>Archivos de código fuente\Entities\Properties</Filter>
+    </ClCompile>
+    <ClCompile Include="DestroyOnCollisionComponent.cpp">
+      <Filter>Archivos de código fuente\Entities\Properties</Filter>
+    </ClCompile>
+    <ClCompile Include="WeaponComponent.cpp">
+      <Filter>Archivos de código fuente\Entities\PlayerProperties</Filter>
+    </ClCompile>
+    <ClCompile Include="LifespanComponent.cpp">
+      <Filter>Archivos de código fuente\Entities\Properties</Filter>
+    </ClCompile>
+    <ClCompile Include="LineCollider.cpp">
+      <Filter>Archivos de código fuente\Colliders</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Module.h">
@@ -342,6 +363,27 @@
       <Filter>Archivos de código fuente\Entities\PlayerProperties</Filter>
     </ClInclude>
     <ClInclude Include="ColliderInteraction.h">
+      <Filter>Archivos de código fuente\Colliders</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyHittedComponent.h">
+      <Filter>Archivos de código fuente\Entities\EnemyProperties</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerWeapon.h">
+      <Filter>Archivos de código fuente\Entities\Factories</Filter>
+    </ClInclude>
+    <ClInclude Include="SingleAnimationComponent.h">
+      <Filter>Archivos de código fuente\Entities\Properties</Filter>
+    </ClInclude>
+    <ClInclude Include="DestroyOnCollisionComponent.h">
+      <Filter>Archivos de código fuente\Entities\Properties</Filter>
+    </ClInclude>
+    <ClInclude Include="WeaponComponent.h">
+      <Filter>Archivos de código fuente\Entities\PlayerProperties</Filter>
+    </ClInclude>
+    <ClInclude Include="LifespanComponent.h">
+      <Filter>Archivos de código fuente\Entities\Properties</Filter>
+    </ClInclude>
+    <ClInclude Include="LineCollider.h">
       <Filter>Archivos de código fuente\Colliders</Filter>
     </ClInclude>
   </ItemGroup>

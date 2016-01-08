@@ -58,6 +58,10 @@ void ModuleScene::changeScene(Scene * scene, float time) {
 	totalTime = (Uint32) (time  * 0.5f * 1000.0f);
 }
 
+void ModuleScene::addEntity(Entity * entity) {
+	currentScene->addNode(entity);
+}
+
 void ModuleScene::makeChangeScene() {
 	if (startTime > 0) {
 		Uint32 now = SDL_GetTicks() - startTime;

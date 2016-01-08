@@ -11,7 +11,6 @@ AnimationComponent::AnimationComponent(const std::string & nameComponent, const 
 }
 
 AnimationComponent::~AnimationComponent() {
-	cleanUp();
 	if (state != nullptr) {
 		delete state;
 	}

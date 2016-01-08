@@ -8,6 +8,7 @@
 
 struct SDL_Texture;
 class Scene;
+class Entity;
 
 class ModuleScene : public Module {
 public:
@@ -20,6 +21,8 @@ public:
 	update_status postUpdate();
 	bool cleanUp();
 	void changeScene(Scene* scene, float time=1.0f);
+
+	void addEntity(Entity* entity);
 
 private:
 	Scene* currentScene;

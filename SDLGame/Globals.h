@@ -10,7 +10,6 @@
 
 void log(const char file[], int line, const char* format, ...);
 
-
 // Configuration -----------
 #define SCREEN_WIDTH 256
 #define SCREEN_HEIGHT 256

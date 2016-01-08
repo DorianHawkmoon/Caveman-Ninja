@@ -26,7 +26,7 @@ public:
 	bool blit(SDL_Texture* texture, const Transform& transform, const SDL_Rect* sectionTexture, float speed = 1.0f);
 	bool paintCollision(const Collider* collision);
 	bool paintRectangle(const SDL_Color& color, const iPoint& position, const iPoint& rect, float speed=1.0f);
-	bool paintRectangle(const SDL_Color& color, const Transform& transform, const iPoint& rect, float speed = 1.0f);
+	bool paintRectangle(const SDL_Color& color, const Transform& transform, const iPoint& rect, const iPoint& pivot = {0,0}, float speed = 1.0f);
 	bool paintCircle(const SDL_Color& color, const fPoint& position, float radius, float speed = 1.0f);
 	bool insideCamera(const SDL_Rect& one, float speed=1.0f) const;
 

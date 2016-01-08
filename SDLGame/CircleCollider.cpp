@@ -1,19 +1,22 @@
 #include "CircleCollider.h"
 #include "RectangleCollider.h"
+#include "LineCollider.h"
 #include "Transform.h"
 
 CircleCollider::~CircleCollider() {}
 
 void CircleCollider::paintCollider() const {
+	//get global
+	Transform global = getGlobalTransform();
+
 	// Determina el color y opacidad del dibujo
 	SDL_Color renderColor;
 	renderColor.r = 0;
 	renderColor.g = 179;
 	renderColor.b = 0;
-	renderColor.a = 128;
+	renderColor.a = 100;
 
-	//const SDL_Texture* texture, const SDL_Color& color, const iPoint& position, float radius, float speed = 1.0f
-	App->renderer->paintCircle(renderColor, position, radius);
+	App->renderer->paintCircle(renderColor, global.position, radius);
 }
 
 Collider * CircleCollider::clone() {
@@ -42,3 +45,5 @@ bool CircleCollider::checkCollision(const CircleCollider * other) const {
 	fPoint global = getGlobalPoint();
 	return global.distanceTo(globalOther) <= (this->radius + other->radius);
 }
+
+bool CircleCollider::checkCollision(const LineCollider * other) const { return other->checkCollision(this); }

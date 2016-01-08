@@ -24,7 +24,7 @@ update_status Gravity::update() {
 			//si la lista está vacia, está cayendo, setear FALL
 			//si no lo esta ... nada, las colisiones especificas se mirara en onCollision
 			//TODO  tener en cuenta el jump down (mover la tolerancia? checkear la tolerancia en jump?) -> variable y cuando la distancia recorrida sea mayor que la tolerancia, considerar la gravedad normal
-			if (collisions.size() > 1) {
+			if (collisions.size() > 1) { //me cuentro a mí mismo
 				parent->controller.stateJump = JumpType::NONE;
 			} else {
 				parent->controller.stateJump = JumpType::FALL;
@@ -51,6 +51,10 @@ void Gravity::onCollisionEnter(const Collider * self, const Collider * another) 
 		return;
 	}
 
+	if (another->type == TypeCollider::GROUND) {
+		LOG("gournd");
+	}
+
 	//falling?
 	MotionComponent* motion = static_cast<MotionComponent*>(parent->getComponent("motion"));
 	if (motion->velocity.y < 0) {
@@ -75,5 +79,5 @@ bool Gravity::isFalling() {
 	RectangleCollider rectangle = RectangleCollider(parent->transform->getGlobalTransform().position, iPoint(5, 57), 0, TypeCollider::PLAYER);
 	std::list<Collider*> collisions = App->collisions->checkCollisions(&rectangle);
 	//TODO  tener en cuenta el jump down (mover la tolerancia? checkear la tolerancia en jump?) -> variable y cuando la distancia recorrida sea mayor que la tolerancia, considerar la gravedad normal
-	return collisions.size() == 0;
+	return collisions.size() == 1; //me cuento a mi mismo
 }

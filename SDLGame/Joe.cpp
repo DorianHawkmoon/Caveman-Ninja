@@ -20,8 +20,10 @@
 #include "CircleCollider.h"
 #include "CollisionComponent.h"
 #include "SDL\SDL_rect.h"
+#include "Animation.h"
 #include "LifeComponent.h"
 #include "WallCollisionComponent.h"
+#include "WeaponComponent.h"
 #include "PlayerHittedComponent.h"
 
 Entity * Joe::makeJoe() {
@@ -58,7 +60,8 @@ Entity * Joe::makeJoe() {
 	LifeComponent* life = new LifeComponent("life",100);
 	result->addComponent(life);
 
-	
+	WeaponComponent* weapon = new WeaponComponent("weapon", 3, 300);
+	result->addComponent(weapon);
 	
 	makeAnimations(result);
 

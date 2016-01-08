@@ -19,6 +19,8 @@ public:
 	virtual update_status postUpdate();
 	virtual bool cleanUp();
 
+	void addNode(Entity* entity);
+
 protected:
 	SceneNode* root;
 	std::list<Entity*> entities;

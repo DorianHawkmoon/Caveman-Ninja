@@ -9,6 +9,7 @@
 #include "ColliderInteraction.h"
 class CircleCollider;
 class RectangleCollider;
+class LineCollider;
 class CollisionListener;
 
 
@@ -35,6 +36,7 @@ public:
 	virtual bool checkSpecificCollision(const Collider* self) const = 0;
 	virtual bool checkCollision(const RectangleCollider* other) const = 0;
 	virtual bool checkCollision(const CircleCollider* other) const = 0;
+	virtual bool checkCollision(const LineCollider* other) const = 0;
 
 	Transform getGlobalTransform() const{
 		if (parentTransform != nullptr) {
