@@ -138,9 +138,6 @@
     <ClCompile Include="JumpComponent.cpp">
       <Filter>Archivos de código fuente\Entities\Properties</Filter>
     </ClCompile>
-    <ClCompile Include="Gravity.cpp">
-      <Filter>Archivos de código fuente\Entities\Properties</Filter>
-    </ClCompile>
     <ClCompile Include="ModuleCollision.cpp">
       <Filter>Archivos de código fuente\Core Modules</Filter>
     </ClCompile>
@@ -200,6 +197,12 @@
     </ClCompile>
     <ClCompile Include="LineCollider.cpp">
       <Filter>Archivos de código fuente\Colliders</Filter>
+    </ClCompile>
+    <ClCompile Include="GravityComponent.cpp">
+      <Filter>Archivos de código fuente\Entities\Properties</Filter>
+    </ClCompile>
+    <ClCompile Include="GravityWeaponComponent.cpp">
+      <Filter>Archivos de código fuente\Entities\PlayerProperties</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -308,9 +311,6 @@
     <ClInclude Include="JumpComponent.h">
       <Filter>Archivos de código fuente\Entities\Properties</Filter>
     </ClInclude>
-    <ClInclude Include="Gravity.h">
-      <Filter>Archivos de código fuente\Entities\Properties</Filter>
-    </ClInclude>
     <ClInclude Include="TimerCondition.h">
       <Filter>Archivos de código fuente\Conditions</Filter>
     </ClInclude>
@@ -385,6 +385,12 @@
     </ClInclude>
     <ClInclude Include="LineCollider.h">
       <Filter>Archivos de código fuente\Colliders</Filter>
+    </ClInclude>
+    <ClInclude Include="GravityComponent.h">
+      <Filter>Archivos de código fuente\Entities\Properties</Filter>
+    </ClInclude>
+    <ClInclude Include="GravityWeaponComponent.h">
+      <Filter>Archivos de código fuente\Entities\PlayerProperties</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -84,28 +84,33 @@ bool FirstLevel::start() {
 	colliderComponent = new CollisionComponent("rightLateral", collider);
 	buffer->addComponent(colliderComponent);
 
-	LineCollider* line = new LineCollider(fPoint(0,0), std::vector<fPoint>{fPoint(290, 211),
-												fPoint(340, 195),
-												fPoint(443, 149),
-												fPoint(487, 113),
-												fPoint(512, 94),
-												fPoint(544, 83),
-												fPoint(578, 83),
-												fPoint(616, 98),
-												fPoint(664, 136),
-												fPoint(700, 150),
-												fPoint(708, 146),
-												fPoint(741, 148),
-												fPoint(756, 164),
-												fPoint(781, 180),
-												fPoint(798, 191)}, TypeCollider::GROUND);
-	line->thickness=1;
-	colliderComponent = new CollisionComponent("lomo", line);
-	buffer->addComponent(colliderComponent);
+	//LineCollider* line = new LineCollider(fPoint(0,0), std::vector<fPoint>{fPoint(290, 211),
+	//											fPoint(340, 195),
+	//											fPoint(443, 149),
+	//											fPoint(487, 113),
+	//											fPoint(512, 94),
+	//											fPoint(544, 83),
+	//											fPoint(578, 83),
+	//											fPoint(616, 98),
+	//											fPoint(664, 136),
+	//											fPoint(700, 150),
+	//											fPoint(708, 146),
+	//											fPoint(741, 148),
+	//											fPoint(756, 164),
+	//											fPoint(781, 180),
+	//											fPoint(798, 191)}, TypeCollider::GROUND);
+	//line->thickness=2;
+	//colliderComponent = new CollisionComponent("lomo", line);
+	//buffer->addComponent(colliderComponent);
+
+	//line= new LineCollider(fPoint(0, 0), std::vector<fPoint>{fPoint(130, 190), fPoint(250,170)}, TypeCollider::GROUND);
+	//line->thickness = 2;
+	//colliderComponent = new CollisionComponent("lomo2", line);
+	//buffer->addComponent(colliderComponent);
 
 	/*rectCollider = {50,15};
 	collider = new RectangleCollider(fPoint(512, 125), rectCollider, -30, TypeCollider::GROUND);
-	colliderComponent = new CollisionComponent("pata", collider);
+	colliderComponent = new CollisionComponent("pata", collideddr);
 	buffer->addComponent(colliderComponent);
 	rectCollider = {25,15};
 	collider = new RectangleCollider(fPoint(550, 115), rectCollider, 0, TypeCollider::GROUND);

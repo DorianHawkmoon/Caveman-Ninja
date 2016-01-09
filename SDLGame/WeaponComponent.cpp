@@ -39,8 +39,8 @@ void WeaponComponent::throwWeapon() {
 	ControlEntity* controller = &parent->controller;
 	Transform* trans = parent->transform;
 
-	controller->attack = (trans->flip == SDL_FLIP_HORIZONTAL) ? -1 : 1;//segun la dirección de joe
 	if (static_cast<int>(weapons.size()) < maxThrowable && time.value() > delay) {
+		controller->attack = (trans->flip == SDL_FLIP_HORIZONTAL) ? -1 : 1;//segun la dirección de joe
 		time.start();
 		Entity* entity = PlayerWeapon::makeWeapon();
 		weapons.push_back(entity);

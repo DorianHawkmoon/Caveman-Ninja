@@ -9,6 +9,8 @@ class LineCollider;
 class CircleCollider;
 
 class RectangleCollider : public Collider {
+	friend class LineCollider;
+
 public:
 	RectangleCollider(fPoint& position, iPoint& rectangle, float rotation, TypeCollider type);
 	virtual ~RectangleCollider(){}

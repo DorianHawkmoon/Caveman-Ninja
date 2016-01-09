@@ -58,7 +58,9 @@ void ModuleCollision::checkCollisions() {
 		#endif
 
 		while (two != colliders.end()) {
-			if (interaction.permission((*one)->type,(*two)->type) && (*one)->checkCollision(*two)) {
+			TypeCollider typeOne = (*one)->type;
+			TypeCollider typeTwo = (*two)->type;
+			if (interaction.permission(typeOne,typeTwo) && (*one)->checkCollision(*two)) {
 				(*one)->notify(*two);
 				(*two)->notify(*one);
 			}

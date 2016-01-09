@@ -1,7 +1,7 @@
 #include "PlayerWeapon.h"
 
 #include "Entity.h"
-#include "Gravity.h"
+#include "GravityWeaponComponent.h"
 #include "SingleAnimationComponent.h"
 #include "Animation.h"
 #include "MotionComponent.h"
@@ -25,7 +25,7 @@ Entity * PlayerWeapon::makeWeapon(const Weapon& type) {
 }
 
 void PlayerWeapon::tomahawk(Entity * entity) {
-	Gravity* gravity = new Gravity("gravity");
+	GravityWeaponComponent* gravity = new GravityWeaponComponent("gravity");
 	gravity->gravity = 550;
 	gravity->maxVelocity = 500;
 	entity->addComponent(gravity);

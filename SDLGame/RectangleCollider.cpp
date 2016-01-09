@@ -216,12 +216,15 @@ bool RectangleCollider::checkCollision(const LineCollider * other) const { retur
 
 
 std::vector<fPoint> RectangleCollider::getPoints(float totalRotation) const {
+	//TODO testear bien, es posible que el metodo de linecollider sea el bueno incluso para aquí?
 	fPoint center = position;
 	if (parentTransform != nullptr) {
 		center += parentTransform->getGlobalTransform().position;
 	}
 	float pointOffsetX = rect.x / 2.0f;
 	float pointOffsetY = rect.y / 2.0f;
+	center.x += pointOffsetX;
+	center.y += pointOffsetY;
 	std::vector<fPoint> points = {
 		center + fPoint(-pointOffsetX, -pointOffsetY).rotate(totalRotation),
 		center + fPoint(+pointOffsetX, -pointOffsetY).rotate(totalRotation),

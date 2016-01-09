@@ -30,6 +30,8 @@ update_status Collider::update() {
 
 update_status Collider::postUpdate() {
 	clearCollisions();
+
+
 #ifdef DEBUG
 	paintCollider();
 #endif

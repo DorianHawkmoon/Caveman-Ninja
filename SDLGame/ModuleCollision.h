@@ -24,9 +24,11 @@ public:
 	void checkCollisions();
 	const std::list<Collider*> checkCollisions(Collider* check);
 
+public:
+	ColliderInteraction interaction;
+
 private:
 	std::list<Collider*> colliders;
-	ColliderInteraction interaction;
 };
 
 #endif // !MODULE_COLLISION_H

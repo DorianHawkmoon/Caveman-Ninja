@@ -77,7 +77,7 @@ update_status ModulePlayer::update(){
 			trans->flip = SDL_FLIP_NONE;
 		}
 
-		if (App->input->getKey(SDL_SCANCODE_W)==KEY_DOWN) {
+		if (App->input->getKey(SDL_SCANCODE_W)) {
 			controller->moveY -= 1;
 		}
 
@@ -92,7 +92,7 @@ update_status ModulePlayer::update(){
 
 
 		//don't jump again when jumping or falling
-		if (App->input->getKey(SDL_SCANCODE_KP_0) && controller->stateJump == JumpType::NONE) {
+		if (App->input->getKey(SDL_SCANCODE_KP_0)== KEY_DOWN && controller->stateJump == JumpType::NONE) {
 			if (App->input->getKey(SDL_SCANCODE_W)) {
 				controller->stateJump = JumpType::DOUBLE_JUMP;
 			} else {

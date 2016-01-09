@@ -1,6 +1,7 @@
 #include "JumpComponent.h"
 #include "Application.h"
 #include "ModuleTimer.h"
+#include "GravityComponent.h"
 
 bool JumpComponent::start() {
 	jumpAccelerated = false;
@@ -16,20 +17,19 @@ update_status JumpComponent::update() {
 			finalSpeed = doubleSpeed;
 		case JUMP:
 		{
+			GravityComponent* gravity = static_cast<GravityComponent*>(parent->getComponent("gravity"));
 			MotionComponent* motion = static_cast<MotionComponent*>(parent->getComponent("motion"));
 			if (!jumpAccelerated) {
 				jumpAccelerated=true;
 				if (motion != nullptr) {
+					motion->velocity.y = 0;
 					motion->velocity.y -= 1 * finalSpeed;
 				}
-			} 
-			/*else {
-				if (motion != nullptr && motion->velocity.y >= 0) {
-						*jump = JumpType::FALL;
-						jumpAccelerated = false;
-				
-				}
-			}*/
+			} else if (motion != nullptr && motion->velocity.y >= 0){
+					*jump = JumpType::FALL;
+					jumpAccelerated = false;
+			}
+			
 		}
 			break;
 

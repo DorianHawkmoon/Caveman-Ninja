@@ -10,7 +10,7 @@
 #include "StateMachine.h"
 #include "JumpComponent.h"
 #include "ConditionComparison.h"
-#include "Gravity.h"
+#include "GravityComponent.h"
 #include "TimerCondition.h"
 #include "ModuleCollision.h"
 #include "RectangleCollider.h"
@@ -32,7 +32,7 @@ Entity * Enemy::makeEnemy() {
 	jump->doubleSpeed = 350;
 	result->addComponent(jump);
 
-	Gravity* gravity = new Gravity("gravity");
+	GravityComponent* gravity = new GravityComponent("gravity");
 	gravity->gravity = 550;
 	gravity->maxVelocity = 500;
 	result->addComponent(gravity);

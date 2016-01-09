@@ -17,6 +17,7 @@ SceneNode::~SceneNode() {
 	//TODO check about remove the node, deleting entity....
 	//delete the entity
 	if (entity != nullptr) {
+		entity->cleanUp();
 		delete entity;
 	}
 	//delete the childs
@@ -84,6 +85,7 @@ void SceneNode::removeDead() {
 	//delete the dead children
 	for (auto it = children.begin(); it != children.end(); ) {
 		if ((*it)->isDestroyed()) {
+			(*it)->cleanUp();
 			delete *it;
 			it = children.erase(it);
 		} else {

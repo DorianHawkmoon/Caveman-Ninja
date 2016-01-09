@@ -6,8 +6,11 @@
 #include <vector>
 #include "Point.h"
 #include "RectangleCollider.h"
+#include "Transform.h"
+
 
 class LineCollider : public Collider {
+
 public:
 	LineCollider(fPoint& position, std::vector<fPoint>& points, TypeCollider type);
 	virtual ~LineCollider();
@@ -35,6 +38,9 @@ public:
 private:
 	fPoint getPointGlobalCoordinates(unsigned int index) const;
 	RectangleCollider createSegmentCollider(int leftBoundIndex) const;
+
+	bool checkCollisionRectangle(const RectangleCollider& segment, const RectangleCollider* other, const Transform & otherTrans, const std::vector<fPoint> otherPoints) const;
+	std::vector<fPoint> getPoints(const RectangleCollider& segment) const;
 };
 
 #endif // !LINE_COLLIDER_H
