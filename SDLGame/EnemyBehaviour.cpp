@@ -18,6 +18,16 @@ IComponent* EnemyBehaviour::clone() {
 	return result;
 }
 
+bool EnemyBehaviour::start() {
+	bool started = true;
+	started = started & ((motion = static_cast<MotionComponent*>(parent->getComponent("motion"))) != nullptr);
+	started = started & ((collision = static_cast<CollisionComponent*>(parent->getComponent("collider"))) != nullptr);
+	started = started & ((life = static_cast<LifeComponent*>(parent->getComponent("life"))) != nullptr);
+	started= started & ((animations = static_cast<AnimationComponent*>(parent->getComponent("animations")))!=nullptr);
+
+	return started;
+}
+
 update_status EnemyBehaviour::update() {
 	Transform* entityTransform = this->parent->transform;
 	Transform globalPlayer = App->player->player->transform->getGlobalTransform();
@@ -51,7 +61,7 @@ update_status EnemyBehaviour::postUpdate() {
 
 void EnemyBehaviour::attacking(Transform & globalMine, Transform& globalPlayer) {
 	int attack = parent->controller.attack;
-	AnimationComponent* animations = static_cast<AnimationComponent*>(parent->getComponent("animations"));
+	
 	const Animation* actualAnimation = animations->getActualAnimation();
 	switch (attack) {
 		case 1: //atacando, buscamos al jugador
@@ -60,7 +70,7 @@ void EnemyBehaviour::attacking(Transform & globalMine, Transform& globalPlayer) 
 				//la animación ha terminado, está en el último frame donde se hace efectivo el golpe
 				//comprobamos colisión a ver si de verdad hemos dado al jugador o se nos ha escapado
 				//check collision with player
-				const Collider* myCollider = (static_cast<CollisionComponent*>(parent->getComponent("collider")))->getCollider();
+				const Collider* myCollider = collision->getCollider();
 				const Collider* colliderPlayer = static_cast<CollisionComponent*>(App->player->player->getComponent("collider"))->getCollider();
 
 				//same position, but in front of the enemy (width)
@@ -92,7 +102,6 @@ void EnemyBehaviour::attacking(Transform & globalMine, Transform& globalPlayer) 
 				parent->controller.attack = 3;
 				//direction of running
 				Transform* entityTransform = this->parent->transform;
-				MotionComponent* motion = static_cast<MotionComponent*>(parent->getComponent("motion"));
 				float direction = 1;
 				if (globalMine.position.x > globalPlayer.position.x) {//correr a derecha
 					entityTransform->flip = SDL_FLIP_HORIZONTAL;
@@ -107,10 +116,11 @@ void EnemyBehaviour::attacking(Transform & globalMine, Transform& globalPlayer) 
 }
 
 void EnemyBehaviour::checkCollisions(Transform& globalMine, Transform& globalPlayer) {
+
 	Transform* entityTransform = this->parent->transform;
 
 	//check collision with player
-	const Collider* myCollider = (static_cast<CollisionComponent*>(parent->getComponent("collider")))->getCollider();
+	const Collider* myCollider =collision->getCollider();
 	const Collider* colliderPlayer = static_cast<CollisionComponent*>(App->player->player->getComponent("collider"))->getCollider();
 
 	//same position, but in front of the enemy (width)

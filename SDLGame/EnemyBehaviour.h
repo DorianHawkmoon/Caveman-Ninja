@@ -6,6 +6,11 @@
 #include "IAComponent.h"
 #include <string>
 
+class LifeComponent;
+class MotionComponent;
+class CollisionComponent;
+class AnimationComponent;
+
 class EnemyBehaviour : public IAComponent {
 public:
 	EnemyBehaviour(const std::string& name): IAComponent(name) {}
@@ -13,9 +18,7 @@ public:
 
 	IComponent* clone();
 
-	bool start() {
-		return true;
-	}
+	bool start();
 	update_status update();
 	update_status postUpdate();
 
@@ -29,6 +32,11 @@ private:
 	void checkCollisions(Transform& globalMine, Transform& globalPlayer);
 	void updateMotion(Transform& globalMine, Transform& globalPlayer);
 	void runningAway(Transform& globalMine);
+
+	LifeComponent* life;
+	MotionComponent* motion;
+	CollisionComponent* collision;
+	AnimationComponent* animations;
 };
 
 #endif // !ENEMY_BEHAVIOUR_H

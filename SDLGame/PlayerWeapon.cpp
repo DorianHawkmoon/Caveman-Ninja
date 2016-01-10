@@ -11,6 +11,7 @@
 #include "LifespanComponent.h"
 #include "DestroyOnCollisionComponent.h"
 #include "CircleCollider.h"
+#include "DamageComponent.h"
 
 Entity * PlayerWeapon::makeWeapon(const Weapon& type) {
 	Entity* result = new Entity();
@@ -43,8 +44,7 @@ void PlayerWeapon::tomahawk(Entity * entity) {
 	motion->doubleSpeed = 50;
 	entity->addComponent(motion);
 
-	//change for circle
-	CircleCollider* circle = new CircleCollider(fPoint(12, 12), 12, TypeCollider::PLAYER_SHOT);
+	CircleCollider* circle = new CircleCollider(fPoint(11, 11), 10, TypeCollider::PLAYER_SHOT);
 	CollisionComponent* collider = new CollisionComponent("collider", circle);
 	entity->addComponent(collider);
 
@@ -53,4 +53,11 @@ void PlayerWeapon::tomahawk(Entity * entity) {
 
 	LifespanComponent* lifespan = new LifespanComponent("lifespan", 2000);
 	entity->addComponent(lifespan);
+
+
+	DamageComponent* damage = new DamageComponent("damage");
+	damage->normalDamage = 5;
+	damage->specialDamage = 10;
+	entity->addComponent(damage);
+
 }

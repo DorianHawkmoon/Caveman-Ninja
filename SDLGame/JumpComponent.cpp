@@ -4,10 +4,21 @@
 #include "GravityComponent.h"
 
 bool JumpComponent::start() {
-	jumpAccelerated = false;
-	//take the state from the controller
-	jump = &parent->controller.stateJump;
+	if (cleaned) {
+		jumpAccelerated = false;
+		//take the state from the controller
+		jump = &parent->controller.stateJump;
+		cleaned = false;
+	}
 	return true;
+}
+
+update_status JumpComponent::preUpdate() {
+	if (toClean) {
+		cleanUp();
+		toClean = false;
+	}
+	return UPDATE_CONTINUE;
 }
 
 update_status JumpComponent::update() {
@@ -55,7 +66,10 @@ update_status JumpComponent::update() {
 }
 
 bool JumpComponent::cleanUp() {
-	jumpAccelerated = false;
+	if (!cleaned) {
+		jumpAccelerated = false;
+		cleaned = true;
+	}
 	return true;
 }
 

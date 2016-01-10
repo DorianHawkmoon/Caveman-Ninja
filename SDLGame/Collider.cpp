@@ -1,7 +1,7 @@
 #include "Collider.h"
 #include "CollisionListener.h"
 
-Collider::Collider(fPoint position, const TypeCollider type) : position(position), type(type), listeners(), parentTransform(nullptr) {
+Collider::Collider(fPoint position, const TypeCollider type) : position(position), type(type), listeners(), parentTransform(nullptr), parent(nullptr) {
 	previousFrame = new std::list<Collider*>();
 	actualFrame = new std::list<Collider*>();
 }

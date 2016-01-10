@@ -7,13 +7,26 @@
 #include "ModuleTextures.h"
 
 SingleAnimationComponent::SingleAnimationComponent(const std::string & nameComponent, const std::string & texture, Animation& animation)
-	: IComponent(nameComponent), nameTexture(texture), anim(animation) {}
+	: IComponent(nameComponent), nameTexture(texture), anim(animation),cleaned(true) {}
 
 SingleAnimationComponent::~SingleAnimationComponent() {}
 
 bool SingleAnimationComponent::start() {
-	texture = App->textures->load(nameTexture.c_str());
-	return texture != nullptr;
+	if (cleaned) {
+		texture = App->textures->load(nameTexture.c_str());
+		cleaned = !(texture != nullptr);
+		return texture != nullptr;
+	} else {
+		return true;
+	}
+}
+
+update_status SingleAnimationComponent::preUpdate() {
+	if (toClean) {
+		cleanUp();
+		toClean = false;
+	}
+	return UPDATE_CONTINUE;
 }
 
 update_status SingleAnimationComponent::update() {
@@ -34,7 +47,10 @@ update_status SingleAnimationComponent::postUpdate() {
 }
 
 bool SingleAnimationComponent::cleanUp() {
-	App->textures->unload(texture);
+	if (!cleaned) {
+		App->textures->unload(texture);
+		cleaned = true;
+	}
 	return true;
 }
 

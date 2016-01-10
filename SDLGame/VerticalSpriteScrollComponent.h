@@ -13,6 +13,7 @@ public:
 	virtual ~VerticalSpriteScrollComponent();
 
 	bool start();
+	update_status preUpdate();
 	update_status update();
 	update_status postUpdate();
 	bool cleanUp();
@@ -30,6 +31,8 @@ private:
 
 	int scrollingOffset;
 	int numberToCover;
+
+	bool cleaned;
 };
 
 #endif // VERTICAL_SPRITE_SCROLL_COMPONENT_H

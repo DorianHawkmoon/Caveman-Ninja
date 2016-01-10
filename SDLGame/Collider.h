@@ -57,6 +57,7 @@ public:
 	fPoint position;
 	TypeCollider type;
 	Transform* parentTransform;
+	Entity* parent;
 
 protected:
 	Collider* clone(Collider* cloning) {

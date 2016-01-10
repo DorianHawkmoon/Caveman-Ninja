@@ -40,7 +40,9 @@ Entity * Joe::makeJoe() {
 	PlayerHittedComponent* hitted = new PlayerHittedComponent("hitted");
 	result->addComponent(hitted);
 
-	GravityComponent* gravity = new GravityComponent("gravity");
+	RectangleCollider* rectangleGravity = new RectangleCollider(fPoint(4, 4), iPoint(20, 38), 0, TypeCollider::PLAYER);
+
+	GravityComponent* gravity = new GravityComponent("gravity", rectangleGravity);
 	gravity->gravity = 550;
 	gravity->maxVelocity = 500;
 	result->addComponent(gravity);
@@ -53,14 +55,14 @@ Entity * Joe::makeJoe() {
 	WallCollisionComponent* walls = new WallCollisionComponent("walls");
 	result->addComponent(walls);
 
-	RectangleCollider* rectangle= new RectangleCollider(fPoint(0,0), iPoint(28,47), 0, TypeCollider::PLAYER);
+	RectangleCollider* rectangle= new RectangleCollider(fPoint(4,4), iPoint(20,38), 0, TypeCollider::PLAYER);
 	CollisionComponent* collider = new CollisionComponent("collider", rectangle);
 	result->addComponent(collider);
 
 	LifeComponent* life = new LifeComponent("life",100);
 	result->addComponent(life);
 
-	WeaponComponent* weapon = new WeaponComponent("weapon", 3, 300);
+	WeaponComponent* weapon = new WeaponComponent("weapon", 3, 250);
 	result->addComponent(weapon);
 	
 	makeAnimations(result);
@@ -194,14 +196,9 @@ void Joe::makeAnimations(Entity* entity) {
 	animations->addState(fallAnimation);
 
 	ConditionComparison<JumpType> conditionFall = ConditionComparison<JumpType>(&controller->stateJump, JumpType::FALL);
-	ConditionCallback conditionFallToIdle = ConditionCallback([entity, controller]() {
+	ConditionCallback conditionFallToIdle = ConditionCallback([controller]() {
 		bool result = false;
-		IComponent* component = entity->getComponent("gravity");
-		if (component != nullptr) {
-			GravityComponent* gravity = static_cast<GravityComponent*>(component);
-			MotionComponent* motion = static_cast<MotionComponent*>(entity->getComponent("motion"));
-			result = (controller->stateJump != JumpType::FALL && controller->stateJump != JumpType::JUMP_DOWN);
-		}
+		result = (controller->stateJump != JumpType::FALL && controller->stateJump != JumpType::JUMP_DOWN);
 		return result;
 	});
 	TimerCondition conditionFallTimer = TimerCondition(300);

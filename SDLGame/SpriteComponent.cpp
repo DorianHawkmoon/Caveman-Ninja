@@ -7,7 +7,7 @@
 #include "Entity.h"
 
 SpriteComponent::SpriteComponent(std::string nameComponent, std::string nameTexture)
-	: IComponent(nameComponent), name(nameTexture), speedCamera(1.0f), offset(0, 0) {}
+	: IComponent(nameComponent), name(nameTexture), speedCamera(1.0f), offset(0, 0), cleaned(true) {}
 
 SpriteComponent::~SpriteComponent() {
 	//unload just in case
@@ -15,8 +15,21 @@ SpriteComponent::~SpriteComponent() {
 }
 
 bool SpriteComponent::start() {
-	texture = App->textures->load(name.c_str());
-	return texture != nullptr;
+	if (cleaned) {
+		texture = App->textures->load(name.c_str());
+		cleaned = !(texture != nullptr);
+		return texture != nullptr;
+	} else {
+		return true;
+	}
+}
+
+update_status SpriteComponent::preUpdate() {
+	if (toClean) {
+		cleanUp();
+		toClean = false;
+	}
+	return UPDATE_CONTINUE;
 }
 
 update_status SpriteComponent::postUpdate() {
@@ -32,7 +45,10 @@ update_status SpriteComponent::postUpdate() {
 }
 
 bool SpriteComponent::cleanUp() {
-	App->textures->unload(texture);
+	if (!cleaned) {
+		App->textures->unload(texture);
+		cleaned = true;
+	}
 	return true;
 }
 

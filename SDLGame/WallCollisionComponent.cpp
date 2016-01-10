@@ -26,15 +26,9 @@ void WallCollisionComponent::onCollisionEnter(const Collider * self, const Colli
 	MotionComponent* motion = static_cast<MotionComponent*>(parent->getComponent("motion"));
 
 	bool onX = true;
-	bool onY = true;
 	if (wallRelativeDirection.x * motion->velocity.x <= 0) {	// Si dan menor que 0, tienen signo distinto, luego son direcciones opuestas
 		onX = false;
 	}
-
-	if (wallRelativeDirection.y * motion->velocity.y <= 0) {	// Si dan menor que 0, tienen signo distinto, luego son direcciones opuestas
-		onY = false;
-	}
-
 	// quieto bicho!
 	if (onX) {
 		motion->velocity.x = 0;
@@ -43,16 +37,6 @@ void WallCollisionComponent::onCollisionEnter(const Collider * self, const Colli
 		int count = 0;
 		do {
 			parent->transform->position.x += stepDirection;
-		} while (self->checkCollision(another) && ++count < 100);
-	}
-
-	if (onY) {
-		motion->velocity.y = 0;
-		int stepDirection = (wallRelativeDirection.y > 0) ? -1 : 1;
-		//put the entity over the collision again
-		int count = 0;
-		do {
-			parent->transform->position.y += stepDirection;
 		} while (self->checkCollision(another) && ++count < 100);
 	}
 }

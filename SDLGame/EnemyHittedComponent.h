@@ -4,6 +4,10 @@
 
 #include "IComponent.h"
 #include "Timer.h"
+class MotionComponent;
+class LifeComponent;
+class CollisionComponent;
+
 class EnemyHittedComponent : public IComponent {
 public:
 	EnemyHittedComponent(const std::string& name);
@@ -21,6 +25,10 @@ private:
 	bool hitted;
 	bool dead;
 	Timer timer;
+
+	CollisionComponent* collision;
+	LifeComponent* life;
+	MotionComponent* motion;
 };
 
 #endif // !ENEMY_HITTED_COMPONENT_H

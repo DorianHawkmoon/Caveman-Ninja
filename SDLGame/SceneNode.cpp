@@ -108,6 +108,8 @@ bool SceneNode::start() {
 }
 
 update_status SceneNode::preUpdate() {
+	removeDead();
+
 	if (entity != nullptr) {
 		entity->preUpdate();
 	}
@@ -131,8 +133,6 @@ update_status SceneNode::postUpdate() {
 	}
 	// Call function recursively for all remaining children
 	std::for_each(children.begin(), children.end(), std::mem_fn(&SceneNode::postUpdate));
-
-	removeDead();
 	return UPDATE_CONTINUE;
 }
 

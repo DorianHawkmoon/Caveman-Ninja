@@ -8,11 +8,11 @@
 
 class JumpComponent : public IComponent {
 public:
-	JumpComponent(std::string nameComponent) : IComponent(nameComponent), speed(1), doubleSpeed(1) {};
+	JumpComponent(std::string nameComponent) : IComponent(nameComponent), speed(1), doubleSpeed(1),cleaned(true) {};
 	virtual ~JumpComponent() {};
 
 	bool start();
-	
+	update_status preUpdate();
 	update_status update();
 
 	bool cleanUp();
@@ -26,6 +26,7 @@ public:
 private:
 	JumpType* jump;
 	bool jumpAccelerated;
+	bool cleaned;
 };
 
 #endif // !JUMP_COMPONENT_H

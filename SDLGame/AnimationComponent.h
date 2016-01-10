@@ -15,7 +15,7 @@ public:
 	virtual ~AnimationComponent();
 
 	bool start();
-
+	update_status preUpdate();
 	update_status update();
 	update_status postUpdate();
 
@@ -29,6 +29,8 @@ private:
 	std::string nameTexture;
 	StateMachine<Animation>* state;
 	SDL_Texture* texture;
+
+	bool cleaned;
 };
 
 #endif // ANIMATION_COMPONENT_H

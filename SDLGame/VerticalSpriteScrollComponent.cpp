@@ -11,7 +11,7 @@
 
 VerticalSpriteScrollComponent::VerticalSpriteScrollComponent(std::string nameComponent, std::string nameTexture)
 	: IComponent(nameComponent), name(nameTexture), scrollingOffset(0), offset(0, 0), speedCamera(1.0f),
-	numberToCover(0) {}
+	numberToCover(0), cleaned(true) {}
 
 
 VerticalSpriteScrollComponent::~VerticalSpriteScrollComponent() {
@@ -20,13 +20,26 @@ VerticalSpriteScrollComponent::~VerticalSpriteScrollComponent() {
 }
 
 bool VerticalSpriteScrollComponent::start() {
-	texture = App->textures->load(name.c_str());
-	int widthWindow = App->renderer->camera.getWindowsSize().w;
-	int widthSprite = rect.h * SCREEN_SIZE;
-	float result = ((float)widthWindow) / widthSprite;
-	numberToCover = static_cast<int>(ceil(result));
-	numberToCover++;
-	return texture != nullptr;
+	if (cleaned) {
+		texture = App->textures->load(name.c_str());
+		int widthWindow = App->renderer->camera.getWindowsSize().w;
+		int widthSprite = rect.h * SCREEN_SIZE;
+		float result = ((float) widthWindow) / widthSprite;
+		numberToCover = static_cast<int>(ceil(result));
+		numberToCover++;
+		cleaned = !(texture != nullptr);
+		return texture != nullptr;
+	} else {
+		return true;
+	}
+}
+
+update_status VerticalSpriteScrollComponent::preUpdate() {
+	if (toClean) {
+		cleanUp();
+		toClean = false;
+	}
+	return UPDATE_CONTINUE;
 }
 
 update_status VerticalSpriteScrollComponent::update() {
@@ -66,7 +79,10 @@ update_status VerticalSpriteScrollComponent::postUpdate() {
 }
 
 bool VerticalSpriteScrollComponent::cleanUp() {
-	App->textures->unload(texture);
+	if (!cleaned) {
+		App->textures->unload(texture);
+		cleaned = true;
+	}
 	return true;
 }
 

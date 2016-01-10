@@ -7,7 +7,7 @@
 #include "ModuleRender.h"
 #include "CollisionComponent.h"
 
-DisappearOutCamera::DisappearOutCamera(const std::string& name): IComponent(name) {}
+DisappearOutCamera::DisappearOutCamera(const std::string& name): IComponent(name), cleaned(true) {}
 
 
 DisappearOutCamera::~DisappearOutCamera() {
@@ -17,10 +17,26 @@ DisappearOutCamera::~DisappearOutCamera() {
 	conditions.clear();
 }
 
+bool DisappearOutCamera::start() {
+	bool result=(collider = static_cast<CollisionComponent*>(parent->getComponent("collider"))) != nullptr;
+	cleaned = !result;
+	return result;
+}
+
+update_status DisappearOutCamera::preUpdate() {
+	if (toClean) {
+		cleanUp();
+		toClean = false;
+	}
+	return UPDATE_CONTINUE;
+}
+
 update_status DisappearOutCamera::update() {
+	if (collider->isEnable()) {
 	//if necessary conditions is true and check if entity is outside of the camera and destroy
-	if (checkCondition() && outsideCamera()) {
-		parent->destroy();
+		if (checkCondition() && outsideCamera()) {
+			parent->destroy();
+		}
 	}
 	return UPDATE_CONTINUE;
 }
@@ -32,6 +48,14 @@ void DisappearOutCamera::addCondition(const Condition * condition) {
 			conditions.push_back(copy);
 		}
 	}
+}
+
+bool DisappearOutCamera::cleanUp() {
+	if (!cleaned) {
+		collider = nullptr;
+		cleaned = true;
+	}
+	return true;
 }
 
 IComponent * DisappearOutCamera::makeClone() {
@@ -52,7 +76,6 @@ bool DisappearOutCamera::checkCondition() {
 
 bool DisappearOutCamera::outsideCamera() {
 	//get the collision of parent
-	CollisionComponent* collider=static_cast<CollisionComponent*>(parent->getComponent("collider"));
 	const Collider* coll=collider->getCollider();
 	fPoint position = coll->getGlobalTransform().position;
 	iPoint size = coll->getSize();

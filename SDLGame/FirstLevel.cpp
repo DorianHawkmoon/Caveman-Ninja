@@ -70,7 +70,7 @@ bool FirstLevel::start() {
 	buffer->addComponent(sprite);
 
 	iPoint rectCollider = {1088, 20};
-	RectangleCollider* collider = new RectangleCollider(fPoint(0, 226), rectCollider, 0, TypeCollider::FLOOR);
+	RectangleCollider* collider = new RectangleCollider(fPoint(0, 218), rectCollider, 0, TypeCollider::FLOOR);
 	CollisionComponent* colliderComponent = new CollisionComponent("ground", collider);
 	buffer->addComponent(colliderComponent);
 
@@ -143,15 +143,21 @@ bool FirstLevel::start() {
 	root->addChild(buffer);
 	root->addChild(collisions);*/
 
-	//buffer = Enemy::makeEnemy();
-	//buffer->transform->position = {150, 170};
-	//root->addChild(buffer);
+	
 
-	/*buffer = Enemy::makeEnemy();
+
+
+	root->addChild(buffer);
+	buffer = Enemy::makeEnemy();
 	buffer->transform->flip = SDL_FLIP_HORIZONTAL;
-	buffer->transform->position = {30, 170};
+	buffer->transform->position = {230, 170};
 
-	root->addChild(buffer);*/
+
+	root->addChild(buffer);
+	buffer = Enemy::makeEnemy();
+	buffer->transform->position = {100, 100};
+	
+
 	//entities.push_back(buffer);
 	root->addChild(buffer);
 	root->start();

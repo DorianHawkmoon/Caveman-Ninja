@@ -25,7 +25,7 @@ Entity::~Entity() {
 bool Entity::start() {
 	bool result = true;
 	for (auto it = properties.begin(); it != properties.end() && result; ++it) {
-		if ((*it)->componentEnabled) {
+		if ((*it)->isEnable()) {
 			result &= (*it)->start();
 		}
 	}
@@ -35,7 +35,7 @@ bool Entity::start() {
 update_status Entity::preUpdate() {
 	update_status result = UPDATE_CONTINUE;
 	for (auto it = properties.begin(); it != properties.end() && result==UPDATE_CONTINUE; ++it) {
-		if ((*it)->componentEnabled) {
+		if ((*it)->isEnable()) {
 			result = (*it)->preUpdate();
 		}
 	}
@@ -45,7 +45,7 @@ update_status Entity::preUpdate() {
 update_status Entity::update() {
 	update_status result = UPDATE_CONTINUE;
 	for (auto it = properties.begin(); it != properties.end() && result == UPDATE_CONTINUE; ++it) {
-		if ((*it)->componentEnabled) {
+		if ((*it)->isEnable()) {
 			result = (*it)->update();
 		}
 	}
@@ -55,7 +55,7 @@ update_status Entity::update() {
 update_status Entity::postUpdate() {
 	update_status result=UPDATE_CONTINUE;
 	for (auto it = properties.begin(); it != properties.end() && result == UPDATE_CONTINUE; ++it) {
-		if ((*it)->componentEnabled) {
+		if ((*it)->isEnable()) {
 			result = (*it)->postUpdate();
 		}
 	}
@@ -65,7 +65,7 @@ update_status Entity::postUpdate() {
 bool Entity::cleanUp() {
 	bool result = true;
 	for (auto it = properties.begin(); it != properties.end() && result; ++it) {
-		if ((*it)->componentEnabled) {
+		if ((*it)->isEnable()) {
 			result &= (*it)->cleanUp();
 		}
 	}
@@ -92,7 +92,7 @@ IComponent * Entity::getComponent(const std::string& id) {
 	std::list<IComponent*>::iterator it = std::find_if(properties.begin(), properties.end(),
 		[&id](IComponent* comp) { return comp->getID().compare(id) == 0; });
 
-	if (it != properties.end() && (*it)->componentEnabled) {
+	if (it != properties.end() && (*it)->isEnable()) {
 			result = *it;
 	}
 	return result;
@@ -100,7 +100,9 @@ IComponent * Entity::getComponent(const std::string& id) {
 
 bool Entity::removeComponent(IComponent * component) {
 	properties.remove(component);
-	component->cleanUp();
+	if (component->isEnable()) {
+		component->cleanUp();
+	}
 	delete component;
 	return false;
 }
@@ -117,15 +119,21 @@ bool Entity::removeComponent(const std::string & name) {
 }
 
 void Entity::onCollisionEnter(const Collider * self, const Collider * another) {
-	std::for_each(properties.begin(), properties.end(), [&](auto collider) {collider->onCollisionEnter(self, another); });
+	std::for_each(properties.begin(), properties.end(), [&](auto collider) {
+		collider->onCollisionEnter(self, another); 
+	});
 }
 
 void Entity::onCollisionExit(const Collider * self, const Collider * another) {
-	std::for_each(properties.begin(), properties.end(), [&](auto collider) {collider->onCollisionExit(self, another); });
+	std::for_each(properties.begin(), properties.end(), [&](auto collider) {
+		collider->onCollisionExit(self, another);
+	});
 }
 
 void Entity::onCollisionStay(const Collider * self, const Collider * another) {
-	std::for_each(properties.begin(), properties.end(), [&](auto collider) {collider->onCollisionStay(self, another); });
+	std::for_each(properties.begin(), properties.end(), [&](auto collider) {
+		collider->onCollisionStay(self, another); 
+	});
 }
 
 Entity * Entity::clone() const {

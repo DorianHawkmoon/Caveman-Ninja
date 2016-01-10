@@ -41,7 +41,7 @@ public:
 		matrix[TypeCollider::PLAYER][TypeCollider::NONE_COLLIDER] = true;
 		matrix[TypeCollider::PLAYER][TypeCollider::WALL] = true;
 		matrix[TypeCollider::PLAYER][TypeCollider::PLAYER] = false;
-		matrix[TypeCollider::PLAYER][TypeCollider::PLAYER_SHOT] = true;
+		matrix[TypeCollider::PLAYER][TypeCollider::PLAYER_SHOT] = false;
 		matrix[TypeCollider::PLAYER][TypeCollider::ENEMY] = true;
 		matrix[TypeCollider::PLAYER][TypeCollider::GROUND] = true;
 		matrix[TypeCollider::PLAYER][TypeCollider::FLOOR] = true;
@@ -80,9 +80,9 @@ public:
 
 		matrix[TypeCollider::FLOOR][TypeCollider::NONE_COLLIDER] = true;
 		matrix[TypeCollider::FLOOR][TypeCollider::WALL] = false;
-		matrix[TypeCollider::FLOOR][TypeCollider::PLAYER] = false;
+		matrix[TypeCollider::FLOOR][TypeCollider::PLAYER] = true;
 		matrix[TypeCollider::FLOOR][TypeCollider::PLAYER_SHOT] = true;
-		matrix[TypeCollider::FLOOR][TypeCollider::ENEMY] = false;
+		matrix[TypeCollider::FLOOR][TypeCollider::ENEMY] = true;
 		matrix[TypeCollider::FLOOR][TypeCollider::GROUND] = false;
 		matrix[TypeCollider::FLOOR][TypeCollider::FLOOR] = false;
 		matrix[TypeCollider::FLOOR][TypeCollider::ITEM] = false;

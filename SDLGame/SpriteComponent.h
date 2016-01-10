@@ -15,6 +15,7 @@ public:
 	virtual ~SpriteComponent();
 
 	bool start();
+	update_status preUpdate();
 	update_status postUpdate();
 	bool cleanUp();
 
@@ -28,6 +29,8 @@ public:
 private:
 	std::string name;
 	SDL_Texture* texture;
+
+	bool cleaned;
 };
 
 

@@ -204,6 +204,9 @@
     <ClCompile Include="GravityWeaponComponent.cpp">
       <Filter>Archivos de código fuente\Entities\PlayerProperties</Filter>
     </ClCompile>
+    <ClCompile Include="DamageComponent.cpp">
+      <Filter>Archivos de código fuente\Entities\Properties</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Module.h">
@@ -391,6 +394,9 @@
     </ClInclude>
     <ClInclude Include="GravityWeaponComponent.h">
       <Filter>Archivos de código fuente\Entities\PlayerProperties</Filter>
+    </ClInclude>
+    <ClInclude Include="DamageComponent.h">
+      <Filter>Archivos de código fuente\Entities\Properties</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

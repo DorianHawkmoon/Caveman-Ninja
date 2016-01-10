@@ -9,7 +9,7 @@
 
 HorizontalSpriteScrollComponent::HorizontalSpriteScrollComponent(std::string nameComponent, std::string nameTexture) 
 	: IComponent(nameComponent), name(nameTexture), scrollingOffset(0), offset(0,0), speedCamera(1.0f),
-	numberToCover(0){}
+	numberToCover(0), cleaned(true){}
 
 
 HorizontalSpriteScrollComponent::~HorizontalSpriteScrollComponent() {
@@ -18,15 +18,28 @@ HorizontalSpriteScrollComponent::~HorizontalSpriteScrollComponent() {
 }
 
 bool HorizontalSpriteScrollComponent::start() {
-	texture = App->textures->load(name.c_str());
-	texture = App->textures->load(name.c_str());
+	if (cleaned) {
+		texture = App->textures->load(name.c_str());
+		texture = App->textures->load(name.c_str());
 
-	float widthWindow = (float)App->renderer->camera.getWindowsSize().w;
-	int widthSprite = static_cast<int>(rect.w * SCREEN_SIZE);
-	float result = widthWindow / widthSprite;
-	numberToCover = static_cast<int>(ceil(result));
-	numberToCover++;
-	return texture != nullptr;
+		float widthWindow = (float) App->renderer->camera.getWindowsSize().w;
+		int widthSprite = static_cast<int>(rect.w * SCREEN_SIZE);
+		float result = widthWindow / widthSprite;
+		numberToCover = static_cast<int>(ceil(result));
+		numberToCover++;
+		cleaned = !(texture != nullptr);
+		return texture != nullptr;
+	} else {
+		return true;
+	}
+}
+
+update_status HorizontalSpriteScrollComponent::preUpdate() {
+	if (toClean) {
+		cleanUp();
+		toClean = false;
+	}
+	return UPDATE_CONTINUE;
 }
 
 update_status HorizontalSpriteScrollComponent::update() {
@@ -66,7 +79,10 @@ update_status HorizontalSpriteScrollComponent::postUpdate() {
 }
 
 bool HorizontalSpriteScrollComponent::cleanUp() {
-	App->textures->unload(texture);
+	if (!cleaned) {
+		App->textures->unload(texture);
+		cleaned = true;
+	}
 	return true;
 }
 

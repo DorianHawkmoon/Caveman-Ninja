@@ -11,6 +11,7 @@ public:
 	virtual ~HorizontalSpriteScrollComponent();
 
 	bool start();
+	update_status preUpdate();
 	update_status update();
 	update_status postUpdate();
 	bool cleanUp();
@@ -28,5 +29,7 @@ private:
 
 	int scrollingOffset;
 	int numberToCover;
+
+	bool cleaned;
 };
 

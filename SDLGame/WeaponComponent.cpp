@@ -48,11 +48,13 @@ void WeaponComponent::throwWeapon() {
 
 		entity->transform->position += trans->position;
 		const Collider* colliderSize;
+		iPoint offset(0, 0);
 		if (controller->attack == -1) {
 			entity->transform->flip = SDL_FLIP_HORIZONTAL;
 			colliderSize = (static_cast<CollisionComponent*>(entity->getComponent("collider")))->getCollider();
 		} else {
 			colliderSize = (static_cast<CollisionComponent*>(parent->getComponent("collider")))->getCollider();
+			offset.x += colliderSize->position.x*2;
 		}
 		entity->transform->position.x += controller->attack * (colliderSize->getSize().x + 2);
 

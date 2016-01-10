@@ -14,6 +14,7 @@ public:
 	virtual IComponent* makeClone();
 
 	virtual bool start();
+	virtual update_status preUpdate();
 	virtual update_status update();
 	virtual update_status postUpdate();
 	virtual bool cleanUp();
@@ -24,6 +25,8 @@ public:
 
 private:
 	Collider* collider;
+
+	bool cleaned;
 };
 
 #endif // !COLLISION_COMPONENT_H

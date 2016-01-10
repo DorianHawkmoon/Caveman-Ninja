@@ -3,6 +3,7 @@
 #include "MotionComponent.h"
 #include "Entity.h"
 #include "LifeComponent.h"
+#include "CollisionComponent.h"
 
 PlayerHittedComponent::PlayerHittedComponent(const std::string& name): IComponent(name), timer(), dead(false) {}
 
@@ -10,8 +11,11 @@ PlayerHittedComponent::PlayerHittedComponent(const std::string& name): IComponen
 PlayerHittedComponent::~PlayerHittedComponent() {}
 
 bool PlayerHittedComponent::start() {
+	bool result = true;
 	timer.stop();
-	return true;
+	result = result & ((life = static_cast<LifeComponent*>(this->parent->getComponent("life"))) != nullptr);
+	result = result & ((motion = static_cast<MotionComponent*>(this->parent->getComponent("motion"))) != nullptr);
+	return result;
 }
 
 update_status PlayerHittedComponent::update() {
@@ -21,20 +25,21 @@ update_status PlayerHittedComponent::update() {
 	//si hitted and alive and not falling more, damage to zero
 	if (hitted) {
 		if (timer.isStopped()) {
-			MotionComponent* motion = static_cast<MotionComponent*>(this->parent->getComponent("motion"));
 			if (motion->velocity.y == 0) {
 				motion->velocity.x = 0;
 				timer.start();
 			}
 		} else {
 			if (timer.value() >= 800) {
-				LifeComponent* life = static_cast<LifeComponent*>(this->parent->getComponent("life"));
 				if (life->isAlive()) {
 					hitted = false;
 					parent->controller.damage = 0;
 				} else {
 					dead = true;
+					//parent->controller.damage = 0; //to -2 if dead?
 				}
+				timer.stop();
+				
 			}
 		}
 	}
@@ -55,6 +60,11 @@ void PlayerHittedComponent::onCollisionEnter(const Collider * self, const Collid
 		return;
 	}
 
+	//check if enemy is alive or not being hitted
+	CollisionComponent* col = static_cast<CollisionComponent*>(another->parent->getComponent("collider"));
+	if (col==nullptr || !col->isEnable()) {
+		return;
+	}
 	ControlEntity* controller = &parent->controller;
 
 	Transform globalAnother = another->getGlobalTransform();
@@ -72,7 +82,6 @@ void PlayerHittedComponent::onCollisionEnter(const Collider * self, const Collid
 		parent->controller.damage = -1;
 	}
 
-	MotionComponent* motion = static_cast<MotionComponent*>(this->parent->getComponent("motion"));
 	motion->velocity.x = x*100.0f;
 	motion->velocity.y -= 150.0f;
 

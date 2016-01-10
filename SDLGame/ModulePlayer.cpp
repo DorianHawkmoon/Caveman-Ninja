@@ -14,9 +14,12 @@
 #include "CollisionComponent.h"
 #include "MotionComponent.h"
 
+
+#include "Enemy.h"
+
 ModulePlayer::ModulePlayer(bool start_enabled) : Module(start_enabled)
 {
-	player = Joe::makeJoe();	
+	player = Joe::makeJoe();
 }
 
 ModulePlayer::~ModulePlayer()
@@ -34,7 +37,7 @@ bool ModulePlayer::start(){
 	started = started & ((jump = static_cast<JumpComponent*>(player->getComponent("jump"))) != nullptr);
 	started = started & ((life = static_cast<LifeComponent*>(player->getComponent("life"))) != nullptr);
 	started = started & ((weapon = static_cast<WeaponComponent*>(player->getComponent("weapon"))) != nullptr);
-	player->transform->position = {100, 170};
+	player->transform->position = {0, 0};
 
 	App->renderer->camera.setCamera(player->transform);
 	App->renderer->camera.offset.x = 30;

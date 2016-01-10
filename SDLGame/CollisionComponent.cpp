@@ -3,7 +3,7 @@
 #include "Application.h"
 #include "ModuleCollision.h"
 
-CollisionComponent::CollisionComponent(const std::string & name, Collider * collider) : IComponent(name), collider(collider) {
+CollisionComponent::CollisionComponent(const std::string & name, Collider * collider) : IComponent(name), collider(collider), cleaned(true){
 	
 }
 
@@ -21,10 +21,22 @@ IComponent * CollisionComponent::makeClone() {
 }
 
 bool CollisionComponent::start() {
-	collider->addListener(parent);
-	collider->parentTransform = parent->transform;
-	App->collisions->addCollider(collider);
+	if (cleaned) {
+		collider->addListener(parent);
+		collider->parentTransform = parent->transform;
+		collider->parent = parent;
+		App->collisions->addCollider(collider);
+		cleaned = false;
+	}
 	return true;
+}
+
+update_status CollisionComponent::preUpdate() {
+	if (toClean) {
+		cleanUp();
+		toClean = false;
+	}
+	return UPDATE_CONTINUE;
 }
 
 update_status CollisionComponent::update() {
@@ -36,6 +48,9 @@ update_status CollisionComponent::postUpdate() {
 }
 
 bool CollisionComponent::cleanUp() {
-	App->collisions->removeCollider(collider);
+	if (!cleaned) {
+		App->collisions->removeCollider(collider);
+		cleaned = true;
+	}
 	return true;
 }

@@ -25,6 +25,7 @@
     <ClCompile Include="CircleCollider.cpp" />
     <ClCompile Include="Collider.cpp" />
     <ClCompile Include="CollisionComponent.cpp" />
+    <ClCompile Include="DamageComponent.cpp" />
     <ClCompile Include="DestroyOnCollisionComponent.cpp" />
     <ClCompile Include="DisappearOutCamera.cpp" />
     <ClCompile Include="Enemy.cpp" />
@@ -82,6 +83,7 @@
     <ClInclude Include="Condition.h" />
     <ClInclude Include="ConditionCallback.h" />
     <ClInclude Include="ConditionComparison.h" />
+    <ClInclude Include="DamageComponent.h" />
     <ClInclude Include="DestroyOnCollisionComponent.h" />
     <ClInclude Include="DisappearOutCamera.h" />
     <ClInclude Include="Enemy.h" />

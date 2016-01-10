@@ -2,32 +2,62 @@
 #include "RectangleCollider.h"
 #include "Application.h"
 #include "ModuleCollision.h"
-#include "CollisionComponent.h"
 #include "MotionComponent.h"
 #include "ColliderInteraction.h"
 
+GravityComponent::GravityComponent(std::string nameComponent, Collider *collider) : IComponent(nameComponent), gravity(0), collision(collider), cleaned(true) {}
+
+GravityComponent::~GravityComponent() {
+	//just in case
+	cleanUp();
+	if (gravityCollider != nullptr) {
+		delete gravityCollider;
+	}
+	if (collision != nullptr) {
+		delete collision;
+	}
+}
+
 IComponent * GravityComponent::makeClone() {
-	GravityComponent* result = new GravityComponent(this->getID());
+	GravityComponent* result = new GravityComponent(this->getID(), collision->clone());
 	result->gravity = gravity;
 	return result;
 }
 
 bool GravityComponent::start() {
-	motion = static_cast<MotionComponent*>(parent->getComponent("motion"));
-	collision = static_cast<CollisionComponent*>(parent->getComponent("collider"));
+	if (cleaned) {
+		motion = static_cast<MotionComponent*>(parent->getComponent("motion"));
+	
+		collision->addListener(parent);
+		collision->parentTransform = parent->transform;
+		collision->parent = parent;
+		App->collisions->addCollider(collision);
 
-	const Collider* collider = (collision)->getCollider();
-	iPoint size = collider->getSize();
-	fPoint offset;
-	offset.y += size.y;
-	offset.x += size.x / 2;
 
-	 gravityCollider = new RectangleCollider(offset, iPoint(5, 10), 0, TypeCollider::GRAVITY);
-	 gravityCollider->addListener(parent);
-	 gravityCollider->parentTransform = parent->transform;
-	 App->collisions->addCollider(gravityCollider);
+		iPoint size = collision->getSize();
+		fPoint offset(0, 0);
+		offset.y += size.y;
+		offset.x += size.x / 2;
 
+		
+
+		gravityCollider = new RectangleCollider(offset, iPoint(5, 10), 0, TypeCollider::GRAVITY);
+		gravityCollider->addListener(parent);
+		gravityCollider->parentTransform = parent->transform;
+		gravityCollider->parent = parent;
+		App->collisions->addCollider(gravityCollider);
+
+		cleaned = false;
+	}
 	return true;
+}
+
+update_status GravityComponent::preUpdate() {
+	if (toClean) {
+		cleanUp();
+		toClean = false;
+	}
+	return UPDATE_CONTINUE;
 }
 
 update_status GravityComponent::update() {
@@ -70,7 +100,7 @@ update_status GravityComponent::postUpdate() {
 
 void GravityComponent::onCollisionEnter(const Collider * self, const Collider * another) {
 	//is from my entity?
-	if (self != collision->getCollider()){
+	if (self != collision){
 		return;
 	}
 
@@ -82,12 +112,10 @@ void GravityComponent::onCollisionEnter(const Collider * self, const Collider * 
 	//if is falling (and not jumping or being throwed)
 	if (motion->velocity.y > 0) {
 		//put the entity over the collision again, get the center point of the collider
-		const Collider* coll = collision->getCollider();
-		
 		int count = 0;
 
 		Transform trans = parent->transform->getGlobalTransform();
-		iPoint size = coll->getSize();
+		iPoint size = collision->getSize();
 		fPoint position=trans.position;
 		position.y += size.y-2;
 		position.x += size.x / 2;
@@ -101,9 +129,30 @@ void GravityComponent::onCollisionEnter(const Collider * self, const Collider * 
 	}
 }
 
+void GravityComponent::onCollisionStay(const Collider * self, const Collider * another) {
+	onCollisionEnter(self, another);
+}
+
 bool GravityComponent::isFalling() {
+	if (cleaned) {
+		return false;
+	}
 	//TODO 10,10 sería la tolerancia -> la posición tendría que ser desde bottom left y no top left
 	std::list<Collider*> collisions = App->collisions->checkCollisions(gravityCollider);
 	//TODO  tener en cuenta el jump down (mover la tolerancia? checkear la tolerancia en jump?) -> variable y cuando la distancia recorrida sea mayor que la tolerancia, considerar la gravedad normal
-	return collisions.size() ==0; //me cuento a mi mismo
+	return collisions.size() == 0; //me cuento a mi mismo
+}
+
+bool GravityComponent::cleanUp() {
+	if (!cleaned) {
+		motion = nullptr;
+		if (gravityCollider != nullptr) {
+			App->collisions->removeCollider(gravityCollider);
+			delete gravityCollider;
+			gravityCollider = nullptr;
+		}
+		App->collisions->removeCollider(collision);
+		cleaned = true;
+	}
+	return false;
 }

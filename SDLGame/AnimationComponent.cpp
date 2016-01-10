@@ -6,19 +6,33 @@
 #include "State.h"
 
 AnimationComponent::AnimationComponent(const std::string & nameComponent, const std::string & texture, StateMachine<Animation>* stateMachine)
-	: IComponent(nameComponent), nameTexture(texture), state(stateMachine) {
+	: IComponent(nameComponent), nameTexture(texture), state(stateMachine), cleaned(true) {
 
 }
 
 AnimationComponent::~AnimationComponent() {
+	cleanUp();
 	if (state != nullptr) {
 		delete state;
 	}
 }
 
 bool AnimationComponent::start() {
-	texture = App->textures->load(nameTexture.c_str());
-	return texture != nullptr;
+	bool result = true;
+	if (cleaned) {
+		texture = App->textures->load(nameTexture.c_str());
+		cleaned = !(texture!=nullptr);
+		result = !cleaned;
+	}
+	return result;
+}
+
+update_status AnimationComponent::preUpdate() {
+	if (toClean) {
+		cleanUp();
+		toClean = false;
+	}
+	return UPDATE_CONTINUE;
 }
 
 update_status AnimationComponent::update() {
@@ -41,7 +55,10 @@ update_status AnimationComponent::postUpdate() {
 }
 
 bool AnimationComponent::cleanUp() {
-	App->textures->unload(texture);
+	if (!cleaned) {
+		App->textures->unload(texture);
+		cleaned = true;
+	}
 	return true;
 }
 

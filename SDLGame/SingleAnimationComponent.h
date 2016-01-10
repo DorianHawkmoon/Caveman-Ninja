@@ -13,7 +13,7 @@ public:
 	virtual ~SingleAnimationComponent();
 
 	bool start();
-
+	update_status preUpdate();
 	update_status update();
 	update_status postUpdate();
 
@@ -25,6 +25,8 @@ private:
 	std::string nameTexture;
 	SDL_Texture* texture;
 	Animation anim;
+
+	bool cleaned;
 };
 
 #endif // !SINGLE_ANIMATION_COMPONENT_H

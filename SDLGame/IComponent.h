@@ -45,14 +45,32 @@ public:
 	*/
 	virtual IComponent* makeClone() = 0;
 
-	bool componentEnabled;
-
 	virtual void onCollisionEnter(const Collider* self, const Collider* another) {};
 	virtual void onCollisionExit(const Collider* self, const Collider* another) {};
 	virtual void onCollisionStay(const Collider* self, const Collider* another) {};
 
+	void enable() {
+		if (!componentEnabled) {
+			componentEnabled = true;
+			start();
+		}
+	}
+
+	void disable() {
+		if (componentEnabled) {
+			componentEnabled = false;
+			toClean = true;
+		}
+	}
+
+	bool isEnable() {
+		return (componentEnabled || toClean);
+	}
+
 protected:
 	Entity* parent;
+	bool componentEnabled;
+	bool toClean;
 
 private:
 	/// The property ID assigned to this IProperty derived class
