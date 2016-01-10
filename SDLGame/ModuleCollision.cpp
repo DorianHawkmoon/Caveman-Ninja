@@ -78,9 +78,10 @@ const std::list<Collider*> ModuleCollision::checkCollisions(Collider * check) {
 #ifdef DEBUG
 	check->paintCollider();
 #endif
-
+	TypeCollider typeOne = check->type;
 	for (auto it = colliders.begin(); it != colliders.end(); ++it) {
-		if (check != *it) {
+		TypeCollider typeTwo = (*it)->type;
+		if (check != *it && interaction.permission(typeOne, typeTwo)) {
 			if (check->checkCollision(*it)) {
 				result.push_back(*it);
 			}

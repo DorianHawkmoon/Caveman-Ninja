@@ -19,7 +19,7 @@ public:
 
 	bool cleanUp();
 
-	IComponent* makeClone();
+	IComponent* makeClone() const;
 
 private:
 	std::string nameTexture;

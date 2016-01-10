@@ -63,7 +63,7 @@ bool AnimationComponent::cleanUp() {
 }
 
 //can't be cloned!!! shared pointers inside
-IComponent * AnimationComponent::makeClone() {
+IComponent * AnimationComponent::makeClone() const {
 	//std::string name = getID();
 	//AnimationComponent* clone=new AnimationComponent(name, nameTexture,state);
 	//TODO clone animationComponent

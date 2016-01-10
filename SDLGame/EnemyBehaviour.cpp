@@ -13,7 +13,7 @@
 #include "Collider.h"
 #include "ModuleRender.h"
 
-IComponent* EnemyBehaviour::clone() {
+IComponent* EnemyBehaviour::clone() const {
 	EnemyBehaviour* result = new EnemyBehaviour(getID());
 	return result;
 }
@@ -29,6 +29,10 @@ bool EnemyBehaviour::start() {
 }
 
 update_status EnemyBehaviour::update() {
+	if (!life->isAlive()) {
+		return UPDATE_CONTINUE;
+	}
+
 	Transform* entityTransform = this->parent->transform;
 	Transform globalPlayer = App->player->player->transform->getGlobalTransform();
 	Transform globalMine = Transform(entityTransform->getGlobalTransform());
@@ -86,7 +90,7 @@ void EnemyBehaviour::attacking(Transform & globalMine, Transform& globalPlayer) 
 
 				if (colliderPlayer->checkCollision(&colliderCheck)) {
 					//damage player and notify him of the collision so he can react
-					App->player->life->modifyActualLife(-150);
+					App->player->life->modifyActualLife(-10);
 					LOG("Enemy damage!!");
 					App->player->player->onCollisionEnter(colliderPlayer, myCollider);
 				}
@@ -200,7 +204,9 @@ void EnemyBehaviour::runningAway(Transform& globalMine) {
 	const Collider* myCollider = (static_cast<CollisionComponent*>(parent->getComponent("collider")))->getCollider();
 	iPoint size = myCollider->getSize();
 	fPoint position = globalMine.position;
-	SDL_Rect rect = {position.x,position.y, size.x, size.y};
+	int x = static_cast<int>(position.x);
+	int y = static_cast<int>(position.y);
+	SDL_Rect rect = {x, y , size.x, size.y};
 	if (!App->renderer->insideCamera(rect)) {
 		parent->destroy();
 	}

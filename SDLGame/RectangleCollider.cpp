@@ -6,7 +6,7 @@
 #include "Transform.h"
 #include "LineCollider.h"
 
-RectangleCollider::RectangleCollider(fPoint& position, iPoint& rectangle, float rotation, TypeCollider type) : Collider(position, type), rect(rectangle), rotation(rotation) {}
+RectangleCollider::RectangleCollider(const fPoint& position, const iPoint& rectangle, float rotation, TypeCollider type) : Collider(position, type), rect(rectangle), rotation(rotation) {}
 
 void RectangleCollider::paintCollider() const {
 	//get global

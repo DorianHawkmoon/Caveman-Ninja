@@ -11,7 +11,7 @@ public:
 	GravityWeaponComponent(std::string nameComponent) : IComponent(nameComponent), gravity(0) {}
 	virtual ~GravityWeaponComponent();
 
-	IComponent * makeClone();
+	IComponent * makeClone() const;
 	bool start();
 	update_status update();
 

@@ -4,7 +4,7 @@
 
 #define LOG(format, ...) log(__FILE__, __LINE__, format, __VA_ARGS__);
 
-#if false
+#if true
 #define DEBUG
 #endif
 

@@ -20,7 +20,7 @@ update_status WeaponComponent::preUpdate() {
 	return UPDATE_CONTINUE;
 }
 
-IComponent * WeaponComponent::makeClone() {
+IComponent * WeaponComponent::makeClone() const {
 	WeaponComponent* result = new WeaponComponent(getID(), maxThrowable, delay);
 	return result;
 }
@@ -54,7 +54,7 @@ void WeaponComponent::throwWeapon() {
 			colliderSize = (static_cast<CollisionComponent*>(entity->getComponent("collider")))->getCollider();
 		} else {
 			colliderSize = (static_cast<CollisionComponent*>(parent->getComponent("collider")))->getCollider();
-			offset.x += colliderSize->position.x*2;
+			offset.x += static_cast<int>(colliderSize->position.x*2);
 		}
 		entity->transform->position.x += controller->attack * (colliderSize->getSize().x + 2);
 

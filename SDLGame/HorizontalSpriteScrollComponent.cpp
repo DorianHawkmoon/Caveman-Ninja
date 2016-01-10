@@ -86,7 +86,7 @@ bool HorizontalSpriteScrollComponent::cleanUp() {
 	return true;
 }
 
-IComponent * HorizontalSpriteScrollComponent::makeClone() {
+IComponent * HorizontalSpriteScrollComponent::makeClone() const {
 	HorizontalSpriteScrollComponent* clone = new HorizontalSpriteScrollComponent(getID(), name);
 	clone->rect = rect;
 	clone->offset = offset;

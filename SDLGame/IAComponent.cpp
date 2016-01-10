@@ -17,7 +17,7 @@ bool IAComponent::start() {
 }
 
 update_status IAComponent::preUpdate() {
-	ticked = false;
+	ticked = true;
 	ticksPassed += App->timer->getDeltaFrame();
 	if (ticksPassed > ticks) {
 		ticksPassed -= ticks;
@@ -33,7 +33,7 @@ bool IAComponent::cleanUp() {
 	return false;
 }
 
-IComponent * IAComponent::makeClone() {
+IComponent * IAComponent::makeClone() const {
 	IAComponent* ia = new IAComponent(getID());
 	ia->ticks = ticks;
 

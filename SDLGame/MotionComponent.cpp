@@ -17,7 +17,7 @@ update_status MotionComponent::update() {
 	return UPDATE_CONTINUE;
 }
 
-IComponent * MotionComponent::makeClone() {
+IComponent * MotionComponent::makeClone() const {
 	std::string name = getID();
 	MotionComponent* result = new MotionComponent(name);
 	result->velocity = velocity;

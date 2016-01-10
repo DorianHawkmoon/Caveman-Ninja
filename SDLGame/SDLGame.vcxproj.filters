@@ -52,9 +52,6 @@
     <Filter Include="Archivos de código fuente\Conditions">
       <UniqueIdentifier>{88dea11d-e009-44c2-9840-c5ca455a9621}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Archivos de código fuente\Entities\SpecificProperties">
-      <UniqueIdentifier>{f6896b50-5633-4a1d-bfe1-c18e4a09ce5e}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Log.cpp">
@@ -206,6 +203,12 @@
     </ClCompile>
     <ClCompile Include="DamageComponent.cpp">
       <Filter>Archivos de código fuente\Entities\Properties</Filter>
+    </ClCompile>
+    <ClCompile Include="Trigger.cpp">
+      <Filter>Archivos de código fuente\Entities\Factories</Filter>
+    </ClCompile>
+    <ClCompile Include="OnCollisionTrigger.cpp">
+      <Filter>Archivos de código fuente\Entities\PlayerProperties</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -397,6 +400,12 @@
     </ClInclude>
     <ClInclude Include="DamageComponent.h">
       <Filter>Archivos de código fuente\Entities\Properties</Filter>
+    </ClInclude>
+    <ClInclude Include="Trigger.h">
+      <Filter>Archivos de código fuente\Entities\Factories</Filter>
+    </ClInclude>
+    <ClInclude Include="OnCollisionTrigger.h">
+      <Filter>Archivos de código fuente\Entities\PlayerProperties</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

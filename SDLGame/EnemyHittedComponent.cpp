@@ -84,7 +84,7 @@ bool EnemyHittedComponent::cleanUp() {
 	return true;
 }
 
-IComponent * EnemyHittedComponent::makeClone() {
+IComponent * EnemyHittedComponent::makeClone() const {
 	return new EnemyHittedComponent(getID());
 }
 

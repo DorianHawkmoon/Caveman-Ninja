@@ -14,7 +14,7 @@ CollisionComponent::~CollisionComponent() {
 	}
 }
 
-IComponent * CollisionComponent::makeClone() {
+IComponent * CollisionComponent::makeClone() const {
 	std::string name = getID();
 	IComponent* result = new CollisionComponent(name, collider->clone());
 	return result;

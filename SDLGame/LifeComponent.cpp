@@ -1,6 +1,6 @@
 #include "LifeComponent.h"
 
-IComponent * LifeComponent::makeClone() {
+IComponent * LifeComponent::makeClone() const {
 	LifeComponent* lifeC = new LifeComponent(getID(),maxLife);
 	lifeC->actualLife = actualLife;
 	return lifeC;

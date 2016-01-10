@@ -183,8 +183,8 @@ bool ModuleRender::paintRectangle(const SDL_Color & color, const Transform & tra
 	//if not, ask the whole texture
 	SDL_QueryTexture(rectangle, nullptr, nullptr, &rectDestiny.w, &rectDestiny.h);
 	
-	rectDestiny.w *= SCREEN_SIZE * renderScale.x;
-	rectDestiny.h *= SCREEN_SIZE * renderScale.y;
+	rectDestiny.w = static_cast<int>(rectDestiny.w* SCREEN_SIZE * renderScale.x);
+	rectDestiny.h = static_cast<int>(rectDestiny.h * SCREEN_SIZE * renderScale.y);
 
 	// Determina el color de la textura
 	bool result = true;

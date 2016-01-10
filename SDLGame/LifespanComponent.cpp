@@ -17,6 +17,6 @@ update_status LifespanComponent::update() {
 	return UPDATE_CONTINUE;
 }
 
-IComponent * LifespanComponent::makeClone() {
+IComponent * LifespanComponent::makeClone() const {
 	return new LifespanComponent(getID(), lifespan);
 }

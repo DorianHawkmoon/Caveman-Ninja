@@ -19,7 +19,7 @@ public:
 	}
 	virtual bool cleanUp();
 
-	virtual IComponent* makeClone();
+	virtual IComponent* makeClone() const;
 	
 public:
 	unsigned int ticks;

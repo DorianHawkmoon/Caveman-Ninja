@@ -43,7 +43,7 @@ public:
 	* system. The value of the Property will also be copied into the clone.
 	* @return pointer to the IProperty derived class clone that was created
 	*/
-	virtual IComponent* makeClone() = 0;
+	virtual IComponent* makeClone() const = 0;
 
 	virtual void onCollisionEnter(const Collider* self, const Collider* another) {};
 	virtual void onCollisionExit(const Collider* self, const Collider* another) {};

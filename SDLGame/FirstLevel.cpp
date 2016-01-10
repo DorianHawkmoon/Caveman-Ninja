@@ -12,13 +12,15 @@
 #include "HorizontalSpriteScrollComponent.h"
 #include "CollisionComponent.h"
 #include "CircleCollider.h"
-#include "Point.h"
 #include "RectangleCollider.h"
 #include "LineCollider.h"
 #include <vector>
 
 #include "Transform.h"
 #include "Enemy.h"
+#include "Trigger.h"
+
+#include <cstdarg>
 
 FirstLevel::FirstLevel() {
 	
@@ -84,6 +86,8 @@ bool FirstLevel::start() {
 	colliderComponent = new CollisionComponent("rightLateral", collider);
 	buffer->addComponent(colliderComponent);
 
+	root->addChild(buffer);
+
 	//LineCollider* line = new LineCollider(fPoint(0,0), std::vector<fPoint>{fPoint(290, 211),
 	//											fPoint(340, 195),
 	//											fPoint(443, 149),
@@ -108,58 +112,68 @@ bool FirstLevel::start() {
 	//colliderComponent = new CollisionComponent("lomo2", line);
 	//buffer->addComponent(colliderComponent);
 
-	/*rectCollider = {50,15};
-	collider = new RectangleCollider(fPoint(512, 125), rectCollider, -30, TypeCollider::GROUND);
-	colliderComponent = new CollisionComponent("pata", collideddr);
-	buffer->addComponent(colliderComponent);
-	rectCollider = {25,15};
-	collider = new RectangleCollider(fPoint(550, 115), rectCollider, 0, TypeCollider::GROUND);
-	colliderComponent = new CollisionComponent("pata2", collider);
-	buffer->addComponent(colliderComponent);
-	rectCollider = {40,15};*/
-	/*
-	fPoint(520, 129),
-	fPoint(550, 115),
-	fPoint(562, 115),
-	fPoint(576, 124),
-	fPoint(587, 145)
-	*/
-	/*collider = new RectangleCollider(fPoint(560, 120), rectCollider, 45, TypeCollider::GROUND);
-	colliderComponent = new CollisionComponent("pata3", collider);
-	buffer->addComponent(colliderComponent);*/
-
-	//adding collisions tests
-	/*Entity* collisions = new Entity();
-	
-	RectangleCollider* rectangle = new RectangleCollider(fPoint(100, 100), iPoint(28,47), 45, TypeCollider::NONE_COLLIDER);
-	CollisionComponent* collider2 = new CollisionComponent("collider", rectangle);
-	collisions->addComponent(collider2);
-	*/
-	/*CircleCollider* circle = new CircleCollider(fPoint(180, 190), 5, TypeCollider::NONE_COLLIDER);
-	CollisionComponent* collider2 = new CollisionComponent("collider2", circle);
-	Entity* collisions = new Entity();
-		collisions->addComponent(collider2);
-	
-	root->addChild(buffer);
-	root->addChild(collisions);*/
-
-	
-
-
-
-	root->addChild(buffer);
 	buffer = Enemy::makeEnemy();
-	buffer->transform->flip = SDL_FLIP_HORIZONTAL;
-	buffer->transform->position = {170, 170};
-
-
-	/*root->addChild(buffer);
-	buffer = Enemy::makeEnemy();
-	buffer->transform->position = {130, 100};*/
-	
-
-	//entities.push_back(buffer);
+	buffer->transform->position = {340, 160};
 	root->addChild(buffer);
+	
+	
+	putEnemies();
+
 	root->start();
 	return true;
+}
+
+void FirstLevel::putEnemies() {
+	fPoint positionTrigger = fPoint(180, 0);
+	std::vector<fPoint> enemies = std::vector<fPoint>();
+		enemies.push_back({350,160});
+	makeEnemy(positionTrigger, enemies);
+
+	positionTrigger.x=230;
+	enemies.clear();
+	enemies.push_back({380,160});
+	makeEnemy(positionTrigger, enemies);
+
+	positionTrigger.x = 350;
+	enemies.clear();
+	enemies.push_back({490,160}); //rock
+	enemies.push_back({490,100}); //hidden
+	makeEnemy(positionTrigger, enemies);
+
+
+	positionTrigger.x = 420;
+	enemies.clear();
+	enemies.push_back({570,100});
+	makeEnemy(positionTrigger, enemies);
+
+	positionTrigger.x = 420;
+	enemies.clear();
+	enemies.push_back({570,100});
+	makeEnemy(positionTrigger, enemies);
+
+	positionTrigger.x = 490;
+	enemies.clear();
+	enemies.push_back({620,100}); //rock
+	enemies.push_back({620,160}); //egg
+	makeEnemy(positionTrigger, enemies);
+
+	//faltan de los enemigos (7) para adelante
+}
+
+void FirstLevel::makeEnemy(fPoint positionTrigger, const std::vector<fPoint>& enemies) {
+	SceneNode* enlace = root;
+	Entity* buffer = Trigger::makeTrigger(positionTrigger, {10,256}, 
+							[enlace, enemies]() {
+								for (auto it = enemies.cbegin(); it != enemies.cend(); ++it) {
+									Entity* enemy = Enemy::makeEnemy();
+									fPoint positionEnemy = *it;
+									enemy->transform->position.x = positionEnemy.x;
+									enemy->transform->position.y = positionEnemy.y;
+
+									enemy->start();
+									enlace->addChild(enemy);
+								}
+							}
+						);
+	root->addChild(buffer);
 }

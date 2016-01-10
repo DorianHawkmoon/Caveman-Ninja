@@ -21,7 +21,7 @@ public:
 
 	bool cleanUp();
 
-	IComponent* makeClone();
+	IComponent* makeClone() const;
 
 	const Animation* getActualAnimation() const;
 

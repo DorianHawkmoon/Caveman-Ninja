@@ -10,9 +10,7 @@ public:
 	DestroyOnCollisionComponent(const std::string& name) : IComponent(name) {}
 	virtual ~DestroyOnCollisionComponent();
 
-	IComponent* makeClone() {
-		return new DestroyOnCollisionComponent(getID());
-	}
+	IComponent* makeClone() const;
 	void onCollisionEnter(const Collider* self, const Collider* another);
 };
 

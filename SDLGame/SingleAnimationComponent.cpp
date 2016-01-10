@@ -54,6 +54,6 @@ bool SingleAnimationComponent::cleanUp() {
 	return true;
 }
 
-IComponent * SingleAnimationComponent::makeClone() {
+IComponent * SingleAnimationComponent::makeClone() const {
 	return nullptr;
 }

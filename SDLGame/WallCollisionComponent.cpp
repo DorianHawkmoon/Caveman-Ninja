@@ -2,7 +2,7 @@
 
 WallCollisionComponent::WallCollisionComponent(const std::string & name) :IComponent(name) {}
 
-IComponent * WallCollisionComponent::makeClone() {
+IComponent * WallCollisionComponent::makeClone() const {
 	return new WallCollisionComponent(getID());
 }
 

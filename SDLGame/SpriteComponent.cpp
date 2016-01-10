@@ -56,7 +56,7 @@ bool SpriteComponent::cleanUp() {
 	return true;
 }
 
-IComponent * SpriteComponent::makeClone() {
+IComponent * SpriteComponent::makeClone() const {
 	SpriteComponent* clone = new SpriteComponent(getID(), name);
 	clone->rect = rect;
 	clone->offset = offset;

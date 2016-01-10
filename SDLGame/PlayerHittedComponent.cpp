@@ -65,7 +65,7 @@ bool PlayerHittedComponent::cleanUp() {
 	return true;
 }
 
-IComponent * PlayerHittedComponent::makeClone() {
+IComponent * PlayerHittedComponent::makeClone() const {
 	return new PlayerHittedComponent(getID());
 }
 

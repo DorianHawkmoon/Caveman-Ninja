@@ -12,6 +12,7 @@ enum TypeCollider {
 	GROUND,
 	FLOOR,
 	GRAVITY,
+	TRIGGER,
 	COLLIDER_MAX
 };
 
@@ -27,6 +28,7 @@ public:
 		matrix[TypeCollider::NONE_COLLIDER][TypeCollider::FLOOR] = true;
 		matrix[TypeCollider::NONE_COLLIDER][TypeCollider::ITEM] = true;
 		matrix[TypeCollider::NONE_COLLIDER][TypeCollider::GRAVITY] = true;
+		matrix[TypeCollider::NONE_COLLIDER][TypeCollider::TRIGGER] = false;
 
 		matrix[TypeCollider::WALL][TypeCollider::NONE_COLLIDER] = true;
 		matrix[TypeCollider::WALL][TypeCollider::WALL] = false;
@@ -37,6 +39,7 @@ public:
 		matrix[TypeCollider::WALL][TypeCollider::FLOOR] = false;
 		matrix[TypeCollider::WALL][TypeCollider::ITEM] = false;
 		matrix[TypeCollider::WALL][TypeCollider::GRAVITY] = true;
+		matrix[TypeCollider::WALL][TypeCollider::TRIGGER] = false;
 
 		matrix[TypeCollider::PLAYER][TypeCollider::NONE_COLLIDER] = true;
 		matrix[TypeCollider::PLAYER][TypeCollider::WALL] = true;
@@ -47,6 +50,7 @@ public:
 		matrix[TypeCollider::PLAYER][TypeCollider::FLOOR] = true;
 		matrix[TypeCollider::PLAYER][TypeCollider::ITEM] = true;
 		matrix[TypeCollider::PLAYER][TypeCollider::GRAVITY] = false;
+		matrix[TypeCollider::PLAYER][TypeCollider::TRIGGER] = true;
 
 		matrix[TypeCollider::PLAYER_SHOT][TypeCollider::NONE_COLLIDER] = true;
 		matrix[TypeCollider::PLAYER_SHOT][TypeCollider::WALL] = true;
@@ -57,6 +61,7 @@ public:
 		matrix[TypeCollider::PLAYER_SHOT][TypeCollider::FLOOR] = true;
 		matrix[TypeCollider::PLAYER_SHOT][TypeCollider::ITEM] = false;
 		matrix[TypeCollider::PLAYER_SHOT][TypeCollider::GRAVITY] = false;
+		matrix[TypeCollider::PLAYER_SHOT][TypeCollider::TRIGGER] = false;
 
 		matrix[TypeCollider::ENEMY][TypeCollider::NONE_COLLIDER] = true;
 		matrix[TypeCollider::ENEMY][TypeCollider::WALL] = true;
@@ -67,6 +72,7 @@ public:
 		matrix[TypeCollider::ENEMY][TypeCollider::FLOOR] = true;
 		matrix[TypeCollider::ENEMY][TypeCollider::ITEM] = false;
 		matrix[TypeCollider::ENEMY][TypeCollider::GRAVITY] = false;
+		matrix[TypeCollider::ENEMY][TypeCollider::TRIGGER] = false;
 
 		matrix[TypeCollider::GROUND][TypeCollider::NONE_COLLIDER] = true;
 		matrix[TypeCollider::GROUND][TypeCollider::WALL] = false;
@@ -77,6 +83,7 @@ public:
 		matrix[TypeCollider::GROUND][TypeCollider::FLOOR] = false;
 		matrix[TypeCollider::GROUND][TypeCollider::ITEM] = false;
 		matrix[TypeCollider::GROUND][TypeCollider::GRAVITY] = true;
+		matrix[TypeCollider::GROUND][TypeCollider::TRIGGER] = false;
 
 		matrix[TypeCollider::FLOOR][TypeCollider::NONE_COLLIDER] = true;
 		matrix[TypeCollider::FLOOR][TypeCollider::WALL] = false;
@@ -87,6 +94,7 @@ public:
 		matrix[TypeCollider::FLOOR][TypeCollider::FLOOR] = false;
 		matrix[TypeCollider::FLOOR][TypeCollider::ITEM] = false;
 		matrix[TypeCollider::FLOOR][TypeCollider::GRAVITY] = true;
+		matrix[TypeCollider::FLOOR][TypeCollider::TRIGGER] = false;
 
 		matrix[TypeCollider::ITEM][TypeCollider::NONE_COLLIDER] = true;
 		matrix[TypeCollider::ITEM][TypeCollider::WALL] = false;
@@ -97,6 +105,7 @@ public:
 		matrix[TypeCollider::ITEM][TypeCollider::FLOOR] = false;
 		matrix[TypeCollider::ITEM][TypeCollider::ITEM] = false;
 		matrix[TypeCollider::ITEM][TypeCollider::GRAVITY] = false;
+		matrix[TypeCollider::ITEM][TypeCollider::TRIGGER] = false;
 
 		matrix[TypeCollider::GRAVITY][TypeCollider::NONE_COLLIDER] = true;
 		matrix[TypeCollider::GRAVITY][TypeCollider::WALL] = true;
@@ -107,6 +116,18 @@ public:
 		matrix[TypeCollider::GRAVITY][TypeCollider::FLOOR] = true;
 		matrix[TypeCollider::GRAVITY][TypeCollider::ITEM] = false;
 		matrix[TypeCollider::GRAVITY][TypeCollider::GRAVITY] = false;
+		matrix[TypeCollider::GRAVITY][TypeCollider::TRIGGER] = false;
+
+		matrix[TypeCollider::TRIGGER][TypeCollider::NONE_COLLIDER] = false;
+		matrix[TypeCollider::TRIGGER][TypeCollider::WALL] = false;
+		matrix[TypeCollider::TRIGGER][TypeCollider::PLAYER] = true;
+		matrix[TypeCollider::TRIGGER][TypeCollider::PLAYER_SHOT] = false;
+		matrix[TypeCollider::TRIGGER][TypeCollider::ENEMY] = false;
+		matrix[TypeCollider::TRIGGER][TypeCollider::GROUND] = false;
+		matrix[TypeCollider::TRIGGER][TypeCollider::FLOOR] = false;
+		matrix[TypeCollider::TRIGGER][TypeCollider::ITEM] = false;
+		matrix[TypeCollider::TRIGGER][TypeCollider::GRAVITY] = false;
+		matrix[TypeCollider::TRIGGER][TypeCollider::TRIGGER] = false;
 	}
 	virtual ~ColliderInteraction() {};
 

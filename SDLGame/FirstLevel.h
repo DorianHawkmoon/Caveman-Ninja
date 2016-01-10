@@ -3,6 +3,9 @@
 #define FIRST_LEVEL_H
 
 #include "Scene.h"
+#include <functional>
+#include "Point.h"
+#include <vector>
 
 class FirstLevel : public Scene {
 public:
@@ -10,6 +13,10 @@ public:
 	virtual ~FirstLevel();
 
 	bool start();
+
+private:
+	void putEnemies();
+	void makeEnemy(fPoint positionTrigger, const std::vector<fPoint>& enemies);
 };
 #endif // ! FIRST_LEVEL_H
 

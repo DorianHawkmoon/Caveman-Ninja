@@ -40,7 +40,8 @@ bool ModulePlayer::start(){
 	started = started & ((jump = static_cast<JumpComponent*>(player->getComponent("jump"))) != nullptr);
 	started = started & ((life = static_cast<LifeComponent*>(player->getComponent("life"))) != nullptr);
 	started = started & ((weapon = static_cast<WeaponComponent*>(player->getComponent("weapon"))) != nullptr);
-	player->transform->position = {100, 0};
+	player->transform->position = {50, 0};
+	player->controller.stateJump = JumpType::FALL;
 
 	App->renderer->camera.setCamera(player->transform);
 	App->renderer->camera.offset.x = 30;

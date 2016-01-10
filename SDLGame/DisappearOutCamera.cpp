@@ -58,7 +58,7 @@ bool DisappearOutCamera::cleanUp() {
 	return true;
 }
 
-IComponent * DisappearOutCamera::makeClone() {
+IComponent * DisappearOutCamera::makeClone() const {
 	DisappearOutCamera* result = new DisappearOutCamera(getID());
 	for (auto it = conditions.begin(); it != conditions.end(); ++it) {
 		result->addCondition(*it);
@@ -79,7 +79,8 @@ bool DisappearOutCamera::outsideCamera() {
 	const Collider* coll=collider->getCollider();
 	fPoint position = coll->getGlobalTransform().position;
 	iPoint size = coll->getSize();
-
-	SDL_Rect result = {position.x,position.y, size.x, size.y};
+	int x = static_cast<int>(position.x);
+	int y = static_cast<int>(position.y);
+	SDL_Rect result = {x, y, size.x, size.y};
 	return !App->renderer->insideCamera(result);
 }

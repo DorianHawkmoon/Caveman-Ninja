@@ -24,7 +24,7 @@ public:
 		return UPDATE_CONTINUE;
 	}
 
-	IComponent* makeClone();
+	IComponent* makeClone() const;
 
 	bool limitReached() const;
 

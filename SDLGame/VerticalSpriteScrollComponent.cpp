@@ -86,7 +86,7 @@ bool VerticalSpriteScrollComponent::cleanUp() {
 	return true;
 }
 
-IComponent * VerticalSpriteScrollComponent::makeClone() {
+IComponent * VerticalSpriteScrollComponent::makeClone() const {
 	VerticalSpriteScrollComponent* clone = new VerticalSpriteScrollComponent(getID(), name);
 	clone->rect = rect;
 	clone->offset = offset;

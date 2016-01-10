@@ -23,6 +23,7 @@
 #include "ConditionCallback.h"
 #include "LifeComponent.h"
 #include "EnemyHittedComponent.h"
+#include "Utils.h"
 
 Entity * Enemy::makeEnemy() {
 	//prepare the entity for the player
@@ -75,7 +76,7 @@ Entity * Enemy::makeEnemy() {
 
 	IAComponent* IA = new EnemyBehaviour("IA");
 	result->addComponent(IA);
-	IA->ticks = 1000;
+	IA->ticks = static_cast<int>(Utils::range(2000, 3000)); //RANDOM IA
 
 	makeAnimations(result);
 

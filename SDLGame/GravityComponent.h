@@ -15,7 +15,7 @@ public:
 	GravityComponent(std::string nameComponent, Collider *collider);
 	virtual ~GravityComponent();
 
-	IComponent* makeClone();
+	IComponent* makeClone() const;
 
 	bool start();
 	update_status preUpdate();

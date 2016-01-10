@@ -26,7 +26,7 @@ void DamageComponent::onCollisionEnter(const Collider * self, const Collider * a
 	//TODO check myself and see if i do normal or special damage
 }
 
-IComponent * DamageComponent::makeClone() {
+IComponent * DamageComponent::makeClone() const {
 	DamageComponent* result = new DamageComponent(getID());
 	result->normalDamage = normalDamage;
 	result->specialDamage = specialDamage;

@@ -17,7 +17,7 @@ public:
 
 	bool cleanUp();
 
-	IComponent* makeClone();
+	IComponent* makeClone() const;
 
 public:
 	float speed;

@@ -16,7 +16,7 @@ public:
 	EnemyBehaviour(const std::string& name): IAComponent(name) {}
 	~EnemyBehaviour() {}
 
-	IComponent* clone();
+	IComponent* clone() const;
 
 	bool start();
 	update_status update();

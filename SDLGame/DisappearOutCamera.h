@@ -19,7 +19,7 @@ public:
 	void addCondition(const Condition * condition);
 
 	bool cleanUp();
-	IComponent* makeClone();
+	IComponent* makeClone() const;
 
 private:
 	/**

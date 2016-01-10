@@ -14,7 +14,7 @@ public:
 
 	update_status update();
 
-	IComponent* makeClone();
+	IComponent* makeClone() const;
 
 public:
 	fPoint velocity;

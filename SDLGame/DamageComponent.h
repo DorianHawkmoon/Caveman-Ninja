@@ -12,7 +12,7 @@ public:
 	virtual ~DamageComponent();
 
 	void onCollisionEnter(const Collider * self, const Collider * another);
-	IComponent* makeClone();
+	IComponent* makeClone() const;
 
 	int normalDamage;
 	int specialDamage;

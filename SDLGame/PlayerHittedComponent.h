@@ -17,7 +17,7 @@ public:
 	update_status preUpdate();
 	virtual update_status update();
 	bool cleanUp();
-	IComponent* makeClone();
+	IComponent* makeClone() const;
 
 
 	virtual void onCollisionEnter(const Collider* self, const Collider* another);

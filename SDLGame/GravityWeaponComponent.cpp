@@ -7,7 +7,7 @@
 
 GravityWeaponComponent::~GravityWeaponComponent() {}
 
-IComponent * GravityWeaponComponent::makeClone() {
+IComponent * GravityWeaponComponent::makeClone() const {
 	GravityWeaponComponent* result = new GravityWeaponComponent(this->getID());
 	result->gravity = gravity;
 	return result;

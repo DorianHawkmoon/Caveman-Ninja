@@ -18,7 +18,7 @@ GravityComponent::~GravityComponent() {
 	}
 }
 
-IComponent * GravityComponent::makeClone() {
+IComponent * GravityComponent::makeClone() const {
 	GravityComponent* result = new GravityComponent(this->getID(), collision->clone());
 	result->gravity = gravity;
 	return result;
@@ -73,6 +73,7 @@ update_status GravityComponent::update() {
 			//si la lista está vacia, está cayendo, setear FALL
 			//si no lo esta ... nada, las colisiones especificas se mirara en onCollision
 			//TODO  tener en cuenta el jump down (mover la tolerancia? checkear la tolerancia en jump?) -> variable y cuando la distancia recorrida sea mayor que la tolerancia, considerar la gravedad normal
+				
 			if (collisions.size() > 0) {
 				//si está en salto, no tenerlo en cuenta!!
 				JumpType jumping = parent->controller.stateJump;

@@ -18,7 +18,7 @@ public:
 	update_status postUpdate();
 	bool cleanUp();
 
-	IComponent* makeClone();
+	IComponent* makeClone() const;
 
 public:
 	SDL_Rect rect;

@@ -13,7 +13,7 @@ public:
 	WallCollisionComponent(const std::string& name);
 	~WallCollisionComponent() {}
 
-	IComponent* makeClone();
+	IComponent* makeClone() const;
 
 	void onCollisionEnter(const Collider* self, const Collider* another);;
 

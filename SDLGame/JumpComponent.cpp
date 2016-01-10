@@ -73,6 +73,6 @@ bool JumpComponent::cleanUp() {
 	return true;
 }
 
-IComponent * JumpComponent::makeClone() {
+IComponent * JumpComponent::makeClone() const {
 	return nullptr;
 }

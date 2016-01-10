@@ -11,7 +11,7 @@ public:
 	CollisionComponent(const std::string& name, Collider *collider);
 	virtual ~CollisionComponent();
 
-	virtual IComponent* makeClone();
+	virtual IComponent* makeClone() const;
 
 	virtual bool start();
 	virtual update_status preUpdate();

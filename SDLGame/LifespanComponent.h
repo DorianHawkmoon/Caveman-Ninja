@@ -13,7 +13,7 @@ public:
 
 	virtual bool start();
 	virtual update_status update();
-	IComponent* makeClone();
+	IComponent* makeClone() const;
 
 private:
 	Timer time;
