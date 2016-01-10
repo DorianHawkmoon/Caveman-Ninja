@@ -40,7 +40,7 @@ Entity * Joe::makeJoe() {
 	PlayerHittedComponent* hitted = new PlayerHittedComponent("hitted");
 	result->addComponent(hitted);
 
-	RectangleCollider* rectangleGravity = new RectangleCollider(fPoint(4, 4), iPoint(20, 38), 0, TypeCollider::PLAYER);
+	RectangleCollider* rectangleGravity = new RectangleCollider(fPoint(4, 4), iPoint(20, 38), 0, TypeCollider::GRAVITY);
 
 	GravityComponent* gravity = new GravityComponent("gravity", rectangleGravity);
 	gravity->gravity = 550;
@@ -174,7 +174,7 @@ void Joe::makeAnimations(Entity* entity) {
 	// ---------------------------------------------
 
 	Animation doubleJump(8);
-	doubleJump.sizeFrame = {0,320,64,64};
+	doubleJump.sizeFrame = {0,192,64,64};
 	doubleJump.speed = 0.35f;
 	doubleJump.offset = {-18, -12};
 	State<Animation>* doubleJumpAnimation = new State<Animation>(doubleJump);
@@ -233,7 +233,7 @@ void Joe::makeAnimations(Entity* entity) {
 		return result;
 	});
 	ConditionComparison<int> conditionDamageToIdle = ConditionComparison<int>(&controller->damage, 0);
-	ConditionComparison<int> conditionBackDamage = ConditionComparison<int>(&controller->damage, -1);
+	ConditionComparison<int> conditionBackDamage = ConditionComparison<int>(&controller->damage, 0, Compare::LESS);
 	StateTransition<Animation> transitionBackDamage = StateTransition<Animation>(backHitAnimation, &conditionBackDamage);
 	StateTransition<Animation> transitionDamageIdle = StateTransition<Animation>(idleAnimation, &conditionDamageToIdle);
 				transitionDamageIdle.addCondition(&isAlive);
@@ -256,7 +256,7 @@ void Joe::makeAnimations(Entity* entity) {
 	State<Animation>* frontHitAnimation = new State<Animation>(frontHit);
 	animations->addState(frontHitAnimation);
 
-	ConditionComparison<int> conditionFrontDamage = ConditionComparison<int>(&controller->damage, 1);
+	ConditionComparison<int> conditionFrontDamage = ConditionComparison<int>(&controller->damage, 0, Compare::GREATER);
 	StateTransition<Animation> transitionFrontDamage = StateTransition<Animation>(frontHitAnimation, &conditionFrontDamage);
 
 	idleAnimation->addTransition(&transitionFrontDamage);
@@ -272,7 +272,7 @@ void Joe::makeAnimations(Entity* entity) {
 	// ---------------------------------------------
 
 	Animation simpleAttack(2);
-	simpleAttack.sizeFrame = {0,384,64,64};
+	simpleAttack.sizeFrame = {384,128,64,64};
 	simpleAttack.speed = 0.2f;
 	simpleAttack.offset = {-18,-17};
 	simpleAttack.repeat = 1;
@@ -300,7 +300,7 @@ void Joe::makeAnimations(Entity* entity) {
 	// ---------------------------------------------
 
 	Animation simpleAttackJumping(2);
-	simpleAttackJumping.sizeFrame = {256,384,64,64};
+	simpleAttackJumping.sizeFrame = {640,128,64,64};
 	simpleAttackJumping.speed = 0.2f;
 	simpleAttackJumping.offset = {-18,-17};
 	simpleAttackJumping.repeat = 1;
@@ -324,6 +324,55 @@ void Joe::makeAnimations(Entity* entity) {
 	simpleAttackJumpingAnimation->addTransition(&transitionAttackJump);
 	fallAnimation->addTransition(&transitionSimpleAttackJumping);
 	simpleAttackJumpingAnimation->addTransition(&transitionAttackFall);
+
+	// ---------------------------------------------
+
+	Animation frontDead(3);
+	frontDead.sizeFrame = {0, 448,128,128};
+	frontDead.offset = {-65,-82};
+	frontDead.flippedOffset.x = 22;
+	frontDead.speed = 0.2f;
+	frontDead.repeat = 1;
+	State<Animation>* frontDeadAnimation = new State<Animation>(frontDead);
+	animations->addState(frontDeadAnimation);
+
+	ConditionComparison<int> conditionFrontDead = ConditionComparison<int>(&controller->damage, 3);
+	StateTransition<Animation> transitionFrontDead = StateTransition<Animation>(frontDeadAnimation, &conditionFrontDead);
+
+	frontHitAnimation->addTransition(&transitionFrontDead);
+				
+
+	// ---------------------------------------------
+	
+	Animation backDead(3);
+	backDead.sizeFrame = {0,320,128,128};
+	backDead.offset = {-40,-82};
+	backDead.flippedOffset.x = -22;
+	backDead.speed = 0.2f;
+	backDead.repeat = 1;
+	State<Animation>* backDeadAnimation = new State<Animation>(backDead);
+	animations->addState(backDeadAnimation);
+
+	ConditionComparison<int> conditionDead = ConditionComparison<int>(&controller->damage, 3);
+	StateTransition<Animation> transitionBackDead = StateTransition<Animation>(backDeadAnimation, &conditionDead);
+
+	backHitAnimation->addTransition(&transitionBackDead);
+
+
+	// ---------------------------------------------
+
+	Animation ghostBackDead(4);
+	ghostBackDead.sizeFrame = {0,320,128,128};
+	ghostBackDead.offset = {-53,-82};
+	//ghostBackDead.flippedOffset.x = 3;
+	ghostBackDead.speed = 0.08f;
+	ghostBackDead.repeat = 1;
+	State<Animation>* ghostBackDeadAnimation = new State<Animation>(ghostBackDead);
+	animations->addState(ghostBackDeadAnimation);
+	
+	StateTransition<Animation> transitionghostBackDead = StateTransition<Animation>(ghostBackDeadAnimation, &finishedAnimation);
+
+	backHitAnimation->addTransition(&transitionBackDead);
 
 
 

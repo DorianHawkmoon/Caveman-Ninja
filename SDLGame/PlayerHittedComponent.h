@@ -5,6 +5,7 @@
 #include "IComponent.h"
 #include "Timer.h"
 class LifeComponent;
+class CollisionComponent;
 class MotionComponent;
 
 class PlayerHittedComponent : public IComponent {
@@ -13,8 +14,9 @@ public:
 	~PlayerHittedComponent();
 	
 	bool start();
+	update_status preUpdate();
 	virtual update_status update();
-
+	bool cleanUp();
 	IComponent* makeClone();
 
 
@@ -27,6 +29,9 @@ private:
 
 	LifeComponent* life;
 	MotionComponent* motion;
+	CollisionComponent* collision;
+
+	bool cleaned;
 };
 
 

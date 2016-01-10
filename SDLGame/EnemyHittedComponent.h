@@ -14,8 +14,9 @@ public:
 	~EnemyHittedComponent();
 
 	bool start();
+	update_status preUpdate();
 	virtual update_status update();
-
+	bool cleanUp();
 	IComponent* makeClone();
 
 
@@ -29,6 +30,8 @@ private:
 	CollisionComponent* collision;
 	LifeComponent* life;
 	MotionComponent* motion;
+
+	bool cleaned;
 };
 
 #endif // !ENEMY_HITTED_COMPONENT_H

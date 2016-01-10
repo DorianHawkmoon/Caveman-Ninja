@@ -38,7 +38,7 @@ Entity * Enemy::makeEnemy() {
 	EnemyHittedComponent* hitted = new EnemyHittedComponent("hitted");
 	result->addComponent(hitted);
 
-	RectangleCollider* rectangleGravity = new RectangleCollider(fPoint(4, 4), iPoint(17, 38), 0, TypeCollider::ENEMY);
+	RectangleCollider* rectangleGravity = new RectangleCollider(fPoint(4, 4), iPoint(17, 38), 0, TypeCollider::GRAVITY);
 	GravityComponent* gravity = new GravityComponent("gravity", rectangleGravity);
 	gravity->gravity = 550;
 	gravity->maxVelocity = 500;
@@ -73,10 +73,10 @@ Entity * Enemy::makeEnemy() {
 	disappear->addCondition(&conditionDead);
 	result->addComponent(disappear);
 
-	/*IAComponent* IA = new EnemyBehaviour("IA");
+	IAComponent* IA = new EnemyBehaviour("IA");
 	result->addComponent(IA);
-	IA->ticks = 500;
-*/
+	IA->ticks = 1000;
+
 	makeAnimations(result);
 
 	return result;
@@ -361,8 +361,8 @@ void Enemy::makeAnimations(Entity* entity) {
 	State<Animation>* frontDeadAnimation = new State<Animation>(frontDead);
 	animations->addState(frontDeadAnimation);
 
-	ConditionComparison<int> conditionFrontDead = ConditionComparison<int>(&controller->damage, 3);
-	StateTransition<Animation> transitionFrontDead = StateTransition<Animation>(frontDeadAnimation, &conditionFrontDead);
+	ConditionComparison<int> conditionDead = ConditionComparison<int>(&controller->damage, 3);
+	StateTransition<Animation> transitionFrontDead = StateTransition<Animation>(frontDeadAnimation, &conditionDead);
 
 	frontHitAnimation->addTransition(&transitionFrontDead);
 				
@@ -378,8 +378,7 @@ void Enemy::makeAnimations(Entity* entity) {
 	State<Animation>* backDeadAnimation = new State<Animation>(backDead);
 	animations->addState(backDeadAnimation);
 
-	ConditionComparison<int> conditionBackDead = ConditionComparison<int>(&controller->damage, 3);
-	StateTransition<Animation> transitionBackDead = StateTransition<Animation>(backDeadAnimation, &conditionBackDead);
+	StateTransition<Animation> transitionBackDead = StateTransition<Animation>(backDeadAnimation, &conditionDead);
 
 	backHitAnimation->addTransition(&transitionBackDead);
 

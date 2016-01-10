@@ -15,7 +15,16 @@ bool PlayerHittedComponent::start() {
 	timer.stop();
 	result = result & ((life = static_cast<LifeComponent*>(this->parent->getComponent("life"))) != nullptr);
 	result = result & ((motion = static_cast<MotionComponent*>(this->parent->getComponent("motion"))) != nullptr);
+	result = result & ((collision = static_cast<CollisionComponent*>(this->parent->getComponent("collider"))) != nullptr);
 	return result;
+}
+
+update_status PlayerHittedComponent::preUpdate() {
+	if (toClean) {
+		cleanUp();
+		toClean = false;
+	}
+	return UPDATE_CONTINUE;
 }
 
 update_status PlayerHittedComponent::update() {
@@ -29,21 +38,31 @@ update_status PlayerHittedComponent::update() {
 				motion->velocity.x = 0;
 				timer.start();
 			}
-		} else {
-			if (timer.value() >= 800) {
-				if (life->isAlive()) {
-					hitted = false;
-					parent->controller.damage = 0;
-				} else {
-					dead = true;
-					//parent->controller.damage = 0; //to -2 if dead?
-				}
-				timer.stop();
-				
-			}
+		} else if (timer.value() >= 800 && life->isAlive()) {
+			hitted = false;
+			collision->enable();
+			parent->controller.damage = 0;
+			timer.stop();
+
+		} else if (timer.value() >= 50 && !life->isAlive()) {
+			dead = true;
+			int dam = parent->controller.damage;
+			parent->controller.damage = 3;
+
+			timer.stop();
 		}
 	}
 	return UPDATE_CONTINUE;
+}
+
+bool PlayerHittedComponent::cleanUp() {
+	if (!cleaned) {
+		collision = nullptr;
+		life = nullptr;
+		motion = nullptr;
+		cleaned = true;
+	}
+	return true;
 }
 
 IComponent * PlayerHittedComponent::makeClone() {
@@ -82,8 +101,8 @@ void PlayerHittedComponent::onCollisionEnter(const Collider * self, const Collid
 		parent->controller.damage = -1;
 	}
 
-	motion->velocity.x = x*100.0f;
-	motion->velocity.y -= 150.0f;
+	motion->velocity.x = x*50.0f;
+	motion->velocity.y -= 100.0f;
 
 	hitted = true;
 }

@@ -86,7 +86,7 @@ void EnemyBehaviour::attacking(Transform & globalMine, Transform& globalPlayer) 
 
 				if (colliderPlayer->checkCollision(&colliderCheck)) {
 					//damage player and notify him of the collision so he can react
-					App->player->life->modifyActualLife(-10);
+					App->player->life->modifyActualLife(-150);
 					LOG("Enemy damage!!");
 					App->player->player->onCollisionEnter(colliderPlayer, myCollider);
 				}

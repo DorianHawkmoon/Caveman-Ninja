@@ -37,7 +37,7 @@ bool ModulePlayer::start(){
 	started = started & ((jump = static_cast<JumpComponent*>(player->getComponent("jump"))) != nullptr);
 	started = started & ((life = static_cast<LifeComponent*>(player->getComponent("life"))) != nullptr);
 	started = started & ((weapon = static_cast<WeaponComponent*>(player->getComponent("weapon"))) != nullptr);
-	player->transform->position = {0, 0};
+	player->transform->position = {150, 0};
 
 	App->renderer->camera.setCamera(player->transform);
 	App->renderer->camera.offset.x = 30;
@@ -108,6 +108,11 @@ update_status ModulePlayer::update(){
 		} else {
 			motion->velocity.x = 0.0f;
 		}
+	}
+
+	if (App->input->getKey(SDL_SCANCODE_KP_5) == KEY_DOWN) {
+		life->modifyActualLife(-10);
+		controller->damage -= 1;
 	}
 
 	player->update();

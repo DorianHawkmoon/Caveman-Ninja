@@ -93,7 +93,10 @@ update_status GravityComponent::update() {
 }
 
 update_status GravityComponent::postUpdate() {
-	gravityCollider->paintCollider();
+	#ifdef DEBUG
+		gravityCollider->paintCollider();
+	#endif
+	
 	return UPDATE_CONTINUE;
 }
 

@@ -150,12 +150,12 @@ bool FirstLevel::start() {
 	root->addChild(buffer);
 	buffer = Enemy::makeEnemy();
 	buffer->transform->flip = SDL_FLIP_HORIZONTAL;
-	buffer->transform->position = {230, 170};
+	buffer->transform->position = {50, 170};
 
 
-	root->addChild(buffer);
+	/*root->addChild(buffer);
 	buffer = Enemy::makeEnemy();
-	buffer->transform->position = {100, 100};
+	buffer->transform->position = {130, 100};*/
 	
 
 	//entities.push_back(buffer);

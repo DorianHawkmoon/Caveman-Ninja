@@ -23,6 +23,14 @@ bool EnemyHittedComponent::start() {
 	return result;
 }
 
+update_status EnemyHittedComponent::preUpdate() {
+	if (toClean) {
+		cleanUp();
+		toClean = false;
+	}
+	return UPDATE_CONTINUE;
+}
+
 update_status EnemyHittedComponent::update() {
 	if (dead) {
 		if (timer.isStopped()) {
@@ -64,6 +72,16 @@ update_status EnemyHittedComponent::update() {
 
 	}
 	return UPDATE_CONTINUE;
+}
+
+bool EnemyHittedComponent::cleanUp() {
+	if (!cleaned) {
+		collision = nullptr;
+		life = nullptr;
+		motion = nullptr;
+		cleaned = true;
+	}
+	return true;
 }
 
 IComponent * EnemyHittedComponent::makeClone() {
