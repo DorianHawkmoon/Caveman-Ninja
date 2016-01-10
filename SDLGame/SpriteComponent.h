@@ -24,6 +24,7 @@ public:
 public:
 	SDL_Rect rect;
 	iPoint offset;
+	iPoint flippedOffset;
 	float speedCamera;
 
 private:

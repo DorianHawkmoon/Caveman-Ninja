@@ -46,8 +46,8 @@ update_status PlayerHittedComponent::update() {
 
 		} else if (timer.value() >= 50 && !life->isAlive()) {
 			dead = true;
-			int dam = parent->controller.damage;
-			parent->controller.damage = 3;
+			int dam = (parent->controller.damage>0)? 1:-1;
+			parent->controller.damage = dam*3;
 
 			timer.stop();
 		}

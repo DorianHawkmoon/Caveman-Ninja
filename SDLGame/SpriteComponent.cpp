@@ -7,7 +7,7 @@
 #include "Entity.h"
 
 SpriteComponent::SpriteComponent(std::string nameComponent, std::string nameTexture)
-	: IComponent(nameComponent), name(nameTexture), speedCamera(1.0f), offset(0, 0), cleaned(true) {}
+	: IComponent(nameComponent), name(nameTexture), speedCamera(1.0f), offset(0, 0), cleaned(true), flippedOffset(0,0) {}
 
 SpriteComponent::~SpriteComponent() {
 	//unload just in case
@@ -39,6 +39,10 @@ update_status SpriteComponent::postUpdate() {
 	Transform global = parentTransform->getGlobalTransform();
 	global.position.x += offset.x;
 	global.position.y += offset.y;
+	if (global.flip != SDL_FLIP_NONE) {
+		global.position.x += flippedOffset.x;
+		global.position.y += flippedOffset.y;
+	}
 	
 	App->renderer->blit(texture, global, &rect, speedCamera);
 	return UPDATE_CONTINUE;

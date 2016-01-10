@@ -34,6 +34,9 @@ public:
 	LifeComponent* life;
 	WeaponComponent* weapon;
 
+private:
+	Entity* deadBody;
+	bool ghost;
 };
 
 #endif // __MODULEPLAYER_H__

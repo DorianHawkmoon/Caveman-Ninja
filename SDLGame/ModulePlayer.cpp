@@ -14,8 +14,9 @@
 #include "CollisionComponent.h"
 #include "MotionComponent.h"
 
-
-#include "Enemy.h"
+#include "AnimationComponent.h"
+#include "Animation.h"
+#include "SpriteComponent.h"
 
 ModulePlayer::ModulePlayer(bool start_enabled) : Module(start_enabled)
 {
@@ -33,11 +34,13 @@ bool ModulePlayer::start(){
 	LOG("Loading player");
 	bool started = true;
 	player->start();
+	ghost = false;
+	deadBody = nullptr;
 	started = started & ((motion = static_cast<MotionComponent*>(player->getComponent("motion")))!=nullptr);
 	started = started & ((jump = static_cast<JumpComponent*>(player->getComponent("jump"))) != nullptr);
 	started = started & ((life = static_cast<LifeComponent*>(player->getComponent("life"))) != nullptr);
 	started = started & ((weapon = static_cast<WeaponComponent*>(player->getComponent("weapon"))) != nullptr);
-	player->transform->position = {150, 0};
+	player->transform->position = {100, 0};
 
 	App->renderer->camera.setCamera(player->transform);
 	App->renderer->camera.offset.x = 30;
@@ -46,6 +49,9 @@ bool ModulePlayer::start(){
 }
 
 update_status ModulePlayer::preUpdate() {
+	if (deadBody != nullptr) {
+		deadBody->preUpdate();
+	}
 	player->preUpdate();
 	return UPDATE_CONTINUE;
 }
@@ -53,6 +59,10 @@ update_status ModulePlayer::preUpdate() {
 // Unload assets
 bool ModulePlayer::cleanUp(){
 	LOG("Unloading player");
+	if (deadBody != nullptr) {
+		deadBody->cleanUp();
+		delete deadBody;
+	}
 	player->cleanUp();
 	return true;
 }
@@ -110,16 +120,47 @@ update_status ModulePlayer::update(){
 		}
 	}
 
-	if (App->input->getKey(SDL_SCANCODE_KP_5) == KEY_DOWN) {
-		life->modifyActualLife(-10);
-		controller->damage -= 1;
+	if (deadBody != nullptr) {
+		motion->velocity.y = -(motion->speed/2);
+		motion->velocity.x = 0;
+
+	}else if ((controller->damage == 3 || controller->damage == -3 ) && deadBody==nullptr) {
+		AnimationComponent* animation = static_cast<AnimationComponent*>(player->getComponent("animations"));
+		if (animation->getActualAnimation()->isInfinity()) {
+			deadBody = new Entity();
+
+			Transform transPlayer = player->transform->getGlobalTransform();
+			deadBody->transform->position = transPlayer.position;
+			deadBody->transform->flip = transPlayer.flip;
+			deadBody->transform->rotation = transPlayer.rotation;
+
+			SpriteComponent* body = new SpriteComponent("body", "Joe.png");
+			if (controller->damage < 0) {
+				body->rect = {256,320, 128,128};
+				body->offset = {-40,-82};
+				body->flippedOffset.x = -22;
+
+			} else {
+				body->rect = {256,448, 128,128};
+				body->offset = {-65,-82};
+				body->flippedOffset.x = 22;
+			}
+			deadBody->addComponent(body);
+			deadBody->start();
+		}
 	}
 
+	if (deadBody != nullptr) {
+		deadBody->update();
+	}
 	player->update();
 	return UPDATE_CONTINUE;
 }
 
 update_status ModulePlayer::postUpdate() {
+	if (deadBody != nullptr) {
+		deadBody->postUpdate();
+	}
 	player->postUpdate();
 	return UPDATE_CONTINUE;
 }

@@ -77,7 +77,7 @@ void Joe::makeAnimations(Entity* entity) {
 
 	
 	Animation idle(1);
-	idle.sizeFrame = {0, 0, 64, 64};
+	idle.sizeFrame = { 0, 0, 64, 64 };
 	idle.offset = {-18,-17};
 	State<Animation>* idleAnimation = new State<Animation>(idle);
 	animations = new StateMachine<Animation>(idleAnimation);
@@ -336,10 +336,13 @@ void Joe::makeAnimations(Entity* entity) {
 	State<Animation>* frontDeadAnimation = new State<Animation>(frontDead);
 	animations->addState(frontDeadAnimation);
 
-	ConditionComparison<int> conditionFrontDead = ConditionComparison<int>(&controller->damage, 3);
-	StateTransition<Animation> transitionFrontDead = StateTransition<Animation>(frontDeadAnimation, &conditionFrontDead);
+	ConditionComparison<int> conditionDead = ConditionComparison<int>(&controller->damage, 3);
+	StateTransition<Animation> transitionFrontDead = StateTransition<Animation>(frontDeadAnimation, &conditionDead);
+	ConditionComparison<int> conditionDead2 = ConditionComparison<int>(&controller->damage, -3);
+	StateTransition<Animation> transitionFrontDead2 = StateTransition<Animation>(frontDeadAnimation, &conditionDead2);
 
 	frontHitAnimation->addTransition(&transitionFrontDead);
+	frontHitAnimation->addTransition(&transitionFrontDead2);
 				
 
 	// ---------------------------------------------
@@ -353,27 +356,67 @@ void Joe::makeAnimations(Entity* entity) {
 	State<Animation>* backDeadAnimation = new State<Animation>(backDead);
 	animations->addState(backDeadAnimation);
 
-	ConditionComparison<int> conditionDead = ConditionComparison<int>(&controller->damage, 3);
 	StateTransition<Animation> transitionBackDead = StateTransition<Animation>(backDeadAnimation, &conditionDead);
+	StateTransition<Animation> transitionBackDead2 = StateTransition<Animation>(backDeadAnimation, &conditionDead2);
 
 	backHitAnimation->addTransition(&transitionBackDead);
+	backHitAnimation->addTransition(&transitionBackDead2);
 
 
 	// ---------------------------------------------
 
 	Animation ghostBackDead(4);
-	ghostBackDead.sizeFrame = {0,320,128,128};
-	ghostBackDead.offset = {-53,-82};
-	//ghostBackDead.flippedOffset.x = 3;
+	ghostBackDead.sizeFrame = {256,320,128,128};
+	ghostBackDead.offset = {-40,-82};
+	ghostBackDead.flippedOffset.x = -22;
 	ghostBackDead.speed = 0.08f;
 	ghostBackDead.repeat = 1;
 	State<Animation>* ghostBackDeadAnimation = new State<Animation>(ghostBackDead);
 	animations->addState(ghostBackDeadAnimation);
 	
 	StateTransition<Animation> transitionghostBackDead = StateTransition<Animation>(ghostBackDeadAnimation, &finishedAnimation);
+	backDeadAnimation->addTransition(&transitionghostBackDead);
 
-	backHitAnimation->addTransition(&transitionBackDead);
+	// ---------------------------------------------
 
+	Animation ghostFrontDead(4);
+	ghostFrontDead.sizeFrame = {256,448,128,128};
+	ghostFrontDead.offset = {-65,-82};
+	ghostFrontDead.flippedOffset.x = 22;
+	ghostFrontDead.speed = 0.08f;
+	ghostFrontDead.repeat = 1;
+	State<Animation>* ghostFrontDeadAnimation = new State<Animation>(ghostFrontDead);
+	animations->addState(ghostFrontDeadAnimation);
+
+	StateTransition<Animation> transitionghostFrontDead = StateTransition<Animation>(ghostFrontDeadAnimation, &finishedAnimation);
+	frontDeadAnimation->addTransition(&transitionghostFrontDead);
+
+	// ---------------------------------------------
+
+	Animation ghostBack(4);
+	ghostBack.sizeFrame = {0,256,64,64};
+	ghostBack.offset = {13,-25};
+	ghostBack.flippedOffset.x = -56;
+	ghostBack.speed = 0.08f;
+	State<Animation>* ghostBackAnimation = new State<Animation>(ghostBack);
+	animations->addState(ghostBackAnimation);
+
+	StateTransition<Animation> transitionghostBack = StateTransition<Animation>(ghostBackAnimation, &finishedAnimation);
+	ghostBackDeadAnimation->addTransition(&transitionghostBack);
+
+
+	// ---------------------------------------------
+
+	Animation ghostFront(4);
+	ghostFront.sizeFrame = {0,256,64,64};
+	ghostFront.offset = {-23,-25};
+	ghostFront.flippedOffset.x = 0;
+	ghostFront.speed = 0.08f;
+	State<Animation>* ghostFrontAnimation = new State<Animation>(ghostFront);
+	animations->addState(ghostFrontAnimation);
+
+	StateTransition<Animation> transitionghostFront = StateTransition<Animation>(ghostFrontAnimation, &finishedAnimation);
+	ghostFrontDeadAnimation->addTransition(&transitionghostFront);
 
 
 	// ---------------------------------------------

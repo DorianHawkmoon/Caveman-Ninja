@@ -61,6 +61,10 @@ public:
 		return repeat == 0;
 	}
 
+	bool isInfinity() const {
+		return repeat == -1;
+	}
+
 
 private:
 	float current_frame;
