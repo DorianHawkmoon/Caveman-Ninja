@@ -265,7 +265,7 @@ void Enemy::makeAnimations(Entity* entity) {
 	startRunningAway.sizeFrame = {0,640,128,128};
 	startRunningAway.offset = {-53, -82};
 	startRunningAway.flippedOffset.x = 3;
-	startRunningAway.repeat = 2;
+	startRunningAway.repeat = 4;
 	startRunningAway.speed = 0.3f;
 	State<Animation>* startRunningAwayAnimation = new State<Animation>(startRunningAway);
 	animations->addState(startRunningAwayAnimation);

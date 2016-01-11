@@ -34,6 +34,7 @@
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="EntryScene.cpp" />
     <ClCompile Include="GravityComponent.cpp" />
+    <ClCompile Include="GravityPlayerComponent.cpp" />
     <ClCompile Include="GravityWeaponComponent.cpp" />
     <ClCompile Include="GUIAnimation.cpp" />
     <ClCompile Include="GUIComponent.cpp" />
@@ -102,6 +103,7 @@
     <ClInclude Include="EnemyHittedComponent.h" />
     <ClInclude Include="EntryScene.h" />
     <ClInclude Include="GravityComponent.h" />
+    <ClInclude Include="GravityPlayerComponent.h" />
     <ClInclude Include="GravityWeaponComponent.h" />
     <ClInclude Include="GUIAnimation.h" />
     <ClInclude Include="GUIComponent.h" />

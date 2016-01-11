@@ -1,10 +1,13 @@
 #include "WeaponComponent.h"
-
+#include "Application.h"
+#include "ModuleAudio.h"
 
 WeaponComponent::~WeaponComponent() {}
 
 bool WeaponComponent::start() {
 	time.start();
+	//prepare sound
+	soundEffect = App->audio->loadEffect("attack.wav");
 	return true;
 }
 
@@ -64,5 +67,7 @@ void WeaponComponent::throwWeapon() {
 
 		//give it to scene module
 		App->scene->addEntity(entity);
+		//throw the sound attack
+		App->audio->playEffect(soundEffect);
 	}
 }

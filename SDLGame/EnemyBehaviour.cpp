@@ -12,6 +12,7 @@
 #include "LifeComponent.h"
 #include "Collider.h"
 #include "ModuleRender.h"
+#include "ModuleAudio.h"
 
 IComponent* EnemyBehaviour::clone() const {
 	EnemyBehaviour* result = new EnemyBehaviour(getID());
@@ -24,6 +25,11 @@ bool EnemyBehaviour::start() {
 	started = started & ((collision = static_cast<CollisionComponent*>(parent->getComponent("collider"))) != nullptr);
 	started = started & ((life = static_cast<LifeComponent*>(parent->getComponent("life"))) != nullptr);
 	started= started & ((animations = static_cast<AnimationComponent*>(parent->getComponent("animations")))!=nullptr);
+
+	hit= App->audio->loadEffect("enemy_hit.wav");
+	startRun = App->audio->loadEffect("enemy_caveman_run_start.wav");
+	run = App->audio->loadEffect("enemy_caveman_run.wav");
+	die = App->audio->loadEffect("enemy_caveman_die.wav");
 
 	return started;
 }
@@ -90,7 +96,8 @@ void EnemyBehaviour::attacking(Transform & globalMine, Transform& globalPlayer) 
 
 				if (colliderPlayer->checkCollision(&colliderCheck)) {
 					//damage player and notify him of the collision so he can react
-					App->player->life->modifyActualLife(-10);
+					App->player->life->modifyActualLife(-20);
+					App->audio->playEffect(hit);
 					LOG("Enemy damage!!");
 					App->player->player->onCollisionEnter(colliderPlayer, myCollider);
 				}
@@ -98,11 +105,13 @@ void EnemyBehaviour::attacking(Transform & globalMine, Transform& globalPlayer) 
 
 				//da igual si le hemos dado, escapamos! (segunda fase de atacar)
 				parent->controller.attack = 2;
+				App->audio->playEffect(startRun);
 			}
 			break;
 		case 2: //precalentamiento de huida
 			//si ha terminado, corremos!!
 			if (actualAnimation->isFinished()) {
+				App->audio->playEffect(run);
 				parent->controller.attack = 3;
 				//direction of running
 				Transform* entityTransform = this->parent->transform;

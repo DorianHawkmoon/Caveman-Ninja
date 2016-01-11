@@ -5,6 +5,7 @@
 #include "ModuleTextures.h"
 #include "ModuleInput.h"
 #include "ModuleRender.h"
+#include "ModuleAudio.h"
 #include "Entity.h"
 #include "SceneNode.h"
 
@@ -123,6 +124,9 @@ bool FirstLevel::start() {
 
 	root->start();
 	makeHUD();
+
+	App->audio->playMusic("backgroundMusic.mp3");
+
 	return true;
 }
 

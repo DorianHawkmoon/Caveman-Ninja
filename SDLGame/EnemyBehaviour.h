@@ -37,6 +37,12 @@ private:
 	MotionComponent* motion;
 	CollisionComponent* collision;
 	AnimationComponent* animations;
+
+	//sounds of caveman
+	unsigned int hit;
+	unsigned int startRun;
+	unsigned int run;
+	unsigned int die;
 };
 
 #endif // !ENEMY_BEHAVIOUR_H

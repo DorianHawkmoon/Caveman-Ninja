@@ -25,6 +25,7 @@
 #include "WallCollisionComponent.h"
 #include "WeaponComponent.h"
 #include "PlayerHittedComponent.h"
+#include "GravityPlayerComponent.h"
 
 Entity * Joe::makeJoe() {
 	//prepare the entity for the player
@@ -42,7 +43,7 @@ Entity * Joe::makeJoe() {
 
 	RectangleCollider* rectangleGravity = new RectangleCollider(fPoint(4, 4), iPoint(20, 38), 0, TypeCollider::GRAVITY);
 
-	GravityComponent* gravity = new GravityComponent("gravity", rectangleGravity);
+	GravityComponent* gravity = new GravityPlayerComponent("gravity", rectangleGravity);
 	gravity->gravity = 550;
 	gravity->maxVelocity = 500;
 	result->addComponent(gravity);

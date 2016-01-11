@@ -9,7 +9,7 @@ ModuleAudio::ModuleAudio(bool started): Module(started), effects() {}
 // Destructor
 ModuleAudio::~ModuleAudio() {
 	//just in case, cleanup
-	cleanUp();
+	//cleanUp();
 	Mix_Quit();
 	SDL_QuitSubSystem(SDL_INIT_AUDIO);
 }

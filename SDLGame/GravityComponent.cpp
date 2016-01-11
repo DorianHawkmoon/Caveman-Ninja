@@ -1,11 +1,13 @@
 #include "GravityComponent.h"
 #include "RectangleCollider.h"
+#include "LifeComponent.h"
 #include "Application.h"
 #include "ModuleCollision.h"
 #include "MotionComponent.h"
 #include "ColliderInteraction.h"
+#include "ModuleAudio.h"
 
-GravityComponent::GravityComponent(std::string nameComponent, Collider *collider) : IComponent(nameComponent), gravity(0), collision(collider), cleaned(true) {}
+GravityComponent::GravityComponent(const std::string& nameComponent, Collider *collider) : IComponent(nameComponent), gravity(0), collision(collider), cleaned(true) {}
 
 GravityComponent::~GravityComponent() {
 	//just in case
@@ -26,6 +28,7 @@ IComponent * GravityComponent::makeClone() const {
 
 bool GravityComponent::start() {
 	if (cleaned) {
+		loadSound();
 		motion = static_cast<MotionComponent*>(parent->getComponent("motion"));
 	
 		collision->addListener(parent);
@@ -46,6 +49,8 @@ bool GravityComponent::start() {
 		gravityCollider->parentTransform = parent->transform;
 		gravityCollider->parent = parent;
 		App->collisions->addCollider(gravityCollider);
+
+		life = static_cast<LifeComponent*>(parent->getComponent("life"));
 
 		cleaned = false;
 	}
@@ -77,9 +82,16 @@ update_status GravityComponent::update() {
 			if (collisions.size() > 0) {
 				//si está en salto, no tenerlo en cuenta!!
 				JumpType jumping = parent->controller.stateJump;
-				if (jumping!=JumpType::JUMP && jumping!=JumpType::DOUBLE_JUMP && jumping!=JumpType::JUMP_DOWN) {
+				if (jumping == JumpType::FALL) {
+					//not if is dead
+					if (life!=nullptr && life->isAlive()) {
+						playSound();
+					}
 					parent->controller.stateJump = JumpType::NONE;
 				}
+				/*if (jumping!=JumpType::JUMP && jumping!=JumpType::DOUBLE_JUMP && jumping!=JumpType::JUMP_DOWN) {
+					parent->controller.stateJump = JumpType::NONE;
+				}*/
 			} else {
 				parent->controller.stateJump = JumpType::FALL;
 			}
@@ -150,6 +162,7 @@ bool GravityComponent::isFalling() {
 bool GravityComponent::cleanUp() {
 	if (!cleaned) {
 		motion = nullptr;
+		life = nullptr;
 		if (gravityCollider != nullptr) {
 			App->collisions->removeCollider(gravityCollider);
 			delete gravityCollider;

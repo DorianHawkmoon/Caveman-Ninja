@@ -35,6 +35,8 @@ private:
 	int maxThrowable;
 	unsigned int delay;
 	std::list<Entity*> weapons;
+
+	unsigned int soundEffect;
 };
 
 

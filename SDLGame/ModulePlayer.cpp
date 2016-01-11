@@ -13,6 +13,7 @@
 #include "WeaponComponent.h"
 #include "CollisionComponent.h"
 #include "MotionComponent.h"
+#include "ModuleAudio.h"
 
 #include "AnimationComponent.h"
 #include "Animation.h"
@@ -45,6 +46,8 @@ bool ModulePlayer::start(){
 
 	App->renderer->camera.setCamera(player->transform);
 	App->renderer->camera.offset.x = 30;
+
+	soundDie = App->audio->loadEffect("player_die.wav");
 
 	return started;
 }
@@ -122,7 +125,7 @@ update_status ModulePlayer::update(){
 	}
 
 	if (deadBody != nullptr) {
-		motion->velocity.y = -(motion->speed/2);
+		motion->velocity.y = -(motion->speed*0.6);
 		motion->velocity.x = 0;
 
 	}else if ((controller->damage == 3 || controller->damage == -3 ) && deadBody==nullptr) {
@@ -148,6 +151,7 @@ update_status ModulePlayer::update(){
 			}
 			deadBody->addComponent(body);
 			deadBody->start();
+			App->audio->playEffect(soundDie);
 		}
 	}
 

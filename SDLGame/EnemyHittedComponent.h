@@ -32,6 +32,9 @@ private:
 	MotionComponent* motion;
 
 	bool cleaned;
+
+	unsigned int soundDie;
+	bool playSound;
 };
 
 #endif // !ENEMY_HITTED_COMPONENT_H

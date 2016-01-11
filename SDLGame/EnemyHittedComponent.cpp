@@ -5,11 +5,13 @@
 #include "LifeComponent.h"
 #include "CollisionComponent.h"
 #include "DamageComponent.h"
+#include "Application.h"
 #include "AnimationComponent.h"
 #include "Animation.h"
+#include "ModuleAudio.h"
 
 
-EnemyHittedComponent::EnemyHittedComponent(const std::string& name) : IComponent(name), timer(), dead(false) {}
+EnemyHittedComponent::EnemyHittedComponent(const std::string& name) : IComponent(name), timer(), dead(false), playSound(true) {}
 
 
 EnemyHittedComponent::~EnemyHittedComponent() {}
@@ -20,6 +22,7 @@ bool EnemyHittedComponent::start() {
 	result = result & ((life = static_cast<LifeComponent*>(this->parent->getComponent("life"))) != nullptr);
 	result = result & ((motion = static_cast<MotionComponent*>(this->parent->getComponent("motion"))) != nullptr);
 	result = result & ((collision = static_cast<CollisionComponent*>(this->parent->getComponent("collider"))) != nullptr);
+	soundDie = App->audio->loadEffect("enemy_caveman_die.wav");
 	return result;
 }
 
@@ -50,6 +53,14 @@ update_status EnemyHittedComponent::update() {
 
 	//si hitted and alive and not falling more, damage to zero
 	if (hitted) {
+		if (playSound) {
+			if (!life->isAlive()) {
+				//sound 
+				App->audio->playEffect(soundDie);
+				playSound = false;
+			}
+		}
+
 		if (timer.isStopped()) {
 			if (motion->velocity.y == 0) {
 				motion->velocity.x = 0;

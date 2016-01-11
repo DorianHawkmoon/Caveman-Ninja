@@ -37,6 +37,7 @@ public:
 private:
 	Entity* deadBody;
 	bool ghost;
+	unsigned int soundDie;
 };
 
 #endif // __MODULEPLAYER_H__

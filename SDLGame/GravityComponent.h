@@ -8,11 +8,12 @@
 #include "Application.h"
 #include "ModuleTimer.h"
 class MotionComponent;
+class LifeComponent;
 class Collider;
 
 class GravityComponent : public IComponent {
 public:
-	GravityComponent(std::string nameComponent, Collider *collider);
+	GravityComponent(const std::string& nameComponent, Collider *collider);
 	virtual ~GravityComponent();
 
 	IComponent* makeClone() const;
@@ -36,11 +37,19 @@ public:
 
 private:
 	MotionComponent* motion;
-	//CollisionComponent* collision;
+	LifeComponent* life;
 	Collider* collision;
 	Collider* gravityCollider;
 
 	bool cleaned;
+
+protected:
+	virtual void loadSound() {
+		
+	}
+	virtual void playSound() {
+		
+	}
 };
 
 #endif // !GRAVITY_H

@@ -243,6 +243,9 @@
     <ClCompile Include="GUILifeBar.cpp">
       <Filter>Archivos de código fuente\GUI\GUIgame</Filter>
     </ClCompile>
+    <ClCompile Include="GravityPlayerComponent.cpp">
+      <Filter>Archivos de código fuente\Entities\PlayerProperties</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Module.h">
@@ -466,6 +469,9 @@
     </ClInclude>
     <ClInclude Include="GUILifeBar.h">
       <Filter>Archivos de código fuente\GUI\GUIgame</Filter>
+    </ClInclude>
+    <ClInclude Include="GravityPlayerComponent.h">
+      <Filter>Archivos de código fuente\Entities\PlayerProperties</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

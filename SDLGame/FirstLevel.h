@@ -18,6 +18,8 @@ private:
 	void putEnemies();
 	void makeEnemy(fPoint positionTrigger, const std::vector<fPoint>& enemies);
 	void makeHUD();
+
+	unsigned int music;
 };
 #endif // ! FIRST_LEVEL_H
 
