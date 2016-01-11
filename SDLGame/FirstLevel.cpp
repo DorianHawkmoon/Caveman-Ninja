@@ -19,8 +19,9 @@
 #include "Transform.h"
 #include "Enemy.h"
 #include "Trigger.h"
-
-#include <cstdarg>
+#include "ModuleGUI.h"
+#include "GUIContainer.h"
+#include "GUIAnimation.h"
 
 FirstLevel::FirstLevel() {
 	
@@ -120,6 +121,7 @@ bool FirstLevel::start() {
 	putEnemies();
 
 	root->start();
+	makeHUD();
 	return true;
 }
 
@@ -176,4 +178,18 @@ void FirstLevel::makeEnemy(fPoint positionTrigger, const std::vector<fPoint>& en
 							}
 						);
 	root->addChild(buffer);
+}
+
+void FirstLevel::makeHUD() {
+	StateMachine<Animation>* animations;
+
+	Animation idle(1);
+	idle.sizeFrame = {0, 0, 24,28};
+	State<Animation>* idleAnimation = new State<Animation>(idle);
+	animations = new StateMachine<Animation>(idleAnimation);
+
+	GUI::GUIAnimation* animationPortrait = new GUI::GUIAnimation("gui_portrait.png", animations);
+	animationPortrait->transform.position = {0,0};
+	rootGUI->pack(animationPortrait);
+	App->gui->registerGUI(rootGUI);
 }

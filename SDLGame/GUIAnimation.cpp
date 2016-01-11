@@ -3,12 +3,13 @@
 #include "ModuleTextures.h"
 
 
-GUI::GUIAnimation::GUIAnimation(const std::string& nameTexture) : GUI::GUITexture(), nameTexture(nameTexture) {
+GUI::GUIAnimation::GUIAnimation(const std::string& nameTexture, StateMachine<Animation>* stateMachine) : GUI::GUITexture(), nameTexture(nameTexture), state(stateMachine) {
 	texture = App->textures->load(nameTexture.c_str());
 }
 
 GUI::GUIAnimation::~GUIAnimation() {
 	App->textures->unload(texture);
+	texture = nullptr;
 	if (state != nullptr) {
 		delete state;
 	}

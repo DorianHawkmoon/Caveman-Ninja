@@ -5,9 +5,6 @@
 
 
 GUI::GUITexture::~GUITexture() {
-	if (animation != nullptr) {
-		delete animation;
-	}
 	if (texture != nullptr) {
 		App->textures->unload(texture);
 	}

@@ -11,8 +11,14 @@ namespace GUI {
 
 	class GUIAnimation : public GUI::GUITexture {
 	public:
-		GUIAnimation(const std::string& nameTexture);
+		GUIAnimation(const std::string& nameTexture, StateMachine<Animation>* stateMachine);
 		virtual ~GUIAnimation();
+
+		inline bool isSelectable() const {
+			return false;
+		}
+
+		virtual void handleEvent(const SDL_Event& event) {}
 
 		update_status update();
 
@@ -20,7 +26,6 @@ namespace GUI {
 	private:
 		std::string nameTexture;
 		StateMachine<Animation>* state;
-		SDL_Texture* texture;
 
 		bool cleaned;
 	};

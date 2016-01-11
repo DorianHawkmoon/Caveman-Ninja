@@ -235,7 +235,7 @@
       <Filter>Archivos de código fuente\GUI</Filter>
     </ClCompile>
     <ClCompile Include="GUIAnimation.cpp">
-      <Filter>Archivos de código fuente</Filter>
+      <Filter>Archivos de código fuente\GUI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -456,7 +456,7 @@
       <Filter>Archivos de código fuente\GUI</Filter>
     </ClInclude>
     <ClInclude Include="GUIAnimation.h">
-      <Filter>Archivos de encabezado</Filter>
+      <Filter>Archivos de código fuente\GUI</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
