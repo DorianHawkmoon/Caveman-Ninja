@@ -8,6 +8,11 @@
 #include "Entity.h"
 #include "ModuleInput.h"
 #include "FirstLevel.h"
+#include "GUILabel.h"
+#include "ModuleGUI.h"
+#include "GUIContainer.h"
+
+#include "GUIComponent.h"
 
 EntryScene::EntryScene() {}
 
@@ -30,6 +35,19 @@ bool EntryScene::start() {
 
 	root->addChild(buffer);
 	root->start();
+
+	SDL_Color color = SDL_Color();
+	color.g = 255;
+	color.b = 255;
+	color.r = 255;
+	color.a = 255;
+	GUI::GUILabel* label = new GUI::GUILabel("Press SPACE to start playing", color, "arcadeClasic.ttf", GUILocation::ABSOLUTE);
+	label->transform.position = {40,190};
+
+	rootGUI->pack(label);
+	rootGUI->start();
+
+	App->gui->registerGUI(rootGUI);
 	return true;
 }
 

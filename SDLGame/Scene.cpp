@@ -3,16 +3,24 @@
 #include "Entity.h"
 #include "SceneNode.h"
 #include <algorithm>
+#include "GUIContainer.h"
+#include "Application.h"
+#include "ModuleGUI.h"
+#include "GUIContainer.h"
 #include <functional>
 
 Scene::Scene(): root(nullptr), entities() {
 	rootE = new Entity();
 	root = new SceneNode(rootE);
+	rootGUI = new GUI::GUIContainer();
 }
 
 Scene::~Scene() {
 	if (root != nullptr) {
 		delete root;
+	}
+	if (rootGUI != nullptr) {
+		delete rootGUI;
 	}
 }
 
@@ -48,6 +56,9 @@ bool Scene::cleanUp() {
 		delete *it;
 	}
 	entities.clear();
+
+	App->gui->removeGUI(rootGUI);
+	rootGUI->cleanUp();
 	return true;
 }
 

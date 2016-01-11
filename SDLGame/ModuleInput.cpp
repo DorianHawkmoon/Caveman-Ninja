@@ -1,7 +1,8 @@
 #include "ModuleInput.h"
 #include "Globals.h"
 #include <algorithm>
-
+#include "Application.h"
+#include "ModuleGUI.h"
 
 
 ModuleInput::ModuleInput(bool started): Module(started) {
@@ -99,7 +100,12 @@ update_status ModuleInput::preUpdate() {
 
 				}
 				break;
+		}
 
+		//let gui handle events
+		ModuleGUI* gui = App->gui;
+		if (gui != nullptr) {
+			gui->handleEventGUI(events);
 		}
 	}
 

@@ -5,6 +5,10 @@
 #include "Globals.h"
 #include <list>
 #include "IUpdater.h"
+namespace GUI {
+	class GUIContainer;
+}
+
 class Entity;
 class SceneNode;
 
@@ -23,6 +27,7 @@ public:
 
 protected:
 	SceneNode* root;
+	GUI::GUIContainer* rootGUI;
 	std::list<Entity*> entities;
 
 private:

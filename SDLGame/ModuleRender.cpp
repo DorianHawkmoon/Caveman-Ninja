@@ -160,7 +160,7 @@ bool ModuleRender::paintRectangle(const SDL_Color& color, const iPoint& position
 		LOG("Cannot draw rectangle to screen. SDL_RenderFillRect error: %s", SDL_GetError());
 		result = false;
 	}
-
+	SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_NONE);
 	
 	return result;
 }
@@ -200,7 +200,6 @@ bool ModuleRender::paintRectangle(const SDL_Color & color, const Transform & tra
 	}
 
 	// Renderiza la textura
-	//pivot is nullptr because is middle of rectangle
 	SDL_Point point = {pivot.x,pivot.y};
 	if (SDL_RenderCopyEx(renderer, rectangle, nullptr, &rectDestiny, transform.rotation, &point, transform.flip) != 0) {
 		LOG("Cannot blit to screen. SDL_RenderCopyEx error: %s", SDL_GetError());
@@ -211,7 +210,7 @@ bool ModuleRender::paintRectangle(const SDL_Color & color, const Transform & tra
 }
 
 bool ModuleRender::paintCircle(const SDL_Color & color, const fPoint & position, float radius, float speed) {
-	bool result = true; 
+	bool result = true;
 
 	SDL_Rect cam = getCorrectCamera(speed);
 
@@ -234,6 +233,12 @@ bool ModuleRender::paintCircle(const SDL_Color & color, const fPoint & position,
 		result = false;
 	}
 
+	// Determina la transparencia de la textura
+	if (SDL_SetTextureAlphaMod(circle, color.a)) {
+		LOG("Cannot change texture opacity. SDL_SetTextureAlphaMod error: %s", SDL_GetError());
+		result = false;
+	}
+
 	if (SDL_RenderCopy(renderer, circle, nullptr, &rectDestiny) != 0) {
 		LOG("Cannot draw circle to screen. Error: %s", SDL_GetError());
 		result = false;
@@ -253,6 +258,39 @@ bool ModuleRender::insideCamera(const SDL_Rect & one, float speed) const {
 
 	SDL_Rect sizeWindows = camera.getWindowsSize();
 	return SDL_HasIntersection(&sizeWindows, &rectDestiny) == SDL_TRUE;
+}
+
+bool ModuleRender::paintGUI(SDL_Texture * texture, const GUITransform & transform, const SDL_Rect* sectionTexture ) {
+	bool result = true;
+
+	SDL_Rect cam = camera.getWindowsSize();
+
+	SDL_Rect rectDestiny;
+	iPoint pos = {(int) transform.position.x, (int) transform.position.y};
+	rectDestiny.x = pos.x*SCREEN_SIZE;
+	rectDestiny.y = pos.y*SCREEN_SIZE;
+	rectDestiny.w = 0;
+	rectDestiny.h = 0;
+
+	//need the size of the image to paint at it image
+	if (sectionTexture != nullptr) {
+		rectDestiny.w = sectionTexture->w;
+		rectDestiny.h = sectionTexture->h;
+	} else {
+		//if not, ask the whole texture
+		SDL_QueryTexture(texture, nullptr, nullptr, &rectDestiny.w, &rectDestiny.h);
+	}
+	
+	rectDestiny.w *= SCREEN_SIZE;
+	rectDestiny.h *= SCREEN_SIZE;
+	
+	//paint
+	if (SDL_RenderCopyEx(renderer, texture, sectionTexture, &rectDestiny, transform.rotation, nullptr, SDL_FLIP_NONE) != 0) {
+		LOG("Cannot blit GUI to screen. SDL_RenderCopy error: %s", SDL_GetError());
+		result = false;
+	}
+
+	return result;
 }
 
 SDL_Rect ModuleRender::getCorrectCamera(float speed) const {

@@ -17,6 +17,8 @@ class ModuleFadeToBlack;
 class ModulePlayer;
 class ModuleTimer;
 class ModuleCollision;
+class ModuleFonts;
+class ModuleGUI;
 
 class Application {
 public:
@@ -39,6 +41,8 @@ public:
 	ModuleCollision* collisions;
 	ModulePlayer* player;
 	ModuleTimer* timer;
+	ModuleFonts* fonts;
+	ModuleGUI* gui;
 
 private:
 	std::list<Module*> modules;

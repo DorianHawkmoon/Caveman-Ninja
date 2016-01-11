@@ -8,6 +8,7 @@
 #include "Collider.h"
 #include "Camera.h"
 #include "Transform.h"
+#include "GUITransform.h"
 struct SDL_Texture;
 struct SDL_Renderer;
 
@@ -29,6 +30,8 @@ public:
 	bool paintRectangle(const SDL_Color& color, const Transform& transform, const iPoint& rect, const iPoint& pivot = {0,0}, float speed = 1.0f);
 	bool paintCircle(const SDL_Color& color, const fPoint& position, float radius, float speed = 1.0f);
 	bool insideCamera(const SDL_Rect& one, float speed=1.0f) const;
+
+	bool paintGUI(SDL_Texture* texture, const GUITransform& transform, const SDL_Rect* sectionTexture);
 
 public:
 	SDL_Texture* circle;

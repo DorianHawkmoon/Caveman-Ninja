@@ -35,8 +35,16 @@
     <ClCompile Include="EntryScene.cpp" />
     <ClCompile Include="GravityComponent.cpp" />
     <ClCompile Include="GravityWeaponComponent.cpp" />
+    <ClCompile Include="GUIAnimation.cpp" />
+    <ClCompile Include="GUIComponent.cpp" />
+    <ClCompile Include="GUIContainer.cpp" />
+    <ClCompile Include="GUILabel.cpp" />
+    <ClCompile Include="GUITexture.cpp" />
+    <ClCompile Include="GUITransform.cpp" />
     <ClCompile Include="LifespanComponent.cpp" />
     <ClCompile Include="LineCollider.cpp" />
+    <ClCompile Include="ModuleFonts.cpp" />
+    <ClCompile Include="ModuleGUI.cpp" />
     <ClCompile Include="OnCollisionTrigger.cpp" />
     <ClCompile Include="PlayerHittedComponent.cpp" />
     <ClCompile Include="HorizontalSpriteScrollComponent.cpp" />
@@ -94,8 +102,16 @@
     <ClInclude Include="EntryScene.h" />
     <ClInclude Include="GravityComponent.h" />
     <ClInclude Include="GravityWeaponComponent.h" />
+    <ClInclude Include="GUIAnimation.h" />
+    <ClInclude Include="GUIComponent.h" />
+    <ClInclude Include="GUIContainer.h" />
+    <ClInclude Include="GUILabel.h" />
+    <ClInclude Include="GUITexture.h" />
+    <ClInclude Include="GUITransform.h" />
     <ClInclude Include="LifespanComponent.h" />
     <ClInclude Include="LineCollider.h" />
+    <ClInclude Include="ModuleFonts.h" />
+    <ClInclude Include="ModuleGUI.h" />
     <ClInclude Include="OnCollisionTrigger.h" />
     <ClInclude Include="PlayerHittedComponent.h" />
     <ClInclude Include="IAComponent.h" />
@@ -208,7 +224,7 @@
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>$(SolutionDir)lib\x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;SDL2_mixer.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;SDL2_mixer.lib;SDL2_ttf.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <SubSystem>Windows</SubSystem>
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
       <EntryPointSymbol>
@@ -247,7 +263,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalLibraryDirectories>$(SolutionDir)lib\x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;SDL2_mixer.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;SDL2_mixer.lib;SDL2_ttf.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <SubSystem>Windows</SubSystem>
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
       <EntryPointSymbol>

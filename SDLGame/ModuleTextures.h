@@ -10,7 +10,7 @@
 
 struct LoadedTexture {
 	LoadedTexture(const std::string& name, SDL_Texture* texture) : name(name), texture(texture),count(1) {}
-	LoadedTexture() {
+	~LoadedTexture() {
 		SDL_DestroyTexture(texture);
 	}
 

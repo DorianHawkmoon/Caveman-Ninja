@@ -9,6 +9,8 @@
 #include "ModuleFadeToBlack.h"
 #include "ModuleTimer.h"
 #include "ModuleCollision.h"
+#include "ModuleFonts.h"
+#include "ModuleGUI.h"
 #include "SDL/SDL.h"
 
 Application::Application() {
@@ -17,6 +19,7 @@ Application::Application() {
 	modules.push_back(input = new ModuleInput());
 	modules.push_back(window = new ModuleWindow());
 	modules.push_back(textures = new ModuleTextures());
+	modules.push_back(fonts = new ModuleFonts);
 	modules.push_back(audio = new ModuleAudio());
 
 	// Game Modules
@@ -27,6 +30,7 @@ Application::Application() {
 	/*modules.push_back(particles = new ModuleParticles());*/
 
 	modules.push_back(fade = new ModuleFadeToBlack());
+	modules.push_back(gui = new ModuleGUI());
 	modules.push_back(renderer = new ModuleRender());
 }
 

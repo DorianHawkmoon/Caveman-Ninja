@@ -75,6 +75,9 @@ SDL_Texture* const ModuleTextures::load(const char* path) {
 }
 
 void ModuleTextures::unload(SDL_Texture * texture) {
+	if (texture == nullptr) {
+		return;
+	}
 	//search for the texture
 	std::list<LoadedTexture*>::iterator it = std::find_if(textures.begin(), textures.end(),
 		[&texture](LoadedTexture* loaded) { return loaded->texture == texture; });

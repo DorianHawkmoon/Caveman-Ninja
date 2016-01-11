@@ -3,6 +3,8 @@
 #define ENTRY_SCENE_H
 
 #include "Scene.h"
+#include <vector>
+class GUIComponent;
 
 class EntryScene : public Scene {
 public:
@@ -11,5 +13,8 @@ public:
 
 	bool start();
 	update_status update();
+
+private:
+	std::vector<GUIComponent*> components;
 };
 #endif // !ENTRY_SCENE_H

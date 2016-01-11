@@ -52,6 +52,9 @@
     <Filter Include="Archivos de código fuente\Conditions">
       <UniqueIdentifier>{88dea11d-e009-44c2-9840-c5ca455a9621}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Archivos de código fuente\GUI">
+      <UniqueIdentifier>{bdf5ceac-9fb7-4164-a9cd-eef2f79c37c4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Log.cpp">
@@ -209,6 +212,30 @@
     </ClCompile>
     <ClCompile Include="OnCollisionTrigger.cpp">
       <Filter>Archivos de código fuente\Entities\PlayerProperties</Filter>
+    </ClCompile>
+    <ClCompile Include="ModuleFonts.cpp">
+      <Filter>Archivos de código fuente\Core Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="GUIComponent.cpp">
+      <Filter>Archivos de código fuente\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="GUIContainer.cpp">
+      <Filter>Archivos de código fuente\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="GUILabel.cpp">
+      <Filter>Archivos de código fuente\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="ModuleGUI.cpp">
+      <Filter>Archivos de código fuente\Core Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="GUITransform.cpp">
+      <Filter>Archivos de código fuente\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="GUITexture.cpp">
+      <Filter>Archivos de código fuente\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="GUIAnimation.cpp">
+      <Filter>Archivos de código fuente</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -406,6 +433,30 @@
     </ClInclude>
     <ClInclude Include="OnCollisionTrigger.h">
       <Filter>Archivos de código fuente\Entities\PlayerProperties</Filter>
+    </ClInclude>
+    <ClInclude Include="ModuleFonts.h">
+      <Filter>Archivos de código fuente\Core Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="GUIComponent.h">
+      <Filter>Archivos de código fuente\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="GUIContainer.h">
+      <Filter>Archivos de código fuente\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="GUILabel.h">
+      <Filter>Archivos de código fuente\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="ModuleGUI.h">
+      <Filter>Archivos de código fuente\Core Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="GUITransform.h">
+      <Filter>Archivos de código fuente\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="GUITexture.h">
+      <Filter>Archivos de código fuente\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="GUIAnimation.h">
+      <Filter>Archivos de encabezado</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
