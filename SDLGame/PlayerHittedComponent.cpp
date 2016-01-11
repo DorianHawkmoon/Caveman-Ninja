@@ -1,8 +1,10 @@
 #include "PlayerHittedComponent.h"
 #include "Collider.h"
+#include "ModuleAudio.h"
 #include "MotionComponent.h"
 #include "Entity.h"
 #include "LifeComponent.h"
+#include "Application.h"
 #include "CollisionComponent.h"
 
 PlayerHittedComponent::PlayerHittedComponent(const std::string& name): IComponent(name), timer(), dead(false) {}
@@ -16,6 +18,7 @@ bool PlayerHittedComponent::start() {
 	result = result & ((life = static_cast<LifeComponent*>(this->parent->getComponent("life"))) != nullptr);
 	result = result & ((motion = static_cast<MotionComponent*>(this->parent->getComponent("motion"))) != nullptr);
 	result = result & ((collision = static_cast<CollisionComponent*>(this->parent->getComponent("collider"))) != nullptr);
+	damageReceivedEffect = App->audio->loadEffect("hurt.wav");
 	return result;
 }
 
@@ -105,4 +108,6 @@ void PlayerHittedComponent::onCollisionEnter(const Collider * self, const Collid
 	motion->velocity.y -= 100.0f;
 
 	hitted = true;
+	//play the sound effect
+	App->audio->playEffect(damageReceivedEffect);
 }

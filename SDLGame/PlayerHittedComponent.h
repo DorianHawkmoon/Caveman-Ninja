@@ -32,6 +32,8 @@ private:
 	CollisionComponent* collision;
 
 	bool cleaned;
+
+	unsigned int damageReceivedEffect;
 };
 
 

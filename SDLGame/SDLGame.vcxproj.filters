@@ -241,7 +241,7 @@
       <Filter>Archivos de código fuente\GUI</Filter>
     </ClCompile>
     <ClCompile Include="GUILifeBar.cpp">
-      <Filter>Archivos de código fuente</Filter>
+      <Filter>Archivos de código fuente\GUI\GUIgame</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -465,7 +465,7 @@
       <Filter>Archivos de código fuente\GUI</Filter>
     </ClInclude>
     <ClInclude Include="GUILifeBar.h">
-      <Filter>Archivos de encabezado</Filter>
+      <Filter>Archivos de código fuente\GUI\GUIgame</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
