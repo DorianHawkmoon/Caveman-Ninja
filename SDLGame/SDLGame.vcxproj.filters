@@ -55,6 +55,9 @@
     <Filter Include="Archivos de código fuente\GUI">
       <UniqueIdentifier>{bdf5ceac-9fb7-4164-a9cd-eef2f79c37c4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Archivos de código fuente\GUI\GUIgame">
+      <UniqueIdentifier>{2e4fa8a8-0e5c-4f14-a8d6-5d9b77a9195b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Log.cpp">
@@ -236,6 +239,9 @@
     </ClCompile>
     <ClCompile Include="GUIAnimation.cpp">
       <Filter>Archivos de código fuente\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="GUILifeBar.cpp">
+      <Filter>Archivos de código fuente</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -457,6 +463,9 @@
     </ClInclude>
     <ClInclude Include="GUIAnimation.h">
       <Filter>Archivos de código fuente\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="GUILifeBar.h">
+      <Filter>Archivos de encabezado</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -11,7 +11,7 @@ struct SDL_Texture;
 
 class SpriteComponent : public IComponent {
 public:
-	SpriteComponent(std::string nameComponent, std::string nameTexture);
+	SpriteComponent(const std::string& nameComponent, const std::string& nameTexture);
 	virtual ~SpriteComponent();
 
 	bool start();
@@ -28,7 +28,7 @@ public:
 	float speedCamera;
 
 private:
-	std::string name;
+	const std::string name;
 	SDL_Texture* texture;
 
 	bool cleaned;

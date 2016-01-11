@@ -24,10 +24,11 @@ void GUI::GUITexture::draw(const GUITransform & states) const {
 	result.position += offset;
 
 	// Determina la rotación de la imagen en pantalla
-	float rotation = states.rotation;
+	//TODO add rotation
+	/*float rotation = states.rotation;
 	SDL_Point pivot;
 	pivot.x = 0;
-	pivot.y = 0;
+	pivot.y = 0;*/
 
 	// Determina el frame que pintar
 	SDL_Rect* renderArea = nullptr;
@@ -35,7 +36,7 @@ void GUI::GUITexture::draw(const GUITransform & states) const {
 		renderArea = &(animation->GetCurrentFrame());
 	}
 
-	result.rotation += rotation;
+	//result.rotation += rotation;
 	App->renderer->paintGUI(texture, result, renderArea);
 }
 

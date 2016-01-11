@@ -22,6 +22,7 @@
 #include "ModuleGUI.h"
 #include "GUIContainer.h"
 #include "GUIAnimation.h"
+#include "GUILifeBar.h"
 
 FirstLevel::FirstLevel() {
 	
@@ -191,5 +192,15 @@ void FirstLevel::makeHUD() {
 	GUI::GUIAnimation* animationPortrait = new GUI::GUIAnimation("gui_portrait.png", animations);
 	animationPortrait->transform.position = {0,0};
 	rootGUI->pack(animationPortrait);
+
+	GUI::GUILifeBar* lifebar = new GUI::GUILifeBar("gui_lifebar.png", App->player->life);
+	lifebar->transform.position = {24,12};
+	lifebar->pointColor[GUI::PointColor::GREEN] = {0,0,5,12};
+	lifebar->pointColor[GUI::PointColor::YELLOW] = {5,0,5,12};
+	lifebar->pointColor[GUI::PointColor::RED] = {10,0,5,12};
+	lifebar->pointColor[GUI::PointColor::EMPTY] = {15,0,5,12};
+	rootGUI->pack(lifebar);
+
+
 	App->gui->registerGUI(rootGUI);
 }

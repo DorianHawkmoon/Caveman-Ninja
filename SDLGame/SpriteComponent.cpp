@@ -6,7 +6,7 @@
 #include "Transform.h"
 #include "Entity.h"
 
-SpriteComponent::SpriteComponent(std::string nameComponent, std::string nameTexture)
+SpriteComponent::SpriteComponent(const std::string &nameComponent, const std::string& nameTexture)
 	: IComponent(nameComponent), name(nameTexture), speedCamera(1.0f), offset(0, 0), cleaned(true), flippedOffset(0,0) {}
 
 SpriteComponent::~SpriteComponent() {
