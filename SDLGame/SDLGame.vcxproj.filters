@@ -246,6 +246,12 @@
     <ClCompile Include="GravityPlayerComponent.cpp">
       <Filter>Archivos de código fuente\Entities\PlayerProperties</Filter>
     </ClCompile>
+    <ClCompile Include="ModuleParticles.cpp">
+      <Filter>Archivos de código fuente\Core Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="Particle.cpp">
+      <Filter>Archivos de código fuente\Utilities</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Module.h">
@@ -472,6 +478,12 @@
     </ClInclude>
     <ClInclude Include="GravityPlayerComponent.h">
       <Filter>Archivos de código fuente\Entities\PlayerProperties</Filter>
+    </ClInclude>
+    <ClInclude Include="ModuleParticles.h">
+      <Filter>Archivos de código fuente\Core Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Particle.h">
+      <Filter>Archivos de encabezado</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -32,9 +32,9 @@ update_status Collider::postUpdate() {
 	clearCollisions();
 
 
-#ifdef DEBUG
-	paintCollider();
-#endif
+	if (DEBUG_COLLISIONS) {
+		paintCollider();
+	}
 	return UPDATE_CONTINUE;
 }
 

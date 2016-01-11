@@ -6,18 +6,12 @@
 
 
 ModuleInput::ModuleInput(bool started): Module(started) {
-	//keyboard = new KeyState[MAX_KEYS];
 	memset(keyboard, KEY_IDLE, sizeof(KeyState) * MAX_KEYS);
 }
 
 // Destructor
 ModuleInput::~ModuleInput() {
 	LOG("Quiting SDL input event system");
-	//if (keyboard != nullptr){
-		//delete keyboard; 
-		//keyboard = nullptr; 
-	//}
-
 	SDL_QuitSubSystem(SDL_INIT_EVENTS);
 }
 

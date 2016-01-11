@@ -106,9 +106,9 @@ update_status GravityComponent::update() {
 }
 
 update_status GravityComponent::postUpdate() {
-	#ifdef DEBUG
+	if (DEBUG_COLLISIONS) {
 		gravityCollider->paintCollider();
-	#endif
+	}
 	
 	return UPDATE_CONTINUE;
 }

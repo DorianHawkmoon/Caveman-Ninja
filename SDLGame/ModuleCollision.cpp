@@ -53,9 +53,9 @@ void ModuleCollision::checkCollisions() {
 	std::list<Collider*>::iterator one = colliders.begin();
 	std::list<Collider*>::iterator two = std::next(one);
 	while (one != colliders.end()) {
-		#ifdef DEBUG
-		(*one)->paintCollider();
-		#endif
+		if (DEBUG_COLLISIONS) {
+			(*one)->paintCollider();
+		}
 
 		while (two != colliders.end()) {
 			TypeCollider typeOne = (*one)->type;
@@ -75,9 +75,9 @@ void ModuleCollision::checkCollisions() {
 const std::list<Collider*> ModuleCollision::checkCollisions(Collider * check) {
 	std::list<Collider*> result;
 
-#ifdef DEBUG
-	check->paintCollider();
-#endif
+	if (DEBUG_COLLISIONS) {
+		check->paintCollider();
+	}
 	TypeCollider typeOne = check->type;
 	for (auto it = colliders.begin(); it != colliders.end(); ++it) {
 		TypeCollider typeTwo = (*it)->type;

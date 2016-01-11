@@ -19,6 +19,8 @@
 #include "Animation.h"
 #include "SpriteComponent.h"
 
+int DEBUG_COLLISIONS = 0;
+
 ModulePlayer::ModulePlayer(bool start_enabled) : Module(start_enabled)
 {
 	player = Joe::makeJoe();
@@ -71,9 +73,52 @@ bool ModulePlayer::cleanUp(){
 	return true;
 }
 
+void ModulePlayer::dead() {
+	ControlEntity* controller = &player->controller;
+
+	if (deadBody != nullptr) {
+		motion->velocity.y = -(motion->speed*0.6F);
+		motion->velocity.x = 0;
+
+	} else if ((controller->damage == 3 || controller->damage == -3) && deadBody == nullptr) {
+		AnimationComponent* animation = static_cast<AnimationComponent*>(player->getComponent("animations"));
+		if (animation->getActualAnimation()->isInfinity()) {
+			deadBody = new Entity();
+
+			Transform transPlayer = player->transform->getGlobalTransform();
+			deadBody->transform->position = transPlayer.position;
+			deadBody->transform->flip = transPlayer.flip;
+			deadBody->transform->rotation = transPlayer.rotation;
+
+			SpriteComponent* body = new SpriteComponent("body", "Joe.png");
+			if (controller->damage < 0) {
+				body->rect = {256,320, 128,128};
+				body->offset = {-40,-82};
+				body->flippedOffset.x = -22;
+
+			} else {
+				body->rect = {256,448, 128,128};
+				body->offset = {-65,-82};
+				body->flippedOffset.x = 22;
+			}
+			deadBody->addComponent(body);
+			deadBody->start();
+			App->audio->playEffect(soundDie);
+		}
+	}
+}
+
+void ModulePlayer::debugging() {
+	if (App->input->getKey(SDL_SCANCODE_T) == KEY_DOWN) {
+		DEBUG_COLLISIONS = (DEBUG_COLLISIONS == 0) ? 1 : 0;
+	}
+}
+
 
 // Update
 update_status ModulePlayer::update(){
+	debugging();
+
 	ControlEntity* controller = &player->controller;
 	Transform* trans = player->transform;
 
@@ -124,37 +169,7 @@ update_status ModulePlayer::update(){
 		}
 	}
 
-	if (deadBody != nullptr) {
-		motion->velocity.y = -(motion->speed*0.6);
-		motion->velocity.x = 0;
-
-	}else if ((controller->damage == 3 || controller->damage == -3 ) && deadBody==nullptr) {
-		AnimationComponent* animation = static_cast<AnimationComponent*>(player->getComponent("animations"));
-		if (animation->getActualAnimation()->isInfinity()) {
-			deadBody = new Entity();
-
-			Transform transPlayer = player->transform->getGlobalTransform();
-			deadBody->transform->position = transPlayer.position;
-			deadBody->transform->flip = transPlayer.flip;
-			deadBody->transform->rotation = transPlayer.rotation;
-
-			SpriteComponent* body = new SpriteComponent("body", "Joe.png");
-			if (controller->damage < 0) {
-				body->rect = {256,320, 128,128};
-				body->offset = {-40,-82};
-				body->flippedOffset.x = -22;
-
-			} else {
-				body->rect = {256,448, 128,128};
-				body->offset = {-65,-82};
-				body->flippedOffset.x = 22;
-			}
-			deadBody->addComponent(body);
-			deadBody->start();
-			App->audio->playEffect(soundDie);
-		}
-	}
-
+	dead();
 	if (deadBody != nullptr) {
 		deadBody->update();
 	}

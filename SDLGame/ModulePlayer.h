@@ -38,6 +38,10 @@ private:
 	Entity* deadBody;
 	bool ghost;
 	unsigned int soundDie;
+
+	void dead();
+
+	void debugging();
 };
 
 #endif // __MODULEPLAYER_H__
