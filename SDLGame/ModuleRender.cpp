@@ -8,6 +8,7 @@
 #include "SDL/SDL.h"
 #include "ModuleTextures.h"
 #include <cmath>
+#include "Particle.h"
 
 
 ModuleRender::ModuleRender(bool started ): 
@@ -245,6 +246,17 @@ bool ModuleRender::paintCircle(const SDL_Color & color, const fPoint & position,
 	}
 
 	return result;
+}
+
+bool ModuleRender::paintParticle(const Particle* particle) {
+	if (particle == nullptr) {
+		return false;
+	} else {
+		Transform trans;
+		trans.position = particle->position;
+		blit(particle->graphics, trans, &particle->anim.GetCurrentFrame());
+	}
+	return true;
 }
 
 bool ModuleRender::insideCamera(const SDL_Rect & one, float speed) const {

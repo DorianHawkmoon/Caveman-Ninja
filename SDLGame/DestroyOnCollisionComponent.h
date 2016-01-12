@@ -11,7 +11,7 @@ public:
 	virtual ~DestroyOnCollisionComponent();
 
 	IComponent* makeClone() const;
-	void onCollisionEnter(const Collider* self, const Collider* another);
+	virtual void onCollisionEnter(const Collider* self, const Collider* another);
 };
 
 #endif // !DESTROY_ON_COLLISION_COMPONENT_H

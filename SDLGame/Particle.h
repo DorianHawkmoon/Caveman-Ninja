@@ -6,18 +6,24 @@
 #include "Point.h"
 #include "Animation.h"
 
-struct Particle {
+struct Particle : public IUpdater {
 public:
-	Particle(const Animation& anim, const SDL_Texture* texture): anim(anim), graphics(texture) {}
-	~Particle(){}
+	Particle(const Animation& anim) : anim(anim) {}
+	~Particle() {}
 
-	const SDL_Texture* graphics = nullptr;
+	virtual bool start();
+
+	virtual update_status update();
+
+	virtual update_status postUpdate();
+
+	SDL_Texture* graphics;
 	Animation anim;
-	iPoint position = {0, 0};
-	iPoint speed = {0, 0};
+	fPoint position = {0, 0};
+	fPoint speed = {0, 0};
 	Timer timer;
-	unsigned int delay;
-	unsigned int born = 0;
+	unsigned int delay = 0;
+	unsigned int life = 0;
 };
 
 

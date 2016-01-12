@@ -12,6 +12,7 @@
 #include "DestroyOnCollisionComponent.h"
 #include "CircleCollider.h"
 #include "DamageComponent.h"
+#include "OnCollisionWeaponComponent.h"
 
 Entity * PlayerWeapon::makeWeapon(const Weapon& type) {
 	Entity* result = new Entity();
@@ -48,7 +49,16 @@ void PlayerWeapon::tomahawk(Entity * entity) {
 	CollisionComponent* collider = new CollisionComponent("collider", circle);
 	entity->addComponent(collider);
 
-	DestroyOnCollisionComponent* destroy = new DestroyOnCollisionComponent("destroyOnCollision");
+	/**
+	Animation idle(1);
+	idle.sizeFrame = { 0, 0, 64, 64 };
+	idle.offset = {-18,-17};
+	*/
+	Animation strong(1);
+	strong.sizeFrame = {128,0,64,64};
+	Animation normal(1);
+	normal.sizeFrame = {64,0,64,64};
+	DestroyOnCollisionComponent* destroy = new OnCollisionWeaponComponent("destroyOnCollision", "effects.png", normal, strong);
 	entity->addComponent(destroy);
 
 	LifespanComponent* lifespan = new LifespanComponent("lifespan", 2000);

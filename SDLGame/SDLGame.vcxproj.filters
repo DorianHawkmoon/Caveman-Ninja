@@ -252,6 +252,9 @@
     <ClCompile Include="OnCollisionTrigger.cpp">
       <Filter>Archivos de código fuente\Entities\EnemyProperties</Filter>
     </ClCompile>
+    <ClCompile Include="OnCollisionWeaponComponent.cpp">
+      <Filter>Archivos de código fuente\Entities\PlayerProperties</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Module.h">
@@ -484,6 +487,9 @@
     </ClInclude>
     <ClInclude Include="OnCollisionTrigger.h">
       <Filter>Archivos de código fuente\Entities\EnemyProperties</Filter>
+    </ClInclude>
+    <ClInclude Include="OnCollisionWeaponComponent.h">
+      <Filter>Archivos de código fuente\Entities\PlayerProperties</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

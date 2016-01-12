@@ -4,7 +4,9 @@
 
 #include "Module.h"
 #include <list>
-class Particle;
+#include "Point.h"
+#include "Particle.h"
+
 
 class ModuleParticles : public Module {
 public:
@@ -14,19 +16,13 @@ public:
 	virtual bool start() {
 		return true;
 	}
-	virtual update_status update() {
-		return UPDATE_CONTINUE;
-	}
-	virtual update_status postUpdate() {
-		return UPDATE_CONTINUE;
-	}
+	virtual update_status update();
+	virtual update_status postUpdate();
 	virtual bool cleanUp() {
 		return UPDATE_CONTINUE;
 	}
 
-	void addParticle() {
-
-	}
+	void addParticle(const Particle& particle, fPoint position, fPoint velocity, int delay=0);
 
 private:
 	std::list<Particle*> particles;
