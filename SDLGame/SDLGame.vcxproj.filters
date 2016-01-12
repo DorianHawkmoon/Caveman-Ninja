@@ -213,9 +213,6 @@
     <ClCompile Include="Trigger.cpp">
       <Filter>Archivos de código fuente\Entities\Factories</Filter>
     </ClCompile>
-    <ClCompile Include="OnCollisionTrigger.cpp">
-      <Filter>Archivos de código fuente\Entities\PlayerProperties</Filter>
-    </ClCompile>
     <ClCompile Include="ModuleFonts.cpp">
       <Filter>Archivos de código fuente\Core Modules</Filter>
     </ClCompile>
@@ -251,6 +248,9 @@
     </ClCompile>
     <ClCompile Include="Particle.cpp">
       <Filter>Archivos de código fuente\Utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="OnCollisionTrigger.cpp">
+      <Filter>Archivos de código fuente\Entities\EnemyProperties</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -446,9 +446,6 @@
     <ClInclude Include="Trigger.h">
       <Filter>Archivos de código fuente\Entities\Factories</Filter>
     </ClInclude>
-    <ClInclude Include="OnCollisionTrigger.h">
-      <Filter>Archivos de código fuente\Entities\PlayerProperties</Filter>
-    </ClInclude>
     <ClInclude Include="ModuleFonts.h">
       <Filter>Archivos de código fuente\Core Modules</Filter>
     </ClInclude>
@@ -484,6 +481,9 @@
     </ClInclude>
     <ClInclude Include="Particle.h">
       <Filter>Archivos de código fuente\Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="OnCollisionTrigger.h">
+      <Filter>Archivos de código fuente\Entities\EnemyProperties</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

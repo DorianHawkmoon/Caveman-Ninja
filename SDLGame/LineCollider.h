@@ -12,7 +12,7 @@
 class LineCollider : public Collider {
 
 public:
-	LineCollider(fPoint& position, std::vector<fPoint>& points, TypeCollider type);
+	LineCollider(fPoint position, std::vector<fPoint>& points, TypeCollider type);
 	virtual ~LineCollider();
 
 	virtual void paintCollider() const;
@@ -23,8 +23,8 @@ public:
 	bool checkCollision(const CircleCollider* other) const;
 	bool checkCollision(const LineCollider* other) const;
 
-	Collider* clone() {
-		return new LineCollider(position, points, type);
+	Collider* clone() const {
+		return new LineCollider(fPoint(position), std::vector<fPoint>(points), type);
 	}
 
 	inline iPoint getSize() const {
@@ -33,9 +33,11 @@ public:
 
 public:
 	int thickness;
-	std::vector<fPoint> points;
+	
 
 private:
+	std::vector<fPoint> points;
+
 	fPoint getPointGlobalCoordinates(unsigned int index) const;
 	RectangleCollider createSegmentCollider(int leftBoundIndex) const;
 

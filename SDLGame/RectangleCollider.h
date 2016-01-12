@@ -25,7 +25,7 @@ public:
 	bool checkCollision(const RectangleCollider* other) const;
 	bool checkCollision(const CircleCollider* other) const;
 	bool checkCollision(const LineCollider* other) const;;
-	Collider* clone();
+	Collider* clone()const;
 
 	float rotation;
 	inline iPoint getSize()const {

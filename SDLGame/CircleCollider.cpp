@@ -19,7 +19,7 @@ void CircleCollider::paintCollider() const {
 	App->renderer->paintCircle(renderColor, global.position, radius);
 }
 
-Collider * CircleCollider::clone() {
+Collider * CircleCollider::clone() const {
 	CircleCollider* result = new CircleCollider(position, radius, type);
 	return Collider::clone(result);
 }

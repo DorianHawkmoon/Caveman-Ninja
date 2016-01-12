@@ -4,7 +4,9 @@
 
 #include "IComponent.h"
 #include "Timer.h"
+#include "Transform.h"
 class LifeComponent;
+class DamageComponent;
 class CollisionComponent;
 class MotionComponent;
 
@@ -30,10 +32,15 @@ private:
 	LifeComponent* life;
 	MotionComponent* motion;
 	CollisionComponent* collision;
+	DamageComponent* damage;
 
 	bool cleaned;
 
 	unsigned int damageReceivedEffect;
+
+private:
+	bool hittedEnemy(const Transform& globalAnother, const Transform& globalMine);
+	bool hittedMyself(const Transform& globalAnother, const Transform& globalMine);
 };
 
 

@@ -15,8 +15,8 @@ void RectangleCollider::paintCollider() const {
 	global.rotation += rotation;
 	SDL_Color color;
 	color.b = 255;
-	color.r = 255;
-	color.g = 200;
+	color.r = 100;
+	color.g = 100;
 	color.a = 100;
 
 	if (global.rotation == 0) {
@@ -48,7 +48,7 @@ void RectangleCollider::paintCollider(const iPoint & pivot) const {
 }
 
 
-Collider * RectangleCollider::clone() {
+Collider * RectangleCollider::clone() const {
 	RectangleCollider* result = new RectangleCollider(position, rect, rotation, type);
 	return Collider::clone(result);
 }

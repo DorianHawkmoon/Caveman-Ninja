@@ -24,6 +24,7 @@
 #include "LifeComponent.h"
 #include "WallCollisionComponent.h"
 #include "WeaponComponent.h"
+#include "DamageComponent.h"
 #include "PlayerHittedComponent.h"
 #include "GravityPlayerComponent.h"
 
@@ -47,6 +48,10 @@ Entity * Joe::makeJoe() {
 	gravity->gravity = 550;
 	gravity->maxVelocity = 500;
 	result->addComponent(gravity);
+
+	DamageComponent* damage = new DamageComponent("damage",5,5);
+	result->addComponent(damage);
+
 
 	JumpComponent* jump = new JumpComponent("jump");
 	jump->speed = 300;

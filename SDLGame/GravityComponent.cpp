@@ -123,8 +123,13 @@ void GravityComponent::onCollisionEnter(const Collider * self, const Collider * 
 	if (motion->velocity.y > 0) { //TODO comprobar que no sea también saltando hacia abajo
 		//put the entity over the collision again
 		int count = 0;
-		motion->velocity.y = 0;
+		if (another->type != TypeCollider::FLOOR) {
+			motion->velocity.y = 0;
+		}
 		while (collision->checkCollision(another) && ++count < 500) {
+			if (another->type == TypeCollider::FLOOR) {
+				motion->velocity.y = 0;
+			}
 			parent->transform->position.y--;
 		}
 	}

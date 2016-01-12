@@ -23,7 +23,7 @@ public:
 		return r->checkSpecificCollision(this);
 	}
 
-	Collider* clone();
+	Collider* clone()const;
 	float radius;
 	inline iPoint getSize() const {
 		return iPoint(static_cast<int>(radius * 2), static_cast<int>(radius * 2));

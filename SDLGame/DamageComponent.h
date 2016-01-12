@@ -8,12 +8,17 @@ class Collider;
 
 class DamageComponent : public IComponent {
 public:
-	DamageComponent(const std::string& name) : IComponent(name), normalDamage(0), specialDamage(0) {}
+	DamageComponent(const std::string& name, int normalDamage, int specialDamage) : IComponent(name), normalDamage(normalDamage), specialDamage(specialDamage), strong(false) {}
 	virtual ~DamageComponent();
 
-	void onCollisionEnter(const Collider * self, const Collider * another);
 	IComponent* makeClone() const;
 
+	int getDamage() const {
+		return (strong) ? specialDamage : normalDamage;
+	}
+
+	bool strong;
+private:
 	int normalDamage;
 	int specialDamage;
 };

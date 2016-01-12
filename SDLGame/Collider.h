@@ -30,7 +30,7 @@ public:
 	void addListener(CollisionListener* newListener);
 	void removeListener(CollisionListener* listener);
 
-	virtual Collider* clone() = 0;
+	virtual Collider* clone() const = 0;
 	virtual bool checkCollision(const Collider* r) const = 0;
 
 	virtual bool checkSpecificCollision(const Collider* self) const = 0;
@@ -60,10 +60,11 @@ public:
 	Entity* parent;
 
 protected:
-	Collider* clone(Collider* cloning) {
+	Collider* clone(Collider* cloning) const {
 		cloning->listeners.insert(cloning->listeners.end(), listeners.begin(), listeners.end());
 		cloning->actualFrame->insert(cloning->actualFrame->end(), actualFrame->begin(), actualFrame->end());
 		cloning->previousFrame->insert(cloning->previousFrame->end(), previousFrame->begin(), previousFrame->end());
+
 		return cloning;
 	}
 

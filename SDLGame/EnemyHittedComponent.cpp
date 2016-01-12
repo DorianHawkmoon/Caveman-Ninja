@@ -8,6 +8,7 @@
 #include "Application.h"
 #include "AnimationComponent.h"
 #include "Animation.h"
+#include "DamageComponent.h"
 #include "ModuleAudio.h"
 
 
@@ -105,7 +106,7 @@ void EnemyHittedComponent::onCollisionEnter(const Collider * self, const Collide
 		return;
 	}
 	//if is the enemy, check where come from and set motion
-	if (another->type != TypeCollider::PLAYER_SHOT && another->type != TypeCollider::PLAYER) {
+	if (another->type != TypeCollider::PLAYER_SHOT) {
 		return;
 	}
 
@@ -115,15 +116,22 @@ void EnemyHittedComponent::onCollisionEnter(const Collider * self, const Collide
 	Transform globalMine = Transform(this->parent->transform->getGlobalTransform());
 	int x = (globalAnother.position.x < globalMine.position.x) ? -1 : 1; //positivo me han dado por la derecha
 
+	DamageComponent* damage = static_cast<DamageComponent*>(another->parent->getComponent("damage"));
+	int strong = (damage != nullptr && damage->strong) ? 2 : 1;
+	if (damage != nullptr) {
+		//do damage
+		life->modifyActualLife(-damage->getDamage());
+	}
+
 	//seteo la animación que toca
 	if (x == 1 && parent->transform->flip == SDL_FLIP_NONE) { 
-		parent->controller.damage = -1;
+		parent->controller.damage = -strong;
 	} else if (x == 1 && parent->transform->flip == SDL_FLIP_HORIZONTAL) {
-		parent->controller.damage = 1;
+		parent->controller.damage = strong;
 	} else if (parent->transform->flip == SDL_FLIP_NONE) {
-		parent->controller.damage = 1;
+		parent->controller.damage = strong;
 	} else {
-		parent->controller.damage = -1;
+		parent->controller.damage = -strong;
 	}
 
 	motion->velocity.x = -1 * x * 100.0f;

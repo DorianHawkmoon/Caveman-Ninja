@@ -50,7 +50,7 @@ Entity * Enemy::makeEnemy() {
 	jump->doubleSpeed = 350;
 	result->addComponent(jump);
 
-	RectangleCollider* rectangle = new RectangleCollider(fPoint(4, 4), iPoint(17, 38), 0, TypeCollider::ENEMY);
+	RectangleCollider* rectangle = new RectangleCollider(fPoint(4, 5), iPoint(17, 35), 0, TypeCollider::ENEMY);
 	CollisionComponent* collider = new CollisionComponent("collider", rectangle);
 	result->addComponent(collider);
 
@@ -74,9 +74,9 @@ Entity * Enemy::makeEnemy() {
 	disappear->addCondition(&conditionDead);
 	result->addComponent(disappear);
 
-	IAComponent* IA = new EnemyBehaviour("IA");
-	result->addComponent(IA);
-	IA->ticks = static_cast<int>(Utils::range(2000, 3000)); //RANDOM IA
+	//IAComponent* IA = new EnemyBehaviour("IA");
+	//result->addComponent(IA);
+	//IA->ticks = static_cast<int>(Utils::range(2000, 3000)); //RANDOM IA
 
 	makeAnimations(result);
 

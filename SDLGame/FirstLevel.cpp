@@ -75,7 +75,7 @@ bool FirstLevel::start() {
 	buffer->addComponent(sprite);
 
 	iPoint rectCollider = {1088, 20};
-	RectangleCollider* collider = new RectangleCollider(fPoint(0, 218), rectCollider, 0, TypeCollider::FLOOR);
+	RectangleCollider* collider = new RectangleCollider(fPoint(0, 225), rectCollider,0, TypeCollider::FLOOR);
 	CollisionComponent* colliderComponent = new CollisionComponent("ground", collider);
 	buffer->addComponent(colliderComponent);
 
@@ -89,35 +89,49 @@ bool FirstLevel::start() {
 	colliderComponent = new CollisionComponent("rightLateral", collider);
 	buffer->addComponent(colliderComponent);
 
-	root->addChild(buffer);
-
-	LineCollider* line = new LineCollider(fPoint(0,0), std::vector<fPoint>{fPoint(290, 211),
-												fPoint(340, 195),
-												fPoint(443, 149),
-												fPoint(487, 113),
-												fPoint(512, 94),
-												fPoint(544, 83),
-												fPoint(578, 83),
-												fPoint(616, 98),
-												fPoint(664, 136),
-												fPoint(700, 150),
-												fPoint(708, 146),
-												fPoint(741, 148),
-												fPoint(756, 164),
-												fPoint(781, 180),
-												fPoint(798, 191)}, TypeCollider::GROUND);
-	line->thickness=1;
+	LineCollider* line = new LineCollider(fPoint(0, 0), std::vector<fPoint>{fPoint(300, 211),
+		fPoint(340, 200),
+		fPoint(443, 154),
+		fPoint(487, 118),
+		fPoint(512, 99),
+		fPoint(544, 88),
+		fPoint(578, 88),
+		fPoint(616, 103),
+		fPoint(664, 141),
+		fPoint(700, 155),
+		fPoint(708, 151),
+		fPoint(741, 153),
+		fPoint(756, 169),
+		fPoint(781, 185),
+		fPoint(798, 196)}, TypeCollider::GROUND);
+	line->thickness = 1;
 	colliderComponent = new CollisionComponent("lomo", line);
 	buffer->addComponent(colliderComponent);
 
-	/*line= new LineCollider(fPoint(0, 0), std::vector<fPoint>{fPoint(130, 190), fPoint(250,170)}, TypeCollider::GROUND);
-	line->thickness = 2;
+	line= new LineCollider(fPoint(0, 0), std::vector<fPoint>{
+		fPoint(520, 128),
+		fPoint(520, 129),
+		fPoint(550, 115),
+		fPoint(562, 115),
+		fPoint(576, 124),
+		fPoint(587, 145)}, TypeCollider::GROUND);
+	line->thickness = 1;
 	colliderComponent = new CollisionComponent("lomo2", line);
-	buffer->addComponent(colliderComponent);*/
+	buffer->addComponent(colliderComponent);
 
-	//buffer = Enemy::makeEnemy();
-	//buffer->transform->position = {340, 160};
-	//root->addChild(buffer);
+	line = new LineCollider(fPoint(0, 0), std::vector<fPoint>{
+		fPoint(640, 176),
+		fPoint(648, 173),
+		fPoint(656, 181)}, TypeCollider::GROUND);
+	line->thickness = 1;
+	colliderComponent = new CollisionComponent("lomo3", line);
+	buffer->addComponent(colliderComponent);
+
+	root->addChild(buffer); //added scenario
+
+	buffer = Enemy::makeEnemy();
+	buffer->transform->position = {340, 160};
+	root->addChild(buffer);
 	
 	
 	//putEnemies();
