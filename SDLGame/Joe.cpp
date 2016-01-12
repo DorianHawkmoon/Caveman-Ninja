@@ -41,9 +41,9 @@ Entity * Joe::makeJoe() {
 	PlayerHittedComponent* hitted = new PlayerHittedComponent("hitted");
 	result->addComponent(hitted);
 
-	RectangleCollider* rectangleGravity = new RectangleCollider(fPoint(4, 4), iPoint(20, 38), 0, TypeCollider::GRAVITY);
+	CircleCollider* circleGravity = new CircleCollider(fPoint(14, 41), 1, TypeCollider::GRAVITY);
 
-	GravityComponent* gravity = new GravityPlayerComponent("gravity", rectangleGravity);
+	GravityComponent* gravity = new GravityPlayerComponent("gravity", circleGravity);
 	gravity->gravity = 550;
 	gravity->maxVelocity = 500;
 	result->addComponent(gravity);

@@ -6,6 +6,7 @@
 #include "MotionComponent.h"
 #include "ColliderInteraction.h"
 #include "ModuleAudio.h"
+#include "CircleCollider.h"
 
 GravityComponent::GravityComponent(const std::string& nameComponent, Collider *collider) : IComponent(nameComponent), gravity(0), collision(collider), cleaned(true) {}
 
@@ -34,21 +35,15 @@ bool GravityComponent::start() {
 		collision->addListener(parent);
 		collision->parentTransform = parent->transform;
 		collision->parent = parent;
-		App->collisions->addCollider(collision);
+		App->collisions->addCollider(collision);		
 
-
-		iPoint size = collision->getSize();
-		fPoint offset(0, 0);
-		offset.y += size.y;
-		offset.x += size.x / 2;
-
-		
-
-		gravityCollider = new RectangleCollider(offset, iPoint(5, 10), 0, TypeCollider::GRAVITY);
+		fPoint positionGravity = collision->position;
+		//positionGravity.y += 5;
+		gravityCollider = new CircleCollider(positionGravity, 5, TypeCollider::GRAVITY);
 		gravityCollider->addListener(parent);
 		gravityCollider->parentTransform = parent->transform;
 		gravityCollider->parent = parent;
-		App->collisions->addCollider(gravityCollider);
+		//App->collisions->addCollider(gravityCollider);
 
 		life = static_cast<LifeComponent*>(parent->getComponent("life"));
 
@@ -72,8 +67,6 @@ update_status GravityComponent::update() {
 
 		//if falling, check tolerance under the entity
 		if (motion->velocity.y > 0) {
-			//TODO 10,10 sería la tolerancia -> la posición tendría que ser desde bottom center y no top left
-
 			std::list<Collider*> collisions=App->collisions->checkCollisions(gravityCollider);
 			//si la lista está vacia, está cayendo, setear FALL
 			//si no lo esta ... nada, las colisiones especificas se mirara en onCollision
@@ -89,10 +82,11 @@ update_status GravityComponent::update() {
 					}
 					parent->controller.stateJump = JumpType::NONE;
 				}
-				/*if (jumping!=JumpType::JUMP && jumping!=JumpType::DOUBLE_JUMP && jumping!=JumpType::JUMP_DOWN) {
-					parent->controller.stateJump = JumpType::NONE;
-				}*/
+				//for (auto it = collisions.begin(); it != collisions.end(); ++it) {
+					this->onCollisionEnter(collision, collisions.front());
+				//}
 			} else {
+				//check with another circle for tolerance of making fall, same to the other method
 				parent->controller.stateJump = JumpType::FALL;
 			}
 		}
@@ -126,21 +120,12 @@ void GravityComponent::onCollisionEnter(const Collider * self, const Collider * 
 	}
 
 	//if is falling (and not jumping or being throwed)
-	if (motion->velocity.y > 0) {
-		//put the entity over the collision again, get the center point of the collider
+	if (motion->velocity.y > 0) { //TODO comprobar que no sea también saltando hacia abajo
+		//put the entity over the collision again
 		int count = 0;
-
-		Transform trans = parent->transform->getGlobalTransform();
-		iPoint size = collision->getSize();
-		fPoint position=trans.position;
-		position.y += size.y-2;
-		position.x += size.x / 2;
-		RectangleCollider point = RectangleCollider(position, iPoint(2, 2), 0, TypeCollider::NONE_COLLIDER);
-
-		while (point.checkCollision(another) && ++count < 500) {
-			motion->velocity.y = 0;
+		motion->velocity.y = 0;
+		while (collision->checkCollision(another) && ++count < 500) {
 			parent->transform->position.y--;
-			point.position.y--;
 		}
 	}
 }

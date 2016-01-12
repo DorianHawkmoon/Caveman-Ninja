@@ -91,36 +91,36 @@ bool FirstLevel::start() {
 
 	root->addChild(buffer);
 
-	//LineCollider* line = new LineCollider(fPoint(0,0), std::vector<fPoint>{fPoint(290, 211),
-	//											fPoint(340, 195),
-	//											fPoint(443, 149),
-	//											fPoint(487, 113),
-	//											fPoint(512, 94),
-	//											fPoint(544, 83),
-	//											fPoint(578, 83),
-	//											fPoint(616, 98),
-	//											fPoint(664, 136),
-	//											fPoint(700, 150),
-	//											fPoint(708, 146),
-	//											fPoint(741, 148),
-	//											fPoint(756, 164),
-	//											fPoint(781, 180),
-	//											fPoint(798, 191)}, TypeCollider::GROUND);
-	//line->thickness=2;
-	//colliderComponent = new CollisionComponent("lomo", line);
-	//buffer->addComponent(colliderComponent);
+	LineCollider* line = new LineCollider(fPoint(0,0), std::vector<fPoint>{fPoint(290, 211),
+												fPoint(340, 195),
+												fPoint(443, 149),
+												fPoint(487, 113),
+												fPoint(512, 94),
+												fPoint(544, 83),
+												fPoint(578, 83),
+												fPoint(616, 98),
+												fPoint(664, 136),
+												fPoint(700, 150),
+												fPoint(708, 146),
+												fPoint(741, 148),
+												fPoint(756, 164),
+												fPoint(781, 180),
+												fPoint(798, 191)}, TypeCollider::GROUND);
+	line->thickness=1;
+	colliderComponent = new CollisionComponent("lomo", line);
+	buffer->addComponent(colliderComponent);
 
-	//line= new LineCollider(fPoint(0, 0), std::vector<fPoint>{fPoint(130, 190), fPoint(250,170)}, TypeCollider::GROUND);
-	//line->thickness = 2;
-	//colliderComponent = new CollisionComponent("lomo2", line);
-	//buffer->addComponent(colliderComponent);
+	/*line= new LineCollider(fPoint(0, 0), std::vector<fPoint>{fPoint(130, 190), fPoint(250,170)}, TypeCollider::GROUND);
+	line->thickness = 2;
+	colliderComponent = new CollisionComponent("lomo2", line);
+	buffer->addComponent(colliderComponent);*/
 
-	buffer = Enemy::makeEnemy();
-	buffer->transform->position = {340, 160};
-	root->addChild(buffer);
+	//buffer = Enemy::makeEnemy();
+	//buffer->transform->position = {340, 160};
+	//root->addChild(buffer);
 	
 	
-	putEnemies();
+	//putEnemies();
 
 	root->start();
 	makeHUD();

@@ -19,7 +19,7 @@
 #include "Animation.h"
 #include "SpriteComponent.h"
 
-int DEBUG_COLLISIONS = 0;
+int DEBUG_COLLISIONS = 1;
 
 ModulePlayer::ModulePlayer(bool start_enabled) : Module(start_enabled)
 {

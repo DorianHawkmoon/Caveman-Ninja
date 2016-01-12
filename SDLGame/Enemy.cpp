@@ -39,8 +39,8 @@ Entity * Enemy::makeEnemy() {
 	EnemyHittedComponent* hitted = new EnemyHittedComponent("hitted");
 	result->addComponent(hitted);
 
-	RectangleCollider* rectangleGravity = new RectangleCollider(fPoint(4, 4), iPoint(17, 38), 0, TypeCollider::GRAVITY);
-	GravityComponent* gravity = new GravityComponent("gravity", rectangleGravity);
+	CircleCollider* circleGravity = new CircleCollider(fPoint(12, 41), 1, TypeCollider::GRAVITY);
+	GravityComponent* gravity = new GravityComponent("gravity", circleGravity);
 	gravity->gravity = 550;
 	gravity->maxVelocity = 500;
 	result->addComponent(gravity);

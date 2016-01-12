@@ -165,51 +165,82 @@ bool RectangleCollider::checkCollision(const RectangleCollider * other) const {
 
 bool RectangleCollider::checkCollision(const CircleCollider * other) const {
 	fPoint globalCircle = other->getGlobalPoint();
+	if (rotation == 0) {
+		//Closest point on collision box
+		iPoint closestPoint;
 
-	//Closest point on collision box
-	iPoint closestPoint;
+		iPoint circle(static_cast<int>(globalCircle.x), 
+					static_cast<int>(globalCircle.y));
+
+		Transform rectTransform = getGlobalTransform();
+
+		fPoint global = rectTransform.position;
+		SDL_Rect positionRect = {static_cast<int>(global.x),
+			static_cast<int>(global.y),
+			static_cast<int>(rect.x),
+			static_cast<int>(rect.y)};
+
+		//Find closest x offset
+		if (circle.x < positionRect.x) {
+			closestPoint.x = static_cast<int>(positionRect.x);
+		} else if (circle.x > positionRect.x + positionRect.w) { 
+			closestPoint.x = static_cast<int>(positionRect.x + positionRect.w);
+		} else {
+			closestPoint.x = circle.x;
+		}
+
+		//Find closest y offset
+		if (circle.y < positionRect.y) {
+			closestPoint.y = static_cast<int>(positionRect.y);
+		} else if (circle.y > positionRect.y + positionRect.h) {
+			closestPoint.y = static_cast<int>(positionRect.y + positionRect.h);
+		} else {
+			closestPoint.y = circle.y;
+		}
+
+		//If the closest point is inside the circle
+		if (closestPoint.distanceTo(circle) < other->radius) {
+			return true;
+		}
+		//If the shapes have not collided
+		return false;
 
 
-	iPoint circle(static_cast<int>(globalCircle.x), 
-				static_cast<int>(globalCircle.y));
-
-	Transform rectTransform = getGlobalTransform();
-	rectTransform.rotation += rotation;
-	if (rectTransform.rotation != 0) {
-		fPoint thisCenter = {rectTransform.position.x+(rect.x/2.0f), rectTransform.position.y+(rect.y / 2.0f)};
-		circle.x = static_cast<int>(cos(rectTransform.rotation) * (globalCircle.x - thisCenter.x) - sin(rectTransform.rotation) * (globalCircle.y - thisCenter.y) + thisCenter.x);
-		circle.y = static_cast<int>(sin(rectTransform.rotation) * (globalCircle.x - thisCenter.x) + cos(rectTransform.rotation) * (globalCircle.y - thisCenter.y) + thisCenter.y);
-	}
-	fPoint global = rectTransform.position;
-	SDL_Rect positionRect = {static_cast<int>(global.x),
-		static_cast<int>(global.y),
-		static_cast<int>(rect.x),
-		static_cast<int>(rect.y)};
-
-	//Find closest x offset
-	if (circle.x < positionRect.x) {
-		closestPoint.x = static_cast<int>(positionRect.x);
-	} else if (circle.x > positionRect.x + positionRect.w) { 
-		closestPoint.x = static_cast<int>(positionRect.x + positionRect.w);
 	} else {
-		closestPoint.x = circle.x;
-	}
+		float angle = -(float) (rotation * M_PI / 180.0f);
+		fPoint thisCenter = getCenter();
+		fPoint circleCenter = globalCircle;
 
-	//Find closest y offset
-	if (circle.y < positionRect.y) {
-		closestPoint.y = static_cast<int>(positionRect.y);
-	} else if (circle.y > positionRect.y + positionRect.h) {
-		closestPoint.y = static_cast<int>(positionRect.y + positionRect.h);
-	} else {
-		closestPoint.y = circle.y;
-	}
+		// Calcula la posición del círculo como si el retángulo no estuviese rotado
+		fPoint newCirclePosition;
+		newCirclePosition.x = cos(angle) * (circleCenter.x - thisCenter.x) - sin(angle) * (circleCenter.y - thisCenter.y) + thisCenter.x;
+		newCirclePosition.y = sin(angle) * (circleCenter.x - thisCenter.x) + cos(angle) * (circleCenter.y - thisCenter.y) + thisCenter.y;
 
-	//If the closest point is inside the circle
-	if (closestPoint.distanceTo(circle) < other->radius) {
-		return true;
+		// Encuentra la x del rectángulo más próxima al nuevo centro
+		float closestX;
+		if (newCirclePosition.x  < thisCenter.x - rect.x * 1.0f / 2)
+			closestX = thisCenter.x - rect.x * 1.0f / 2;
+		else if (newCirclePosition.x  > thisCenter.x + rect.x * 1.0f / 2)
+			closestX = thisCenter.x + rect.x * 1.0f / 2;
+		else
+			closestX = newCirclePosition.x;
+
+		// Encuentra la y del rectángulo más próxima al nuevo centro
+		float closestY;
+		if (newCirclePosition.y  < thisCenter.y - rect.y * 1.0f / 2)
+			closestY = thisCenter.y - rect.y * 1.0f / 2;
+		else if (newCirclePosition.y  > thisCenter.y + rect.y * 1.0f / 2)
+			closestY = thisCenter.y + rect.y * 1.0f / 2;
+		else
+			closestY = newCirclePosition.y;
+
+		// Si tanto la x como la y más cercanas son el propio centro del círculo, el centro esta dentro y hay colisión
+		if (closestX == newCirclePosition.x && closestY == newCirclePosition.y)
+			return true;
+
+		// Determina si la distancia al punto más cercano es inferior al radio
+		return fPoint(closestX, closestY).distanceTo(newCirclePosition) < other->radius;
 	}
-	//If the shapes have not collided
-	return false;
 }
 
 bool RectangleCollider::checkCollision(const LineCollider * other) const { return other->checkCollision(this); }

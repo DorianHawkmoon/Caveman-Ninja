@@ -20,8 +20,30 @@ void LineCollider::paintCollider() const {
 	color.a = 128;
 
 	// Renderiza cada uno de los cuadrados que conforman la línea
-	for (unsigned int i = 0; i < points.size() - 1; ++i) {	// Empieza desde el primero y acaba en el penúltimo
-		createSegmentCollider(i).paintCollider(iPoint(0,0));
+	for (unsigned int leftBoundIndex = 0; leftBoundIndex < points.size() - 1; ++leftBoundIndex) {	// Empieza desde el primero y acaba en el penúltimo
+
+															// Calcula el centro del segmento
+															// Las coordenadas serán locales que luego hacemos globales
+		fPoint leftBound = points[leftBoundIndex];
+		fPoint rightBound = points[leftBoundIndex + 1];
+		fPoint segment = rightBound - leftBound;
+		//fPoint center = leftBound + segment * (1.0f / 2.0f);
+
+		// Calcula las dimensiones del segmento
+		int width = static_cast<int>(leftBound.distanceTo(rightBound) + thickness);
+		int height = thickness;
+
+		Transform global = getGlobalTransform();
+		// Calcula la pendiente del segmento
+		float rotation = (float) (atan2(segment.y, segment.x) * 180 / PI);
+		//y lo sumo al total
+		rotation += global.rotation;
+
+		// Crea y devuelve el rectángulo adecuado
+		fPoint position = leftBound + global.position;
+		(RectangleCollider(position, iPoint(width, height), rotation, type)).paintCollider(iPoint(0,0));
+
+		//createSegmentCollider(i).paintCollider(iPoint(0,0));
 	}
 }
 
@@ -60,12 +82,29 @@ bool LineCollider::checkCollision(const CircleCollider * other) const {
 			found = true;
 		}
 
-	if (!found)	// Está más a la derecha que el último punto, comprueba la colision con el último segmento
+	if (!found) {	// Está más a la derecha que el último punto, comprueba la colision con el último segmento
 		leftBoundIndex = points.size() - 2;	// size - 2 es el índice del penúltimo elemento
+	}
+
+	//rotate the point of circle in dependant of the segment
+	//get the rotation
+	//fPoint leftBound = points[leftBoundIndex];
+	//fPoint rightBound = points[leftBoundIndex + 1];
+	//fPoint segment = rightBound - leftBound;
+	//// Calcula la pendiente del segmento
+	//float rotation = (float) (atan2(segment.y, segment.x) * 180 / PI);
+	////new center
+	//center=center.rotate(rotation);
+
+	//RectangleCollider rect = RectangleCollider(leftBound, {static_cast<int>(segment.x), thickness}, 0, NONE_COLLIDER);
+	//CircleCollider newCircle = CircleCollider(center,other->radius, NONE_COLLIDER);
+	//return rect.checkCollision(&newCircle);
+
 
 	// Crea el rectángulo del segmento adecuado y comprueba la colision
 	RectangleCollider rc = createSegmentCollider(leftBoundIndex);
-	return rc.checkSpecificCollision(other);
+	rc.parentTransform = this->parentTransform;
+	return rc.checkCollision(other);
 }
 
 bool LineCollider::checkCollision(const LineCollider * other) const {
@@ -94,7 +133,7 @@ RectangleCollider LineCollider::createSegmentCollider(int leftBoundIndex) const 
 	//fPoint center = leftBound + segment * (1.0f / 2.0f);
 
 	// Calcula las dimensiones del segmento
-	int width = static_cast<int>(leftBound.distanceTo(rightBound) + thickness);
+	int width = static_cast<int>(leftBound.distanceTo(rightBound)*2 + thickness);
 	int height = thickness;
 
 	Transform global= getGlobalTransform();
