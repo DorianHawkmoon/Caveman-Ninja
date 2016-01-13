@@ -50,7 +50,7 @@ Entity * Enemy::makeEnemy() {
 	jump->doubleSpeed = 350;
 	result->addComponent(jump);
 
-	RectangleCollider* rectangle = new RectangleCollider(fPoint(4, 5), iPoint(17, 35), 0, TypeCollider::ENEMY);
+	RectangleCollider* rectangle = new RectangleCollider(fPoint(4, 5), iPoint(18, 35), 0, TypeCollider::ENEMY);
 	CollisionComponent* collider = new CollisionComponent("collider", rectangle);
 	result->addComponent(collider);
 
@@ -156,7 +156,7 @@ void Enemy::makeAnimations(Entity* entity) {
 	State<Animation>* jumpAnimation = new State<Animation>(jump);
 	animations->addState(jumpAnimation);
 
-	ConditionComparison<JumpType> conditionJump = ConditionComparison<JumpType>(&controller->stateJump, JumpType::JUMP);
+	ConditionComparison<TypeJump> conditionJump = ConditionComparison<TypeJump>(&controller->stateJump, TypeJump::JUMP);
 	StateTransition<Animation> transitionJump = StateTransition<Animation>(jumpAnimation, &conditionJump);
 
 	idleAnimation->addTransition(&transitionJump);
@@ -173,7 +173,7 @@ void Enemy::makeAnimations(Entity* entity) {
 	State<Animation>* startFallAnimation = new State<Animation>(startFall);
 	animations->addState(startFallAnimation);
 
-	ConditionComparison<JumpType> conditionFall = ConditionComparison<JumpType>(&controller->stateJump, JumpType::FALL);
+	ConditionComparison<TypeJump> conditionFall = ConditionComparison<TypeJump>(&controller->stateJump, TypeJump::FALL);
 	StateTransition<Animation> transitionFall = StateTransition<Animation>(startFallAnimation, &conditionFall);
 
 	jumpAnimation->addTransition(&transitionFall);
@@ -211,7 +211,7 @@ void Enemy::makeAnimations(Entity* entity) {
 	TimerCondition conditionFallTimer2 = TimerCondition(500);
 	ConditionCallback conditionFallToEnd = ConditionCallback([controller]() {
 		bool result = false;
-		result = (controller->stateJump != JumpType::FALL && controller->stateJump != JumpType::JUMP_DOWN);
+		result = (controller->stateJump != TypeJump::FALL && controller->stateJump != TypeJump::JUMP_DOWN);
 		return result;
 	});
 	StateTransition<Animation> transitionFallToEnd = StateTransition<Animation>(endFallAnimation, &conditionFallToEnd);

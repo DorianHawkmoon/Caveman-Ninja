@@ -24,7 +24,7 @@ public:
 	float doubleSpeed;
 
 private:
-	JumpType* jump;
+	TypeJump* jump;
 	bool jumpAccelerated;
 	bool cleaned;
 };

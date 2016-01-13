@@ -19,8 +19,6 @@
 #include "Animation.h"
 #include "SpriteComponent.h"
 
-int DEBUG_COLLISIONS = 1;
-
 ModulePlayer::ModulePlayer(bool start_enabled) : Module(start_enabled)
 {
 	player = Joe::makeJoe();
@@ -44,7 +42,7 @@ bool ModulePlayer::start(){
 	started = started & ((life = static_cast<LifeComponent*>(player->getComponent("life"))) != nullptr);
 	started = started & ((weapon = static_cast<WeaponComponent*>(player->getComponent("weapon"))) != nullptr);
 	player->transform->position = {50, 0};
-	player->controller.stateJump = JumpType::FALL;
+	player->controller.stateJump = TypeJump::FALL;
 
 	App->renderer->camera.setCamera(player->transform);
 	App->renderer->camera.offset.x = 30;
@@ -147,18 +145,20 @@ update_status ModulePlayer::update(){
 			controller->moveY += 1;
 		}
 
-		if (App->input->getKey(SDL_SCANCODE_KP_ENTER)) {
+		if (App->input->getKey(SDL_SCANCODE_KP_ENTER)==KEY_DOWN) {
 			weapon->throwWeapon();
 		}
 
 
 
 		//don't jump again when jumping or falling
-		if (App->input->getKey(SDL_SCANCODE_KP_0)== KEY_DOWN && controller->stateJump == JumpType::NONE) {
+		if (App->input->getKey(SDL_SCANCODE_KP_0)== KEY_DOWN && controller->stateJump == TypeJump::NONE) {
 			if (App->input->getKey(SDL_SCANCODE_W)) {
-				controller->stateJump = JumpType::DOUBLE_JUMP;
+				controller->stateJump = TypeJump::DOUBLE_JUMP;
+			} else if(App->input->getKey(SDL_SCANCODE_S)){
+				controller->stateJump = TypeJump::JUMP_DOWN;
 			} else {
-				controller->stateJump = JumpType::JUMP;
+				controller->stateJump = TypeJump::JUMP;
 			}
 		}
 

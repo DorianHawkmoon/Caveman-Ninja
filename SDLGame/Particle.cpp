@@ -3,9 +3,11 @@
 #include "Application.h"
 #include "ModuleRender.h"
 #include "ModuleTimer.h"
+#include "ModuleTextures.h"
 
 bool Particle::start() {
 	timer.start();
+	graphics = App->textures->load(nameTexture.c_str());
 	return true;
 }
 
@@ -35,4 +37,11 @@ update_status Particle::postUpdate() {
 	}
 
 	return result;
+}
+
+bool Particle::cleanUp() {
+	if (graphics != nullptr) {
+		App->textures->unload(graphics);
+	}
+	return true;
 }

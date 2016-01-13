@@ -49,15 +49,13 @@ void PlayerWeapon::tomahawk(Entity * entity) {
 	CollisionComponent* collider = new CollisionComponent("collider", circle);
 	entity->addComponent(collider);
 
-	/**
-	Animation idle(1);
-	idle.sizeFrame = { 0, 0, 64, 64 };
-	idle.offset = {-18,-17};
-	*/
+	
 	Animation strong(1);
 	strong.sizeFrame = {128,0,64,64};
+	strong.offset = {-32,-32};
 	Animation normal(1);
 	normal.sizeFrame = {64,0,64,64};
+	normal.offset = {-32,-32};
 	DestroyOnCollisionComponent* destroy = new OnCollisionWeaponComponent("destroyOnCollision", "effects.png", normal, strong);
 	entity->addComponent(destroy);
 

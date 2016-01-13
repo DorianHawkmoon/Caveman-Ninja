@@ -161,7 +161,6 @@ bool ModuleRender::paintRectangle(const SDL_Color& color, const iPoint& position
 		LOG("Cannot draw rectangle to screen. SDL_RenderFillRect error: %s", SDL_GetError());
 		result = false;
 	}
-	SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_NONE);
 	
 	return result;
 }
@@ -254,6 +253,8 @@ bool ModuleRender::paintParticle(const Particle* particle) {
 	} else {
 		Transform trans;
 		trans.position = particle->position;
+		trans.position.x += particle->anim.offset.x;
+		trans.position.y += particle->anim.offset.y;
 		blit(particle->graphics, trans, &particle->anim.GetCurrentFrame());
 	}
 	return true;

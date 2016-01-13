@@ -12,11 +12,10 @@ update_status ModuleParticles::postUpdate() {
 	for (auto it = particles.begin(); it != particles.end();) {
 		Particle* p = *it;
 		if (p->update() != UPDATE_CONTINUE) {
+			p->cleanUp();
 			delete p;
 			it = particles.erase(it);
-			LOG("Deleted particle");
 		} else {
-			LOG("Painting particle");
 			p->postUpdate();
 			++it;
 		}

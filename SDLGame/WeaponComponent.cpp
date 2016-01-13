@@ -60,10 +60,20 @@ void WeaponComponent::throwWeapon() {
 			offset.x += static_cast<int>(colliderSize->position.x*2);
 		}
 		entity->transform->position.x += controller->attack * (colliderSize->getSize().x + 2);
+		if (controller->moveY == 1) {
+			entity->transform->position.y+=colliderSize->getSize().y*0.5;
+		} else if(controller->moveY ==-1) {
+			entity->transform->position.x -= colliderSize->getSize().x*0.5;
+		}
 
 		MotionComponent* motion = static_cast<MotionComponent*>(entity->getComponent("motion"));
-		motion->velocity.x += controller->attack * 115;
-		motion->velocity.y -= 130;
+		if (controller->moveY == -1) {
+			motion->velocity.y -= controller->attack * 200;
+			motion->velocity.x = 0;
+		} else {
+			motion->velocity.x += controller->attack * 115;
+			motion->velocity.y = 0;
+		}
 
 		//give it to scene module
 		App->scene->addEntity(entity);

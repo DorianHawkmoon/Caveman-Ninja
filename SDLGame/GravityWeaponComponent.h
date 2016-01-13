@@ -3,12 +3,13 @@
 #define GRAVITY_WEAPON_COMPONENT_H
 
 #include "IComponent.h"
+#include "Timer.h"
 class MotionComponent;
 class CollisionComponent;
 
 class GravityWeaponComponent : public IComponent {
 public:
-	GravityWeaponComponent(std::string nameComponent) : IComponent(nameComponent), gravity(0) {}
+	GravityWeaponComponent(std::string nameComponent) : IComponent(nameComponent), gravity(0), timer() {}
 	virtual ~GravityWeaponComponent();
 
 	IComponent * makeClone() const;
@@ -22,7 +23,7 @@ public:
 private:
 	MotionComponent* motion;
 	CollisionComponent* collision;
-
+	Timer timer;
 };
 
 

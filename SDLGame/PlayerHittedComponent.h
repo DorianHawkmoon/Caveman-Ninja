@@ -5,8 +5,8 @@
 #include "IComponent.h"
 #include "Timer.h"
 #include "Transform.h"
+#include "Particle.h"
 class LifeComponent;
-class DamageComponent;
 class CollisionComponent;
 class MotionComponent;
 
@@ -32,11 +32,14 @@ private:
 	LifeComponent* life;
 	MotionComponent* motion;
 	CollisionComponent* collision;
-	DamageComponent* damage;
+	
+	SDL_Texture* textureEffects;
+	Particle* particleJumped;
+	unsigned int damageReceivedEffect;
 
 	bool cleaned;
 
-	unsigned int damageReceivedEffect;
+	
 
 private:
 	bool hittedEnemy(const Transform& globalAnother, const Transform& globalMine);

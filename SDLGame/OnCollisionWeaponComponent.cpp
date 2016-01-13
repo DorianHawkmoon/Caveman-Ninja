@@ -7,10 +7,10 @@
 #include "Application.h"
 #include "ModuleTextures.h"
 
-OnCollisionWeaponComponent::OnCollisionWeaponComponent(const std::string& name, const std::string& nameTexture, const Animation& normal, const Animation& strong) : DestroyOnCollisionComponent(name), strongParticle(strong), normalParticle(normal), nameTexture(nameTexture), cleaned(true) {
-	normalParticle.life = 1000000;
+OnCollisionWeaponComponent::OnCollisionWeaponComponent(const std::string& name, const std::string& nameTexture, const Animation& normal, const Animation& strong) : DestroyOnCollisionComponent(name), strongParticle(nameTexture, strong), normalParticle(nameTexture, normal), nameTexture(nameTexture), cleaned(true) {
+	normalParticle.life = 300;
 	normalParticle.delay = 0;
-	strongParticle.life = 1000000;
+	strongParticle.life = 300;
 	strongParticle.delay = 0;
 }
 
@@ -19,7 +19,8 @@ OnCollisionWeaponComponent::~OnCollisionWeaponComponent() {}
 bool OnCollisionWeaponComponent::start() {
 	//load the graphic and give it to the animations
 	if (cleaned) {
-		texture = App->textures->load(nameTexture.c_str());
+		texture = App->textures->load(nameTexture.c_str()); //i load the graphic here
+		//to do a preload for the particles
 		if (texture != nullptr) {
 			cleaned = false;
 			strongParticle.graphics = texture;
@@ -44,15 +45,15 @@ void OnCollisionWeaponComponent::onCollisionEnter(const Collider * self, const C
 	parent->destroy();
 
 	//check my strong to set a particle
-	DamageComponent* damage = static_cast<DamageComponent*>(parent->getComponent("damage"));
-	fPoint position=self->getGlobalTransform().position;
-	/*position.x += self->getSize().x;
-	position.y += self->getSize().y;*/
-	fPoint velocity = fPoint(0,0);
-	if (damage != nullptr && damage->strong) {
-		App->particles->addParticle(strongParticle,position,velocity, strongParticle.delay);
-	} else {
-		App->particles->addParticle(normalParticle, position, velocity, normalParticle.delay);
+	if (another->type == TypeCollider::ENEMY) {
+		DamageComponent* damage = static_cast<DamageComponent*>(parent->getComponent("damage"));
+		fPoint position = self->getGlobalTransform().position;
+		fPoint velocity = fPoint(0, 0);
+		if (damage != nullptr && damage->strong) {
+			App->particles->addParticle(strongParticle, position, velocity, strongParticle.delay);
+		} else {
+			App->particles->addParticle(normalParticle, position, velocity, normalParticle.delay);
+		}
 	}
 
 }

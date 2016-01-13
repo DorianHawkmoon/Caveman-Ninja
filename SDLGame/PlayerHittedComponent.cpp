@@ -5,21 +5,34 @@
 #include "Entity.h"
 #include "LifeComponent.h"
 #include "Application.h"
+#include "ModuleTextures.h"
+#include "ModuleParticles.h"
 #include "CollisionComponent.h"
-#include "DamageComponent.h"
 
-PlayerHittedComponent::PlayerHittedComponent(const std::string& name): IComponent(name), timer(), dead(false) {}
+PlayerHittedComponent::PlayerHittedComponent(const std::string& name): IComponent(name), timer(), dead(false) {
+	
+}
 
 
-PlayerHittedComponent::~PlayerHittedComponent() {}
+PlayerHittedComponent::~PlayerHittedComponent() {
+}
 
 bool PlayerHittedComponent::start() {
 	bool result = true;
 	timer.stop();
 	result = result & ((life = static_cast<LifeComponent*>(this->parent->getComponent("life"))) != nullptr);
-	//damage = static_cast<DamageComponent*>(this->parent->getComponent("damage"));
 	result = result & ((motion = static_cast<MotionComponent*>(this->parent->getComponent("motion"))) != nullptr);
 	result = result & ((collision = static_cast<CollisionComponent*>(this->parent->getComponent("collider"))) != nullptr);
+	result = result & ((textureEffects = App->textures->load("effects.png")) != nullptr);
+
+	Animation anim(1);
+	anim.sizeFrame = {192,0,64,64};
+	anim.offset = {-32,-32};
+	particleJumped = new Particle("effects.png",anim);
+	particleJumped->life = 300;
+	particleJumped->delay = 0;
+	
+
 	damageReceivedEffect = App->audio->loadEffect("hurt.wav");
 	return result;
 }
@@ -66,6 +79,9 @@ bool PlayerHittedComponent::cleanUp() {
 		life = nullptr;
 		motion = nullptr;
 		cleaned = true;
+		if (particleJumped != nullptr) {
+			delete particleJumped;
+		}
 	}
 	return true;
 }
@@ -102,7 +118,7 @@ void PlayerHittedComponent::onCollisionEnter(const Collider * self, const Collid
 		colliderHitted->parent = parent;
 		another->parent->onCollisionEnter(another,colliderHitted);
 		delete colliderHitted;
-		//TODO make the particle
+		
 	} else {
 		hittedMyself(globalAnother, globalMine);
 	}
@@ -115,7 +131,7 @@ bool PlayerHittedComponent::hittedEnemy(const Transform& globalAnother, const Tr
 	bool result = false;
 
 	//player can't be quiet, must be falling or at least jumping
-	if (controller->stateJump != JumpType::NONE) {
+	if (controller->stateJump != TypeJump::FALL && controller->stateJump != TypeJump::NONE) {
 		return result;
 	}
 
@@ -124,11 +140,16 @@ bool PlayerHittedComponent::hittedEnemy(const Transform& globalAnother, const Tr
 	int yEnemy = static_cast<int>(globalAnother.position.y);
 
 	//tolerance distance
-	if (yPlayer - 5 - yEnemy < 0) {
+	if (yPlayer - (10 * SCREEN_SIZE) - yEnemy < 0) {
 		result = true;
 		//do actions
-		controller->stateJump = JumpType::JUMP; //animations as jump
-		motion->velocity.y = 5; //jump again a little
+		controller->stateJump = TypeJump::JUMP; //animations as jump
+		motion->velocity.y = -1*(motion->speed*0.15f); //jump again a little
+
+		fPoint position=globalMine.position;
+		position.y = static_cast<float>(yEnemy);
+		fPoint velocity = fPoint(0, 0);
+		App->particles->addParticle(*particleJumped, position, velocity, particleJumped->delay);
 	}
 
 	return result;

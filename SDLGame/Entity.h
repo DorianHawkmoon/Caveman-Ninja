@@ -17,7 +17,7 @@ enum class Category {
 	PROYECTIL = 1 << 3
 };
 
-enum JumpType {
+enum TypeJump {
 	NONE,
 	JUMP,
 	JUMP_DOWN,
@@ -32,7 +32,7 @@ struct ControlEntity {
 		attack = 0;
 		damage = 0;
 		run = false;
-		stateJump = JumpType::NONE;
+		stateJump = TypeJump::NONE;
 	}
 
 	virtual ~ControlEntity() {}
@@ -41,7 +41,7 @@ struct ControlEntity {
 	int moveX;
 	int moveY;
 	//state of the jump jump, double jump, fall...
-	JumpType stateJump;
+	TypeJump stateJump;
 	//state of attack attacking, running...
 	int attack;
 	//state of damage (from front or back) 1 front -1 back

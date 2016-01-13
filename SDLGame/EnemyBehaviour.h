@@ -6,6 +6,7 @@
 #include "IAComponent.h"
 #include <string>
 
+struct Particle;
 class LifeComponent;
 class MotionComponent;
 class CollisionComponent;
@@ -43,6 +44,10 @@ private:
 	unsigned int startRun;
 	unsigned int run;
 	unsigned int die;
+
+	//effects
+	SDL_Texture* effects; //preload effect
+	Particle* particleAttack;
 };
 
 #endif // !ENEMY_BEHAVIOUR_H

@@ -73,7 +73,13 @@ bool FirstLevel::start() {
 	sprite->rect.h = 256;
 	sprite->speedCamera = 1;
 	buffer->addComponent(sprite);
+	root->addChild(buffer);
 
+
+	// ---------------------------------------------
+
+
+	buffer = new Entity();
 	iPoint rectCollider = {1088, 20};
 	RectangleCollider* collider = new RectangleCollider(fPoint(0, 225), rectCollider,0, TypeCollider::FLOOR);
 	CollisionComponent* colliderComponent = new CollisionComponent("ground", collider);
@@ -119,15 +125,21 @@ bool FirstLevel::start() {
 	colliderComponent = new CollisionComponent("lomo2", line);
 	buffer->addComponent(colliderComponent);
 
-	line = new LineCollider(fPoint(0, 0), std::vector<fPoint>{
+	/*line = new LineCollider(fPoint(0, 0), std::vector<fPoint>{
 		fPoint(640, 176),
 		fPoint(648, 173),
 		fPoint(656, 181)}, TypeCollider::GROUND);
 	line->thickness = 1;
 	colliderComponent = new CollisionComponent("lomo3", line);
-	buffer->addComponent(colliderComponent);
+	buffer->addComponent(colliderComponent);*/
 
 	root->addChild(buffer); //added scenario
+
+	// ---------------------------------------------
+
+	buffer = Enemy::makeEnemy();
+	buffer->transform->position = {170, 160};
+	root->addChild(buffer);
 
 	buffer = Enemy::makeEnemy();
 	buffer->transform->position = {340, 160};
@@ -139,7 +151,7 @@ bool FirstLevel::start() {
 	root->start();
 	makeHUD();
 
-	App->audio->playMusic("backgroundMusic.mp3");
+	//App->audio->playMusic("backgroundMusic.mp3");
 
 	return true;
 }

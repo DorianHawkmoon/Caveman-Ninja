@@ -40,6 +40,7 @@ private:
 	LifeComponent* life;
 	Collider* collision;
 	Collider* gravityCollider;
+	Timer fallTime;
 
 	bool cleaned;
 

@@ -14,6 +14,8 @@
 #include "ModuleGUI.h"
 #include "SDL/SDL.h"
 
+int DEBUG_COLLISIONS = 0;
+
 Application::Application() {
 	// Order matters: they will init/start/update in this order
 	modules.push_back(timer = new ModuleTimer());

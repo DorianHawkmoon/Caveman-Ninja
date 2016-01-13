@@ -7,6 +7,7 @@
 #include "ColliderInteraction.h"
 #include "ModuleAudio.h"
 #include "CircleCollider.h"
+#include "Entity.h"
 
 GravityComponent::GravityComponent(const std::string& nameComponent, Collider *collider) : IComponent(nameComponent), gravity(0), collision(collider), cleaned(true) {}
 
@@ -38,12 +39,10 @@ bool GravityComponent::start() {
 		App->collisions->addCollider(collision);		
 
 		fPoint positionGravity = collision->position;
-		//positionGravity.y += 5;
 		gravityCollider = new CircleCollider(positionGravity, 5, TypeCollider::GRAVITY);
 		gravityCollider->addListener(parent);
 		gravityCollider->parentTransform = parent->transform;
 		gravityCollider->parent = parent;
-		//App->collisions->addCollider(gravityCollider);
 
 		life = static_cast<LifeComponent*>(parent->getComponent("life"));
 
@@ -74,20 +73,24 @@ update_status GravityComponent::update() {
 				
 			if (collisions.size() > 0) {
 				//si está en salto, no tenerlo en cuenta!!
-				JumpType jumping = parent->controller.stateJump;
-				if (jumping == JumpType::FALL) {
+				TypeJump jumping = parent->controller.stateJump;
+				if (jumping == TypeJump::FALL) {
 					//not if is dead
 					if (life!=nullptr && life->isAlive()) {
 						playSound();
 					}
-					parent->controller.stateJump = JumpType::NONE;
+					parent->controller.stateJump = TypeJump::NONE;
 				}
-				//for (auto it = collisions.begin(); it != collisions.end(); ++it) {
-					this->onCollisionEnter(collision, collisions.front());
-				//}
+
+				//ignore collisions jumping down
+				this->onCollisionEnter(collision, collisions.front());
+				
+				
 			} else {
-				//check with another circle for tolerance of making fall, same to the other method
-				parent->controller.stateJump = JumpType::FALL;
+				if (isFalling()) {
+					//check with another circle for tolerance of making fall
+					parent->controller.stateJump = TypeJump::FALL;
+				}
 			}
 		}
 
@@ -119,8 +122,15 @@ void GravityComponent::onCollisionEnter(const Collider * self, const Collider * 
 		return;
 	}
 
+	//if jumping down, ignore the correction
+	if (parent->controller.stateJump == TypeJump::JUMP_DOWN && another->type==TypeCollider::GROUND) {
+		return;
+	} else if (parent->controller.stateJump == TypeJump::JUMP_DOWN) {
+		parent->controller.stateJump = TypeJump::NONE;
+	}
+
 	//if is falling (and not jumping or being throwed)
-	if (motion->velocity.y > 0) { //TODO comprobar que no sea también saltando hacia abajo
+	if (motion->velocity.y > 0) {
 		//put the entity over the collision again
 		int count = 0;
 		if (another->type != TypeCollider::FLOOR) {
@@ -144,9 +154,12 @@ bool GravityComponent::isFalling() {
 		return false;
 	}
 	//TODO 10,10 sería la tolerancia -> la posición tendría que ser desde bottom left y no top left
-	std::list<Collider*> collisions = App->collisions->checkCollisions(gravityCollider);
+	Collider* clone = gravityCollider->clone();
+	clone->parentTransform = gravityCollider->parentTransform;
+	clone->position.y += 5;
+	std::list<Collider*> collisions = App->collisions->checkCollisions(clone);
 	//TODO  tener en cuenta el jump down (mover la tolerancia? checkear la tolerancia en jump?) -> variable y cuando la distancia recorrida sea mayor que la tolerancia, considerar la gravedad normal
-	return collisions.size() == 0; //me cuento a mi mismo
+	return collisions.size() == 0;
 }
 
 bool GravityComponent::cleanUp() {

@@ -39,15 +39,14 @@ Entity * Joe::makeJoe() {
 	motion->doubleSpeed = 50;
 	result->addComponent(motion);
 
-	PlayerHittedComponent* hitted = new PlayerHittedComponent("hitted");
-	result->addComponent(hitted);
-
 	CircleCollider* circleGravity = new CircleCollider(fPoint(14, 41), 1, TypeCollider::GRAVITY);
-
 	GravityComponent* gravity = new GravityPlayerComponent("gravity", circleGravity);
 	gravity->gravity = 550;
 	gravity->maxVelocity = 500;
 	result->addComponent(gravity);
+
+	PlayerHittedComponent* hitted = new PlayerHittedComponent("hitted");
+	result->addComponent(hitted);
 
 	DamageComponent* damage = new DamageComponent("damage",5,5);
 	result->addComponent(damage);
@@ -150,8 +149,8 @@ void Joe::makeAnimations(Entity* entity) {
 	State<Animation>* startJumpAnimation = new State<Animation>(startJump);
 	animations->addState(startJumpAnimation);
 
-	ConditionComparison<JumpType> conditionStartJump1 = ConditionComparison<JumpType>(&controller->stateJump, JumpType::JUMP);
-	ConditionComparison<JumpType> conditionStartJump2 = ConditionComparison<JumpType>(&controller->stateJump, JumpType::DOUBLE_JUMP);
+	ConditionComparison<TypeJump> conditionStartJump1 = ConditionComparison<TypeJump>(&controller->stateJump, TypeJump::JUMP);
+	ConditionComparison<TypeJump> conditionStartJump2 = ConditionComparison<TypeJump>(&controller->stateJump, TypeJump::DOUBLE_JUMP);
 	StateTransition<Animation> transitionStartJump1 = StateTransition<Animation>(startJumpAnimation, &conditionStartJump1);
 	StateTransition<Animation> transitionStartJump2 = StateTransition<Animation>(startJumpAnimation, &conditionStartJump2);
 
@@ -170,7 +169,7 @@ void Joe::makeAnimations(Entity* entity) {
 	animations->addState(jumpAnimation);
 
 	TimerCondition conditionJump2 = TimerCondition(150);
-	ConditionComparison<JumpType> conditionJump = ConditionComparison<JumpType>(&controller->stateJump, JumpType::JUMP);
+	ConditionComparison<TypeJump> conditionJump = ConditionComparison<TypeJump>(&controller->stateJump, TypeJump::JUMP);
 	StateTransition<Animation> transitionJump = StateTransition<Animation>(jumpAnimation, &conditionJump);
 					transitionJump.addCondition(&conditionJump2);
 					transitionJump.addCondition(&conditionStartJump1);
@@ -186,7 +185,7 @@ void Joe::makeAnimations(Entity* entity) {
 	State<Animation>* doubleJumpAnimation = new State<Animation>(doubleJump);
 	animations->addState(doubleJumpAnimation);
 
-	ConditionComparison<JumpType> conditionDoubleJump = ConditionComparison<JumpType>(&controller->stateJump, JumpType::DOUBLE_JUMP);
+	ConditionComparison<TypeJump> conditionDoubleJump = ConditionComparison<TypeJump>(&controller->stateJump, TypeJump::DOUBLE_JUMP);
 	StateTransition<Animation> transitionDoubleJump = StateTransition<Animation>(doubleJumpAnimation, &conditionDoubleJump);
 					transitionDoubleJump.addCondition(&conditionJump2);
 					transitionDoubleJump.addCondition(&conditionStartJump2);
@@ -201,10 +200,10 @@ void Joe::makeAnimations(Entity* entity) {
 	State<Animation>* fallAnimation = new State<Animation>(fall);
 	animations->addState(fallAnimation);
 
-	ConditionComparison<JumpType> conditionFall = ConditionComparison<JumpType>(&controller->stateJump, JumpType::FALL);
+	ConditionComparison<TypeJump> conditionFall = ConditionComparison<TypeJump>(&controller->stateJump, TypeJump::FALL);
 	ConditionCallback conditionFallToIdle = ConditionCallback([controller]() {
 		bool result = false;
-		result = (controller->stateJump != JumpType::FALL && controller->stateJump != JumpType::JUMP_DOWN);
+		result = (controller->stateJump != TypeJump::FALL && controller->stateJump != TypeJump::JUMP_DOWN);
 		return result;
 	});
 	TimerCondition conditionFallTimer = TimerCondition(300);
@@ -305,6 +304,40 @@ void Joe::makeAnimations(Entity* entity) {
 
 	// ---------------------------------------------
 
+	Animation simpleAttackDown(2);
+	simpleAttackDown.sizeFrame = {512,128,64,64};
+	simpleAttackDown.speed = 0.2f;
+	simpleAttackDown.offset = {-18,-17};
+	simpleAttackDown.repeat = 1;
+	State<Animation>* simpleAttackDownAnimation = new State<Animation>(simpleAttackDown);
+	animations->addState(simpleAttackDownAnimation);
+
+	StateTransition<Animation> transitionSimpleAttackDown = StateTransition<Animation>(simpleAttackDownAnimation, &conditionSimpleAttack);
+	StateTransition<Animation> transitionToDown= StateTransition<Animation>(downAnimation, &finishedAnimation);
+								transitionToDown.addCondition(&conditionTimer);
+
+	simpleAttackDownAnimation->addTransition(&transitionToDown);
+	downAnimation->addTransition(&transitionSimpleAttackDown);
+
+	// ---------------------------------------------
+
+	Animation simpleAttackUp(2);
+	simpleAttackUp.sizeFrame = {512,192,64,64};
+	simpleAttackUp.speed = 0.2f;
+	simpleAttackUp.offset = {-18,-17};
+	simpleAttackUp.repeat = 1;
+	State<Animation>* simpleAttackUpAnimation = new State<Animation>(simpleAttackUp);
+	animations->addState(simpleAttackUpAnimation);
+
+	StateTransition<Animation> transitionSimpleAttackUp = StateTransition<Animation>(simpleAttackUpAnimation, &conditionSimpleAttack);
+	StateTransition<Animation> transitionToUp = StateTransition<Animation>(lookingUpAnimation, &finishedAnimation);
+	transitionToUp.addCondition(&conditionTimer);
+
+	simpleAttackUpAnimation->addTransition(&transitionToUp);
+	lookingUpAnimation->addTransition(&transitionSimpleAttackUp);
+
+	// ---------------------------------------------
+
 	Animation simpleAttackJumping(2);
 	simpleAttackJumping.sizeFrame = {640,128,64,64};
 	simpleAttackJumping.speed = 0.2f;
@@ -314,7 +347,7 @@ void Joe::makeAnimations(Entity* entity) {
 	animations->addState(simpleAttackJumpingAnimation);
 	
 	ConditionCallback fallOrIdle= ConditionCallback([controller]() {
-		return controller->stateJump== JumpType::FALL || controller->stateJump == JumpType::NONE;
+		return controller->stateJump== TypeJump::FALL || controller->stateJump == TypeJump::NONE;
 	});
 	StateTransition<Animation> transitionSimpleAttackJumping= StateTransition<Animation>(simpleAttackJumpingAnimation, &conditionSimpleAttack);
 				transitionSimpleAttack.addCondition(&conditionJump);
@@ -427,7 +460,7 @@ void Joe::makeAnimations(Entity* entity) {
 
 	// ---------------------------------------------
 	
-	ConditionComparison<JumpType> conditionJumpDown = ConditionComparison<JumpType>(&controller->stateJump, JumpType::JUMP_DOWN);
+	ConditionComparison<TypeJump> conditionJumpDown = ConditionComparison<TypeJump>(&controller->stateJump, TypeJump::JUMP_DOWN);
 	ConditionCallback isNotAlive = ConditionCallback([entity]() {
 		bool result = false;
 		IComponent* component = entity->getComponent("life");

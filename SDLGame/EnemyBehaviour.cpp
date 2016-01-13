@@ -3,7 +3,7 @@
 #include "MotionComponent.h"
 #include "RectangleCollider.h"
 #include "CollisionComponent.h"
-
+#include "ModuleParticles.h"
 #include "Application.h"
 #include "ModulePlayer.h"
 #include "Utils.h"
@@ -13,6 +13,7 @@
 #include "Collider.h"
 #include "ModuleRender.h"
 #include "ModuleAudio.h"
+#include "Particle.h"
 
 IComponent* EnemyBehaviour::clone() const {
 	EnemyBehaviour* result = new EnemyBehaviour(getID());
@@ -24,12 +25,19 @@ bool EnemyBehaviour::start() {
 	started = started & ((motion = static_cast<MotionComponent*>(parent->getComponent("motion"))) != nullptr);
 	started = started & ((collision = static_cast<CollisionComponent*>(parent->getComponent("collider"))) != nullptr);
 	started = started & ((life = static_cast<LifeComponent*>(parent->getComponent("life"))) != nullptr);
-	started= started & ((animations = static_cast<AnimationComponent*>(parent->getComponent("animations")))!=nullptr);
+	started = started & ((animations = static_cast<AnimationComponent*>(parent->getComponent("animations"))) != nullptr);
 
-	hit= App->audio->loadEffect("enemy_hit.wav");
+	hit = App->audio->loadEffect("enemy_hit.wav");
 	startRun = App->audio->loadEffect("enemy_caveman_run_start.wav");
 	run = App->audio->loadEffect("enemy_caveman_run.wav");
 	die = App->audio->loadEffect("enemy_caveman_die.wav");
+
+	Animation anim(1);
+	anim.sizeFrame = {64,64,64,64};
+	anim.offset = {-32,-32};
+	particleAttack = new Particle("effects.png", anim);
+	particleAttack->life = 300;
+	particleAttack->delay = 0;
 
 	return started;
 }
@@ -42,23 +50,23 @@ update_status EnemyBehaviour::update() {
 	Transform* entityTransform = this->parent->transform;
 	Transform globalPlayer = App->player->player->transform->getGlobalTransform();
 	Transform globalMine = Transform(entityTransform->getGlobalTransform());
-	
+
 	int attack = parent->controller.attack;
 	//check if player is near to attack him
 	if (attack == 1 || attack == 2) {
 		//is attacking, check if finished the animation
-		attacking(globalMine,globalPlayer);
+		attacking(globalMine, globalPlayer);
 	} else if (attack == 0) {
 		//check if player is near to attack him
 		checkCollisions(globalMine, globalPlayer);
 
-	}else if(attack==3){
+	} else if (attack == 3) {
 		//motion run
 		runningAway(globalMine);
-	} 
+	}
 
 	//put the enemy thinking what to do
-	if (ticked && parent->controller.attack==0) {
+	if (ticked && parent->controller.attack == 0) {
 		updateMotion(globalMine, globalPlayer);
 	}
 
@@ -71,7 +79,7 @@ update_status EnemyBehaviour::postUpdate() {
 
 void EnemyBehaviour::attacking(Transform & globalMine, Transform& globalPlayer) {
 	int attack = parent->controller.attack;
-	
+
 	const Animation* actualAnimation = animations->getActualAnimation();
 	switch (attack) {
 		case 1: //atacando, buscamos al jugador
@@ -99,6 +107,11 @@ void EnemyBehaviour::attacking(Transform & globalMine, Transform& globalPlayer) 
 					App->player->life->modifyActualLife(-20);
 					App->audio->playEffect(hit);
 					LOG("Enemy damage!!");
+
+					position.y += size.y*0.5;
+					fPoint velocity = fPoint(0, 0);
+					App->particles->addParticle(*particleAttack, position, velocity, particleAttack->delay);
+
 					App->player->player->onCollisionEnter(colliderPlayer, myCollider);
 				}
 
@@ -133,14 +146,14 @@ void EnemyBehaviour::checkCollisions(Transform& globalMine, Transform& globalPla
 	Transform* entityTransform = this->parent->transform;
 
 	//check collision with player
-	const Collider* myCollider =collision->getCollider();
+	const Collider* myCollider = collision->getCollider();
 	const Collider* colliderPlayer = static_cast<CollisionComponent*>(App->player->player->getComponent("collider"))->getCollider();
 
 	//same position, but in front of the enemy (width)
 	fPoint position = globalMine.position;
 	//NONE -> looking left
 	iPoint size = myCollider->getSize();
-	position.x += (entityTransform->flip == SDL_FLIP_NONE) ? -size.x+10 : size.x;
+	position.x += (entityTransform->flip == SDL_FLIP_NONE) ? -size.x + 10 : size.x;
 
 	iPoint rectangle = {10,size.y};
 	RectangleCollider colliderCheck = RectangleCollider(position, rectangle, 0, TypeCollider::ENEMY);
