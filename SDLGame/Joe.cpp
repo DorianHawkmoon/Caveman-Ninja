@@ -26,6 +26,7 @@
 #include "WeaponComponent.h"
 #include "DamageComponent.h"
 #include "PlayerHittedComponent.h"
+#include "PickupItemComponent.h"
 #include "GravityPlayerComponent.h"
 
 Entity * Joe::makeJoe() {
@@ -48,7 +49,7 @@ Entity * Joe::makeJoe() {
 	PlayerHittedComponent* hitted = new PlayerHittedComponent("hitted");
 	result->addComponent(hitted);
 
-	DamageComponent* damage = new DamageComponent("damage",5,5);
+	DamageComponent* damage = new DamageComponent("damage",1,1);
 	result->addComponent(damage);
 
 
@@ -64,11 +65,14 @@ Entity * Joe::makeJoe() {
 	CollisionComponent* collider = new CollisionComponent("collider", rectangle);
 	result->addComponent(collider);
 
-	LifeComponent* life = new LifeComponent("life",100);
+	LifeComponent* life = new LifeComponent("life",18);
 	result->addComponent(life);
 
 	WeaponComponent* weapon = new WeaponComponent("weapon", 3, 250);
 	result->addComponent(weapon);
+
+	PickupItemComponent* pickup = new PickupItemComponent("pickup");
+	result->addComponent(pickup);
 	
 	makeAnimations(result);
 

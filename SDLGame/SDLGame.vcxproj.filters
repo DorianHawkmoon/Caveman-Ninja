@@ -270,6 +270,9 @@
     <ClCompile Include="DropItemComponent.cpp">
       <Filter>Archivos de código fuente\Entities\ItemProperties</Filter>
     </ClCompile>
+    <ClCompile Include="PickupItemComponent.cpp">
+      <Filter>Archivos de código fuente\Entities\PlayerProperties</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Module.h">
@@ -517,6 +520,9 @@
     </ClInclude>
     <ClInclude Include="DropItemComponent.h">
       <Filter>Archivos de código fuente\Entities\ItemProperties</Filter>
+    </ClInclude>
+    <ClInclude Include="PickupItemComponent.h">
+      <Filter>Archivos de código fuente\Entities\PlayerProperties</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

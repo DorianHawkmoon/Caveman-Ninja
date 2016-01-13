@@ -63,7 +63,7 @@ void PlayerWeapon::tomahawk(Entity * entity) {
 	entity->addComponent(lifespan);
 
 
-	DamageComponent* damage = new DamageComponent("damage", 5, 10);
+	DamageComponent* damage = new DamageComponent("damage", 1, 5);
 	entity->addComponent(damage);
 
 }

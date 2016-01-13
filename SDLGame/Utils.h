@@ -4,6 +4,7 @@
 
 #include <cmath>
 #include <ctime>
+#include <random>
 
 namespace Utils {
 	template <typename T> int sgn(T val) {
@@ -12,9 +13,10 @@ namespace Utils {
 
 	//inclusive ranges!
 	static int range(int max, int min = 0) {
-		std::srand(static_cast<int>(std::time(0))); // use current time as seed for random generator
-		float random = static_cast<float>(std::rand()) / static_cast<float>(RAND_MAX);
-		return static_cast<int>(round((min + random * (max - min))*10));
+		std::random_device rd; // obtain a random number from hardware
+		std::mt19937 eng(rd()); // seed the generator, the type is mersenne twister pseudo-random generator
+		std::uniform_int_distribution<> distr(min, max); // define the range
+		return distr(eng);
 	}
 }
 #endif // !UTILS_H

@@ -41,7 +41,7 @@ Entity * Enemy::makeEnemy(const TypeItem itemToDrop) {
 	EnemyHittedComponent* hitted = new EnemyHittedComponent("hitted");
 	result->addComponent(hitted);
 
-	DamageComponent* damage = new DamageComponent("damage", 105, 5);
+	DamageComponent* damage = new DamageComponent("damage", 5, 5);
 	result->addComponent(damage);
 
 	CircleCollider* circleGravity = new CircleCollider(fPoint(12, 41), 1, TypeCollider::GRAVITY);

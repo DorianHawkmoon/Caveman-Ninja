@@ -55,6 +55,7 @@
     <ClCompile Include="OnCollisionTrigger.cpp" />
     <ClCompile Include="OnCollisionWeaponComponent.cpp" />
     <ClCompile Include="Particle.cpp" />
+    <ClCompile Include="PickupItemComponent.cpp" />
     <ClCompile Include="PlayerHittedComponent.cpp" />
     <ClCompile Include="HorizontalSpriteScrollComponent.cpp" />
     <ClCompile Include="IAComponent.cpp" />
@@ -131,6 +132,7 @@
     <ClInclude Include="OnCollisionTrigger.h" />
     <ClInclude Include="OnCollisionWeaponComponent.h" />
     <ClInclude Include="Particle.h" />
+    <ClInclude Include="PickupItemComponent.h" />
     <ClInclude Include="PlayerHittedComponent.h" />
     <ClInclude Include="IAComponent.h" />
     <ClInclude Include="IUpdater.h" />

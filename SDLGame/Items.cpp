@@ -65,6 +65,7 @@ Entity * Items::makeItem(TypeItem item) {
 	data->type = item;
 	data->life = life;
 	data->points = points;
+	result->addComponent(data);
 
 	CircleCollider* circle = new CircleCollider(fPoint(0,0), radius, TypeCollider::ITEM);
 	CollisionComponent* collider = new CollisionComponent("collider", circle);
