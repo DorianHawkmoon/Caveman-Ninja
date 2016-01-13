@@ -120,30 +120,21 @@ bool Entity::removeComponent(const std::string & name) {
 }
 
 void Entity::onCollisionEnter(const Collider * self, const Collider * another) {
-	for (auto it = properties.begin(); it != properties.end(); ++it) {
-		(*it)->onCollisionEnter(self, another);
-	}/*
 	std::for_each(properties.begin(), properties.end(), [&](auto collider) {
 		collider->onCollisionEnter(self, another); 
-	});*/
+	});
 }
 
 void Entity::onCollisionExit(const Collider * self, const Collider * another) {
-	for (auto it = properties.begin(); it != properties.end(); ++it) {
-		(*it)->onCollisionExit(self, another);
-	}
-	/*std::for_each(properties.begin(), properties.end(), [&](auto collider) {
+	std::for_each(properties.begin(), properties.end(), [&](auto collider) {
 		collider->onCollisionExit(self, another);
-	});*/
+	});
 }
 
 void Entity::onCollisionStay(const Collider * self, const Collider * another) {
-	for (auto it = properties.begin(); it != properties.end(); ++it) {
-		(*it)->onCollisionStay(self, another);
-	}
-	/*std::for_each(properties.begin(), properties.end(), [&](auto collider) {
+	std::for_each(properties.begin(), properties.end(), [&](auto collider) {
 		collider->onCollisionStay(self, another); 
-	});*/
+	});
 }
 
 Entity * Entity::clone() const {
@@ -151,7 +142,7 @@ Entity * Entity::clone() const {
 	result->category = category;
 	result->destroyed = destroyed;
 	for (auto it = properties.begin(); it != properties.end(); ++it) {
-		result->properties.push_back((*it)->makeClone());
+		result->addComponent((*it)->makeClone());
 	}
 	return result;
 }

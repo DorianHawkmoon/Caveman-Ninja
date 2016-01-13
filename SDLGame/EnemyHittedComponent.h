@@ -23,6 +23,9 @@ public:
 	virtual void onCollisionEnter(const Collider* self, const Collider* another);
 
 private:
+	void deadUpdate();
+
+private:
 	bool hitted;
 	bool dead;
 	Timer timer;

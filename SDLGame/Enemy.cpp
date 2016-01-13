@@ -24,9 +24,10 @@
 #include "LifeComponent.h"
 #include "EnemyHittedComponent.h"
 #include "DamageComponent.h"
+#include "DropItemComponent.h"
 #include "Utils.h"
 
-Entity * Enemy::makeEnemy() {
+Entity * Enemy::makeEnemy(const TypeItem itemToDrop) {
 	//prepare the entity for the player
 	Entity* result = new Entity();
 
@@ -58,7 +59,7 @@ Entity * Enemy::makeEnemy() {
 	CollisionComponent* collider = new CollisionComponent("collider", rectangle);
 	result->addComponent(collider);
 
-	LifeComponent* life = new LifeComponent("life",1);
+	LifeComponent* life = new LifeComponent("life", 1);
 	result->addComponent(life);
 
 	ControlEntity* controller = &result->controller;
@@ -68,7 +69,7 @@ Entity * Enemy::makeEnemy() {
 	result->addComponent(disappear);
 
 	disappear = new DisappearOutCamera("runningDead");
-	ConditionCallback conditionDead= ConditionCallback([result]() {
+	ConditionCallback conditionDead = ConditionCallback([result]() {
 		LifeComponent* life = static_cast<LifeComponent*>(result->getComponent("life"));
 		if (life != nullptr) {
 			return !life->isAlive();
@@ -77,6 +78,10 @@ Entity * Enemy::makeEnemy() {
 	});
 	disappear->addCondition(&conditionDead);
 	result->addComponent(disappear);
+
+	Entity* item = Items::makeItem(itemToDrop);
+	DropItemComponent* drop = new DropItemComponent("drop", item);
+	result->addComponent(drop);
 
 	//IAComponent* IA = new EnemyBehaviour("IA");
 	//result->addComponent(IA);

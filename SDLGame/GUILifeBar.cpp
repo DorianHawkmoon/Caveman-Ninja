@@ -39,7 +39,7 @@ update_status GUI::GUILifeBar::update() {
 		actualColor = PointColor::GREEN;
 	}
 
-	coloredPoint = static_cast<int>(longLife*percent);
+	coloredPoint = static_cast<int>(longLife*percent)-1;
 
 	return UPDATE_CONTINUE;
 }

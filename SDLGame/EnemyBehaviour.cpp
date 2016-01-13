@@ -124,6 +124,9 @@ void EnemyBehaviour::attacking(Transform & globalMine, Transform& globalPlayer) 
 		case 2: //precalentamiento de huida
 			//si ha terminado, corremos!!
 			if (actualAnimation->isFinished()) {
+				//quitamos la colisión
+				collision->disable();
+
 				App->audio->playEffect(run);
 				parent->controller.attack = 3;
 				//direction of running

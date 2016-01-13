@@ -11,10 +11,10 @@ namespace Utils {
 	}
 
 	//inclusive ranges!
-	static float range(float max, float min = 0) {
+	static int range(int max, int min = 0) {
 		std::srand(static_cast<int>(std::time(0))); // use current time as seed for random generator
 		float random = static_cast<float>(std::rand()) / static_cast<float>(RAND_MAX);
-		return min + random * (max - min);
+		return static_cast<int>(round((min + random * (max - min))*10));
 	}
 }
 #endif // !UTILS_H

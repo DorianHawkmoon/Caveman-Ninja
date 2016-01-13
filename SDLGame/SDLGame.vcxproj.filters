@@ -58,6 +58,9 @@
     <Filter Include="Archivos de código fuente\GUI\GUIgame">
       <UniqueIdentifier>{2e4fa8a8-0e5c-4f14-a8d6-5d9b77a9195b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Archivos de código fuente\Entities\ItemProperties">
+      <UniqueIdentifier>{6416567d-ab16-4277-90f7-5f206bc2e750}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Log.cpp">
@@ -257,6 +260,15 @@
     </ClCompile>
     <ClCompile Include="GUISprite.cpp">
       <Filter>Archivos de código fuente\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Items.cpp">
+      <Filter>Archivos de código fuente\Entities\Factories</Filter>
+    </ClCompile>
+    <ClCompile Include="DataItemComponent.cpp">
+      <Filter>Archivos de código fuente\Entities\ItemProperties</Filter>
+    </ClCompile>
+    <ClCompile Include="DropItemComponent.cpp">
+      <Filter>Archivos de código fuente\Entities\ItemProperties</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -496,6 +508,15 @@
     </ClInclude>
     <ClInclude Include="GUISprite.h">
       <Filter>Archivos de código fuente\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="Items.h">
+      <Filter>Archivos de código fuente\Entities\Factories</Filter>
+    </ClInclude>
+    <ClInclude Include="DataItemComponent.h">
+      <Filter>Archivos de código fuente\Entities\ItemProperties</Filter>
+    </ClInclude>
+    <ClInclude Include="DropItemComponent.h">
+      <Filter>Archivos de código fuente\Entities\ItemProperties</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

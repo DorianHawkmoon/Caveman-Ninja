@@ -26,8 +26,10 @@
     <ClCompile Include="Collider.cpp" />
     <ClCompile Include="CollisionComponent.cpp" />
     <ClCompile Include="DamageComponent.cpp" />
+    <ClCompile Include="DataItemComponent.cpp" />
     <ClCompile Include="DestroyOnCollisionComponent.cpp" />
     <ClCompile Include="DisappearOutCamera.cpp" />
+    <ClCompile Include="DropItemComponent.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="EnemyBehaviour.cpp" />
     <ClCompile Include="EnemyHittedComponent.cpp" />
@@ -44,6 +46,7 @@
     <ClCompile Include="GUISprite.cpp" />
     <ClCompile Include="GUITexture.cpp" />
     <ClCompile Include="GUITransform.cpp" />
+    <ClCompile Include="Items.cpp" />
     <ClCompile Include="LifespanComponent.cpp" />
     <ClCompile Include="LineCollider.cpp" />
     <ClCompile Include="ModuleFonts.cpp" />
@@ -100,8 +103,10 @@
     <ClInclude Include="ConditionCallback.h" />
     <ClInclude Include="ConditionComparison.h" />
     <ClInclude Include="DamageComponent.h" />
+    <ClInclude Include="DataItemComponent.h" />
     <ClInclude Include="DestroyOnCollisionComponent.h" />
     <ClInclude Include="DisappearOutCamera.h" />
+    <ClInclude Include="DropItemComponent.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="EnemyBehaviour.h" />
     <ClInclude Include="EnemyHittedComponent.h" />
@@ -117,6 +122,7 @@
     <ClInclude Include="GUISprite.h" />
     <ClInclude Include="GUITexture.h" />
     <ClInclude Include="GUITransform.h" />
+    <ClInclude Include="Items.h" />
     <ClInclude Include="LifespanComponent.h" />
     <ClInclude Include="LineCollider.h" />
     <ClInclude Include="ModuleFonts.h" />
