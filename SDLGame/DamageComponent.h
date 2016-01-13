@@ -11,7 +11,7 @@ public:
 	DamageComponent(const std::string& name, int normalDamage, int specialDamage) : IComponent(name), normalDamage(normalDamage), specialDamage(specialDamage), strong(false) {}
 	virtual ~DamageComponent();
 
-	IComponent* makeClone() const;
+	virtual IComponent* makeClone() const;
 
 	int getDamage() const {
 		return (strong) ? specialDamage : normalDamage;

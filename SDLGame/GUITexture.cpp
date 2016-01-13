@@ -23,13 +23,6 @@ void GUI::GUITexture::draw(const GUITransform & states) const {
 	result.position += temp.rotate(states.rotation);
 	result.position += offset;
 
-	// Determina la rotación de la imagen en pantalla
-	//TODO add rotation
-	/*float rotation = states.rotation;
-	SDL_Point pivot;
-	pivot.x = 0;
-	pivot.y = 0;*/
-
 	// Determina el frame que pintar
 	SDL_Rect* renderArea = nullptr;
 	if (animation != nullptr) {

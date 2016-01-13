@@ -35,7 +35,7 @@ FirstLevel::~FirstLevel() {
 
 // Load assets
 bool FirstLevel::start() {
-	LOG("Loading scene");
+	LOG("Loading first level");
 	App->player->enable();
 
 	App->renderer->camera.leftLimit = {0,0};
@@ -138,11 +138,11 @@ bool FirstLevel::start() {
 	// ---------------------------------------------
 
 	buffer = Enemy::makeEnemy();
-	buffer->transform->position = {170, 160};
+	buffer->transform->position = {170, 0};
 	root->addChild(buffer);
 
 	buffer = Enemy::makeEnemy();
-	buffer->transform->position = {340, 160};
+	buffer->transform->position = {340, 0};
 	root->addChild(buffer);
 	
 	
@@ -153,6 +153,13 @@ bool FirstLevel::start() {
 
 	//App->audio->playMusic("backgroundMusic.mp3");
 
+	return true;
+}
+
+bool FirstLevel::cleanUp() {
+	LOG("Unloading first level");
+	Scene::cleanUp();
+	App->player->disable();
 	return true;
 }
 
@@ -195,6 +202,7 @@ void FirstLevel::putEnemies() {
 
 void FirstLevel::makeEnemy(fPoint positionTrigger, const std::vector<fPoint>& enemies) {
 	SceneNode* enlace = root;
+	
 	Entity* buffer = Trigger::makeTrigger(positionTrigger, {10,256}, 
 							[enlace, enemies]() {
 								for (auto it = enemies.cbegin(); it != enemies.cend(); ++it) {

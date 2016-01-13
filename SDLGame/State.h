@@ -33,8 +33,8 @@ public:
 		newState->getValue()->start();
 		newState->start();
 	};
-	bool start();
-	bool cleanUp();
+	virtual bool start();
+	virtual bool cleanUp();
 	inline T* getValue() {
 		return &value;
 	}

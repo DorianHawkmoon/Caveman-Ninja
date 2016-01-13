@@ -15,7 +15,7 @@ bool ModuleFadeToBlack::start() {
 }
 
 bool ModuleFadeToBlack::cleanUp() {
-	SDL_SetRenderDrawBlendMode(App->renderer->renderer, SDL_BLENDMODE_NONE);
+	//SDL_SetRenderDrawBlendMode(App->renderer->renderer, SDL_BLENDMODE_NONE);
 	return true;
 }
 
@@ -33,8 +33,11 @@ update_status ModuleFadeToBlack::update() {
 		}
 
 		// Draw a screen-size balck rectangle with alpha
-		SDL_SetRenderDrawColor(App->renderer->renderer, 0, 0, 0, (Uint8) (normalized * 255.0f));
-		SDL_RenderFillRect(App->renderer->renderer, nullptr);
+		SDL_Color color;
+		color.r = 0;
+		color.g = 0;
+		color.b = 0;
+		App->renderer->setFaddingEffect(normalized, color);
 
 		if (moduleOff == nullptr && moduleOn != nullptr) {
 			moduleOn->enable();
@@ -55,6 +58,7 @@ update_status ModuleFadeToBlack::update() {
 				fadingIn = false;
 			} else {
 				startTime = 0;
+				App->renderer->clearFaddingEffect();
 			}
 		}
 	}
@@ -63,8 +67,6 @@ update_status ModuleFadeToBlack::update() {
 }
 
 update_status ModuleFadeToBlack::postUpdate() {
-	
-
 	return UPDATE_CONTINUE;
 }
 

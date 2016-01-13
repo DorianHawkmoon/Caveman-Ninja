@@ -47,6 +47,7 @@ bool ModuleRender::init() {
 }
 
 bool ModuleRender::start() {
+	SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
 	circle = App->textures->load("circle_64.png");
 	rectangle = App->textures->load("square_64.png");
 	return true;
@@ -85,6 +86,7 @@ update_status ModuleRender::update() {
 }
 
 update_status ModuleRender::postUpdate() {
+	paintFading();
 	SDL_RenderPresent(renderer);
 	return UPDATE_CONTINUE;
 }
@@ -140,7 +142,6 @@ bool ModuleRender::paintCollision(const Collider * collision) {
 bool ModuleRender::paintRectangle(const SDL_Color& color, const iPoint& position, const iPoint& rect, float speed) {
 	bool result = true;
 
-	SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
 	SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, color.a);
 
 	SDL_Rect cam = getCorrectCamera(speed);
@@ -306,6 +307,20 @@ bool ModuleRender::paintGUI(SDL_Texture * texture, const GUITransform & transfor
 	return result;
 }
 
+void ModuleRender::resetCamera() {
+	camera.offset.setToZero();
+	camera.setCamera(nullptr);
+}
+
+void ModuleRender::setFaddingEffect(float normalized, const SDL_Color & color) {
+	this->normalizedFading = normalized;
+	this->fadingColor = color;
+}
+
+void ModuleRender::clearFaddingEffect() {
+	normalizedFading = 0;
+}
+
 SDL_Rect ModuleRender::getCorrectCamera(float speed) const {
 	SDL_Rect cam = camera.getViewArea(speed);
 	iPoint rightLimit = camera.rightLimit*SCREEN_SIZE;
@@ -326,6 +341,11 @@ SDL_Rect ModuleRender::getCorrectCamera(float speed) const {
 	cam.x += offset.x;
 	cam.y += offset.y;
 	return cam;
+}
+
+void ModuleRender::paintFading() {
+	SDL_SetRenderDrawColor(renderer, fadingColor.r, fadingColor.g, fadingColor.b, (Uint8) (normalizedFading * 255.0f));
+	SDL_RenderFillRect(renderer, nullptr);
 }
 
 

@@ -5,6 +5,7 @@
 #include "ModuleAudio.h"
 #include "ModuleInput.h"
 #include "EntryScene.h"
+#include "GUIComponent.h"
 
 ModuleScene::ModuleScene(bool started):Module(started), currentScene(false), nextScene(nullptr) {}
 
@@ -45,7 +46,7 @@ update_status ModuleScene::postUpdate() {
 }
 
 bool ModuleScene::cleanUp() {
-	SDL_SetRenderDrawBlendMode(App->renderer->renderer, SDL_BLENDMODE_NONE);
+	//SDL_SetRenderDrawBlendMode(App->renderer->renderer, SDL_BLENDMODE_NONE);
 	return currentScene->cleanUp();
 }
 
@@ -62,6 +63,10 @@ void ModuleScene::addEntity(Entity * entity) {
 	currentScene->addNode(entity);
 }
 
+void ModuleScene::addGUI(GUI::GUIComponent * gui) {
+	currentScene->addGUI(gui);
+}
+
 void ModuleScene::makeChangeScene() {
 	if (startTime > 0) {
 		Uint32 now = SDL_GetTicks() - startTime;
@@ -76,13 +81,14 @@ void ModuleScene::makeChangeScene() {
 		}
 
 		// Draw a screen-size balck rectangle with alpha
-		SDL_SetRenderDrawColor(App->renderer->renderer, 0, 0, 0, (Uint8) (normalized * 255.0f));
-		SDL_RenderFillRect(App->renderer->renderer, nullptr);
+		App->renderer->setFaddingEffect(normalized);
 
 		if (now >= totalTime) {
 			if (fadingIn == true) {
 				// Elimina la escena anterior (de haberla)
 				if (currentScene != nullptr) {
+					//clean the scene and delete it
+					LOG("Cleaning scene");
 					currentScene->cleanUp();
 					delete currentScene;
 				}
@@ -97,6 +103,7 @@ void ModuleScene::makeChangeScene() {
 				fadingIn = false;
 			} else {
 				startTime = 0;
+				App->renderer->clearFaddingEffect();
 				App->input->enable();
 			}
 		}

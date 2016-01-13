@@ -31,10 +31,8 @@ Application::Application() {
 	modules.push_back(particles = new ModuleParticles());
 	modules.push_back(collisions = new ModuleCollision());
 
-	/*modules.push_back(particles = new ModuleParticles());*/
-
-	modules.push_back(fade = new ModuleFadeToBlack());
 	modules.push_back(gui = new ModuleGUI());
+	modules.push_back(fade = new ModuleFadeToBlack());
 	modules.push_back(renderer = new ModuleRender());
 }
 

@@ -12,9 +12,9 @@ public:
 	GravityWeaponComponent(std::string nameComponent) : IComponent(nameComponent), gravity(0), timer() {}
 	virtual ~GravityWeaponComponent();
 
-	IComponent * makeClone() const;
-	bool start();
-	update_status update();
+	virtual IComponent * makeClone() const;
+	virtual bool start();
+	virtual update_status update();
 
 public:
 	float gravity;

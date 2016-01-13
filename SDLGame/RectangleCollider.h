@@ -13,7 +13,7 @@ class RectangleCollider : public Collider {
 
 public:
 	RectangleCollider(const fPoint& position, const iPoint& rectangle, float rotation, TypeCollider type);
-	virtual ~RectangleCollider(){}
+	virtual ~RectangleCollider();
 
 	virtual void paintCollider() const;
 	void paintCollider(const iPoint& pivot) const;

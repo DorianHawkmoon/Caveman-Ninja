@@ -11,8 +11,8 @@ public:
 	EntryScene();
 	virtual ~EntryScene();
 
-	bool start();
-	update_status update();
+	virtual bool start();
+	virtual update_status update();
 
 private:
 	std::vector<GUIComponent*> components;

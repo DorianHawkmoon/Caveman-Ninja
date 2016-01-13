@@ -9,7 +9,7 @@
 class GravityPlayerComponent :	public GravityComponent {
 public:
 	GravityPlayerComponent(const std::string& nameComponent, Collider *collider): GravityComponent(nameComponent,collider){}
-	~GravityPlayerComponent(){}
+	virtual ~GravityPlayerComponent(){}
 
 protected:
 	unsigned int soundGround;

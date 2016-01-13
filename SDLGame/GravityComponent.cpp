@@ -158,6 +158,7 @@ bool GravityComponent::isFalling() {
 	clone->parentTransform = gravityCollider->parentTransform;
 	clone->position.y += 5;
 	std::list<Collider*> collisions = App->collisions->checkCollisions(clone);
+	delete clone;
 	//TODO  tener en cuenta el jump down (mover la tolerancia? checkear la tolerancia en jump?) -> variable y cuando la distancia recorrida sea mayor que la tolerancia, considerar la gravedad normal
 	return collisions.size() == 0;
 }
@@ -174,5 +175,5 @@ bool GravityComponent::cleanUp() {
 		App->collisions->removeCollider(collision);
 		cleaned = true;
 	}
-	return false;
+	return cleaned;
 }

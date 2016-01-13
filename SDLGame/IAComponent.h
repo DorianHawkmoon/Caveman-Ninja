@@ -13,7 +13,7 @@ public:
 
 	virtual bool start();
 
-	update_status preUpdate();
+	virtual update_status preUpdate();
 	virtual update_status delegatedPreUpdate() { 
 		return UPDATE_CONTINUE;
 	}

@@ -12,14 +12,14 @@ public:
 	SingleAnimationComponent(const std::string& nameComponent, const std::string& texture, Animation& animation);
 	virtual ~SingleAnimationComponent();
 
-	bool start();
-	update_status preUpdate();
-	update_status update();
-	update_status postUpdate();
+	virtual bool start();
+	virtual update_status preUpdate();
+	virtual update_status update();
+	virtual update_status postUpdate();
 
-	bool cleanUp();
+	virtual bool cleanUp();
 
-	IComponent* makeClone() const;
+	virtual IComponent* makeClone() const;
 
 private:
 	std::string nameTexture;

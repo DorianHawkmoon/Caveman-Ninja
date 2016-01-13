@@ -8,6 +8,7 @@
 #include "StateMachine.h"
 #include "Joe.h"
 #include <vector>
+#include "Timer.h"
 
 class LifeComponent;
 class JumpComponent;
@@ -36,11 +37,13 @@ public:
 
 private:
 	Entity* deadBody;
+	Timer gameOverTimer;
+	int lifes;
 	bool ghost;
 	unsigned int soundDie;
 
+	void addGameOver();
 	void dead();
-
 	void debugging();
 };
 

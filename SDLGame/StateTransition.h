@@ -70,7 +70,7 @@ void StateTransition<T>::addCondition(const Condition * condition) {
 	}
 	Condition* copy = condition->clone(); //owned condition
 	if (std::find(conditions.begin(), conditions.end(), copy) == conditions.end()) {
-		conditions.push_back(copy);
+		conditions.push_back(std::move(copy));
 	}
 }
 

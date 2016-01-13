@@ -9,13 +9,13 @@ public:
 	OnCollisionWeaponComponent(const std::string& name, const std::string& nameTexture, const Animation& normal, const Animation& strong);
 	virtual ~OnCollisionWeaponComponent();
 
-	bool start();
+	virtual bool start();
 
-	void onCollisionEnter(const Collider* self, const Collider* another); //destroy and add the animation (a copy)
+	virtual void onCollisionEnter(const Collider* self, const Collider* another); //destroy and add the animation (a copy)
 
-	update_status preUpdate();
+	virtual update_status preUpdate();
 
-	bool cleanUp();
+	virtual bool cleanUp();
 
 private:
 	const std::string nameTexture;

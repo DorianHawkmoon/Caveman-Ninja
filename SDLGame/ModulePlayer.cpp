@@ -14,12 +14,13 @@
 #include "CollisionComponent.h"
 #include "MotionComponent.h"
 #include "ModuleAudio.h"
-
+#include "EntryScene.h"
 #include "AnimationComponent.h"
+#include "GUISprite.h"
 #include "Animation.h"
 #include "SpriteComponent.h"
 
-ModulePlayer::ModulePlayer(bool start_enabled) : Module(start_enabled)
+ModulePlayer::ModulePlayer(bool start_enabled) : Module(start_enabled), lifes(1)
 {
 	player = Joe::makeJoe();
 }
@@ -34,6 +35,13 @@ ModulePlayer::~ModulePlayer()
 bool ModulePlayer::start(){
 	LOG("Loading player");
 	bool started = true;
+
+	if (lifes <= 0) {
+		delete player;
+		player = Joe::makeJoe();
+		lifes = 1;
+	}
+
 	player->start();
 	ghost = false;
 	deadBody = nullptr;
@@ -43,6 +51,12 @@ bool ModulePlayer::start(){
 	started = started & ((weapon = static_cast<WeaponComponent*>(player->getComponent("weapon"))) != nullptr);
 	player->transform->position = {50, 0};
 	player->controller.stateJump = TypeJump::FALL;
+
+	//restore his life
+	life->setActualLife(life->getMaxLife());
+	
+
+	gameOverTimer.stop();
 
 	App->renderer->camera.setCamera(player->transform);
 	App->renderer->camera.offset.x = 30;
@@ -66,9 +80,15 @@ bool ModulePlayer::cleanUp(){
 	if (deadBody != nullptr) {
 		deadBody->cleanUp();
 		delete deadBody;
+		deadBody = nullptr;
 	}
 	player->cleanUp();
 	return true;
+}
+
+void ModulePlayer::addGameOver() {
+	GUI::GUISprite* gameOver = new GUI::GUISprite("gameover.png");
+	App->scene->addGUI(gameOver);
 }
 
 void ModulePlayer::dead() {
@@ -81,6 +101,11 @@ void ModulePlayer::dead() {
 	} else if ((controller->damage == 3 || controller->damage == -3) && deadBody == nullptr) {
 		AnimationComponent* animation = static_cast<AnimationComponent*>(player->getComponent("animations"));
 		if (animation->getActualAnimation()->isInfinity()) {
+			//start the countdown!
+			gameOverTimer.start();
+			addGameOver();
+			lifes--;
+
 			deadBody = new Entity();
 
 			Transform transPlayer = player->transform->getGlobalTransform();
@@ -174,6 +199,13 @@ update_status ModulePlayer::update(){
 		deadBody->update();
 	}
 	player->update();
+
+	if (!gameOverTimer.isStopped() && gameOverTimer.value() > 10000) {
+		Scene* next = new EntryScene();
+		App->scene->changeScene(next, 1);
+		gameOverTimer.stop();
+		//App->audio->stop //stop music
+	}
 	return UPDATE_CONTINUE;
 }
 

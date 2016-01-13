@@ -16,12 +16,12 @@ public:
 	GravityComponent(const std::string& nameComponent, Collider *collider);
 	virtual ~GravityComponent();
 
-	IComponent* makeClone() const;
+	virtual IComponent* makeClone() const;
 
-	bool start();
-	update_status preUpdate();
-	update_status update();
-	update_status postUpdate();
+	virtual bool start();
+	virtual update_status preUpdate();
+	virtual update_status update();
+	virtual update_status postUpdate();
 
 	virtual void onCollisionEnter(const Collider* self, const Collider* another);
 	virtual void onCollisionExit(const Collider* self, const Collider* another) {};
@@ -29,7 +29,7 @@ public:
 
 	bool isFalling();
 
-	bool cleanUp();
+	virtual bool cleanUp();
 
 public:
 	float gravity;

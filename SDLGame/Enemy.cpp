@@ -23,6 +23,7 @@
 #include "ConditionCallback.h"
 #include "LifeComponent.h"
 #include "EnemyHittedComponent.h"
+#include "DamageComponent.h"
 #include "Utils.h"
 
 Entity * Enemy::makeEnemy() {
@@ -38,6 +39,9 @@ Entity * Enemy::makeEnemy() {
 
 	EnemyHittedComponent* hitted = new EnemyHittedComponent("hitted");
 	result->addComponent(hitted);
+
+	DamageComponent* damage = new DamageComponent("damage", 105, 5);
+	result->addComponent(damage);
 
 	CircleCollider* circleGravity = new CircleCollider(fPoint(12, 41), 1, TypeCollider::GRAVITY);
 	GravityComponent* gravity = new GravityComponent("gravity", circleGravity);

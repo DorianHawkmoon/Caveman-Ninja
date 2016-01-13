@@ -6,7 +6,7 @@
 #include "GUIContainer.h"
 #include "Application.h"
 #include "ModuleGUI.h"
-#include "GUIContainer.h"
+#include "GUIComponent.h"
 #include <functional>
 
 Scene::Scene(): root(nullptr), entities() {
@@ -46,11 +46,12 @@ update_status Scene::postUpdate() {
 	auto wreckfieldBegin = std::remove_if(entities.begin(), entities.end(), std::mem_fn(&Entity::isDestroyed));
 	entities.erase(wreckfieldBegin, entities.end());
 
-	//TODO limpiar de la lista entidades muertas? dejar que lo haga el scene?
 	return UPDATE_CONTINUE;
 }
 
 bool Scene::cleanUp() {
+	LOG("unloading scene");
+	root->cleanUp();
 	root->remove();
 	for (std::list<Entity*>::iterator it = entities.begin(); it != entities.end(); ++it) {
 		delete *it;
@@ -65,5 +66,13 @@ bool Scene::cleanUp() {
 void Scene::addNode(Entity * entity) {
 	if (root != nullptr) {
 		root->addChild(entity);
+		entity->start();
+	}
+}
+
+void Scene::addGUI(GUI::GUIComponent * gui) {
+	if (rootGUI != nullptr) {
+		gui->start();
+		rootGUI->pack(gui);
 	}
 }

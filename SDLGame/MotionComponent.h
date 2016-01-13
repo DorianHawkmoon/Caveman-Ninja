@@ -12,9 +12,9 @@ public:
 	MotionComponent(std::string nameComponent);
 	virtual ~MotionComponent();
 
-	update_status update();
+	virtual update_status update();
 
-	IComponent* makeClone() const;
+	virtual IComponent* makeClone() const;
 
 public:
 	fPoint velocity;

@@ -11,13 +11,13 @@ class CollisionComponent;
 class EnemyHittedComponent : public IComponent {
 public:
 	EnemyHittedComponent(const std::string& name);
-	~EnemyHittedComponent();
+	virtual ~EnemyHittedComponent();
 
-	bool start();
-	update_status preUpdate();
+	virtual bool start();
+	virtual update_status preUpdate();
 	virtual update_status update();
-	bool cleanUp();
-	IComponent* makeClone() const;
+	virtual bool cleanUp();
+	virtual IComponent* makeClone() const;
 
 
 	virtual void onCollisionEnter(const Collider* self, const Collider* another);

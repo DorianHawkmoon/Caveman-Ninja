@@ -3,7 +3,7 @@
 #include <functional>
 #include "IComponent.h"
 
-Entity::Entity(Category category) : destroyed(false), category(category) {
+Entity::Entity(Category category) : destroyed(false), category(category), transform(nullptr) {
 	transform = new Transform();
 	transform->setToZero();
 }
@@ -17,9 +17,10 @@ Entity::~Entity() {
 		delete (*it);
 	}
 	properties.clear();
-	if (transform != nullptr) {
+	//if (transform != nullptr) {
 		delete transform;
-	}
+		transform = nullptr;
+	//}
 }
 
 bool Entity::start() {
@@ -64,9 +65,9 @@ update_status Entity::postUpdate() {
 
 bool Entity::cleanUp() {
 	bool result = true;
-	for (auto it = properties.begin(); it != properties.end() && result; ++it) {
+	for (auto it = properties.begin(); it != properties.end(); ++it) {
 		if ((*it)->isEnable()) {
-			result &= (*it)->cleanUp();
+			(*it)->cleanUp();
 		}
 	}
 	return result;
@@ -80,7 +81,7 @@ bool Entity::addComponent(IComponent * component) {
 
 		if (it == properties.end()) {
 			component->setParent(this);
-			properties.push_back(component);
+			properties.push_back(std::move(component));
 			result = true;
 		}
 	}
@@ -119,21 +120,30 @@ bool Entity::removeComponent(const std::string & name) {
 }
 
 void Entity::onCollisionEnter(const Collider * self, const Collider * another) {
+	for (auto it = properties.begin(); it != properties.end(); ++it) {
+		(*it)->onCollisionEnter(self, another);
+	}/*
 	std::for_each(properties.begin(), properties.end(), [&](auto collider) {
 		collider->onCollisionEnter(self, another); 
-	});
+	});*/
 }
 
 void Entity::onCollisionExit(const Collider * self, const Collider * another) {
-	std::for_each(properties.begin(), properties.end(), [&](auto collider) {
+	for (auto it = properties.begin(); it != properties.end(); ++it) {
+		(*it)->onCollisionExit(self, another);
+	}
+	/*std::for_each(properties.begin(), properties.end(), [&](auto collider) {
 		collider->onCollisionExit(self, another);
-	});
+	});*/
 }
 
 void Entity::onCollisionStay(const Collider * self, const Collider * another) {
-	std::for_each(properties.begin(), properties.end(), [&](auto collider) {
+	for (auto it = properties.begin(); it != properties.end(); ++it) {
+		(*it)->onCollisionStay(self, another);
+	}
+	/*std::for_each(properties.begin(), properties.end(), [&](auto collider) {
 		collider->onCollisionStay(self, another); 
-	});
+	});*/
 }
 
 Entity * Entity::clone() const {

@@ -18,9 +18,7 @@ public:
 	}
 	virtual update_status update();
 	virtual update_status postUpdate();
-	virtual bool cleanUp() {
-		return UPDATE_CONTINUE;
-	}
+	virtual bool cleanUp();
 
 	void addParticle(const Particle& particle, fPoint position, fPoint velocity, int delay=0);
 

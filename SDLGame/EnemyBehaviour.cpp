@@ -108,7 +108,7 @@ void EnemyBehaviour::attacking(Transform & globalMine, Transform& globalPlayer) 
 					App->audio->playEffect(hit);
 					LOG("Enemy damage!!");
 
-					position.y += size.y*0.5;
+					position.y += size.y*0.5f;
 					fPoint velocity = fPoint(0, 0);
 					App->particles->addParticle(*particleAttack, position, velocity, particleAttack->delay);
 

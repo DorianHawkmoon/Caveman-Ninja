@@ -59,7 +59,7 @@ update_status ModuleInput::preUpdate() {
 		}
 	}
 
-	if (keyboard[SDL_SCANCODE_ESCAPE]) {
+	if (getKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN) {
 		return UPDATE_STOP;
 	}
 
@@ -101,10 +101,6 @@ update_status ModuleInput::preUpdate() {
 		if (gui != nullptr) {
 			gui->handleEventGUI(events);
 		}
-	}
-
-	if (getKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN) {
-		return UPDATE_STOP;
 	}
 
 	return UPDATE_CONTINUE;

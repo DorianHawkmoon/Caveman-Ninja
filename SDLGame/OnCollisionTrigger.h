@@ -12,7 +12,7 @@ public:
 	
 	virtual void onCollisionEnter(const Collider* self, const Collider* another);
 
-	IComponent* makeClone() const;
+	virtual IComponent* makeClone() const;
 
 private:
 	/**

@@ -71,6 +71,10 @@ IComponent * AnimationComponent::makeClone() const {
 }
 
 const Animation* AnimationComponent::getActualAnimation() const {
-	Animation* anim = state->getState()->getValue();
-	return anim;
+	if (state != nullptr) {
+		Animation* anim = state->getState()->getValue();
+		return anim;
+	} else {
+		return nullptr;
+	}
 }

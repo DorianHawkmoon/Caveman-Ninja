@@ -15,13 +15,13 @@ class AnimationComponent;
 class EnemyBehaviour : public IAComponent {
 public:
 	EnemyBehaviour(const std::string& name): IAComponent(name) {}
-	~EnemyBehaviour() {}
+	virtual ~EnemyBehaviour() {}
 
-	IComponent* clone() const;
+	virtual IComponent* clone() const;
 
-	bool start();
-	update_status update();
-	update_status postUpdate();
+	virtual bool start();
+	virtual update_status update();
+	virtual update_status postUpdate();
 
 private:
 	//tres fases de ataque

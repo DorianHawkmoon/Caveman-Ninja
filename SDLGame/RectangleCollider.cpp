@@ -8,6 +8,8 @@
 
 RectangleCollider::RectangleCollider(const fPoint& position, const iPoint& rectangle, float rotation, TypeCollider type) : Collider(position, type), rect(rectangle), rotation(rotation) {}
 
+RectangleCollider::~RectangleCollider() {}
+
 void RectangleCollider::paintCollider() const {
 	//get global
 	Transform global = getGlobalTransform();

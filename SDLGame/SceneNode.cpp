@@ -14,16 +14,17 @@ SceneNode::SceneNode(Entity* entity) : children(), parent(nullptr), entity(entit
 
 
 SceneNode::~SceneNode() {
-	//TODO check about remove the node, deleting entity....
 	//delete the entity
 	if (entity != nullptr) {
 		entity->cleanUp();
 		delete entity;
 	}
 	//delete the childs
-	for (auto it = children.begin(); it != children.end(); ++it) {
+	for (auto it = children.begin(); it != children.end(); it++) {
+		(*it)->cleanUp();
 		delete *it;
 	}
+	children.clear();
 }
 
 void SceneNode::addChild(SceneNode* child) {
@@ -34,7 +35,8 @@ void SceneNode::addChild(SceneNode* child) {
 
 SceneNode * SceneNode::addChild(Entity * child) {
 	SceneNode* result = new SceneNode(child);
-	addChild(result);
+	result->parent = this;
+	children.push_back(std::move(result));
 	return result;
 }
 
@@ -63,6 +65,15 @@ void SceneNode::remove() {
 	// Call function recursively for all remaining children
 	std::for_each(children.begin(), children.end(), std::mem_fn(&SceneNode::remove));
 
+	//delete himself
+	if (entity != nullptr) {
+		delete entity;
+		entity = nullptr;
+	}
+
+	for (auto it = children.begin(); it != children.end(); ++it) {
+		delete (*it);
+	}
 	// Remove all children which request so
 	children.clear();
 }

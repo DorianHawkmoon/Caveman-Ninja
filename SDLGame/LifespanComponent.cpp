@@ -1,6 +1,4 @@
 #include "LifespanComponent.h"
-
-
 #include "Entity.h"
 
 LifespanComponent::~LifespanComponent() {}

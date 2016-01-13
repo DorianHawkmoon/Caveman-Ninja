@@ -10,13 +10,13 @@ public:
 	HorizontalSpriteScrollComponent(std::string nameComponent, std::string nameTexture);
 	virtual ~HorizontalSpriteScrollComponent();
 
-	bool start();
-	update_status preUpdate();
-	update_status update();
-	update_status postUpdate();
-	bool cleanUp();
+	virtual bool start();
+	virtual update_status preUpdate();
+	virtual update_status update();
+	virtual update_status postUpdate();
+	virtual bool cleanUp();
 
-	IComponent* makeClone() const;
+	virtual IComponent* makeClone() const;
 
 public:
 	SDL_Rect rect;

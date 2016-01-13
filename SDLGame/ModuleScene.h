@@ -9,6 +9,9 @@
 struct SDL_Texture;
 class Scene;
 class Entity;
+namespace GUI {
+	class GUIComponent;
+}
 
 class ModuleScene : public Module {
 public:
@@ -23,13 +26,14 @@ public:
 	void changeScene(Scene* scene, float time=1.0f);
 
 	void addEntity(Entity* entity);
+	void addGUI(GUI::GUIComponent* gui);
 
 private:
 	Scene* currentScene;
 	Scene* nextScene;
 
-	Uint32 startTime = 0;
-	Uint32 totalTime = 0;
+	Uint32 startTime;
+	Uint32 totalTime;
 	bool fadingIn = true;
 
 private:

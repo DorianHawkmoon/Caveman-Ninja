@@ -8,7 +8,7 @@ public:
 	LifeComponent(const std::string& name, int maxLife) :IComponent(name), actualLife(maxLife), maxLife(maxLife) {}
 	virtual ~LifeComponent() {}
 
-	IComponent* makeClone() const;
+	virtual IComponent* makeClone() const;
 
 	void modifyActualLife(int modify);
 

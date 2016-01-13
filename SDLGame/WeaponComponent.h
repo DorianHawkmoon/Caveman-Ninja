@@ -16,7 +16,7 @@ public:
 	WeaponComponent(const std::string& name, int maxThrowable = -1, unsigned int delay = 0) :IComponent(name), maxThrowable(maxThrowable), delay(delay), weapons() {}
 	virtual ~WeaponComponent();
 
-	bool start();
+	virtual bool start();
 
 	virtual update_status preUpdate();
 
@@ -24,7 +24,7 @@ public:
 		return UPDATE_CONTINUE;
 	}
 
-	IComponent* makeClone() const;
+	virtual IComponent* makeClone() const;
 
 	bool limitReached() const;
 

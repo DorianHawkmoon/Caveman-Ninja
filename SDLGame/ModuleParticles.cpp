@@ -31,6 +31,14 @@ update_status ModuleParticles::postUpdate() {
 	return UPDATE_CONTINUE;
 }
 
+bool ModuleParticles::cleanUp() {
+	for (auto it = particles.begin(); it != particles.end(); ++it) {
+		delete *it;
+	}
+	particles.clear();
+	return UPDATE_CONTINUE;
+}
+
 void ModuleParticles::addParticle(const Particle& particle, fPoint position, fPoint velocity, int delay) {
 	Particle* p = new Particle(particle);
 	p->timer.start();

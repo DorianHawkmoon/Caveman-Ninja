@@ -11,13 +11,13 @@
 class WallCollisionComponent : public IComponent {
 public:
 	WallCollisionComponent(const std::string& name);
-	~WallCollisionComponent() {}
+	virtual ~WallCollisionComponent() {}
 
-	IComponent* makeClone() const;
+	virtual IComponent* makeClone() const;
 
-	void onCollisionEnter(const Collider* self, const Collider* another);;
+	virtual void onCollisionEnter(const Collider* self, const Collider* another);;
 
-	void onCollisionStay(Collider* self, Collider* another);;
+	virtual void onCollisionStay(Collider* self, Collider* another);;
 };
 
 

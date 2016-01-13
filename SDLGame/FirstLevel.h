@@ -12,8 +12,8 @@ public:
 	FirstLevel();
 	virtual ~FirstLevel();
 
-	bool start();
-
+	virtual bool start();
+	virtual bool cleanUp();
 private:
 	void putEnemies();
 	void makeEnemy(fPoint positionTrigger, const std::vector<fPoint>& enemies);

@@ -7,6 +7,7 @@
 #include "IUpdater.h"
 namespace GUI {
 	class GUIContainer;
+	class GUIComponent;
 }
 
 class Entity;
@@ -24,6 +25,7 @@ public:
 	virtual bool cleanUp();
 
 	void addNode(Entity* entity);
+	void addGUI(GUI::GUIComponent* gui);
 
 protected:
 	SceneNode* root;

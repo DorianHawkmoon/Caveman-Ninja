@@ -23,6 +23,7 @@ bool EntryScene::start() {
 	LOG("Loading title");
 	App->renderer->camera.leftLimit = {0,0};
 	App->renderer->camera.rightLimit = {1088,256};
+	App->renderer->resetCamera();
 
 	Entity* buffer = new Entity(Category::NONE_CATEGORY);
 	SpriteComponent* background = new SpriteComponent("title", "title.png");
@@ -33,6 +34,9 @@ bool EntryScene::start() {
 	background->speedCamera = 0.3f;
 	buffer->addComponent(background);
 
+	root->addChild(buffer);
+
+	buffer = new Entity(Category::NONE_CATEGORY);
 	root->addChild(buffer);
 	root->start();
 

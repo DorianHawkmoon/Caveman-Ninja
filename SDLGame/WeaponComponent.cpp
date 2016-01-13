@@ -47,7 +47,6 @@ void WeaponComponent::throwWeapon() {
 		time.start();
 		Entity* entity = PlayerWeapon::makeWeapon();
 		weapons.push_back(entity);
-		entity->start();
 
 		entity->transform->position += trans->position;
 		const Collider* colliderSize;
@@ -61,9 +60,9 @@ void WeaponComponent::throwWeapon() {
 		}
 		entity->transform->position.x += controller->attack * (colliderSize->getSize().x + 2);
 		if (controller->moveY == 1) {
-			entity->transform->position.y+=colliderSize->getSize().y*0.5;
+			entity->transform->position.y+=colliderSize->getSize().y*0.5f;
 		} else if(controller->moveY ==-1) {
-			entity->transform->position.x -= colliderSize->getSize().x*0.5;
+			entity->transform->position.x -= colliderSize->getSize().x*0.5f;
 		}
 
 		MotionComponent* motion = static_cast<MotionComponent*>(entity->getComponent("motion"));

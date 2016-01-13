@@ -13,12 +13,12 @@ public:
 	DisappearOutCamera(const std::string& name);
 	virtual ~DisappearOutCamera();
 
-	bool start();
-	update_status preUpdate();
+	virtual bool start();
+	virtual update_status preUpdate();
 	virtual update_status update();
 	void addCondition(const Condition * condition);
 
-	bool cleanUp();
+	virtual bool cleanUp();
 	IComponent* makeClone() const;
 
 private:

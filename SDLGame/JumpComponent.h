@@ -11,13 +11,13 @@ public:
 	JumpComponent(std::string nameComponent) : IComponent(nameComponent), speed(1), doubleSpeed(1),cleaned(true) {};
 	virtual ~JumpComponent() {};
 
-	bool start();
-	update_status preUpdate();
-	update_status update();
+	virtual bool start();
+	virtual update_status preUpdate();
+	virtual update_status update();
 
-	bool cleanUp();
+	virtual bool cleanUp();
 
-	IComponent* makeClone() const;
+	virtual IComponent* makeClone() const;
 
 public:
 	float speed;

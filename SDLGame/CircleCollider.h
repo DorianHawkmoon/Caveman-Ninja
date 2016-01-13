@@ -12,9 +12,7 @@ class RectangleCollider;
 
 class CircleCollider : public Collider {
 public:
-	CircleCollider(fPoint position, float radius, TypeCollider type) : Collider(position, type), radius(radius) {
-		
-	}
+	CircleCollider(fPoint position, float radius, TypeCollider type);
 	virtual ~CircleCollider();
 
 	virtual void paintCollider() const;

@@ -17,7 +17,7 @@ public:
 		life = particle.life;
 		timer = particle.timer;
 	}
-	~Particle() {}
+	virtual ~Particle() {}
 
 	virtual bool start();
 

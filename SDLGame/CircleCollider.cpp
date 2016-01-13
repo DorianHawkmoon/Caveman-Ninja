@@ -3,6 +3,10 @@
 #include "LineCollider.h"
 #include "Transform.h"
 
+CircleCollider::CircleCollider(fPoint position, float radius, TypeCollider type) : Collider(position, type), radius(radius) {
+
+}
+
 CircleCollider::~CircleCollider() {}
 
 void CircleCollider::paintCollider() const {
