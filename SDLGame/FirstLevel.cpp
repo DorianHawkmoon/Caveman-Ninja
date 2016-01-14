@@ -138,12 +138,10 @@ bool FirstLevel::start() {
 
 	root->addChild(buffer); //added scenario
 
-	fPoint positionTrigger = {1070,0};
+	fPoint positionTrigger = {1060,0};
 	buffer = Trigger::makeTrigger(positionTrigger, {10,256},
 		[]() {
-		App->audio->stopMusic();
-		Scene* scene = new EntryScene();
-		App->scene->changeScene(scene, 1);
+			App->player->levelFinished = true;
 	}
 	);
 	root->addChild(buffer);

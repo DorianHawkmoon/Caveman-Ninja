@@ -26,6 +26,7 @@
 #include "WeaponComponent.h"
 #include "DamageComponent.h"
 #include "PlayerHittedComponent.h"
+#include "ModulePlayer.h"
 #include "PickupItemComponent.h"
 #include "ScoreComponent.h"
 #include "GravityPlayerComponent.h"
@@ -68,15 +69,15 @@ Entity * Joe::makeJoe() {
 	LifeComponent* life = new LifeComponent("life",18);
 	result->addComponent(life);
 
-	WeaponComponent* weapon = new WeaponComponent("weapon", 2, 250);
-	result->addComponent(weapon);
-
 	PickupItemComponent* pickup = new PickupItemComponent("pickup");
 	result->addComponent(pickup);
 
 	ScoreComponent* score = new ScoreComponent("score");
 	result->addComponent(score);
 	
+	WeaponComponent* weapon = new WeaponComponent("weapon", 2, 250);
+	result->addComponent(weapon);
+
 	makeAnimations(result);
 
 	return result;
@@ -307,6 +308,7 @@ void Joe::makeAnimations(Entity* entity) {
 				transitionIdleAttack.addCondition(&conditionTimer);
 
 	idleAnimation->addTransition(&transitionSimpleAttack);
+	forwardAnimation->addTransition(&transitionSimpleAttack);
 	simpleAttackAnimation->addTransition(&transitionIdleAttack);
 
 	// ---------------------------------------------
@@ -466,22 +468,24 @@ void Joe::makeAnimations(Entity* entity) {
 
 
 	// ---------------------------------------------
-	
-	ConditionComparison<TypeJump> conditionJumpDown = ConditionComparison<TypeJump>(&controller->stateJump, TypeJump::JUMP_DOWN);
-	ConditionCallback isNotAlive = ConditionCallback([entity]() {
-		bool result = false;
-		IComponent* component = entity->getComponent("life");
-		if (component != nullptr) {
-			LifeComponent* life = static_cast<LifeComponent*>(component);
-			result = !life->isAlive();
-		}
-		return result;
-	});
-	ConditionComparison<int> conditionNotAttack = ConditionComparison<int>(&controller->attack, 0);
-	StateTransition<Animation> transitionJumpDown = StateTransition<Animation>(fallAnimation, &conditionJumpDown);
-	downAnimation->addTransition(&transitionJumpDown);
-	
 
+	Animation victory(4);
+	victory.sizeFrame = {384, 0, 64, 64};
+	victory.offset = {-18,-17};
+	victory.speed = 0.1f;
+	State<Animation>* victoryAnimation = new State<Animation>(victory);
+	animations->addState(victoryAnimation);
+
+	ConditionComparison<bool> conditionVictory = ConditionComparison<bool>(&App->player->levelFinished, true);
+	ConditionComparison<bool> conditionIdleVictory = ConditionComparison<bool>(&App->player->levelFinished, false);
+	StateTransition<Animation> transitionVictory = StateTransition<Animation>(victoryAnimation, &conditionVictory);
+	StateTransition<Animation> transitionVictoryIdle = StateTransition<Animation>(idleAnimation, &conditionIdleVictory);
+	
+	victoryAnimation->addTransition(&transitionVictoryIdle);
+	forwardAnimation->addTransition(&transitionVictory);
+	idleAnimation->addTransition(&transitionVictory);
+	simpleAttackAnimation->addTransition(&transitionVictory);
+	lookingUpAnimation->addTransition(&transitionVictory);
 
 	//create the component
 	AnimationComponent* component=new AnimationComponent("animations", "Joe.png", animations);

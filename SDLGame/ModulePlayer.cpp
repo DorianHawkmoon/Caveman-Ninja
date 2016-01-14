@@ -27,15 +27,16 @@
 #include "GUIAnimation.h"
 #include "ConditionCallback.h"
 
-ModulePlayer::ModulePlayer(bool start_enabled) : Module(start_enabled), lifes(1)
+ModulePlayer::ModulePlayer(bool start_enabled) : Module(start_enabled), lifes(1), player(nullptr)
 {
-	player = Joe::makeJoe();
 }
 
 ModulePlayer::~ModulePlayer()
 {
 	// Homework : check for memory leaks
-	delete player;
+	if (player != nullptr) {
+		delete player;
+	}
 }
 
 // Load assets
@@ -43,8 +44,10 @@ bool ModulePlayer::start(){
 	LOG("Loading player");
 	bool started = true;
 
-	if (lifes <= 0) {
-		delete player;
+	if (lifes <= 0 || player==nullptr) {
+		if (player != nullptr) {
+			delete player;
+		}
 		player = Joe::makeJoe();
 		lifes = 1;
 	}
@@ -64,6 +67,7 @@ bool ModulePlayer::start(){
 	life->setActualLife(life->getMaxLife());
 	score->score.resetScore();
 	gameOverTimer.stop();
+	levelFinished = false;
 
 	App->renderer->camera.setCamera(player->transform);
 	App->renderer->camera.offset.x = 30;
@@ -231,8 +235,24 @@ void ModulePlayer::portraitAnimation() {
 update_status ModulePlayer::update(){
 	debugging();
 
+
 	ControlEntity* controller = &player->controller;
 	Transform* trans = player->transform;
+
+	if (levelFinished && !gameOverTimer.isStopped() && gameOverTimer.value() > 3000) {
+		Scene* next = new EntryScene();
+		App->scene->changeScene(next, 1);
+		gameOverTimer.stop();
+		App->audio->stopMusic(); //stop music
+
+	}else if (levelFinished && gameOverTimer.isStopped()) {
+		controller->moveX = 0;
+		controller->moveY = 0;
+		controller->attack = 0;
+		controller->damage = 0;
+		gameOverTimer.start();
+		//put the animation
+	}
 
 	//don't move while receiving damage
 	if (controller->damage == 0) {
@@ -261,7 +281,7 @@ update_status ModulePlayer::update(){
 
 		if (App->input->getKey(SDL_SCANCODE_L)==KEY_DOWN) {
 			weapon->throwWeapon();
-			controller->moveX = 0;
+			motion->velocity.x = 0;
 		}
 
 

@@ -2,8 +2,6 @@
 #include "Globals.h"
 #include "Application.h"
 
-#include "vld.h"
-
 enum main_states {
 	MAIN_CREATION,
 	MAIN_INIT,

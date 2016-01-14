@@ -37,6 +37,7 @@ public:
 	LifeComponent* life;
 	WeaponComponent* weapon;
 	ScoreComponent* score;
+	bool levelFinished;
 
 private:
 	Entity* deadBody;

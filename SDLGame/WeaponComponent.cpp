@@ -43,7 +43,6 @@ void WeaponComponent::throwWeapon() {
 	Transform* trans = parent->transform;
 
 	if (static_cast<int>(weapons.size()) < maxThrowable && time.value() > delay) {
-		//controller->moveX = 0; //stop!
 		controller->attack = (trans->flip == SDL_FLIP_HORIZONTAL) ? -1 : 1;//segun la dirección de joe
 		time.start();
 		Entity* entity = PlayerWeapon::makeWeapon();
@@ -59,7 +58,9 @@ void WeaponComponent::throwWeapon() {
 			colliderSize = (static_cast<CollisionComponent*>(parent->getComponent("collider")))->getCollider();
 			offset.x += static_cast<int>(colliderSize->position.x*2);
 		}
-		entity->transform->position.x += controller->attack * (colliderSize->getSize().x + 2);
+		if (controller->moveY != -1) {
+			entity->transform->position.x += controller->attack * (colliderSize->getSize().x + 2);
+		}
 		if (controller->moveY == 1) {
 			entity->transform->position.y+=colliderSize->getSize().y*0.5f;
 		} else if(controller->moveY ==-1) {

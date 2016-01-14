@@ -12,6 +12,8 @@
 #include "DamageComponent.h"
 #include "ModuleAudio.h"
 #include "ModuleScene.h"
+#include "ModulePlayer.h"
+#include "ScoreComponent.h"
 #include "DropItemComponent.h"
 
 
@@ -132,6 +134,9 @@ void EnemyHittedComponent::deadUpdate() {
 	if (timer.isStopped()) {
 		//start the time of dead animation
 		timer.start();
+		//points to player (no effects)
+		App->player->score->score.addScore(300);
+
 		//drop the item if i have one
 		DropItemComponent* drop = static_cast<DropItemComponent*>(parent->getComponent("drop"));
 		if (drop != nullptr && drop->item != nullptr) {
