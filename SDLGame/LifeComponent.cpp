@@ -7,6 +7,7 @@ IComponent * LifeComponent::makeClone() const {
 }
 
 void LifeComponent::modifyActualLife(int modify) {
+	previousLife = actualLife;
 	actualLife += modify;
 	if (actualLife > maxLife) {
 		actualLife = maxLife;

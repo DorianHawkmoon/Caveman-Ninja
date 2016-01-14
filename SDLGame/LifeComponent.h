@@ -22,6 +22,7 @@ public:
 
 	bool isAlive() const;
 
+	int previousLife;
 private:
 	int actualLife;
 	int maxLife;

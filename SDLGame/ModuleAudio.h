@@ -18,6 +18,7 @@ public:
 	bool cleanUp();
 
 	bool const playMusic(const char* path, float fade_time = DEFAULT_MUSIC_FADE_TIME);
+	void stopMusic();
 	unsigned int const loadEffect(const char* path);
 	bool playEffect(unsigned int fx, int repeat = 0);
 

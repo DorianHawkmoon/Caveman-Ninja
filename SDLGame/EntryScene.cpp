@@ -60,7 +60,6 @@ update_status EntryScene::update() {
 		root->update();
 	}
 
-	//TODO text blink, need a text module for fonts
 
 	if (App->input->keyActive(SDL_SCANCODE_RETURN) || App->input->keyActive(SDL_SCANCODE_SPACE)) {
 		Scene* next = new FirstLevel();

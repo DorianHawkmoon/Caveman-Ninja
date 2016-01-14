@@ -53,7 +53,6 @@ Entity * Joe::makeJoe() {
 	DamageComponent* damage = new DamageComponent("damage",1,1);
 	result->addComponent(damage);
 
-
 	JumpComponent* jump = new JumpComponent("jump");
 	jump->speed = 300;
 	jump->doubleSpeed = 400;
@@ -69,7 +68,7 @@ Entity * Joe::makeJoe() {
 	LifeComponent* life = new LifeComponent("life",18);
 	result->addComponent(life);
 
-	WeaponComponent* weapon = new WeaponComponent("weapon", 3, 250);
+	WeaponComponent* weapon = new WeaponComponent("weapon", 2, 250);
 	result->addComponent(weapon);
 
 	PickupItemComponent* pickup = new PickupItemComponent("pickup");

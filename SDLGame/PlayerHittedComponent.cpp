@@ -10,7 +10,7 @@
 #include "CollisionComponent.h"
 #include "DamageComponent.h"
 
-PlayerHittedComponent::PlayerHittedComponent(const std::string& name) : IComponent(name), timer(), dead(false) {
+PlayerHittedComponent::PlayerHittedComponent(const std::string& name) : IComponent(name), timer(), dead(false), securityTimer() {
 
 }
 
@@ -56,17 +56,23 @@ update_status PlayerHittedComponent::update() {
 				motion->velocity.x = 0;
 				timer.start();
 			}
+			if (securityTimer.isStopped()) {
+				securityTimer.start();
+			} else if (securityTimer.value() > 2000) {
+				timer.start();
+			}
 		} else if (timer.value() >= 600 && life->isAlive()) {
 			hitted = false;
 			collision->enable();
 			parent->controller.damage = 0;
 			timer.stop();
+			securityTimer.stop();
 
 		} else if (timer.value() >= 50 && !life->isAlive()) {
 			dead = true;
 			int dam = (parent->controller.damage > 0) ? 1 : -1;
 			parent->controller.damage = dam * 3;
-
+			securityTimer.stop();
 			timer.stop();
 		}
 	}

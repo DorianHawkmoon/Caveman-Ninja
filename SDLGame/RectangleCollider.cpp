@@ -57,7 +57,7 @@ Collider * RectangleCollider::clone() const {
 
 
 bool RectangleCollider::checkCollisionRotated(const RectangleCollider * other, const Transform & otherTrans, const Transform & self) const {
-	//Code from Ignacio Astorga
+	//Code isnpired from Ignacio Astorga
 	// Obtiene los puntos de los rectángulos
 	std::vector<fPoint> thisPoints = getPoints(self.rotation);
 	std::vector<fPoint> otherPoints = other->getPoints(otherTrans.rotation);
@@ -249,7 +249,6 @@ bool RectangleCollider::checkCollision(const LineCollider * other) const { retur
 
 
 std::vector<fPoint> RectangleCollider::getPoints(float totalRotation) const {
-	//TODO testear bien, es posible que el metodo de linecollider sea el bueno incluso para aquí?
 	fPoint center = position;
 	if (parentTransform != nullptr) {
 		center += parentTransform->getGlobalTransform().position;

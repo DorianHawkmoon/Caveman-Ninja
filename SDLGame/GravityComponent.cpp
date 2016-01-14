@@ -69,8 +69,6 @@ update_status GravityComponent::update() {
 			std::list<Collider*> collisions=App->collisions->checkCollisions(gravityCollider);
 			//si la lista está vacia, está cayendo, setear FALL
 			//si no lo esta ... nada, las colisiones especificas se mirara en onCollision
-			//TODO  tener en cuenta el jump down (mover la tolerancia? checkear la tolerancia en jump?) -> variable y cuando la distancia recorrida sea mayor que la tolerancia, considerar la gravedad normal
-				
 			if (collisions.size() > 0) {
 				//si está en salto, no tenerlo en cuenta!!
 				TypeJump jumping = parent->controller.stateJump;
@@ -153,13 +151,11 @@ bool GravityComponent::isFalling() {
 	if (cleaned) {
 		return false;
 	}
-	//TODO 10,10 sería la tolerancia -> la posición tendría que ser desde bottom left y no top left
 	Collider* clone = gravityCollider->clone();
 	clone->parentTransform = gravityCollider->parentTransform;
 	clone->position.y += 5;
 	std::list<Collider*> collisions = App->collisions->checkCollisions(clone);
 	delete clone;
-	//TODO  tener en cuenta el jump down (mover la tolerancia? checkear la tolerancia en jump?) -> variable y cuando la distancia recorrida sea mayor que la tolerancia, considerar la gravedad normal
 	return collisions.size() == 0;
 }
 

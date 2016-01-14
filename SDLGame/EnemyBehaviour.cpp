@@ -321,7 +321,7 @@ iPoint EnemyBehaviour::directionPlayer(Transform & globalMine, Transform & globa
 		result.x = 1;
 	}
 
-	int difference = globalPlayer.position.y - globalMine.position.y;
+	int difference = static_cast<int>(globalPlayer.position.y - globalMine.position.y);
 	if (difference > 20) {
 		result.y = 1;
 	} else if(difference < -20){

@@ -95,6 +95,10 @@ bool const ModuleAudio::playMusic(const char * path, float fade_time) {
 	return result;
 }
 
+void ModuleAudio::stopMusic() {
+		Mix_HaltMusic();
+}
+
 unsigned int const ModuleAudio::loadEffect(const char * path) {
 	unsigned int result = 0;
 	std::string finalPath = "audio/effects/";

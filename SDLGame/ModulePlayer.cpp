@@ -21,7 +21,11 @@
 #include "Animation.h"
 #include "SpriteComponent.h"
 #include "ScoreComponent.h"
+#include "ConditionComparison.h"
 #include "GUIScore.h"
+#include "TimerCondition.h"
+#include "GUIAnimation.h"
+#include "ConditionCallback.h"
 
 ModulePlayer::ModulePlayer(bool start_enabled) : Module(start_enabled), lifes(1)
 {
@@ -53,7 +57,7 @@ bool ModulePlayer::start(){
 	started = started & ((life = static_cast<LifeComponent*>(player->getComponent("life"))) != nullptr);
 	started = started & ((weapon = static_cast<WeaponComponent*>(player->getComponent("weapon"))) != nullptr);
 	started = started & ((score = static_cast<ScoreComponent*>(player->getComponent("score"))) != nullptr);
-	player->transform->position = {20, 180};
+	player->transform->position = {20, 170};
 	player->controller.stateJump = TypeJump::FALL;
 
 	//restore his life
@@ -75,6 +79,7 @@ bool ModulePlayer::start(){
 	scoreText->transform.position = {50, 2};
 
 	App->scene->addGUI(scoreText);
+	portraitAnimation();
 
 	return started;
 }
@@ -150,6 +155,77 @@ void ModulePlayer::debugging() {
 	}
 }
 
+void ModulePlayer::portraitAnimation() {
+	ControlEntity* controller = &player->controller;
+	StateMachine<Animation>* animations;
+
+	Animation idle(1);
+	idle.sizeFrame = {0, 0, 24,28};
+	State<Animation>* idleAnimation = new State<Animation>(idle);
+	animations = new StateMachine<Animation>(idleAnimation);
+
+	// ---------------------------------------------
+
+	Animation damage(1);
+	damage.sizeFrame = {0, 28,24,28};
+	State<Animation>* damageAnimation = new State<Animation>(damage);
+	animations->addState(damageAnimation);
+
+	ConditionComparison<int> conditionDamage = ConditionComparison<int>(&controller->damage, 0, NON_EQUAL);
+	ConditionComparison<int> conditionIdle = ConditionComparison<int>(&controller->damage, 0);
+	StateTransition<Animation> transitionDamage = StateTransition<Animation>(damageAnimation, &conditionDamage);
+	StateTransition<Animation> transitionIdle = StateTransition<Animation>(idleAnimation, &conditionIdle);
+
+	damageAnimation->addTransition(&transitionIdle);
+	idleAnimation->addTransition(&transitionDamage);
+
+
+	// ---------------------------------------------
+
+	Animation eating(1);
+	eating.sizeFrame = {24, 0, 24,28};
+	State<Animation>* eatingAnimation = new State<Animation>(eating);
+	animations->addState(eatingAnimation);
+
+	TimerCondition conditionIdle2 = TimerCondition(1000);
+	ConditionCallback conditionEating = ConditionCallback([=](){
+		int actuaLife = life->getActualLife();
+		if (life->previousLife < actuaLife) {
+			life->previousLife = actuaLife;
+			return true;
+		} else {
+			return false;
+		}
+		});
+	StateTransition<Animation> transitionIdle2 = StateTransition<Animation>(idleAnimation, &conditionIdle2);
+	StateTransition<Animation> transitionEating = StateTransition<Animation>(eatingAnimation, &conditionEating);
+
+	idleAnimation->addTransition(&transitionEating);
+	eatingAnimation->addTransition(&transitionIdle2);
+	eatingAnimation->addTransition(&transitionDamage);
+
+	// ---------------------------------------------
+
+	Animation deadly(1);
+	deadly.sizeFrame = {24, 28, 24,28};
+	State<Animation>* deadlyAnimation = new State<Animation>(deadly);
+	animations->addState(deadlyAnimation);
+
+	ConditionComparison<int> conditionDead = ConditionComparison<int>(&controller->damage, 3);
+	ConditionComparison<int> conditionDead2 = ConditionComparison<int>(&controller->damage, -3);
+	StateTransition<Animation> transitionDead = StateTransition<Animation>(deadlyAnimation, &conditionDead);
+	StateTransition<Animation> transitionDead2 = StateTransition<Animation>(deadlyAnimation, &conditionDead2);
+
+	idleAnimation->addTransition(&transitionDead);
+	damageAnimation->addTransition(&transitionDead);
+	idleAnimation->addTransition(&transitionDead2);
+	damageAnimation->addTransition(&transitionDead2);
+
+	GUI::GUIAnimation* animationPortrait = new GUI::GUIAnimation("gui_portrait.png", animations);
+	animationPortrait->transform.position = {0,0};
+	App->scene->addGUI(animationPortrait);
+}
+
 
 // Update
 update_status ModulePlayer::update(){
@@ -205,6 +281,7 @@ update_status ModulePlayer::update(){
 		} else {
 			motion->velocity.x = 0.0f;
 		}
+		
 	}
 
 	dead();
@@ -217,7 +294,7 @@ update_status ModulePlayer::update(){
 		Scene* next = new EntryScene();
 		App->scene->changeScene(next, 1);
 		gameOverTimer.stop();
-		//App->audio->stop //stop music
+		App->audio->stopMusic(); //stop music
 	}
 	return UPDATE_CONTINUE;
 }

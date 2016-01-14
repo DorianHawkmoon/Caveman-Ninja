@@ -29,6 +29,10 @@ public:
 	update_status update();
 	bool cleanUp();
 
+	bool isPaused() const;
+	void pause();
+	void unpause();
+
 public:
 	ModuleRender* renderer;
 	ModuleWindow* window;
@@ -46,7 +50,7 @@ public:
 
 private:
 	std::list<Module*> modules;
-
+	bool paused;
 };
 
 extern Application* App;

@@ -67,15 +67,19 @@ bool Application::init() {
 update_status Application::update() {
 	update_status ret = UPDATE_CONTINUE;
 
-	//todo improve pause system
-	if (input->getWindowEvent(WE_PAUSE)) {
-		timer->pause();
+	if (paused) {
+		input->preUpdate();
+		input->update();
+
 		for (std::list<Module*>::iterator it = modules.begin(); it != modules.end() && ret == UPDATE_CONTINUE; ++it) {
 			if ((*it)->isEnabled() == true) {
 				ret = (*it)->postUpdate();
 			}
 		}
+		
+
 	} else {
+		timer->unpause();
 		for (std::list<Module*>::iterator it = modules.begin(); it != modules.end() && ret == UPDATE_CONTINUE; ++it) {
 			if ((*it)->isEnabled() == true) {
 				ret = (*it)->preUpdate();
@@ -107,4 +111,24 @@ bool Application::cleanUp() {
 	}
 
 	return ret;
+}
+
+bool Application::isPaused() const {
+	return paused;
+}
+
+void Application::pause() {
+	timer->pause();
+	SDL_Color c;
+	c.b = 0;
+	c.r = 0;
+	c.g = 0;
+	renderer->setFaddingEffect(0.5f*255.0f, c);
+	paused = true;
+}
+
+void Application::unpause() {
+	timer->unpause();
+	renderer->clearFaddingEffect();
+	paused = false;
 }

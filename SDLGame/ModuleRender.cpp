@@ -325,16 +325,17 @@ SDL_Rect ModuleRender::getCorrectCamera(float speed) const {
 	SDL_Rect cam = camera.getViewArea(speed);
 	iPoint rightLimit = camera.rightLimit*SCREEN_SIZE;
 	iPoint leftLimit = camera.leftLimit*SCREEN_SIZE;
+	SDL_Rect size=camera.getWindowsSize();
 	iPoint offset = {0,0};
-	if (cam.x > rightLimit.x) {
-		offset.x = cam.x - rightLimit.x;
+	if (cam.x+size.w > rightLimit.x) {
+		offset.x = -(cam.x+size.w - rightLimit.x);
 	} else if (cam.x < leftLimit.x) {
 		offset.x = leftLimit.x - cam.x;
 	}
 
-	if (cam.y > rightLimit.y) {
-		offset.y = cam.y - rightLimit.y;
-	} else if (cam.x < leftLimit.y) {
+	if (cam.y+size.h > rightLimit.y) {
+		offset.y = cam.y - rightLimit.y+size.h;
+	} else if (cam.y < leftLimit.y) {
 		offset.x = leftLimit.y - cam.x;
 	}
 

@@ -6,6 +6,8 @@
 #include "ModuleInput.h"
 #include "ModuleRender.h"
 #include "ModuleAudio.h"
+#include "ModuleScene.h"
+#include "EntryScene.h"
 #include "Entity.h"
 #include "SceneNode.h"
 
@@ -73,6 +75,7 @@ bool FirstLevel::start() {
 	sprite->rect.h = 256;
 	sprite->speedCamera = 1;
 	buffer->addComponent(sprite);
+
 	root->addChild(buffer);
 
 
@@ -94,6 +97,7 @@ bool FirstLevel::start() {
 	collider = new RectangleCollider(fPoint(1080, 0), rectCollider, 0, TypeCollider::WALL);
 	colliderComponent = new CollisionComponent("rightLateral", collider);
 	buffer->addComponent(colliderComponent);
+
 
 	LineCollider* line = new LineCollider(fPoint(0, 0), std::vector<fPoint>{fPoint(300, 211),
 		fPoint(340, 200),
@@ -125,8 +129,24 @@ bool FirstLevel::start() {
 	colliderComponent = new CollisionComponent("lomo2", line);
 	buffer->addComponent(colliderComponent);
 
+	line = new LineCollider(fPoint(0,0), std::vector<fPoint>{fPoint(966, 140),
+		fPoint(1088, 140)}, TypeCollider::GROUND);
+	line->thickness = 1;
+	colliderComponent = new CollisionComponent("final", line);
+	buffer->addComponent(colliderComponent);
+
 
 	root->addChild(buffer); //added scenario
+
+	fPoint positionTrigger = {1070,0};
+	buffer = Trigger::makeTrigger(positionTrigger, {10,256},
+		[]() {
+		App->audio->stopMusic();
+		Scene* scene = new EntryScene();
+		App->scene->changeScene(scene, 1);
+	}
+	);
+	root->addChild(buffer);
 
 	// ---------------------------------------------
 
@@ -140,7 +160,7 @@ bool FirstLevel::start() {
 	root->start();
 	makeHUD();
 
-	//App->audio->playMusic("backgroundMusic.mp3");
+	App->audio->playMusic("backgroundMusic.mp3");
 
 	return true;
 }
@@ -228,17 +248,6 @@ void FirstLevel::makeEnemy(fPoint positionTrigger, const std::vector<fPoint>& en
 }
 
 void FirstLevel::makeHUD() {
-	StateMachine<Animation>* animations;
-
-	Animation idle(1);
-	idle.sizeFrame = {0, 0, 24,28};
-	State<Animation>* idleAnimation = new State<Animation>(idle);
-	animations = new StateMachine<Animation>(idleAnimation);
-
-	GUI::GUIAnimation* animationPortrait = new GUI::GUIAnimation("gui_portrait.png", animations);
-	animationPortrait->transform.position = {0,0};
-	rootGUI->pack(animationPortrait);
-
 	GUI::GUILifeBar* lifebar = new GUI::GUILifeBar("gui_lifebar.png", App->player->life);
 	lifebar->transform.position = {24,12};
 	lifebar->pointColor[GUI::PointColor::GREEN] = {0,0,5,12};

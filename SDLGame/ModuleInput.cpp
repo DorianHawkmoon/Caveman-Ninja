@@ -61,6 +61,14 @@ update_status ModuleInput::preUpdate() {
 
 	if (getKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN) {
 		return UPDATE_STOP;
+	} else if (getWindowEvent(WE_PAUSE)) {
+		App->pause();
+	} else if (getKey(SDL_SCANCODE_P) == KEY_DOWN) {
+		if (App->isPaused()) {
+			App->unpause();
+		} else {
+			App->pause();
+		}
 	}
 
 	SDL_Event events;

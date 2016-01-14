@@ -44,7 +44,6 @@ update_status JumpComponent::update() {
 		}
 			break;
 
-			//TODO JUMP DOWN
 		case JUMP_DOWN:
 		{
 			MotionComponent* motion = static_cast<MotionComponent*>(parent->getComponent("motion"));

@@ -41,6 +41,7 @@ public:
 private:
 	Entity* deadBody;
 	Timer gameOverTimer;
+	
 	int lifes;
 	bool ghost;
 	unsigned int soundDie;
@@ -49,6 +50,8 @@ private:
 	void addGameOver();
 	void dead();
 	void debugging();
+
+	void portraitAnimation();
 };
 
 #endif // __MODULEPLAYER_H__

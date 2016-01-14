@@ -27,6 +27,7 @@ public:
 private:
 	bool hitted;
 	Timer timer;
+	Timer securityTimer;
 	bool dead;
 
 	LifeComponent* life;
