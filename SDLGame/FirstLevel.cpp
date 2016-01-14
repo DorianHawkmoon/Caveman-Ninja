@@ -131,8 +131,9 @@ bool FirstLevel::start() {
 	// ---------------------------------------------
 
 	buffer = Enemy::makeEnemy();
-	buffer->transform->position = {340, 170};
+	buffer->transform->position = {340, 180};
 	root->addChild(buffer);
+	
 	
 	putEnemies();
 
@@ -154,38 +155,57 @@ bool FirstLevel::cleanUp() {
 void FirstLevel::putEnemies() {
 	fPoint positionTrigger = fPoint(180, 0);
 	std::vector<fPoint> enemies = std::vector<fPoint>();
-		enemies.push_back({350,160});
+		enemies.push_back({350,155});
 	makeEnemy(positionTrigger, enemies);
 
-	positionTrigger.x=230;
+	positionTrigger.x=220;
 	enemies.clear();
-	enemies.push_back({380,160});
+	enemies.push_back({380,135});
 	makeEnemy(positionTrigger, enemies);
 
-	positionTrigger.x = 350;
+	positionTrigger.x = 340;
 	enemies.clear();
-	enemies.push_back({490,160}); //rock
-	enemies.push_back({490,100}); //hidden
+	enemies.push_back({490,70}); //rock
+	enemies.push_back({490,180}); //hidden
 	makeEnemy(positionTrigger, enemies);
 
 
-	positionTrigger.x = 420;
+	positionTrigger.x = 410;
 	enemies.clear();
-	enemies.push_back({570,100});
+	enemies.push_back({570,45});
 	makeEnemy(positionTrigger, enemies);
 
-	positionTrigger.x = 420;
+	positionTrigger.x = 480;
 	enemies.clear();
-	enemies.push_back({570,100});
+	enemies.push_back({620,65}); //rock
+	enemies.push_back({620,180}); //egg
 	makeEnemy(positionTrigger, enemies);
 
-	positionTrigger.x = 490;
+	positionTrigger.x = 506;
 	enemies.clear();
-	enemies.push_back({620,100}); //rock
-	enemies.push_back({620,160}); //egg
+	enemies.push_back({690,110});
+	enemies.push_back({690,180}); //hidden
 	makeEnemy(positionTrigger, enemies);
 
-	//faltan de los enemigos (7) para adelante
+	positionTrigger.x = 580;
+	enemies.clear();
+	enemies.push_back({430,180}); //por detras
+	enemies.push_back({730,180}); //rock
+	//helicoptero, no poner
+	makeEnemy(positionTrigger, enemies);
+
+
+	positionTrigger.x = 650;
+	enemies.clear();
+	enemies.push_back({450,180}); //por detras up
+	enemies.push_back({820,180}); //hidden
+	makeEnemy(positionTrigger, enemies);
+
+	positionTrigger.x = 720;
+	enemies.clear();
+	enemies.push_back({890,180});
+	makeEnemy(positionTrigger, enemies);
+
 }
 
 void FirstLevel::makeEnemy(fPoint positionTrigger, const std::vector<fPoint>& enemies) {

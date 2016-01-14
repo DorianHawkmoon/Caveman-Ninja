@@ -69,17 +69,12 @@ update_status Application::update() {
 
 	//todo improve pause system
 	if (input->getWindowEvent(WE_PAUSE)) {
-		renderer->preUpdate();
-		timer->preUpdate();
-		input->preUpdate();
-
-		renderer->update();
-		timer->update();
-		input->update();
-
-		renderer->postUpdate();
-		timer->postUpdate();
-		input->postUpdate();
+		timer->pause();
+		for (std::list<Module*>::iterator it = modules.begin(); it != modules.end() && ret == UPDATE_CONTINUE; ++it) {
+			if ((*it)->isEnabled() == true) {
+				ret = (*it)->postUpdate();
+			}
+		}
 	} else {
 		for (std::list<Module*>::iterator it = modules.begin(); it != modules.end() && ret == UPDATE_CONTINUE; ++it) {
 			if ((*it)->isEnabled() == true) {
@@ -100,7 +95,7 @@ update_status Application::update() {
 		}
 	}
 	//control fps
-	//SDL_Delay(static_cast<int>(1.0 / FPS ) - (timer->getDeltaFrame()/1000));
+	SDL_Delay(static_cast<int>(1.0 / FPS ) - (timer->getDeltaFrame()/1000));
 	return ret;
 }
 

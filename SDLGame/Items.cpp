@@ -7,6 +7,7 @@
 #include "DataItemComponent.h"
 #include "Utils.h"
 #include "GravityComponent.h"
+#include "LifespanComponent.h"
 
 Entity * Items::makeItem() {
 	int random=Utils::range(39);
@@ -24,6 +25,9 @@ Entity * Items::makeItem(TypeItem item) {
 	
 	DestroyOnCollisionComponent* destroy = new DestroyOnCollisionComponent("destroy");
 	result->addComponent(destroy);
+
+	LifespanComponent* lifespan = new LifespanComponent("lifespan",5000);
+	result->addComponent(lifespan);
 
 	int life = 0;
 	int points = 0;

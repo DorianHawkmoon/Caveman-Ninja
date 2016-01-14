@@ -41,6 +41,7 @@ update_status EnemyHittedComponent::preUpdate() {
 update_status EnemyHittedComponent::update() {
 	if (dead) {
 		deadUpdate();
+
 	}else if (hitted) { 	//si hitted and alive and not falling more, damage to zero
 		if (playSound && !life->isAlive()) {
 				//sound 

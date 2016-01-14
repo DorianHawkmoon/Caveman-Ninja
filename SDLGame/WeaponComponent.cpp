@@ -43,6 +43,7 @@ void WeaponComponent::throwWeapon() {
 	Transform* trans = parent->transform;
 
 	if (static_cast<int>(weapons.size()) < maxThrowable && time.value() > delay) {
+		controller->moveX = 0; //stop!
 		controller->attack = (trans->flip == SDL_FLIP_HORIZONTAL) ? -1 : 1;//segun la dirección de joe
 		time.start();
 		Entity* entity = PlayerWeapon::makeWeapon();
@@ -67,7 +68,7 @@ void WeaponComponent::throwWeapon() {
 
 		MotionComponent* motion = static_cast<MotionComponent*>(entity->getComponent("motion"));
 		if (controller->moveY == -1) {
-			motion->velocity.y -= controller->attack * 200;
+			motion->velocity.y -= abs(controller->attack) * 200;
 			motion->velocity.x = 0;
 		} else {
 			motion->velocity.x += controller->attack * 115;

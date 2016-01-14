@@ -19,6 +19,7 @@ update_status ModuleTimer::preUpdate() {
 	float seconds = fpsTimer.miliToSeconds(deltaTime);
 	fps = static_cast<int>(frames / seconds);
 
+	//if too much value, limit it
 	return UPDATE_CONTINUE;
 }
 

@@ -40,7 +40,7 @@ namespace GUI {
 		SDL_Texture* texture;
 		const LifeComponent* life;
 
-		unsigned int coloredPoint;
+		int coloredPoint;
 		PointColor actualColor;
 
 		fPoint getPosition(const GUITransform& transformParent) const;

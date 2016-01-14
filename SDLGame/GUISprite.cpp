@@ -6,7 +6,6 @@
 GUI::GUISprite::GUISprite(const std::string & nameTexture) : nameTexture(nameTexture) {}
 
 GUI::GUISprite::~GUISprite() {
-	LOG("en busca del leak perdido");
 }
 
 bool GUI::GUISprite::start() {

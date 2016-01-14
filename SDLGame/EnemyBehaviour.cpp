@@ -14,6 +14,8 @@
 #include "ModuleRender.h"
 #include "ModuleAudio.h"
 #include "Particle.h"
+#include "JumpComponent.h"
+#include "LifespanComponent.h"
 
 IComponent* EnemyBehaviour::clone() const {
 	EnemyBehaviour* result = new EnemyBehaviour(getID());
@@ -26,6 +28,10 @@ bool EnemyBehaviour::start() {
 	started = started & ((collision = static_cast<CollisionComponent*>(parent->getComponent("collider"))) != nullptr);
 	started = started & ((life = static_cast<LifeComponent*>(parent->getComponent("life"))) != nullptr);
 	started = started & ((animations = static_cast<AnimationComponent*>(parent->getComponent("animations"))) != nullptr);
+	started = started & ((jump = static_cast<JumpComponent*>(parent->getComponent("jump"))) != nullptr);
+
+	state = SEARCHING;
+	controlIA.start();
 
 	hit = App->audio->loadEffect("enemy_hit.wav");
 	startRun = App->audio->loadEffect("enemy_caveman_run_start.wav");
@@ -51,23 +57,30 @@ update_status EnemyBehaviour::update() {
 	Transform globalPlayer = App->player->player->transform->getGlobalTransform();
 	Transform globalMine = Transform(entityTransform->getGlobalTransform());
 
-	int attack = parent->controller.attack;
-	//check if player is near to attack him
-	if (attack == 1 || attack == 2) {
-		//is attacking, check if finished the animation
-		attacking(globalMine, globalPlayer);
-	} else if (attack == 0) {
-		//check if player is near to attack him
+	//first at all, look if i attack
+	if (state != RUN_AWAY && state != ATTACK) {
 		checkCollisions(globalMine, globalPlayer);
-
-	} else if (attack == 3) {
-		//motion run
-		runningAway(globalMine);
 	}
 
-	//put the enemy thinking what to do
-	if (ticked && parent->controller.attack == 0) {
-		updateMotion(globalMine, globalPlayer);
+	switch (state) {
+		case SEARCHING:
+			search(globalMine, globalPlayer);
+			break;
+		case RUN:
+			running(globalMine, globalPlayer);
+			break;
+		case FORWARD:
+			forward(globalMine, globalPlayer);
+			break;
+		case JUMP:
+			jumping(globalMine, globalPlayer);
+			break;
+		case RUN_AWAY:
+			runningAway(globalMine);
+			break;
+		case ATTACK:
+			attacking(globalMine, globalPlayer);
+			break;
 	}
 
 	return UPDATE_CONTINUE;
@@ -104,7 +117,6 @@ void EnemyBehaviour::attacking(Transform & globalMine, Transform& globalPlayer) 
 
 				if (colliderPlayer->checkCollision(&colliderCheck)) {
 					//damage player and notify him of the collision so he can react
-					App->player->life->modifyActualLife(-20);
 					App->audio->playEffect(hit);
 					LOG("Enemy damage!!");
 
@@ -124,9 +136,12 @@ void EnemyBehaviour::attacking(Transform & globalMine, Transform& globalPlayer) 
 		case 2: //precalentamiento de huida
 			//si ha terminado, corremos!!
 			if (actualAnimation->isFinished()) {
-				//quitamos la colisión
-				collision->disable();
+				//set a lifetime
+				LifespanComponent* lifespan = new LifespanComponent("lifespan",5000);
+				lifespan->start();
+				parent->addComponent(lifespan);
 
+				state = RUN_AWAY;
 				App->audio->playEffect(run);
 				parent->controller.attack = 3;
 				//direction of running
@@ -145,7 +160,9 @@ void EnemyBehaviour::attacking(Transform & globalMine, Transform& globalPlayer) 
 }
 
 void EnemyBehaviour::checkCollisions(Transform& globalMine, Transform& globalPlayer) {
-
+	if (parent->controller.stateJump != TypeJump::NONE) {
+		return;
+	}
 	Transform* entityTransform = this->parent->transform;
 
 	//check collision with player
@@ -164,6 +181,7 @@ void EnemyBehaviour::checkCollisions(Transform& globalMine, Transform& globalPla
 
 	if (colliderPlayer->checkCollision(&colliderCheck)) {
 		//inmediatly react attacking
+		state = ATTACK;
 		parent->controller.attack = 1;
 		//stop motion
 		MotionComponent* motion = static_cast<MotionComponent*>(parent->getComponent("motion"));
@@ -172,55 +190,22 @@ void EnemyBehaviour::checkCollisions(Transform& globalMine, Transform& globalPla
 	}
 }
 
-void EnemyBehaviour::updateMotion(Transform& globalMine, Transform& globalPlayer) {
-	Transform* entityTransform = this->parent->transform;
+void EnemyBehaviour::forward(Transform& globalMine, Transform& globalPlayer) {
 	ControlEntity* controller = &parent->controller;
-
-	MotionComponent* motion = static_cast<MotionComponent*>(parent->getComponent("motion"));
-
-	controller->moveX = 0;
-	controller->moveY = 0;
-	controller->attack = 0;
-
-	float distance = abs(globalPlayer.position.x - globalMine.position.x);
-	if (globalPlayer.position.x < globalMine.position.x) {
-		controller->moveX -= 1;
-		entityTransform->flip = SDL_FLIP_NONE;
-		if (distance > 150) {
-			controller->run = true;
+	//I'm walking for a time
+	if (controlIA.value() > 2000) {
+		//stop and search for the player
+		iPoint player = directionPlayer(globalMine, globalPlayer);
+		previousplayer = player;
+		state = SEARCHING;
+		//decide inmediatly or thinking?
+		if (Utils::range(3) == 0) {
+			controlIA.stop();
+			controlIA.start();
 		}
-	}
-
-	if (globalPlayer.position.x > globalMine.position.x) {
-		controller->moveX += 1;
-		entityTransform->flip = SDL_FLIP_HORIZONTAL;
-		if (distance > 80) {
-			controller->run = true;
-		}
-	}
-
-	/*if (App->input->getKey(SDL_SCANCODE_W)) {
-	controller->moveY -= 1;
-	}
-
-	if (App->input->getKey(SDL_SCANCODE_S)) {
-	controller->moveY += 1;
-	}*/
-
-
-	//don't jump again when jumping or falling
-	/*if (App->input->getKey(SDL_SCANCODE_KP_0) && controller->stateJump == JumpType::NONE) {
-	if (App->input->getKey(SDL_SCANCODE_W)) {
-	controller->stateJump = JumpType::DOUBLE_JUMP;
 	} else {
-	controller->stateJump = JumpType::JUMP;
-	}
-	}*/
-
-	if (controller->moveY != 1) {
-		motion->velocity.x = (controller->run) ? controller->moveX * motion->doubleSpeed : controller->moveX * motion->speed;
-	} else {
-		motion->velocity.x = 0.0f;
+		controller->run = false;
+		setController(iPoint(previousplayer.x, 0));
 	}
 }
 
@@ -235,4 +220,113 @@ void EnemyBehaviour::runningAway(Transform& globalMine) {
 	if (!App->renderer->insideCamera(rect)) {
 		parent->destroy();
 	}
+}
+
+void EnemyBehaviour::search(Transform & globalMine, Transform & globalPlayer) {
+	ControlEntity* controller = &parent->controller;
+	if (controlIA.value() < 1000) {
+		setController(iPoint(0, previousplayer.y));
+		return;
+	}
+	//i was looking for player, time for a decision
+	iPoint direction = directionPlayer(globalMine, globalPlayer);
+	//first, up/down
+	if (previousplayer.y != 0 && previousplayer.y == direction.y) {
+		//jump to him!!
+		if (direction.y < 0) {
+			parent->controller.stateJump = TypeJump::DOUBLE_JUMP;
+		} else {
+			parent->controller.stateJump = TypeJump::JUMP_DOWN;
+		}
+		controller->moveY = direction.y;
+		state = JUMP;
+
+	} else {
+		//continue in his direction
+		//random to know if running or walking
+		if (Utils::range(4) != 0) {
+			//run!!
+			state = RUN;
+			controlIA.stop();
+			controlIA.start();
+			controller->run = true;
+		} else {
+			//walk
+			state = FORWARD;
+			controlIA.stop();
+			controlIA.start();
+		}
+	}
+
+	previousplayer = direction;
+}
+
+void EnemyBehaviour::running(Transform& globalMine, Transform& globalPlayer) {
+	//he is running, stop after a time
+	if (controlIA.value() > 1700) {
+		state = FORWARD;
+		parent->controller.run = false;
+		controlIA.stop();
+		controlIA.start();
+	}
+	setController(iPoint(previousplayer.x, 0));
+}
+
+void EnemyBehaviour::jumping(Transform & globalMine, Transform & globalPlayer) {
+	//make the jump in the player direction
+	if (parent->controller.stateJump != TypeJump::JUMP) {
+		state = SEARCHING;
+		//decide inmediatly or thinking?
+		if (Utils::range(3) == 0) {
+			controlIA.stop();
+			controlIA.start();
+		}
+	}
+}
+
+void EnemyBehaviour::setController(iPoint direction) {
+	ControlEntity* controller = &parent->controller;
+	Transform* entityTransform = this->parent->transform;
+
+	controller->moveX = 0;
+	controller->moveY = 0;
+	if (direction.x < 0) {
+		controller->moveX = -1;
+		entityTransform->flip = SDL_FLIP_NONE;
+	} else if (direction.x>0) {
+		controller->moveX = +1;
+		entityTransform->flip = SDL_FLIP_HORIZONTAL;
+	}
+
+	if (direction.y != 0) {
+		//stop and look below
+		controller->moveX = 0;
+		controller->moveY = direction.y;
+	}
+
+	if (controller->moveY == 0) {
+		motion->velocity.x = (controller->run) ? controller->moveX * motion->doubleSpeed : controller->moveX * motion->speed;
+	} else {
+		motion->velocity.x = 0.0f;
+	}
+}
+
+iPoint EnemyBehaviour::directionPlayer(Transform & globalMine, Transform & globalPlayer) const {
+	iPoint result = iPoint();
+	result.setToZero();
+
+	if (globalPlayer.position.x < globalMine.position.x) {
+		result.x = -1;
+	} else {
+		result.x = 1;
+	}
+
+	int difference = globalPlayer.position.y - globalMine.position.y;
+	if (difference > 20) {
+		result.y = 1;
+	} else if(difference < -20){
+		result.y = -1;
+	}
+
+	return result;
 }

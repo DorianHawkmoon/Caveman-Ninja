@@ -13,7 +13,6 @@ public:
 	bool start();
 
 	update_status preUpdate();
-
 	bool cleanUp();
 
 	inline int getDeltaFrame() const {
@@ -21,6 +20,13 @@ public:
 	}
 	inline int getFPS() const {
 		return fps;
+	}
+
+	void pause() {
+		fpsTimer.pause();
+	}
+	void unpause() {
+		fpsTimer.unpause();
 	}
 
 	inline void resetFrames() {

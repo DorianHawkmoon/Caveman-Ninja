@@ -5,14 +5,25 @@
 #include "Transform.h"
 #include "IAComponent.h"
 #include <string>
-
+#include "Timer.h"
 struct Particle;
 class LifeComponent;
 class MotionComponent;
 class CollisionComponent;
+class JumpComponent;
 class AnimationComponent;
 
 class EnemyBehaviour : public IAComponent {
+private:
+	enum statesIA {
+		SEARCHING,
+		FORWARD,
+		RUN,
+		RUN_AWAY,
+		JUMP,
+		ATTACK
+	};
+
 public:
 	EnemyBehaviour(const std::string& name): IAComponent(name) {}
 	virtual ~EnemyBehaviour() {}
@@ -31,13 +42,26 @@ private:
 	//3 esta corriendo
 	void attacking(Transform& globalMine, Transform& globalPlayer);
 	void checkCollisions(Transform& globalMine, Transform& globalPlayer);
-	void updateMotion(Transform& globalMine, Transform& globalPlayer);
+	void forward(Transform& globalMine, Transform& globalPlayer);
 	void runningAway(Transform& globalMine);
+	void search(Transform& globalMine, Transform& globalPlayer);
+	void running(Transform& globalMine, Transform& globalPlayer);
+	void jumping(Transform& globalMine, Transform& globalPlayer);
+	void setController(iPoint direction);
+
+	iPoint directionPlayer(Transform & globalMine, Transform & globalPlayer) const;
+
+	statesIA state;
+	iPoint previousplayer;
+	Timer controlIA;
+
+
 
 	LifeComponent* life;
 	MotionComponent* motion;
 	CollisionComponent* collision;
 	AnimationComponent* animations;
+	JumpComponent* jump;
 
 	//sounds of caveman
 	unsigned int hit;

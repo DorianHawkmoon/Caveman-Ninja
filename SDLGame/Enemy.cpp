@@ -83,9 +83,9 @@ Entity * Enemy::makeEnemy(const TypeItem itemToDrop) {
 	DropItemComponent* drop = new DropItemComponent("drop", item);
 	result->addComponent(drop);
 
-	//IAComponent* IA = new EnemyBehaviour("IA");
-	//result->addComponent(IA);
-	//IA->ticks = static_cast<int>(Utils::range(2000, 3000)); //RANDOM IA
+	IAComponent* IA = new EnemyBehaviour("IA");
+	result->addComponent(IA);
+	IA->ticks = static_cast<int>(Utils::range(2000, 3000)); //RANDOM IA
 
 	makeAnimations(result);
 
@@ -98,9 +98,10 @@ void Enemy::makeAnimations(Entity* entity) {
 	StateMachine<Animation>* animations;
 
 
-	Animation idle(1);
-	idle.sizeFrame = {0, 0, 128, 128};
+	Animation idle(4);
+	idle.sizeFrame = {0, 512, 128, 128};
 	idle.offset = {-51,-82};
+	idle.speed = 0.1f;
 	State<Animation>* idleAnimation = new State<Animation>(idle);
 	animations = new StateMachine<Animation>(idleAnimation);
 
@@ -166,12 +167,16 @@ void Enemy::makeAnimations(Entity* entity) {
 	animations->addState(jumpAnimation);
 
 	ConditionComparison<TypeJump> conditionJump = ConditionComparison<TypeJump>(&controller->stateJump, TypeJump::JUMP);
+	ConditionComparison<TypeJump> conditionJump2 = ConditionComparison<TypeJump>(&controller->stateJump, TypeJump::DOUBLE_JUMP);
 	StateTransition<Animation> transitionJump = StateTransition<Animation>(jumpAnimation, &conditionJump);
+	StateTransition<Animation> transitionJump2 = StateTransition<Animation>(jumpAnimation, &conditionJump2);
 
 	idleAnimation->addTransition(&transitionJump);
 	forwardAnimation->addTransition(&transitionJump);
 	lookingUpAnimation->addTransition(&transitionJump);
-
+	idleAnimation->addTransition(&transitionJump2);
+	forwardAnimation->addTransition(&transitionJump2);
+	lookingUpAnimation->addTransition(&transitionJump2);
 
 	// ---------------------------------------------
 
@@ -227,6 +232,7 @@ void Enemy::makeAnimations(Entity* entity) {
 	StateTransition<Animation> transitionFallToIdle = StateTransition<Animation>(idleAnimation, &conditionFallTimer2);
 							transitionFallToIdle.addCondition(&conditionFallToEnd);
 
+	startFallAnimation->addTransition(&transitionFallToEnd);
 	fallAnimation->addTransition(&transitionFallToEnd);
 	endFallAnimation->addTransition(&transitionFallToIdle);
 
@@ -243,7 +249,7 @@ void Enemy::makeAnimations(Entity* entity) {
 	ConditionComparison<bool> conditionRun = ConditionComparison<bool>(&controller->run, true);
 	ConditionComparison<bool> conditionNotRun = ConditionComparison<bool>(&controller->run, false);
 	StateTransition<Animation> transitionRun = StateTransition<Animation>(runAnimation, &conditionRun);
-	StateTransition<Animation> transitionRunIddle = StateTransition<Animation>(runAnimation, &conditionNotRun);
+	StateTransition<Animation> transitionRunIddle = StateTransition<Animation>(idleAnimation, &conditionNotRun);
 
 	idleAnimation->addTransition(&transitionRun);
 	forwardAnimation->addTransition(&transitionRun);
@@ -255,7 +261,7 @@ void Enemy::makeAnimations(Entity* entity) {
 	attack.sizeFrame = {0,256,128,128};
 	attack.offset = {-53,-82};
 	attack.flippedOffset.x = 3;
-	attack.speed = 0.18f;
+	attack.speed = 0.2f;
 	attack.repeat = 1;
 	State<Animation>* attackAnimation = new State<Animation>(attack);
 	animations->addState(attackAnimation);

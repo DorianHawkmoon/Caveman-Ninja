@@ -53,7 +53,7 @@ bool ModulePlayer::start(){
 	started = started & ((life = static_cast<LifeComponent*>(player->getComponent("life"))) != nullptr);
 	started = started & ((weapon = static_cast<WeaponComponent*>(player->getComponent("weapon"))) != nullptr);
 	started = started & ((score = static_cast<ScoreComponent*>(player->getComponent("score"))) != nullptr);
-	player->transform->position = {50, 0};
+	player->transform->position = {20, 180};
 	player->controller.stateJump = TypeJump::FALL;
 
 	//restore his life
@@ -67,12 +67,11 @@ bool ModulePlayer::start(){
 	soundDie = App->audio->loadEffect("player_die.wav");
 
 	//create the gui
-	//const std::string& text, const SDL_Color& color, const std::string& font, const GUILocation& location, int size = 12
 	SDL_Color color;
 	color.r = 255;
 	color.g = 255;
 	color.b = 255;
-	scoreText = new GUI::GUIScore(&score->score, color, "arcadepix.ttf", GUILocation::ABSOLUTE, 8);
+	GUI::GUIScore* scoreText  = new GUI::GUIScore(&score->score, color, "arcadepix.ttf", GUILocation::ABSOLUTE, 8);
 	scoreText->transform.position = {50, 2};
 
 	App->scene->addGUI(scoreText);

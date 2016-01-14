@@ -10,7 +10,6 @@
 #include <vector>
 #include "Timer.h"
 #include "Score.h"
-#include "GUILabel.h"
 
 class LifeComponent;
 class JumpComponent;
@@ -45,9 +44,6 @@ private:
 	int lifes;
 	bool ghost;
 	unsigned int soundDie;
-
-	GUI::GUILabel* scoreText;
-	GUI::GUILabel* scoreTextHighest;
 
 private:
 	void addGameOver();

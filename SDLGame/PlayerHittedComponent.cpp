@@ -56,7 +56,7 @@ update_status PlayerHittedComponent::update() {
 				motion->velocity.x = 0;
 				timer.start();
 			}
-		} else if (timer.value() >= 800 && life->isAlive()) {
+		} else if (timer.value() >= 600 && life->isAlive()) {
 			hitted = false;
 			collision->enable();
 			parent->controller.damage = 0;
