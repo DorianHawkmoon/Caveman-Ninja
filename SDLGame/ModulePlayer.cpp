@@ -259,14 +259,15 @@ update_status ModulePlayer::update(){
 			controller->moveY += 1;
 		}
 
-		if (App->input->getKey(SDL_SCANCODE_KP_ENTER)==KEY_DOWN) {
+		if (App->input->getKey(SDL_SCANCODE_L)==KEY_DOWN) {
 			weapon->throwWeapon();
+			controller->moveX = 0;
 		}
 
 
 
 		//don't jump again when jumping or falling
-		if (App->input->getKey(SDL_SCANCODE_KP_0)== KEY_DOWN && controller->stateJump == TypeJump::NONE) {
+		if (App->input->getKey(SDL_SCANCODE_J)== KEY_DOWN && controller->stateJump == TypeJump::NONE) {
 			if (App->input->getKey(SDL_SCANCODE_W)) {
 				controller->stateJump = TypeJump::DOUBLE_JUMP;
 			} else if(App->input->getKey(SDL_SCANCODE_S)){
