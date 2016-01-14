@@ -9,12 +9,15 @@
 #include "Joe.h"
 #include <vector>
 #include "Timer.h"
+#include "Score.h"
+#include "GUILabel.h"
 
 class LifeComponent;
 class JumpComponent;
 class WeaponComponent;
 class MotionComponent;
 class Entity;
+class ScoreComponent;
 
 class ModulePlayer : public Module
 {
@@ -34,6 +37,7 @@ public:
 	JumpComponent* jump;
 	LifeComponent* life;
 	WeaponComponent* weapon;
+	ScoreComponent* score;
 
 private:
 	Entity* deadBody;
@@ -42,6 +46,10 @@ private:
 	bool ghost;
 	unsigned int soundDie;
 
+	GUI::GUILabel* scoreText;
+	GUI::GUILabel* scoreTextHighest;
+
+private:
 	void addGameOver();
 	void dead();
 	void debugging();

@@ -3,9 +3,10 @@
 #define PICKUP_ITEM_COMPONENT_H
 
 #include "IComponent.h"
-class Collider;
 #include <string>
+class Collider;
 class LifeComponent;
+class ScoreComponent;
 
 class PickupItemComponent :	public IComponent {
 public:
@@ -20,6 +21,8 @@ public:
 
 private:
 	LifeComponent* life;
+	ScoreComponent* score;
+	unsigned int eatSound;
 };
 
 #endif // !PICKUP_ITEM_COMPONENT_H

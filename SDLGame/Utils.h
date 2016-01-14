@@ -2,8 +2,6 @@
 #ifndef UTILS_H
 #define UTILS_H
 
-#include <cmath>
-#include <ctime>
 #include <random>
 
 namespace Utils {

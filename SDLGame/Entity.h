@@ -9,14 +9,6 @@
 #include "CollisionListener.h"
 class IComponent;
 
-enum class Category {
-	NONE_CATEGORY = 0,
-	PLAYER = 1 << 0,
-	WALL = 1 << 1,
-	ENEMY = 1 << 2, 
-	PROYECTIL = 1 << 3
-};
-
 enum TypeJump {
 	NONE,
 	JUMP,
@@ -52,7 +44,7 @@ struct ControlEntity {
 
 class Entity : public IUpdater, public CollisionListener {
 public:
-	Entity(Category category=Category::NONE_CATEGORY);
+	Entity();
 	virtual ~Entity();
 
 	virtual bool start();
@@ -86,14 +78,6 @@ public:
 		destroyed = true;
 	}
 
-	/**
-	* Devuelve la categoría de la entidad
-	* @return categoría de la entidad
-	*/
-	inline Category getCategory() const {
-		return category;
-	}
-
 	virtual void onCollisionEnter(const Collider* self, const Collider* another);
 	virtual void onCollisionExit(const Collider* self, const Collider* another);
 	virtual void onCollisionStay(const Collider* self, const Collider* another);
@@ -105,10 +89,6 @@ public:
 	ControlEntity controller;
 
 private:
-	/**
-	* Categoría de la entidad
-	*/
-	Category category;
 	/**
 	* Variable que guarda si la entidad está destruida
 	* Será destruida por el nodo que la contiene

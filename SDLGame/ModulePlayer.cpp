@@ -17,8 +17,11 @@
 #include "EntryScene.h"
 #include "AnimationComponent.h"
 #include "GUISprite.h"
+#include "ModuleGUI.h"
 #include "Animation.h"
 #include "SpriteComponent.h"
+#include "ScoreComponent.h"
+#include "GUIScore.h"
 
 ModulePlayer::ModulePlayer(bool start_enabled) : Module(start_enabled), lifes(1)
 {
@@ -49,19 +52,30 @@ bool ModulePlayer::start(){
 	started = started & ((jump = static_cast<JumpComponent*>(player->getComponent("jump"))) != nullptr);
 	started = started & ((life = static_cast<LifeComponent*>(player->getComponent("life"))) != nullptr);
 	started = started & ((weapon = static_cast<WeaponComponent*>(player->getComponent("weapon"))) != nullptr);
+	started = started & ((score = static_cast<ScoreComponent*>(player->getComponent("score"))) != nullptr);
 	player->transform->position = {50, 0};
 	player->controller.stateJump = TypeJump::FALL;
 
 	//restore his life
 	life->setActualLife(life->getMaxLife());
-	
-
+	score->score.resetScore();
 	gameOverTimer.stop();
 
 	App->renderer->camera.setCamera(player->transform);
 	App->renderer->camera.offset.x = 30;
 
 	soundDie = App->audio->loadEffect("player_die.wav");
+
+	//create the gui
+	//const std::string& text, const SDL_Color& color, const std::string& font, const GUILocation& location, int size = 12
+	SDL_Color color;
+	color.r = 255;
+	color.g = 255;
+	color.b = 255;
+	scoreText = new GUI::GUIScore(&score->score, color, "arcadepix.ttf", GUILocation::ABSOLUTE, 8);
+	scoreText->transform.position = {50, 2};
+
+	App->scene->addGUI(scoreText);
 
 	return started;
 }

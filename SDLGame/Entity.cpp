@@ -3,7 +3,7 @@
 #include <functional>
 #include "IComponent.h"
 
-Entity::Entity(Category category) : destroyed(false), category(category), transform(nullptr) {
+Entity::Entity() : destroyed(false), transform(nullptr) {
 	transform = new Transform();
 	transform->setToZero();
 }
@@ -17,10 +17,10 @@ Entity::~Entity() {
 		delete (*it);
 	}
 	properties.clear();
-	//if (transform != nullptr) {
+	if (transform != nullptr) {
 		delete transform;
 		transform = nullptr;
-	//}
+	}
 }
 
 bool Entity::start() {
@@ -139,7 +139,6 @@ void Entity::onCollisionStay(const Collider * self, const Collider * another) {
 
 Entity * Entity::clone() const {
 	Entity* result = new Entity();
-	result->category = category;
 	result->destroyed = destroyed;
 	for (auto it = properties.begin(); it != properties.end(); ++it) {
 		result->addComponent((*it)->makeClone());

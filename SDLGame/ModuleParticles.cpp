@@ -45,7 +45,6 @@ void ModuleParticles::addParticle(const Particle& particle, fPoint position, fPo
 	p->position = position;
 	p->delay = delay;
 	p->speed = velocity;
-	LOG("Added particle");
 	p->start();
 	particles.push_back(p);
 }

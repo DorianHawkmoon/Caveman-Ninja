@@ -27,6 +27,7 @@
 #include "DamageComponent.h"
 #include "PlayerHittedComponent.h"
 #include "PickupItemComponent.h"
+#include "ScoreComponent.h"
 #include "GravityPlayerComponent.h"
 
 Entity * Joe::makeJoe() {
@@ -73,6 +74,9 @@ Entity * Joe::makeJoe() {
 
 	PickupItemComponent* pickup = new PickupItemComponent("pickup");
 	result->addComponent(pickup);
+
+	ScoreComponent* score = new ScoreComponent("score");
+	result->addComponent(score);
 	
 	makeAnimations(result);
 

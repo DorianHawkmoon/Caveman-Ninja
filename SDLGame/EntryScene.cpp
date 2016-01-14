@@ -25,7 +25,7 @@ bool EntryScene::start() {
 	App->renderer->camera.rightLimit = {1088,256};
 	App->renderer->resetCamera();
 
-	Entity* buffer = new Entity(Category::NONE_CATEGORY);
+	Entity* buffer = new Entity();
 	SpriteComponent* background = new SpriteComponent("title", "title.png");
 	background->rect.x = 0;
 	background->rect.y = 0;
@@ -36,7 +36,7 @@ bool EntryScene::start() {
 
 	root->addChild(buffer);
 
-	buffer = new Entity(Category::NONE_CATEGORY);
+	buffer = new Entity();
 	root->addChild(buffer);
 	root->start();
 
@@ -45,8 +45,8 @@ bool EntryScene::start() {
 	color.b = 255;
 	color.r = 255;
 	color.a = 255;
-	GUI::GUILabel* label = new GUI::GUILabel("Press SPACE to start playing", color, "arcadeClasic.ttf", GUILocation::ABSOLUTE);
-	label->transform.position = {40,190};
+	GUI::GUILabel* label = new GUI::GUILabel("Press SPACE to start", color, "arcadepix.ttf", GUILocation::ABSOLUTE);
+	label->transform.position = {35,190};
 
 	rootGUI->pack(label);
 	rootGUI->start();

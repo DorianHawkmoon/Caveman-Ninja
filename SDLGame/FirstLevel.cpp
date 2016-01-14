@@ -41,7 +41,7 @@ bool FirstLevel::start() {
 	App->renderer->camera.leftLimit = {0,0};
 	App->renderer->camera.rightLimit = {1088,256};
 
-	Entity* buffer = new Entity(Category::NONE_CATEGORY);
+	Entity* buffer = new Entity();
 	HorizontalSpriteScrollComponent* background = new HorizontalSpriteScrollComponent("sky", "cielo.png");
 	background->rect.x = 0;
 	background->rect.y = 0;
@@ -125,28 +125,16 @@ bool FirstLevel::start() {
 	colliderComponent = new CollisionComponent("lomo2", line);
 	buffer->addComponent(colliderComponent);
 
-	/*line = new LineCollider(fPoint(0, 0), std::vector<fPoint>{
-		fPoint(640, 176),
-		fPoint(648, 173),
-		fPoint(656, 181)}, TypeCollider::GROUND);
-	line->thickness = 1;
-	colliderComponent = new CollisionComponent("lomo3", line);
-	buffer->addComponent(colliderComponent);*/
 
 	root->addChild(buffer); //added scenario
 
 	// ---------------------------------------------
 
 	buffer = Enemy::makeEnemy();
-	buffer->transform->position = {170, 0};
-	root->addChild(buffer);
-
-	buffer = Enemy::makeEnemy();
-	buffer->transform->position = {340, 0};
+	buffer->transform->position = {340, 170};
 	root->addChild(buffer);
 	
-	
-	//putEnemies();
+	putEnemies();
 
 	root->start();
 	makeHUD();

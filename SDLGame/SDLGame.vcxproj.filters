@@ -273,6 +273,15 @@
     <ClCompile Include="PickupItemComponent.cpp">
       <Filter>Archivos de código fuente\Entities\PlayerProperties</Filter>
     </ClCompile>
+    <ClCompile Include="Score.cpp">
+      <Filter>Archivos de código fuente\Game Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="ScoreComponent.cpp">
+      <Filter>Archivos de código fuente\Entities\PlayerProperties</Filter>
+    </ClCompile>
+    <ClCompile Include="GUIScore.cpp">
+      <Filter>Archivos de código fuente\GUI\GUIgame</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Module.h">
@@ -523,6 +532,15 @@
     </ClInclude>
     <ClInclude Include="PickupItemComponent.h">
       <Filter>Archivos de código fuente\Entities\PlayerProperties</Filter>
+    </ClInclude>
+    <ClInclude Include="Score.h">
+      <Filter>Archivos de código fuente\Game Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="ScoreComponent.h">
+      <Filter>Archivos de código fuente\Entities\PlayerProperties</Filter>
+    </ClInclude>
+    <ClInclude Include="GUIScore.h">
+      <Filter>Archivos de código fuente\GUI\GUIgame</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
