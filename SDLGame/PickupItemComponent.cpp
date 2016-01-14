@@ -6,7 +6,10 @@
 #include "LifeComponent.h"
 #include "Application.h"
 #include "ModuleAudio.h"
+#include "ModuleParticles.h"
 #include "ScoreComponent.h"
+#include "Particle.h"
+#include "Transform.h"
 
 PickupItemComponent::PickupItemComponent(const std::string & name) :IComponent(name) {}
 
@@ -41,6 +44,14 @@ void PickupItemComponent::onCollisionEnter(const Collider * self, const Collider
 			}
 			if (score != nullptr) {
 				score->score.addScore(data->points);
+				//add particle score
+				Particle p = Particle("pickups_score.png",data->effectScore);
+				p.delay = 0;
+				p.life = 1000;
+				
+				fPoint position = parent->transform->getGlobalTransform().position;
+				fPoint velocity = {0,-10};
+				App->particles->addParticle(p, position, velocity);
 			}
 
 			//play sound

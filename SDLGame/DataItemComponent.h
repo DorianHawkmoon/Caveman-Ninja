@@ -4,6 +4,7 @@
 
 #include "IComponent.h"
 #include "Items.h"
+#include "Animation.h"
 
 class DataItemComponent : public IComponent {
 public:
@@ -15,6 +16,7 @@ public:
 	TypeItem type;
 	int points;
 	int life;
+	Animation effectScore;
 };
 
 #endif // !DATA_ITEM_COMPONENT_H

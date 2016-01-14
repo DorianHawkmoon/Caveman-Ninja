@@ -29,6 +29,7 @@ Entity * Items::makeItem(TypeItem item) {
 	int points = 0;
 	SDL_Rect rect;
 	float radius;
+	Animation anim(1);
 	switch (item) {
 		case TypeItem::SMALL_FOOD:
 			rect.x = Utils::range(7) * 32;
@@ -36,6 +37,7 @@ Entity * Items::makeItem(TypeItem item) {
 			points = 100;
 			life = 1;
 			radius = 8;
+			anim.sizeFrame = {0,0,16,16};
 			break;
 
 		case TypeItem::MEDIUM_FOOD:
@@ -44,6 +46,7 @@ Entity * Items::makeItem(TypeItem item) {
 			points = 300;
 			life = 3;
 			radius = 8;
+			anim.sizeFrame = {32,0,16,16};
 			break;
 
 		case TypeItem::BIG_FOOD:
@@ -52,6 +55,7 @@ Entity * Items::makeItem(TypeItem item) {
 			points = 500;
 			life = 5;
 			radius = 16;
+			anim.sizeFrame = {0,16,16,16};
 			break;
 	}
 	rect.w = 32;
@@ -65,6 +69,7 @@ Entity * Items::makeItem(TypeItem item) {
 	data->type = item;
 	data->life = life;
 	data->points = points;
+	data->effectScore = anim;
 	result->addComponent(data);
 
 	CircleCollider* circle = new CircleCollider(fPoint(0,0), radius, TypeCollider::ITEM);
