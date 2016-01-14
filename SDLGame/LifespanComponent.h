@@ -8,7 +8,7 @@
 
 class LifespanComponent : public IComponent {
 public:
-	LifespanComponent(const std::string& name,unsigned int lifespan): IComponent(name), lifespan(lifespan) {}
+	LifespanComponent(const std::string& name, unsigned int lifespan): IComponent(name), lifespan(lifespan) {}
 	virtual ~LifespanComponent();
 
 	virtual bool start();

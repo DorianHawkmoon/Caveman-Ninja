@@ -3,8 +3,8 @@
 #define COLLISION_COMPONENT_H
 
 #include "IComponent.h"
-#include "Collider.h"
 #include <string>
+class Collider;
 
 class CollisionComponent : public IComponent {
 public:
@@ -15,13 +15,9 @@ public:
 
 	virtual bool start();
 	virtual update_status preUpdate();
-	virtual update_status update();
-	virtual update_status postUpdate();
 	virtual bool cleanUp();
 
-	const Collider* getCollider() const {
-		return collider;
-	}
+	const Collider* getCollider() const;
 
 private:
 	Collider* collider;

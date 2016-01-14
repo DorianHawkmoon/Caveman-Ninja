@@ -6,7 +6,7 @@
 #include "ModuleRender.h"
 #include "ModuleTextures.h"
 
-SingleAnimationComponent::SingleAnimationComponent(const std::string & nameComponent, const std::string & texture, Animation& animation)
+SingleAnimationComponent::SingleAnimationComponent(const std::string & nameComponent, const std::string & texture, const Animation& animation)
 	: IComponent(nameComponent), nameTexture(texture), anim(animation),cleaned(true) {}
 
 SingleAnimationComponent::~SingleAnimationComponent() {}

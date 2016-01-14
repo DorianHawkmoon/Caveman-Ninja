@@ -8,14 +8,12 @@ class Collider;
 
 class DamageComponent : public IComponent {
 public:
-	DamageComponent(const std::string& name, int normalDamage, int specialDamage) : IComponent(name), normalDamage(normalDamage), specialDamage(specialDamage), strong(false) {}
+	DamageComponent(const std::string& name, int normalDamage, int specialDamage);
 	virtual ~DamageComponent();
 
 	virtual IComponent* makeClone() const;
 
-	int getDamage() const {
-		return (strong) ? specialDamage : normalDamage;
-	}
+	int getDamage() const;
 
 	bool strong;
 private:

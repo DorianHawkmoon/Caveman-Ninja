@@ -27,7 +27,7 @@ struct ControlEntity {
 		stateJump = TypeJump::NONE;
 	}
 
-	virtual ~ControlEntity() {}
+	~ControlEntity() {}
 
 	//direction move
 	int moveX;

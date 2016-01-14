@@ -10,10 +10,10 @@
 #include "LifespanComponent.h"
 
 Entity * Items::makeItem() {
-	int random=Utils::range(39);
-	if (random < 32) {
+	int random=Utils::range(100);
+	if (random < 50) {
 		return makeItem(TypeItem::SMALL_FOOD);
-	} else if (random < 35) {
+	} else if (random < 80) {
 		return makeItem(TypeItem::MEDIUM_FOOD);
 	} else {
 		return makeItem(TypeItem::BIG_FOOD);

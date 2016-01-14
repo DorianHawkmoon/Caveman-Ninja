@@ -7,7 +7,6 @@ class Score;
 namespace GUI {
 	class GUIScore : public GUILabel {
 	public:
-		//const std::string& text, const SDL_Color& color, const std::string& font, const GUILocation& location, int size = 12
 		GUIScore(const Score* score, const SDL_Color& color, const std::string& font, const GUILocation& location, int size = 12);
 		virtual ~GUIScore();
 

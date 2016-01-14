@@ -3,8 +3,6 @@
 #define MODULE_SCENE_H
 
 #include "Module.h"
-#include "ModuleAudio.h"
-#include "SDL_mixer/SDL_mixer.h"
 
 struct SDL_Texture;
 class Scene;
@@ -32,8 +30,8 @@ private:
 	Scene* currentScene;
 	Scene* nextScene;
 
-	Uint32 startTime;
-	Uint32 totalTime;
+	unsigned int startTime;
+	unsigned int totalTime;
 	bool fadingIn = true;
 
 private:

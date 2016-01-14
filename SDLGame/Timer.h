@@ -11,8 +11,8 @@ public:
 	void unpause();
 	void stop();
 
-	bool isPaused();
-	bool isStopped();
+	bool isPaused() const;
+	bool isStopped() const;
 
 	unsigned int value() const;
 	float miliToSeconds(unsigned int miliseconds);

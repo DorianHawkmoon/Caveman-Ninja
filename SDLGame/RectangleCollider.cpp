@@ -6,7 +6,8 @@
 #include "Transform.h"
 #include "LineCollider.h"
 
-RectangleCollider::RectangleCollider(const fPoint& position, const iPoint& rectangle, float rotation, TypeCollider type) : Collider(position, type), rect(rectangle), rotation(rotation) {}
+RectangleCollider::RectangleCollider(const fPoint& position, const iPoint& rectangle, float rotation, TypeCollider type) :
+		Collider(position, type), rect(rectangle), rotation(rotation) {}
 
 RectangleCollider::~RectangleCollider() {}
 
@@ -42,7 +43,6 @@ void RectangleCollider::paintCollider(const iPoint & pivot) const {
 
 	if (global.rotation == 0) {
 		iPoint pos(static_cast<int>(global.position.x), static_cast<int>(global.position.y));
-
 		App->renderer->paintRectangle(color, pos, rect);
 	} else {
 		App->renderer->paintRectangle(color, global, rect, pivot);
@@ -55,9 +55,13 @@ Collider * RectangleCollider::clone() const {
 	return Collider::clone(result);
 }
 
+inline iPoint RectangleCollider::getSize() const {
+	return rect;
+}
+
 
 bool RectangleCollider::checkCollisionRotated(const RectangleCollider * other, const Transform & otherTrans, const Transform & self) const {
-	//Code isnpired from Ignacio Astorga
+	//Code isnpired from Ignacio Astorga, not working
 	// Obtiene los puntos de los rectángulos
 	std::vector<fPoint> thisPoints = getPoints(self.rotation);
 	std::vector<fPoint> otherPoints = other->getPoints(otherTrans.rotation);
@@ -136,16 +140,22 @@ bool RectangleCollider::checkCollisionRotated(const RectangleCollider * other, c
 	return collides;
 }
 
+bool RectangleCollider::checkCollision(const Collider * r) const {
+	return r->checkSpecificCollision(this);
+}
+
 bool RectangleCollider::checkSpecificCollision(const Collider * self) const {
 	return  self->checkCollision(this);
 }
 
 bool RectangleCollider::checkCollision(const RectangleCollider * other) const {
+	//get global positions
 	Transform transOther = other->getGlobalTransform();
 	transOther.rotation += other->rotation;
 	Transform transThis = this->getGlobalTransform();
 	transThis.rotation += rotation;
 
+	//check rotations, if not, go to the simples way (create sdl_rect)
 	if (transThis.rotation == 0 && transOther.rotation == 0) {
 		fPoint global = transOther.position;
 		SDL_Rect otherRect = {static_cast<int>(global.x),
@@ -170,7 +180,7 @@ bool RectangleCollider::checkCollision(const CircleCollider * other) const {
 	if (rotation == 0) {
 		//Closest point on collision box
 		iPoint closestPoint;
-
+		//center circle
 		iPoint circle(static_cast<int>(globalCircle.x), 
 					static_cast<int>(globalCircle.y));
 
@@ -253,10 +263,12 @@ std::vector<fPoint> RectangleCollider::getPoints(float totalRotation) const {
 	if (parentTransform != nullptr) {
 		center += parentTransform->getGlobalTransform().position;
 	}
+	//get the offset to add to the position and get the center of rectangle
 	float pointOffsetX = rect.x / 2.0f;
 	float pointOffsetY = rect.y / 2.0f;
 	center.x += pointOffsetX;
 	center.y += pointOffsetY;
+
 	std::vector<fPoint> points = {
 		center + fPoint(-pointOffsetX, -pointOffsetY).rotate(totalRotation),
 		center + fPoint(+pointOffsetX, -pointOffsetY).rotate(totalRotation),
@@ -266,6 +278,7 @@ std::vector<fPoint> RectangleCollider::getPoints(float totalRotation) const {
 }
 
 fPoint RectangleCollider::getCenter() const {
+	//the center is really the top left point of rectangle, the position of rectangle
 	fPoint positionCenter = position;
 	if (parentTransform != nullptr) {
 		positionCenter += parentTransform->getGlobalTransform().position;

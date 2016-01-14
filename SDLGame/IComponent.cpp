@@ -13,3 +13,21 @@ void IComponent::setParent(Entity * entity) {
 inline bool IComponent::isEqual(const IComponent * another) {
 	return componentID.compare(another->getID()) == 0;
 }
+
+void IComponent::enable() {
+	if (!componentEnabled) {
+		componentEnabled = true;
+		start();
+	}
+}
+
+void IComponent::disable() {
+	if (componentEnabled) {
+		componentEnabled = false;
+		toClean = true;
+	}
+}
+
+bool IComponent::isEnable() {
+	return (componentEnabled || toClean);
+}

@@ -4,17 +4,16 @@
 
 #include "DestroyOnCollisionComponent.h"
 #include "Particle.h"
+class Collider;
+
 class OnCollisionWeaponComponent : public DestroyOnCollisionComponent {
 public:
 	OnCollisionWeaponComponent(const std::string& name, const std::string& nameTexture, const Animation& normal, const Animation& strong);
 	virtual ~OnCollisionWeaponComponent();
 
 	virtual bool start();
-
-	virtual void onCollisionEnter(const Collider* self, const Collider* another); //destroy and add the animation (a copy)
-
+	virtual void onCollisionEnter(const Collider* self, const Collider* another);
 	virtual update_status preUpdate();
-
 	virtual bool cleanUp();
 
 private:

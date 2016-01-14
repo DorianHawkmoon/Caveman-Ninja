@@ -21,7 +21,6 @@ bool GravityWeaponComponent::start() {
 }
 
 update_status GravityWeaponComponent::update() {
-
 	if (motion != nullptr) {
 		//apply force gravity
 		if (timer.value() > 200) {

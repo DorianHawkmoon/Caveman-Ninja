@@ -13,12 +13,8 @@ public:
 
 protected:
 	unsigned int soundGround;
-	virtual void loadSound() {
-		soundGround = App->audio->loadEffect("landedJump.wav");
-	}
-	virtual void playSound() {
-		App->audio->playEffect(soundGround);
-	}
+	virtual void loadSound();
+	virtual void playSound();
 };
 
 

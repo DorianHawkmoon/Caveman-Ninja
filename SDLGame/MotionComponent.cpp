@@ -3,7 +3,7 @@
 #include "ModuleTimer.h"
 
 
-MotionComponent::MotionComponent(std::string nameComponent): IComponent(nameComponent), velocity(0,0), speed(0) {
+MotionComponent::MotionComponent(const std::string& nameComponent): IComponent(nameComponent), velocity(0,0), speed(0) {
 }
 
 

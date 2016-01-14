@@ -143,7 +143,6 @@ bool ModuleRender::paintRectangle(const SDL_Color& color, const iPoint& position
 	bool result = true;
 
 	SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, color.a);
-
 	SDL_Rect cam = getCorrectCamera(speed);
 
 	int x = static_cast<int>(position.x * SCREEN_SIZE - cam.x);
@@ -326,6 +325,7 @@ SDL_Rect ModuleRender::getCorrectCamera(float speed) const {
 	iPoint rightLimit = camera.rightLimit*SCREEN_SIZE;
 	iPoint leftLimit = camera.leftLimit*SCREEN_SIZE;
 	SDL_Rect size=camera.getWindowsSize();
+
 	iPoint offset = {0,0};
 	if (cam.x+size.w > rightLimit.x) {
 		offset.x = -(cam.x+size.w - rightLimit.x);

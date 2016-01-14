@@ -61,9 +61,11 @@ update_status ModuleInput::preUpdate() {
 
 	if (getKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN) {
 		return UPDATE_STOP;
-	} else if (getWindowEvent(WE_PAUSE)) {
+
+	} else if (windowEvents[WE_PAUSE] || windowEvents[WE_HIDE]) {
 		App->pause();
-	} else if (getKey(SDL_SCANCODE_P) == KEY_DOWN) {
+
+	} else if (getKey(SDL_SCANCODE_P) == KEY_DOWN || windowEvents[WE_SHOW]) {
 		if (App->isPaused()) {
 			App->unpause();
 		} else {
@@ -79,10 +81,10 @@ update_status ModuleInput::preUpdate() {
 			break;
 			case SDL_WINDOWEVENT:
 				switch (events.window.event) {
-					//case SDL_WINDOWEVENT_LEAVE:
+					case SDL_WINDOWEVENT_LEAVE:
 					case SDL_WINDOWEVENT_HIDDEN:
 					case SDL_WINDOWEVENT_MINIMIZED:
-					//case SDL_WINDOWEVENT_FOCUS_LOST:
+					case SDL_WINDOWEVENT_FOCUS_LOST:
 						windowEvents[WE_HIDE] = true;
 						break;
 

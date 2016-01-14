@@ -1,4 +1,7 @@
 #include "WallCollisionComponent.h"
+#include "Collider.h"
+#include "Entity.h"
+#include "MotionComponent.h"
 
 WallCollisionComponent::WallCollisionComponent(const std::string & name) :IComponent(name) {}
 
@@ -26,7 +29,7 @@ void WallCollisionComponent::onCollisionEnter(const Collider * self, const Colli
 	MotionComponent* motion = static_cast<MotionComponent*>(parent->getComponent("motion"));
 
 	bool onX = true;
-	if (wallRelativeDirection.x * motion->velocity.x <= 0) {	// Si dan menor que 0, tienen signo distinto, luego son direcciones opuestas
+	if (wallRelativeDirection.x * motion->velocity.x <= 0) {
 		onX = false;
 	}
 	// quieto bicho!

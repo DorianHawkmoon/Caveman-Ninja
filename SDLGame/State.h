@@ -44,6 +44,10 @@ protected:
 	std::list<StateTransition<T>*> transitions;
 };
 
+
+
+
+
 template<class T>
 State<T>::State(T & value) : value(value) {}
 

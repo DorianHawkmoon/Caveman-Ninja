@@ -51,7 +51,6 @@ private:
 	void addGameOver();
 	void dead();
 	void debugging();
-
 	void portraitAnimation();
 };
 

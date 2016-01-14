@@ -29,3 +29,23 @@ bool ModuleTimer::cleanUp() {
 	frames = 0;
 	return true;
 }
+
+int ModuleTimer::getDeltaFrame() const {
+	return deltaTime;
+}
+
+int ModuleTimer::getFPS() const {
+	return fps;
+}
+
+void ModuleTimer::pause() {
+	fpsTimer.pause();
+}
+
+void ModuleTimer::unpause() {
+	fpsTimer.unpause();
+}
+
+void ModuleTimer::resetFrames() {
+	frames = 0;
+}

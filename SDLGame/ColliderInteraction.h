@@ -129,7 +129,8 @@ public:
 		matrix[TypeCollider::TRIGGER][TypeCollider::GRAVITY] = false;
 		matrix[TypeCollider::TRIGGER][TypeCollider::TRIGGER] = false;
 	}
-	virtual ~ColliderInteraction() {};
+	
+	~ColliderInteraction() {};
 
 	bool permission(const TypeCollider& one, const TypeCollider& another) const {
 		return matrix[one][another];

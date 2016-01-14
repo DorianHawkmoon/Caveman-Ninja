@@ -90,7 +90,7 @@ update_status EnemyBehaviour::postUpdate() {
 	return UPDATE_CONTINUE;
 }
 
-void EnemyBehaviour::attacking(Transform & globalMine, Transform& globalPlayer) {
+void EnemyBehaviour::attacking(const Transform & globalMine, const Transform& globalPlayer) {
 	int attack = parent->controller.attack;
 
 	const Animation* actualAnimation = animations->getActualAnimation();
@@ -159,7 +159,7 @@ void EnemyBehaviour::attacking(Transform & globalMine, Transform& globalPlayer) 
 	}
 }
 
-void EnemyBehaviour::checkCollisions(Transform& globalMine, Transform& globalPlayer) {
+void EnemyBehaviour::checkCollisions(const Transform& globalMine, const Transform& globalPlayer) {
 	if (parent->controller.stateJump != TypeJump::NONE) {
 		return;
 	}
@@ -190,7 +190,7 @@ void EnemyBehaviour::checkCollisions(Transform& globalMine, Transform& globalPla
 	}
 }
 
-void EnemyBehaviour::forward(Transform& globalMine, Transform& globalPlayer) {
+void EnemyBehaviour::forward(const Transform& globalMine, const Transform& globalPlayer) {
 	ControlEntity* controller = &parent->controller;
 	//I'm walking for a time
 	if (controlIA.value() > 2000) {
@@ -209,7 +209,7 @@ void EnemyBehaviour::forward(Transform& globalMine, Transform& globalPlayer) {
 	}
 }
 
-void EnemyBehaviour::runningAway(Transform& globalMine) {
+void EnemyBehaviour::runningAway(const Transform& globalMine) {
 	//check if dead to set corresponding motion
 	const Collider* myCollider = (static_cast<CollisionComponent*>(parent->getComponent("collider")))->getCollider();
 	iPoint size = myCollider->getSize();
@@ -222,7 +222,7 @@ void EnemyBehaviour::runningAway(Transform& globalMine) {
 	}
 }
 
-void EnemyBehaviour::search(Transform & globalMine, Transform & globalPlayer) {
+void EnemyBehaviour::search(const Transform & globalMine, const  Transform & globalPlayer) {
 	ControlEntity* controller = &parent->controller;
 	if (controlIA.value() < 1000) {
 		setController(iPoint(0, previousplayer.y));
@@ -261,7 +261,7 @@ void EnemyBehaviour::search(Transform & globalMine, Transform & globalPlayer) {
 	previousplayer = direction;
 }
 
-void EnemyBehaviour::running(Transform& globalMine, Transform& globalPlayer) {
+void EnemyBehaviour::running(const Transform& globalMine, const Transform& globalPlayer) {
 	//he is running, stop after a time
 	if (controlIA.value() > 1700) {
 		state = FORWARD;
@@ -272,7 +272,7 @@ void EnemyBehaviour::running(Transform& globalMine, Transform& globalPlayer) {
 	setController(iPoint(previousplayer.x, 0));
 }
 
-void EnemyBehaviour::jumping(Transform & globalMine, Transform & globalPlayer) {
+void EnemyBehaviour::jumping(const Transform & globalMine, const  Transform & globalPlayer) {
 	//make the jump in the player direction
 	if (parent->controller.stateJump != TypeJump::JUMP) {
 		state = SEARCHING;
@@ -311,7 +311,7 @@ void EnemyBehaviour::setController(iPoint direction) {
 	}
 }
 
-iPoint EnemyBehaviour::directionPlayer(Transform & globalMine, Transform & globalPlayer) const {
+iPoint EnemyBehaviour::directionPlayer(const Transform & globalMine, const Transform & globalPlayer) const {
 	iPoint result = iPoint();
 	result.setToZero();
 

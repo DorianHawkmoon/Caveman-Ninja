@@ -26,7 +26,7 @@ public:
 	const Animation* getActualAnimation() const;
 
 private:
-	std::string nameTexture;
+	const std::string nameTexture;
 	StateMachine<Animation>* state;
 	SDL_Texture* texture;
 

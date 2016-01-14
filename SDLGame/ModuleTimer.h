@@ -15,23 +15,14 @@ public:
 	update_status preUpdate();
 	bool cleanUp();
 
-	inline int getDeltaFrame() const {
-		return deltaTime;
-	}
-	inline int getFPS() const {
-		return fps;
-	}
+	int getDeltaFrame() const;
+	int getFPS() const;
 
-	void pause() {
-		fpsTimer.pause();
-	}
-	void unpause() {
-		fpsTimer.unpause();
-	}
+	void pause();
+	void unpause();
 
-	inline void resetFrames() {
-		frames = 0;
-	}
+	void resetFrames();
+
 private:
 	Timer fpsTimer;
 	unsigned int deltaTime;

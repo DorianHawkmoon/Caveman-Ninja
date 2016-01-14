@@ -8,6 +8,7 @@
 
 #define DEFAULT_MUSIC_FADE_TIME 2.0f
 
+//TODO improve it, same way as texture, track loaded effect and share it, not reloaded
 class ModuleAudio :	public Module {
 public:
 	ModuleAudio(bool started=true);

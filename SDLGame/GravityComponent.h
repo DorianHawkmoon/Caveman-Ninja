@@ -24,7 +24,6 @@ public:
 	virtual update_status postUpdate();
 
 	virtual void onCollisionEnter(const Collider* self, const Collider* another);
-	virtual void onCollisionExit(const Collider* self, const Collider* another) {};
 	virtual void onCollisionStay(const Collider* self, const Collider* another);;
 
 	bool isFalling();

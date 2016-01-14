@@ -9,7 +9,7 @@ struct SDL_Texture;
 
 class SingleAnimationComponent : public IComponent {
 public:
-	SingleAnimationComponent(const std::string& nameComponent, const std::string& texture, Animation& animation);
+	SingleAnimationComponent(const std::string& nameComponent, const std::string& texture, const Animation& animation);
 	virtual ~SingleAnimationComponent();
 
 	virtual bool start();

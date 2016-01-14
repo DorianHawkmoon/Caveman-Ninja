@@ -16,25 +16,25 @@ public:
 	virtual ~RectangleCollider();
 
 	virtual void paintCollider() const;
+	//paint with a rotation/pivot
 	void paintCollider(const iPoint& pivot) const;
 
-	bool checkCollision(const Collider* r) const {
-		return r->checkSpecificCollision(this);
-	}
+	bool checkCollision(const Collider* r) const;
 	bool checkSpecificCollision(const Collider* self) const;
 	bool checkCollision(const RectangleCollider* other) const;
 	bool checkCollision(const CircleCollider* other) const;
 	bool checkCollision(const LineCollider* other) const;;
-	Collider* clone()const;
+
+	Collider* clone() const;
 
 	float rotation;
-	inline iPoint getSize()const {
-		return rect;
-	}
+	inline iPoint getSize() const;
 
 private:
 	iPoint rect;
+	//concrete checks when the rectangle is rotated (not working)
 	bool checkCollisionRotated(const RectangleCollider* other, const Transform & otherTrans, const Transform & self) const;
+	//get the vertex of the rectangle with the rotation
 	std::vector<fPoint> getPoints(float totalRotation) const;
 	fPoint getCenter() const;
 };

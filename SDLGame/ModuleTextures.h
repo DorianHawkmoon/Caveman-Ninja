@@ -4,15 +4,12 @@
 
 #include "Module.h"
 #include <list>
-#include <vector>
 #include "SDL_image\SDL_image.h"
 #include "SDL\SDL.h"
 
 struct LoadedTexture {
-	LoadedTexture(const std::string& name, SDL_Texture* texture) : name(name), texture(texture),count(1) {}
-	~LoadedTexture() {
-		SDL_DestroyTexture(texture);
-	}
+	LoadedTexture(const std::string& name, SDL_Texture* texture);
+	~LoadedTexture();
 
 	const std::string name;
 	int count;

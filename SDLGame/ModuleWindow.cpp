@@ -5,9 +5,6 @@ ModuleWindow::ModuleWindow(bool started):Module(started) {}
 
 // Destructor
 ModuleWindow::~ModuleWindow() {
-	if (screen_surface != nullptr) {
-	}
-
 	LOG("Destroying SDL window and quitting all SDL systems");
 
 	//Destroy window

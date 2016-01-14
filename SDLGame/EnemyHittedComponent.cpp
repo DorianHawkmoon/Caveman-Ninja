@@ -51,18 +51,21 @@ update_status EnemyHittedComponent::update() {
 				playSound = false;
 		}
 
+		//start the timer to die or run
 		if (timer.isStopped()) {
 			if (motion->velocity.y == 0) {
 				motion->velocity.x = 0;
 				timer.start();
 			}
 
+		//is alive? come back!
 		} else if (timer.value() >= 800 && life->isAlive()) {
 			hitted = false;
 			collision->enable();
 			parent->controller.damage = 0;
 			timer.stop();
 
+		//is not, start dying
 		} else if (timer.value() >= 100 && !life->isAlive()) {
 			dead = true;
 			int dam = parent->controller.damage;

@@ -7,7 +7,7 @@ struct SDL_Texture;
 
 class HorizontalSpriteScrollComponent :	public IComponent {
 public:
-	HorizontalSpriteScrollComponent(std::string nameComponent, std::string nameTexture);
+	HorizontalSpriteScrollComponent(const std::string& nameComponent, const std::string& nameTexture);
 	virtual ~HorizontalSpriteScrollComponent();
 
 	virtual bool start();
@@ -24,7 +24,7 @@ public:
 	float speedCamera;
 
 private:
-	std::string name;
+	const std::string name;
 	SDL_Texture* texture;
 
 	int scrollingOffset;

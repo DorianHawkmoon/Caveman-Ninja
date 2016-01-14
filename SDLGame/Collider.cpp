@@ -76,6 +76,14 @@ void Collider::removeListener(CollisionListener * listener) {
 }
 
 
+Collider * Collider::clone(Collider * cloning) const {
+	cloning->listeners.insert(cloning->listeners.end(), listeners.begin(), listeners.end());
+	cloning->actualFrame->insert(cloning->actualFrame->end(), actualFrame->begin(), actualFrame->end());
+	cloning->previousFrame->insert(cloning->previousFrame->end(), previousFrame->begin(), previousFrame->end());
+
+	return cloning;
+}
+
 //notify onExit
 void Collider::checkExitCollision() {
 	for (auto it = previousFrame->begin(); it != previousFrame->end(); ++it) {
@@ -96,4 +104,17 @@ void Collider::clearCollisions() {
 
 	// Vacía la lista de colisiones actuales
 	actualFrame->clear();
+}
+
+Transform Collider::getGlobalTransform() const {
+	if (parentTransform != nullptr) {
+		Transform global = parentTransform->getGlobalTransform();
+		global.position += position;
+		return global;
+
+	} else {
+		Transform result;
+		result.position += position;
+		return result;
+	}
 }

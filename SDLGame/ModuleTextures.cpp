@@ -1,5 +1,4 @@
 #include "ModuleTextures.h"
-#include "SDL_image/SDL_image.h"
 #include "Globals.h"
 #include "Application.h"
 #include "ModuleRender.h"
@@ -91,4 +90,10 @@ void ModuleTextures::unload(SDL_Texture * texture) {
 			textures.erase(it);
 		}
 	}
+}
+
+LoadedTexture::LoadedTexture(const std::string & name, SDL_Texture * texture) : name(name), texture(texture), count(1) {}
+
+LoadedTexture::~LoadedTexture() {
+	SDL_DestroyTexture(texture);
 }

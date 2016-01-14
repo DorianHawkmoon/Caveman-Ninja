@@ -17,6 +17,24 @@ namespace GUI {
 
 	void GUILabel::handleEvent(const SDL_Event&) {}
 
+	SDL_Color GUILabel::getColor() const {
+		return color;
+	}
+
+	void GUILabel::setColor(const SDL_Color & color) {
+		this->color = color;
+		createTexture();
+	}
+
+	std::string GUILabel::getText() const {
+		return text;
+	}
+
+	void GUILabel::setText(const std::string & text) {
+		this->text = text;
+		createTexture();
+	}
+
 	void GUILabel::setSize(unsigned int size) {
 		if (this->size != size) {
 			if (font != nullptr) {
@@ -26,6 +44,10 @@ namespace GUI {
 			font = App->fonts->load(nameFont.c_str(), size);
 			createTexture();
 		}
+	}
+
+	unsigned int GUILabel::getSize() {
+		return size;
 	}
 
 

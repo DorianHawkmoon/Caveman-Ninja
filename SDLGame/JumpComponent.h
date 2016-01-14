@@ -4,11 +4,11 @@
 
 #include "IComponent.h"
 #include <string>
-#include "MotionComponent.h"
+enum TypeJump;
 
 class JumpComponent : public IComponent {
 public:
-	JumpComponent(std::string nameComponent) : IComponent(nameComponent), speed(1), doubleSpeed(1),cleaned(true) {};
+	JumpComponent(const std::string& nameComponent);
 	virtual ~JumpComponent() {};
 
 	virtual bool start();

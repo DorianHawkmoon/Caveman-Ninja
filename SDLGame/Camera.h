@@ -14,9 +14,7 @@ public:
 	}
 	virtual ~Camera() {}
 
-	void setCamera(const Transform* camera) {
-		transform = camera;
-	}
+	void setCamera(const Transform* camera);
 
 	int getX(float speed = 1.0f) const;
 	int getY(float speed = 1.0f) const;

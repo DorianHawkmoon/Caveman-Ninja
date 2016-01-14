@@ -28,30 +28,12 @@ namespace GUI {
 	
 		virtual void handleEvent(const SDL_Event& event);
 
-		SDL_Color getColor() {
-			return color;
-		}
-
-
-		void setColor(const SDL_Color& color) {
-			this->color = color;
-			createTexture();
-		}
-
-		std::string getText() {
-			return text;
-		}
-
-		void setText(std::string& text) {
-			this->text = text;
-			createTexture();
-		}
-
+		SDL_Color getColor() const;
+		void setColor(const SDL_Color& color);
+		std::string getText() const;
+		void setText(const std::string& text);
 		void setSize(unsigned int size);
-
-		inline unsigned int getSize() {
-			return size;
-		}
+		unsigned int getSize();
 
 	private:
 		std::string nameFont;

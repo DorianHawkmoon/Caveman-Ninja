@@ -19,13 +19,12 @@ public:
 
 	bool checkCollision(const Collider* r) const;
 	bool checkSpecificCollision(const Collider* self) const;
+	//not working well
 	bool checkCollision(const RectangleCollider* other) const;
 	bool checkCollision(const CircleCollider* other) const;
 	bool checkCollision(const LineCollider* other) const;
 
-	Collider* clone() const {
-		return new LineCollider(fPoint(position), std::vector<fPoint>(points), type);
-	}
+	Collider* clone() const;
 
 	inline iPoint getSize() const {
 		return iPoint( 1, thickness);

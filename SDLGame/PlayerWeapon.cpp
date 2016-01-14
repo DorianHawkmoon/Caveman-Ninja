@@ -18,9 +18,9 @@ Entity * PlayerWeapon::makeWeapon(const Weapon& type) {
 	Entity* result = new Entity();
 
 	switch (type) {
-	case TOMAHAWK:
-		tomahawk(result);
-		break;
+		case TOMAHAWK:
+			tomahawk(result);
+			break;
 	}
 
 	return result;
@@ -32,7 +32,7 @@ void PlayerWeapon::tomahawk(Entity * entity) {
 	gravity->maxVelocity = 500;
 	entity->addComponent(gravity);
 
-	
+
 	Animation anim = Animation(8);
 	anim.sizeFrame = {0,0,32,32};
 	anim.offset = {-5,-6};
@@ -49,7 +49,7 @@ void PlayerWeapon::tomahawk(Entity * entity) {
 	CollisionComponent* collider = new CollisionComponent("collider", circle);
 	entity->addComponent(collider);
 
-	
+
 	Animation strong(1);
 	strong.sizeFrame = {128,0,64,64};
 	strong.offset = {-32,-32};

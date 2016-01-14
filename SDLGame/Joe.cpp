@@ -487,6 +487,8 @@ void Joe::makeAnimations(Entity* entity) {
 	simpleAttackAnimation->addTransition(&transitionVictory);
 	lookingUpAnimation->addTransition(&transitionVictory);
 
+
+
 	//create the component
 	AnimationComponent* component=new AnimationComponent("animations", "Joe.png", animations);
 	entity->addComponent(component);

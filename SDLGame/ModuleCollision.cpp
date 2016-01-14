@@ -52,6 +52,7 @@ void ModuleCollision::removeCollider(Collider * collider) {
 void ModuleCollision::checkCollisions() {
 	std::list<Collider*>::iterator one = colliders.begin();
 	std::list<Collider*>::iterator two = std::next(one);
+	//check with reflexion
 	while (one != colliders.end()) {
 		if (DEBUG_COLLISIONS) {
 			(*one)->paintCollider();

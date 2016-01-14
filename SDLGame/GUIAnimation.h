@@ -24,7 +24,7 @@ namespace GUI {
 
 
 	private:
-		std::string nameTexture;
+		const std::string nameTexture;
 		StateMachine<Animation>* state;
 
 		bool cleaned;

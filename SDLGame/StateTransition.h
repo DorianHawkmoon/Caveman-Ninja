@@ -26,13 +26,7 @@ public:
 	bool start();
 	bool cleanUp();
 
-	StateTransition<T>* clone() const {
-		StateTransition<T>* result = new StateTransition<T>(newState);
-		for (auto it = conditions.begin(); it != conditions.end(); ++it) {
-			result->addCondition(*it);
-		}
-		return result;
-	}
+	StateTransition<T>* clone() const;
 
 private:
 	/**
@@ -44,6 +38,10 @@ private:
 	*/
 	State<T>* newState; //i don't own the state
 };
+
+
+
+
 
 #include "Condition.h"
 
@@ -97,6 +95,15 @@ bool StateTransition<T>::cleanUp() {
 	bool result = true;
 	for (std::list<Condition*>::iterator it = conditions.begin(); it != conditions.end() && result; ++it) {
 		result = (*it)->cleanUp();
+	}
+	return result;
+}
+
+template<class T>
+StateTransition<T>* StateTransition<T>::clone() const {
+	StateTransition<T>* result = new StateTransition<T>(newState);
+	for (auto it = conditions.begin(); it != conditions.end(); ++it) {
+		result->addCondition(*it);
 	}
 	return result;
 }

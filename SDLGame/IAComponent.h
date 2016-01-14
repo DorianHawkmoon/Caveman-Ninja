@@ -13,7 +13,8 @@ public:
 
 	virtual bool start();
 
-	virtual update_status preUpdate();
+	update_status preUpdate();
+	//concrete subclass of IA will use this preUpdate
 	virtual update_status delegatedPreUpdate() { 
 		return UPDATE_CONTINUE;
 	}

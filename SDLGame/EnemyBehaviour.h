@@ -40,16 +40,16 @@ private:
 	//1 esta atacando
 	//2 se prepara para correr
 	//3 esta corriendo
-	void attacking(Transform& globalMine, Transform& globalPlayer);
-	void checkCollisions(Transform& globalMine, Transform& globalPlayer);
-	void forward(Transform& globalMine, Transform& globalPlayer);
-	void runningAway(Transform& globalMine);
-	void search(Transform& globalMine, Transform& globalPlayer);
-	void running(Transform& globalMine, Transform& globalPlayer);
-	void jumping(Transform& globalMine, Transform& globalPlayer);
+	void attacking(const Transform& globalMine, const Transform& globalPlayer);
+	void checkCollisions(const Transform& globalMine, const Transform& globalPlayer);
+	void forward(const Transform& globalMine, const Transform& globalPlayer);
+	void runningAway(const Transform& globalMine);
+	void search(const Transform& globalMine, const Transform& globalPlayer);
+	void running(const Transform& globalMine, const Transform& globalPlayer);
+	void jumping(const Transform& globalMine, const Transform& globalPlayer);
 	void setController(iPoint direction);
 
-	iPoint directionPlayer(Transform & globalMine, Transform & globalPlayer) const;
+	iPoint directionPlayer(const Transform & globalMine, const Transform & globalPlayer) const;
 
 	statesIA state;
 	iPoint previousplayer;

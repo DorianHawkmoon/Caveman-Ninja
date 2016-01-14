@@ -36,6 +36,10 @@ private:
 	State<T>* state;
 };
 
+
+
+
+
 #include "State.h"
 
 template<class T>

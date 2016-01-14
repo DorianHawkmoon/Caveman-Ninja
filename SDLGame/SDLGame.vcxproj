@@ -22,7 +22,9 @@
     <ClCompile Include="AnimationComponent.cpp" />
     <ClCompile Include="Application.cpp" />
     <ClCompile Include="Camera.cpp" />
-    <ClCompile Include="CircleCollider.cpp" />
+    <ClCompile Include="CircleCollider.cpp">
+      <ShowIncludes Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ShowIncludes>
+    </ClCompile>
     <ClCompile Include="Collider.cpp" />
     <ClCompile Include="CollisionComponent.cpp" />
     <ClCompile Include="DamageComponent.cpp" />

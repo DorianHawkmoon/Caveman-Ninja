@@ -11,18 +11,13 @@ public:
 	virtual IComponent* makeClone() const;
 
 	void modifyActualLife(int modify);
-
-	inline int getActualLife() const {
-		return actualLife;
-	}
-
+	int getActualLife() const;
 	void setActualLife(int life);
-
 	int getMaxLife() const;
-
 	bool isAlive() const;
 
-	int previousLife;
+	int previousLife; //weird hack for portrait animation
+
 private:
 	int actualLife;
 	int maxLife;

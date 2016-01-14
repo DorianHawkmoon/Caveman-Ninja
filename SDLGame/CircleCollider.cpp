@@ -23,9 +23,17 @@ void CircleCollider::paintCollider() const {
 	App->renderer->paintCircle(renderColor, global.position, radius);
 }
 
+inline bool CircleCollider::checkCollision(const Collider * r) const {
+	return r->checkSpecificCollision(this);
+}
+
 Collider * CircleCollider::clone() const {
 	CircleCollider* result = new CircleCollider(position, radius, type);
 	return Collider::clone(result);
+}
+
+inline iPoint CircleCollider::getSize() const {
+	return iPoint(static_cast<int>(radius * 2), static_cast<int>(radius * 2));
 }
 
 fPoint CircleCollider::getGlobalPoint() const {

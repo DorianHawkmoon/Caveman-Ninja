@@ -38,19 +38,7 @@ public:
 	virtual bool checkCollision(const CircleCollider* other) const = 0;
 	virtual bool checkCollision(const LineCollider* other) const = 0;
 
-	Transform getGlobalTransform() const{
-		if (parentTransform != nullptr) {
-			Transform global=parentTransform->getGlobalTransform();
-			global.position += position;
-			return global;
-
-		} else {
-			Transform result;
-			result.position += position;
-			return result;
-		}
-	}
-
+	Transform getGlobalTransform() const;
 	virtual iPoint getSize() const = 0;
 
 public:
@@ -60,13 +48,7 @@ public:
 	Entity* parent;
 
 protected:
-	Collider* clone(Collider* cloning) const {
-		cloning->listeners.insert(cloning->listeners.end(), listeners.begin(), listeners.end());
-		cloning->actualFrame->insert(cloning->actualFrame->end(), actualFrame->begin(), actualFrame->end());
-		cloning->previousFrame->insert(cloning->previousFrame->end(), previousFrame->begin(), previousFrame->end());
-
-		return cloning;
-	}
+	Collider* clone(Collider* cloning) const;
 
 private:
 	std::list<CollisionListener*> listeners;

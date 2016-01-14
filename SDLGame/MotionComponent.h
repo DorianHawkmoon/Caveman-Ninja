@@ -9,7 +9,7 @@
 class MotionComponent :
 	public IComponent {
 public:
-	MotionComponent(std::string nameComponent);
+	MotionComponent(const std::string& nameComponent);
 	virtual ~MotionComponent();
 
 	virtual update_status update();

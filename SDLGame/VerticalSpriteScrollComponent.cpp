@@ -9,7 +9,7 @@
 #include "Entity.h"
 #include <cmath>
 
-VerticalSpriteScrollComponent::VerticalSpriteScrollComponent(std::string nameComponent, std::string nameTexture)
+VerticalSpriteScrollComponent::VerticalSpriteScrollComponent(const std::string& nameComponent, const std::string& nameTexture)
 	: IComponent(nameComponent), name(nameTexture), scrollingOffset(0), offset(0, 0), speedCamera(1.0f),
 	numberToCover(0), cleaned(true) {}
 

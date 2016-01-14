@@ -45,27 +45,15 @@ public:
 	*/
 	virtual IComponent* makeClone() const = 0;
 
-	virtual void onCollisionEnter(const Collider* self, const Collider* another) {};
+	/*virtual void onCollisionEnter(const Collider* self, const Collider* another) {};
 	virtual void onCollisionExit(const Collider* self, const Collider* another) {};
-	virtual void onCollisionStay(const Collider* self, const Collider* another) {};
+	virtual void onCollisionStay(const Collider* self, const Collider* another) {};*/
 
-	void enable() {
-		if (!componentEnabled) {
-			componentEnabled = true;
-			start();
-		}
-	}
+	void enable();
 
-	void disable() {
-		if (componentEnabled) {
-			componentEnabled = false;
-			toClean = true;
-		}
-	}
+	void disable();
 
-	bool isEnable() {
-		return (componentEnabled || toClean);
-	}
+	bool isEnable();
 
 protected:
 	Entity* parent;

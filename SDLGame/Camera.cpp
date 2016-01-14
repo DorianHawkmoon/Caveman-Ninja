@@ -1,6 +1,10 @@
 #include "Camera.h"
 #include "Transform.h"
 
+void Camera::setCamera(const Transform * camera) {
+	transform = camera;
+}
+
 int Camera::getX(float speed) const {
 	float x = (transform == nullptr) ? 0 : transform->getGlobalTransform().position.x;
 	x += offset.x;
@@ -10,7 +14,7 @@ int Camera::getX(float speed) const {
 }
 
 int Camera::getY(float speed) const {
-	float y = 0;// (transform == nullptr) ? 0 : transform->getGlobalTransform().position.y;
+	float y = 0;
 	y += offset.y;
 	y *= SCREEN_SIZE;
 	return static_cast<int>(y*speed);

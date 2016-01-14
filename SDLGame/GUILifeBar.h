@@ -3,8 +3,8 @@
 #define GUI_LIFEBAR_H
 
 #include "GUIComponent.h"
-#include <vector>
 #include <string>
+#include <vector>
 class Entity;
 class LifeComponent;
 

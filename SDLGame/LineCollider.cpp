@@ -81,6 +81,10 @@ bool LineCollider::checkCollision(const LineCollider * other) const {
 	return result;	// Llegados a este punto, ningún segmento colisiona con la línea
 }
 
+Collider * LineCollider::clone() const {
+	return new LineCollider(fPoint(position), std::vector<fPoint>(points), type);
+}
+
 fPoint LineCollider::getPointGlobalCoordinates(unsigned int index) const {
 	fPoint coordinates = points[index];
 	Transform global = getGlobalTransform();
@@ -193,15 +197,19 @@ bool LineCollider::checkCollisionRectangle(const RectangleCollider& segment, con
 }
 
 std::vector<fPoint> LineCollider::getPoints(const RectangleCollider& segment) const {
+	//get the position (top left of rectangle)
 	fPoint center = segment.position;
 	float totalRotation = segment.rotation;
 	if (parentTransform != nullptr) {
 		center += parentTransform->getGlobalTransform().position;
 	}
+	//get the center of rectangle
 	float pointOffsetX = segment.rect.x / 2.0f;
 	float pointOffsetY = segment.rect.y / 2.0f;
 	center.x += pointOffsetX;
 	center.y += pointOffsetY;
+
+	//get the points
 	std::vector<fPoint> points = {
 		center + fPoint(-pointOffsetX, -pointOffsetY).rotate(totalRotation),
 		center + fPoint(+pointOffsetX, -pointOffsetY).rotate(totalRotation),

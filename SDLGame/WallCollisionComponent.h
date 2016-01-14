@@ -4,9 +4,7 @@
 
 #include "IComponent.h"
 #include <string>
-#include "Collider.h"
-#include "Entity.h"
-#include "MotionComponent.h"
+class Collider;
 
 class WallCollisionComponent : public IComponent {
 public:
@@ -15,9 +13,8 @@ public:
 
 	virtual IComponent* makeClone() const;
 
-	virtual void onCollisionEnter(const Collider* self, const Collider* another);;
-
-	virtual void onCollisionStay(Collider* self, Collider* another);;
+	virtual void onCollisionEnter(const Collider* self, const Collider* another);
+	virtual void onCollisionStay(Collider* self, Collider* another);
 };
 
 

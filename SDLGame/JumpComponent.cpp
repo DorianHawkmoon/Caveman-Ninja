@@ -2,6 +2,10 @@
 #include "Application.h"
 #include "ModuleTimer.h"
 #include "GravityComponent.h"
+#include "MotionComponent.h"
+#include "Entity.h"
+
+JumpComponent::JumpComponent(const std::string & nameComponent) : IComponent(nameComponent), speed(1), doubleSpeed(1), cleaned(true) {}
 
 bool JumpComponent::start() {
 	if (cleaned) {

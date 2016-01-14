@@ -34,19 +34,23 @@ public:
 	bool insideCamera(const SDL_Rect& one, float speed=1.0f) const;
 
 	bool paintGUI(SDL_Texture* texture, const GUITransform& transform, const SDL_Rect* sectionTexture);
+	
 	void resetCamera();
 	void setFaddingEffect(float normalized, const SDL_Color& color = SDL_Color());
 	void clearFaddingEffect();
 
 public:
-	SDL_Texture* circle;
-	SDL_Texture* rectangle;
+	
 	SDL_Renderer* renderer;
 	Camera camera;
 
 private:
 	SDL_Color fadingColor;
 	float normalizedFading;
+
+	SDL_Texture* circle;
+	SDL_Texture* rectangle;
+
 	SDL_Rect getCorrectCamera(float speed) const;
 	void paintFading();
 };

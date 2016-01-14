@@ -14,6 +14,10 @@ void LifeComponent::modifyActualLife(int modify) {
 	}
 }
 
+int LifeComponent::getActualLife() const {
+	return actualLife;
+}
+
 void LifeComponent::setActualLife(int life) {
 	actualLife = life;
 	if (actualLife > maxLife) {

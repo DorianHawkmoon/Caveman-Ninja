@@ -2,6 +2,7 @@
 #include "Entity.h"
 #include "Application.h"
 #include "ModuleCollision.h"
+#include "Collider.h"
 
 CollisionComponent::CollisionComponent(const std::string & name, Collider * collider) : IComponent(name), collider(collider), cleaned(true){
 	
@@ -39,18 +40,14 @@ update_status CollisionComponent::preUpdate() {
 	return UPDATE_CONTINUE;
 }
 
-update_status CollisionComponent::update() {
-	return UPDATE_CONTINUE;
-}
-
-update_status CollisionComponent::postUpdate() {
-	return UPDATE_CONTINUE;
-}
-
 bool CollisionComponent::cleanUp() {
 	if (!cleaned) {
 		App->collisions->removeCollider(collider);
 		cleaned = true;
 	}
 	return true;
+}
+
+const Collider * CollisionComponent::getCollider() const {
+	return collider;
 }

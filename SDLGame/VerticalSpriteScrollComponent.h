@@ -9,7 +9,7 @@
 
 class VerticalSpriteScrollComponent : public IComponent {
 public:
-	VerticalSpriteScrollComponent(std::string nameComponent, std::string nameTexture);
+	VerticalSpriteScrollComponent(const std::string& nameComponent, const std::string& nameTexture);
 	virtual ~VerticalSpriteScrollComponent();
 
 	virtual bool start();
@@ -26,7 +26,7 @@ public:
 	float speedCamera;
 
 private:
-	std::string name;
+	const std::string name;
 	SDL_Texture* texture;
 
 	int scrollingOffset;

@@ -12,7 +12,7 @@ public:
 
 	IComponent* makeClone() const;
 
-	const Entity* item; //owned
+	const Entity* item; //owned and cannot be modified
 };
 
 #endif // !DROP_ITEM_COMPONENT_H

@@ -6,6 +6,7 @@
 #include "DamageComponent.h"
 #include "Application.h"
 #include "ModuleTextures.h"
+#include "Collider.h"
 
 OnCollisionWeaponComponent::OnCollisionWeaponComponent(const std::string& name, const std::string& nameTexture, const Animation& normal, const Animation& strong) : DestroyOnCollisionComponent(name), strongParticle(nameTexture, strong), normalParticle(nameTexture, normal), nameTexture(nameTexture), cleaned(true) {
 	normalParticle.life = 300;

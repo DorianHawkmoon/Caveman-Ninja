@@ -63,11 +63,11 @@ void Timer::stop() {
 	pauseTime = 0;
 }
 
-bool Timer::isPaused() {
+bool Timer::isPaused() const {
 	return paused;
 }
 
-bool Timer::isStopped() {
+bool Timer::isStopped() const {
 	return stopped;
 }
 

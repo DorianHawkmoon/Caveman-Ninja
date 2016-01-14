@@ -11,7 +11,6 @@
 #include "GUILabel.h"
 #include "ModuleGUI.h"
 #include "GUIContainer.h"
-
 #include "GUIComponent.h"
 
 EntryScene::EntryScene() {}

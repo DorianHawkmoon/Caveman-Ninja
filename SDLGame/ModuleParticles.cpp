@@ -19,13 +19,6 @@ update_status ModuleParticles::postUpdate() {
 			p->postUpdate();
 			++it;
 		}
-
-			/*if (p->fx_played == false) {
-				p->fx_played = true;
-				App->audio->PlayFx(p->fx);
-			}*/
-		
-		
 	}
 
 	return UPDATE_CONTINUE;

@@ -6,7 +6,7 @@
 #include "Point.h"
 #include "Animation.h"
 #include <string>
-
+//TODO improve: add sound to particles
 struct Particle : public IUpdater {
 public:
 	Particle(const std::string& nameTexture, const Animation& anim) : anim(anim), nameTexture(nameTexture) {}
