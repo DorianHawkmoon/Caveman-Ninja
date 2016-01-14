@@ -104,7 +104,9 @@ bool ModulePlayer::cleanUp(){
 		delete deadBody;
 		deadBody = nullptr;
 	}
-	player->cleanUp();
+	if (player != nullptr) {
+		player->cleanUp();
+	}
 	return true;
 }
 
