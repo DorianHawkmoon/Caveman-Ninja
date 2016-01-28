@@ -19,10 +19,19 @@ public:
 	}
 
 	bool deleteTransition(const StateTransition<T>* transition) {
+		/* this compile on windows?!?!?!?
 		if (find(transitions.begin(), transitions.end(), transition) != transitions.end()) {
 			erase it;
 			return true;
 		}
+		*/
+		auto it = std::find(transitions.begin(), transitions.end(), transition);
+		if (it != transitions.end()) {
+			delete it;
+			transitions.erase(it);
+			return true;
+		}
+		return false;
 		return false;
 	}
 

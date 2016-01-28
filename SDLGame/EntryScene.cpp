@@ -19,7 +19,7 @@ EntryScene::EntryScene() {}
 EntryScene::~EntryScene() {}
 
 bool EntryScene::start() {
-	LOG("Loading title");
+	LOG("Loading title","");
 	App->renderer->camera.leftLimit = {0,0};
 	App->renderer->camera.rightLimit = {1088,256};
 	App->renderer->resetCamera();

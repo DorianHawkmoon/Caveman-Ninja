@@ -3,7 +3,7 @@
 #include <algorithm>
 #include "Application.h"
 #include "ModuleGUI.h"
-
+#include <cstring> //memset
 
 ModuleInput::ModuleInput(bool started): Module(started) {
 	memset(keyboard, KEY_IDLE, sizeof(KeyState) * MAX_KEYS);
@@ -11,13 +11,13 @@ ModuleInput::ModuleInput(bool started): Module(started) {
 
 // Destructor
 ModuleInput::~ModuleInput() {
-	LOG("Quiting SDL input event system");
+	LOG("Quiting SDL input event system","");
 	SDL_QuitSubSystem(SDL_INIT_EVENTS);
 }
 
 // Called before render is available
 bool ModuleInput::init() {
-	LOG("init SDL input event system");
+	LOG("init SDL input event system","");
 	bool ret = true;
 	SDL_Init(0);
 
@@ -118,7 +118,7 @@ update_status ModuleInput::preUpdate() {
 
 // Called before quitting
 bool ModuleInput::cleanUp() {
-	LOG("Disabling SDL input event subsystem");
+	LOG("Disabling SDL input event subsystem","");
 	memset(keyboard, KEY_IDLE, sizeof(KeyState) * MAX_KEYS);
 	return true;
 }

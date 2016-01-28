@@ -2,7 +2,7 @@
 
 #include "HorizontalSpriteScrollComponent.h"
 #include "Application.h"
-#include "SDL\SDL.h"
+#include "SDL/SDL.h"
 #include "ModuleRender.h"
 #include "ModuleTextures.h"
 #include "Camera.h"

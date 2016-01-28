@@ -22,7 +22,7 @@
 
 
 // maximum mumber of lines the output console should have
-static const WORD MAX_CONSOLE_LINES = 500;
+//static const WORD MAX_CONSOLE_LINES = 500;
 static bool start = false;
 
 #if defined(OPTION_OUTPUT) && OPTION_OUTPUT==IOSTREAM_OUTPUT

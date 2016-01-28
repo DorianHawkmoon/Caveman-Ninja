@@ -50,7 +50,7 @@ update_status Scene::postUpdate() {
 }
 
 bool Scene::cleanUp() {
-	LOG("unloading scene");
+	LOG("unloading scene","");
 	root->cleanUp();
 	root->remove();
 	for (std::list<Entity*>::iterator it = entities.begin(); it != entities.end(); ++it) {

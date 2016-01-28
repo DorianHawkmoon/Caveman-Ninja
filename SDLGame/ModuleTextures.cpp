@@ -12,7 +12,7 @@ ModuleTextures::~ModuleTextures() {
 }
 
 bool ModuleTextures::init() {
-	LOG("init Image library");
+	LOG("init Image library","");
 	bool ret = true;
 
 	// load support for the PNG image format
@@ -28,7 +28,7 @@ bool ModuleTextures::init() {
 }
 
 bool ModuleTextures::cleanUp() {
-	LOG("Freeing textures and Image library");
+	LOG("Freeing textures and Image library","");
 
 	for (std::list<LoadedTexture*>::iterator it = textures.begin(); it != textures.end(); ++it) {
 		delete (*it);

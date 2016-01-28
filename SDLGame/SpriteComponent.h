@@ -5,7 +5,7 @@
 #include "IComponent.h"
 #include <string>
 #include "Point.h"
-#include "SDL\SDL_rect.h"
+#include "SDL/SDL_rect.h"
 
 struct SDL_Texture;
 

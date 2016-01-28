@@ -5,7 +5,7 @@ ModuleWindow::ModuleWindow(bool started):Module(started) {}
 
 // Destructor
 ModuleWindow::~ModuleWindow() {
-	LOG("Destroying SDL window and quitting all SDL systems");
+	LOG("Destroying SDL window and quitting all SDL systems","");
 
 	//Destroy window
 	if (window != nullptr) {
@@ -18,7 +18,7 @@ ModuleWindow::~ModuleWindow() {
 
 // Called before render is available
 bool ModuleWindow::init() {
-	LOG("init SDL window & surface");
+	LOG("init SDL window & surface","");
 	bool ret = true;
 
 	if (SDL_Init(SDL_INIT_VIDEO) < 0) {
@@ -61,7 +61,7 @@ bool ModuleWindow::init() {
 
 // Called before quitting
 bool ModuleWindow::cleanUp() {
-	LOG("CleanUp windows");
+	LOG("CleanUp windows","");
 	return true;
 }
 

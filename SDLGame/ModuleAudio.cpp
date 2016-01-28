@@ -16,7 +16,7 @@ ModuleAudio::~ModuleAudio() {
 
 // Called before render is available
 bool ModuleAudio::init() {
-	LOG("init Mixer library");
+	LOG("init Mixer library","");
 	bool ret = true;
 
 	// load support for the MP3 and OGG
@@ -41,7 +41,7 @@ bool ModuleAudio::start() {
 
 // Called before quitting
 bool ModuleAudio::cleanUp() {
-	LOG("Freeing music and effects music library");
+	LOG("Freeing music and effects music library","");
 
 	if (music != nullptr) {
 		Mix_FreeMusic(music);
@@ -73,7 +73,7 @@ bool const ModuleAudio::playMusic(const char * path, float fade_time) {
 	music = loadMusic(path);
 
 	if (music == nullptr) {
-		LOG("Cannot load music %s.\n");
+		LOG("Cannot load music %s.\n","");
 		result = false;
 
 	} else {
@@ -125,7 +125,7 @@ bool ModuleAudio::playEffect(unsigned int fx, int repeat) {
 	return result;
 }
 
-Mix_Music* const ModuleAudio::loadMusic(const char* path) {
+Mix_Music* ModuleAudio::loadMusic(const char* path) const {
 	std::string finalPath = "audio/music/";
 	finalPath.append(path);
 	Mix_Music* musicLoaded = Mix_LoadMUS(finalPath.c_str());

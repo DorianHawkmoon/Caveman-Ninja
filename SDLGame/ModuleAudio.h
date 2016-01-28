@@ -24,7 +24,7 @@ public:
 	bool playEffect(unsigned int fx, int repeat = 0);
 
 private:
-	Mix_Music* const ModuleAudio::loadMusic(const char* path);
+	Mix_Music* loadMusic(const char* path) const;
 
 private:
 	Mix_Music* music;

@@ -4,7 +4,7 @@
 
 #include "Collider.h"
 #include "Globals.h"
-#include "SDL\SDL_rect.h"
+#include "SDL/SDL_rect.h"
 class LineCollider;
 class CircleCollider;
 
@@ -28,7 +28,7 @@ public:
 	Collider* clone() const;
 
 	float rotation;
-	inline iPoint getSize() const;
+	iPoint getSize() const;
 
 private:
 	iPoint rect;

@@ -26,7 +26,8 @@ void GUI::GUITexture::draw(const GUITransform & states) const {
 	// Determina el frame que pintar
 	SDL_Rect* renderArea = nullptr;
 	if (animation != nullptr) {
-		renderArea = &(animation->GetCurrentFrame());
+		SDL_Rect rectAnim = animation->GetCurrentFrame();
+		renderArea = &rectAnim;
 	}
 
 	//result.rotation += rotation;
@@ -37,9 +38,9 @@ fPoint GUI::GUITexture::getPosition(const GUITransform& transformParent) const {
 	SDL_Rect viewArea = App->renderer->camera.getWindowsSize();
 	fPoint position = transformParent.position;
 
-	if(transform.location==ABSOLUTE){
+	if (transform.location == ABSOLUTE) {
 		position += transform.position;
-	}else {
+	} else {
 		//start centered as default
 		position += fPoint((float) viewArea.w / (2 * SCREEN_SIZE), (float) viewArea.h / (2 * SCREEN_SIZE));
 

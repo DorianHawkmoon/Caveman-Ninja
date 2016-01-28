@@ -4,8 +4,9 @@
 
 #include "Module.h"
 #include <list>
-#include "SDL_image\SDL_image.h"
-#include "SDL\SDL.h"
+#include "SDL_image/SDL_image.h"
+#include "SDL/SDL.h"
+#include <string>
 
 struct LoadedTexture {
 	LoadedTexture(const std::string& name, SDL_Texture* texture);

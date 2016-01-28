@@ -1,6 +1,6 @@
 #pragma once
 #include "IComponent.h"
-#include "SDL\SDL_rect.h"
+#include "SDL/SDL_rect.h"
 #include "Point.h"
 #include <string>
 struct SDL_Texture;

@@ -50,7 +50,8 @@ update_status AnimationComponent::postUpdate() {
 		global.position.x += anim->flippedOffset.x;
 		global.position.y += anim->flippedOffset.y;
 	}
-	App->renderer->blit(texture, global, &(anim->GetCurrentFrame()), 1.0);
+	SDL_Rect rectFrame = anim->GetCurrentFrame();
+	App->renderer->blit(texture, global, &rectFrame, 1.0);
 	return UPDATE_CONTINUE;
 }
 

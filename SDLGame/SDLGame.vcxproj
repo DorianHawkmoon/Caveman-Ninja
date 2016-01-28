@@ -164,6 +164,7 @@
     <ClInclude Include="PlayerWeapon.h" />
     <ClInclude Include="Point.h" />
     <ClInclude Include="RectangleCollider.h" />
+    <ClInclude Include="resource.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="FirstLevel.h" />
     <ClInclude Include="SceneNode.h" />
@@ -182,6 +183,13 @@
     <ClInclude Include="VerticalSpriteScrollComponent.h" />
     <ClInclude Include="WallCollisionComponent.h" />
     <ClInclude Include="WeaponComponent.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="SDLGame.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\resources\images\Definitivos\icon.ico" />
+    <Image Include="..\resources\images\Definitivos\icon.png" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{1C26C921-73BE-4D82-ADDF-EA4D5B581FC4}</ProjectGuid>
@@ -268,11 +276,11 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>C:\Users\Dorian\Documents\Visual Studio 2015\Projects\SDLGame\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\Dorian Hawkmoon\Documents\Visual Studio 2015\Projects\Caveman-Ninja\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>C:\Users\Dorian\Documents\Visual Studio 2015\Projects\SDLGame\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\Users\Dorian Hawkmoon\Documents\Visual Studio 2015\Projects\Caveman-Ninja\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -309,13 +317,13 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>C:\Users\Dorian\Documents\Visual Studio 2015\Projects\SDLGame\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\Dorian Hawkmoon\Documents\Visual Studio 2015\Projects\Caveman-Ninja\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalLibraryDirectories>C:\Users\Dorian\Documents\Visual Studio 2015\Projects\SDLGame\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\Users\Dorian Hawkmoon\Documents\Visual Studio 2015\Projects\Caveman-Ninja\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

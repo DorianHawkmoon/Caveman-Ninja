@@ -4,7 +4,7 @@
 
 #include "IComponent.h"
 #include <string>
-enum TypeJump;
+#include "Entity.h"
 
 class JumpComponent : public IComponent {
 public:

@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #ifndef ENTITY_H
 #define ENTITY_H
 
@@ -7,6 +7,8 @@
 #include "Transform.h"
 #include "IUpdater.h"
 #include "CollisionListener.h"
+#include <string>
+
 class IComponent;
 
 enum TypeJump {
@@ -64,8 +66,8 @@ public:
 
 
 	/**
-	* Determina si la entidad está destruida
-	* @return true si la entidad está destruida
+	* Determina si la entidad estï¿½ destruida
+	* @return true si la entidad estï¿½ destruida
 	*/
 	inline bool isDestroyed() const {
 		return destroyed;
@@ -83,15 +85,15 @@ public:
 	virtual void onCollisionStay(const Collider* self, const Collider* another);
 
 	Entity* clone() const;
-	
+
 public:
 	Transform* transform;
 	ControlEntity controller;
 
 private:
 	/**
-	* Variable que guarda si la entidad está destruida
-	* Será destruida por el nodo que la contiene
+	* Variable que guarda si la entidad estÃ¡ destruida
+	* SerÃ¡ destruida por el nodo que la contiene
 	*/
 	bool destroyed;
 

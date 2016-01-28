@@ -4,7 +4,7 @@
 
 #include "Module.h"
 #include <vector>
-#include "SDL\SDL_events.h"
+#include "SDL/SDL_events.h"
 
 namespace GUI {
 	class GUIComponent;

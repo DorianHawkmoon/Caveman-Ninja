@@ -1,4 +1,4 @@
-#include "LineCollider.h"
+Ôªø#include "LineCollider.h"
 #include "CircleCollider.h"
 #include <algorithm>
 
@@ -19,11 +19,11 @@ void LineCollider::paintCollider() const {
 	color.b = 0;
 	color.a = 128;
 
-	// Renderiza cada uno de los cuadrados que conforman la lÌnea
+	// Renderiza cada uno de los cuadrados que conforman la l√≠nea
 	for (unsigned int i = 0; i < points.size() - 1; ++i) {
 		RectangleCollider rect = createSegmentCollider(i);
 		rect.rect.x = static_cast<int>(rect.rect.x *0.5);
-		rect.paintCollider(iPoint(0,0));
+		rect.paintCollider(iPoint(0, 0));
 	}
 }
 
@@ -42,31 +42,31 @@ bool LineCollider::checkCollision(const RectangleCollider * other) const {
 	Transform otherTrans = other->getGlobalTransform();
 	std::vector<fPoint> otherPoints = other->getPoints(otherTrans.rotation); //we are friends!! :D
 
-	// Para cada segmento, comprueba si colisiona con la lÌnea
-	for (unsigned int i = 0; i < points.size() - 1 && !result; ++i) {	// Empieza desde el primero y acaba en el pen˙ltimo
+																			 // Para cada segmento, comprueba si colisiona con la lÔøΩnea
+	for (unsigned int i = 0; i < points.size() - 1 && !result; ++i) {	// Empieza desde el primero y acaba en el pen√∫ltimo
 		RectangleCollider segment = createSegmentCollider(i);
-		result= checkCollisionRectangle(segment, other, otherTrans, otherPoints);
+		result = checkCollisionRectangle(segment, other, otherTrans, otherPoints);
 	}
 	return result;
 }
 
 bool LineCollider::checkCollision(const CircleCollider * other) const {
-	// Por las propiedades del cÌrculo, solo comprueba en el segmento que contiene la X del centro del cÌrculo
+	// Por las propiedades del c√≠rculo, solo comprueba en el segmento que contiene la X del centro del cÔøΩrculo
 	int leftBoundIndex = 0;
 	bool found = false;
 	fPoint center = other->getGlobalPoint();
 
-	for (unsigned int i = 0; i < points.size() - 1 && !found; ++i)	// Empieza desde el primero y acaba en el pen˙ltimo
+	for (unsigned int i = 0; i < points.size() - 1 && !found; ++i)	// Empieza desde el primero y acaba en el pen√∫ltimo
 		if (center.x <= getPointGlobalCoordinates(i + 1).x) {
 			leftBoundIndex = i;
 			found = true;
 		}
 
-	if (!found) {	// Est· m·s a la derecha que el ˙ltimo punto, comprueba la colision con el ˙ltimo segmento
-		leftBoundIndex = points.size() - 2;	// size - 2 es el Ìndice del pen˙ltimo elemento
+	if (!found) {	// Est√° m√°s a la derecha que el ÔøΩltimo punto, comprueba la colision con el √∫ltimo segmento
+		leftBoundIndex = points.size() - 2;	// size - 2 es el √≠ndice del pen√∫ltimo elemento
 	}
 
-	// Crea el rect·ngulo del segmento adecuado y comprueba la colision
+	// Crea el rect√°ngulo del segmento adecuado y comprueba la colision
 	RectangleCollider rc = createSegmentCollider(leftBoundIndex);
 	rc.parentTransform = this->parentTransform;
 	return rc.checkCollision(other);
@@ -74,15 +74,16 @@ bool LineCollider::checkCollision(const CircleCollider * other) const {
 
 bool LineCollider::checkCollision(const LineCollider * other) const {
 	bool result = true;
-	// Para cada segmento, comprueba si colisiona con la lÌnea
-	for (unsigned int i = 0; i < points.size() - 1 && result; ++i) {	// Empieza desde el primero y acaba en el pen˙ltimo
+	// Para cada segmento, comprueba si colisiona con la lÔøΩnea
+	for (unsigned int i = 0; i < points.size() - 1 && result; ++i) {	// Empieza desde el primero y acaba en el pen√∫ltimo
 		result = createSegmentCollider(i).checkSpecificCollision(other);
 	}
-	return result;	// Llegados a este punto, ning˙n segmento colisiona con la lÌnea
+	return result;	// Llegados a este punto, ning√∫n segmento colisiona con la l√≠nea
 }
 
 Collider * LineCollider::clone() const {
-	return new LineCollider(fPoint(position), std::vector<fPoint>(points), type);
+	std::vector<fPoint> pon = std::vector<fPoint>(points);
+	return new LineCollider(fPoint(position), pon, type);
 }
 
 fPoint LineCollider::getPointGlobalCoordinates(unsigned int index) const {
@@ -95,28 +96,28 @@ fPoint LineCollider::getPointGlobalCoordinates(unsigned int index) const {
 
 RectangleCollider LineCollider::createSegmentCollider(int leftBoundIndex) const {
 	// Calcula el centro del segmento
-	// Las coordenadas ser·n locales que luego hacemos globales
+	// Las coordenadas ser√°n locales que luego hacemos globales
 	fPoint leftBound = points[leftBoundIndex];
 	fPoint rightBound = points[leftBoundIndex + 1];
 	fPoint segment = rightBound - leftBound;
 	fPoint center = leftBound + segment * (1.0f / 2.0f);
 
 	// Calcula las dimensiones del segmento
-	int width = static_cast<int>(leftBound.distanceTo(rightBound)*2 + thickness);
+	int width = static_cast<int>(leftBound.distanceTo(rightBound) * 2 + thickness);
 	int height = thickness;
-	
+
 	// Calcula la pendiente del segmento
 	float rotation = (float) (atan2(segment.y, segment.x) * 180 / PI);
 
-	// Crea y devuelve el rect·ngulo adecuado
+	// Crea y devuelve el rect√°ngulo adecuado
 	fPoint position = leftBound;
 	return RectangleCollider(position, iPoint(width, height), rotation, type);
 }
 
 bool LineCollider::checkCollisionRectangle(const RectangleCollider& segment, const RectangleCollider* other, const Transform & otherTrans, const std::vector<fPoint> otherPoints) const {
-	std::vector<fPoint> segmentPoints= getPoints(segment);
+	std::vector<fPoint> segmentPoints = getPoints(segment);
 
-	// Calcula los ejes de proyecciÛn
+	// Calcula los ejes de proyecci√≥n
 	std::vector<fPoint> axis = std::vector<fPoint>(4);
 	axis[0] = segmentPoints[1] - segmentPoints[0];
 	axis[1] = segmentPoints[3] - segmentPoints[0];
@@ -144,7 +145,7 @@ bool LineCollider::checkCollisionRectangle(const RectangleCollider& segment, con
 	// Recorre los ejes
 	bool collides = false;
 	for (unsigned int i = 0; i < 4; ++i) {
-		// Calcula la proyecciÛn de todos los puntos de cada rect·ngulo sobre el eje
+		// Calcula la proyecci√≥n de todos los puntos de cada rect√°ngulo sobre el eje
 		// Hace el producto escalar para obtener un valor normalizado con el que comparar
 		std::vector<float> thisProyections = std::vector<float>(4);
 		std::vector<float> otherProyections = std::vector<float>(4);
@@ -163,7 +164,7 @@ bool LineCollider::checkCollisionRectangle(const RectangleCollider& segment, con
 			otherProyections[j] = proyection.x * axis[i].x + proyection.y * axis[i].y;
 		}
 
-		// Calcula la menor y mayor proyecciÛn de cada rect·ngulo
+		// Calcula la menor y mayor proyecci√≥n de cada rect√°ngulo
 		float thisMin, thisMax;
 		thisMin = thisMax = thisProyections[0];
 		float otherMin, otherMax;

@@ -1,4 +1,4 @@
-#include "Enemy.h"
+ï»¿#include "Enemy.h"
 #include "Entity.h"
 #include "Animation.h"
 #include "StateMachine.h"
@@ -6,7 +6,7 @@
 #include "MotionComponent.h"
 #include "AnimationComponent.h" 
 #include "Application.h"
-#include "SDL\SDL.h"
+#include "SDL/SDL.h"
 #include "StateMachine.h"
 #include "JumpComponent.h"
 #include "ConditionComparison.h"
@@ -16,7 +16,6 @@
 #include "RectangleCollider.h"
 #include "CircleCollider.h"
 #include "CollisionComponent.h"
-#include "SDL\SDL_rect.h"
 #include "IAComponent.h"
 #include "EnemyBehaviour.h"
 #include "DisappearOutCamera.h"
@@ -85,6 +84,7 @@ Entity * Enemy::makeEnemy(const TypeItem itemToDrop) {
 
 	IAComponent* IA = new EnemyBehaviour("IA");
 	result->addComponent(IA);
+	Utils::range(2000, 3000);
 	IA->ticks = static_cast<int>(Utils::range(2000, 3000)); //RANDOM IA
 
 	makeAnimations(result);
@@ -204,11 +204,11 @@ void Enemy::makeAnimations(Entity* entity) {
 	TimerCondition conditionFallTimer = TimerCondition(300);
 	StateTransition<Animation> transitionFall2 = StateTransition<Animation>(fallAnimation, &conditionFall);
 	StateTransition<Animation> transitionFalling = StateTransition<Animation>(fallAnimation, &conditionFallTimer);
-		transitionFalling.addCondition(&conditionFall);
+	transitionFalling.addCondition(&conditionFall);
 
-	//idle forward y otros pasan a caer aquí, con fall
+	//idle forward y otros pasan a caer aquï¿½, con fall
 	startFallAnimation->addTransition(&transitionFalling); //con el tiempo empieza de caer a cayendo
-	//si es cayendo, idle y otros pasan a esta animacion
+														   //si es cayendo, idle y otros pasan a esta animacion
 	idleAnimation->addTransition(&transitionFall2);
 	forwardAnimation->addTransition(&transitionFall2);
 	downAnimation->addTransition(&transitionFall2);
@@ -230,7 +230,7 @@ void Enemy::makeAnimations(Entity* entity) {
 	});
 	StateTransition<Animation> transitionFallToEnd = StateTransition<Animation>(endFallAnimation, &conditionFallToEnd);
 	StateTransition<Animation> transitionFallToIdle = StateTransition<Animation>(idleAnimation, &conditionFallTimer2);
-							transitionFallToIdle.addCondition(&conditionFallToEnd);
+	transitionFallToIdle.addCondition(&conditionFallToEnd);
 
 	startFallAnimation->addTransition(&transitionFallToEnd);
 	fallAnimation->addTransition(&transitionFallToEnd);
@@ -327,7 +327,7 @@ void Enemy::makeAnimations(Entity* entity) {
 	ConditionComparison<int> conditionBackDamage = ConditionComparison<int>(&controller->damage, 0, Compare::LESS);
 	StateTransition<Animation> transitionBackDamage = StateTransition<Animation>(backHitAnimation, &conditionBackDamage);
 	StateTransition<Animation> transitionDamageIdle = StateTransition<Animation>(idleAnimation, &conditionDamageToIdle);
-								transitionDamageIdle.addCondition(&isAlive);
+	transitionDamageIdle.addCondition(&isAlive);
 
 	idleAnimation->addTransition(&transitionBackDamage);
 	forwardAnimation->addTransition(&transitionBackDamage);
@@ -367,7 +367,7 @@ void Enemy::makeAnimations(Entity* entity) {
 	frontHitAnimation->addTransition(&transitionDamageIdle);
 
 	// ---------------------------------------------
-	
+
 	Animation frontDead(3);
 	frontDead.sizeFrame = {640,384,128,128};
 	frontDead.offset = {-53,-82};
@@ -381,10 +381,10 @@ void Enemy::makeAnimations(Entity* entity) {
 	StateTransition<Animation> transitionFrontDead = StateTransition<Animation>(frontDeadAnimation, &conditionDead);
 
 	frontHitAnimation->addTransition(&transitionFrontDead);
-				
+
 
 	// ---------------------------------------------
-	
+
 	Animation backDead(3);
 	backDead.sizeFrame = {640,512,128,128};
 	backDead.offset = {-53,-82};

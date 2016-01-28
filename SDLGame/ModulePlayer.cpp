@@ -6,7 +6,7 @@
 #include "ModuleRender.h"
 #include "Application.h"
 #include "ModuleInput.h"
-#include "SDL\SDL_keycode.h"
+#include "SDL/SDL_keycode.h"
 #include "JumpComponent.h"
 #include "LifeComponent.h"
 #include "PlayerWeapon.h"
@@ -41,7 +41,7 @@ ModulePlayer::~ModulePlayer()
 
 // Load assets
 bool ModulePlayer::start(){
-	LOG("Loading player");
+	LOG("Loading player","");
 	bool started = true;
 
 	if (lifes <= 0 || player==nullptr) {
@@ -98,7 +98,7 @@ update_status ModulePlayer::preUpdate() {
 
 // Unload assets
 bool ModulePlayer::cleanUp(){
-	LOG("Unloading player");
+	LOG("Unloading player","");
 	if (deadBody != nullptr) {
 		deadBody->cleanUp();
 		delete deadBody;
@@ -137,7 +137,7 @@ void ModulePlayer::dead() {
 			deadBody->transform->flip = transPlayer.flip;
 			deadBody->transform->rotation = transPlayer.rotation;
 
-			SpriteComponent* body = new SpriteComponent("body", "Joe.png");
+			SpriteComponent* body = new SpriteComponent("body", "joe.png");
 			if (controller->damage < 0) {
 				body->rect = {256,320, 128,128};
 				body->offset = {-40,-82};

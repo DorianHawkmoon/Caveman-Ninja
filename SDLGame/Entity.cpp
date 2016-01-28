@@ -120,19 +120,19 @@ bool Entity::removeComponent(const std::string & name) {
 }
 
 void Entity::onCollisionEnter(const Collider * self, const Collider * another) {
-	std::for_each(properties.begin(), properties.end(), [&](auto collider) {
+	std::for_each(properties.begin(), properties.end(), [&](IComponent* collider) {
 		collider->onCollisionEnter(self, another); 
 	});
 }
 
 void Entity::onCollisionExit(const Collider * self, const Collider * another) {
-	std::for_each(properties.begin(), properties.end(), [&](auto collider) {
+	std::for_each(properties.begin(), properties.end(), [&](IComponent* collider) {
 		collider->onCollisionExit(self, another);
 	});
 }
 
 void Entity::onCollisionStay(const Collider * self, const Collider * another) {
-	std::for_each(properties.begin(), properties.end(), [&](auto collider) {
+	std::for_each(properties.begin(), properties.end(), [&](IComponent* collider) {
 		collider->onCollisionStay(self, another); 
 	});
 }

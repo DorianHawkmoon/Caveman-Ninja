@@ -3,6 +3,7 @@
 #define STATE_TRANSITION_H
 
 #include <list>
+#include <algorithm>
 template <class T>
 class State;
 class Condition;
@@ -21,7 +22,7 @@ public:
 		return newState;
 	}
 	void addCondition(const Condition* condition);
-	bool checkCondition() ;
+	bool checkCondition();
 
 	bool start();
 	bool cleanUp();
@@ -34,8 +35,8 @@ private:
 	*/
 	std::list<Condition*> conditions; //conditions owned
 	/**
-	* Nuevo estado
-	*/
+	 * Nuevo estado
+	 */
 	State<T>* newState; //i don't own the state
 };
 

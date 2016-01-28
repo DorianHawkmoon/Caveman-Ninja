@@ -1,5 +1,6 @@
 #include "ModuleCollision.h"
 #include "Collider.h"
+#include <algorithm>
 
 bool ModuleCollision::start() {
 	return true;

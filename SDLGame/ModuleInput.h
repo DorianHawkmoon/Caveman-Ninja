@@ -4,7 +4,8 @@
 #define MODULE_INPUT_H
 
 #include "Module.h"
-typedef unsigned __int8 Uint8;
+#include <cstdint>
+//typedef unsigned __int8 Uint8;
 #include <list>
 #include "SDL/SDL.h"
 #define MAX_KEYS 300

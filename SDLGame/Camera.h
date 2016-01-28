@@ -2,7 +2,7 @@
 #ifndef CAMERA_H
 #define CAMERA_H
 
-#include "SDL\SDL_rect.h"
+#include "SDL/SDL_rect.h"
 #include "Point.h"
 #include "Globals.h"
 struct Transform;

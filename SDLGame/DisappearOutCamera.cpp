@@ -1,5 +1,5 @@
 #include "DisappearOutCamera.h"
-
+#include <algorithm>
 #include "Collider.h"
 #include "Condition.h"
 #include "Entity.h"

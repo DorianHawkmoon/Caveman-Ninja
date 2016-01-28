@@ -28,20 +28,19 @@
 #include "GUILifeBar.h"
 
 FirstLevel::FirstLevel() {
-	
+
 }
 
-
-FirstLevel::~FirstLevel() {
-}
+FirstLevel::~FirstLevel() {}
 
 // Load assets
+
 bool FirstLevel::start() {
-	LOG("Loading first level");
+	LOG("Loading first level", "");
 	App->player->enable();
 
-	App->renderer->camera.leftLimit = {0,0};
-	App->renderer->camera.rightLimit = {1088,256};
+	App->renderer->camera.leftLimit = {0, 0};
+	App->renderer->camera.rightLimit = {1088, 256};
 
 	Entity* buffer = new Entity();
 	HorizontalSpriteScrollComponent* background = new HorizontalSpriteScrollComponent("sky", "cielo.png");
@@ -84,22 +83,23 @@ bool FirstLevel::start() {
 
 	buffer = new Entity();
 	iPoint rectCollider = {1088, 20};
-	RectangleCollider* collider = new RectangleCollider(fPoint(0, 225), rectCollider,0, TypeCollider::FLOOR);
+	RectangleCollider* collider = new RectangleCollider(fPoint(0, 225), rectCollider, 0, TypeCollider::FLOOR);
 	CollisionComponent* colliderComponent = new CollisionComponent("ground", collider);
 	buffer->addComponent(colliderComponent);
 
-	rectCollider = {20,256};
+	rectCollider = {20, 256};
 	collider = new RectangleCollider(fPoint(-10, 0), rectCollider, 0, TypeCollider::WALL);
 	colliderComponent = new CollisionComponent("leftLateral", collider);
 	buffer->addComponent(colliderComponent);
 
-	rectCollider = {20,256};
+	rectCollider = {20, 256};
 	collider = new RectangleCollider(fPoint(1080, 0), rectCollider, 0, TypeCollider::WALL);
 	colliderComponent = new CollisionComponent("rightLateral", collider);
 	buffer->addComponent(colliderComponent);
 
-
-	LineCollider* line = new LineCollider(fPoint(0, 0), std::vector<fPoint>{fPoint(300, 211),
+	TypeCollider typeOfCollider = TypeCollider::GROUND;
+	std::vector<fPoint> points = {
+		fPoint(300, 211),
 		fPoint(340, 200),
 		fPoint(443, 154),
 		fPoint(487, 118),
@@ -113,24 +113,30 @@ bool FirstLevel::start() {
 		fPoint(741, 153),
 		fPoint(756, 169),
 		fPoint(781, 185),
-		fPoint(798, 196)}, TypeCollider::GROUND);
+		fPoint(798, 196)};
+	LineCollider* line = new LineCollider(fPoint(0, 0), points, typeOfCollider);
 	line->thickness = 1;
 	colliderComponent = new CollisionComponent("lomo", line);
 	buffer->addComponent(colliderComponent);
 
-	line= new LineCollider(fPoint(0, 0), std::vector<fPoint>{
+
+	points = {
 		fPoint(520, 128),
 		fPoint(520, 129),
 		fPoint(550, 115),
 		fPoint(562, 115),
 		fPoint(576, 124),
-		fPoint(587, 145)}, TypeCollider::GROUND);
+		fPoint(587, 145)
+	};
+	line = new LineCollider(fPoint(0, 0), points, typeOfCollider);
 	line->thickness = 1;
 	colliderComponent = new CollisionComponent("lomo2", line);
 	buffer->addComponent(colliderComponent);
 
-	line = new LineCollider(fPoint(0,0), std::vector<fPoint>{fPoint(966, 140),
-		fPoint(1088, 140)}, TypeCollider::GROUND);
+	points = {
+		fPoint(966, 140),
+		fPoint(1088, 140)};
+	line = new LineCollider(fPoint(0, 0), points, typeOfCollider);
 	line->thickness = 1;
 	colliderComponent = new CollisionComponent("final", line);
 	buffer->addComponent(colliderComponent);
@@ -138,10 +144,10 @@ bool FirstLevel::start() {
 
 	root->addChild(buffer); //added scenario
 
-	fPoint positionTrigger = {1060,0};
-	buffer = Trigger::makeTrigger(positionTrigger, {10,256},
+	fPoint positionTrigger = {1060, 0};
+	buffer = Trigger::makeTrigger(positionTrigger, {10, 256},
 		[]() {
-			App->player->levelFinished = true;
+		App->player->levelFinished = true;
 	}
 	);
 	root->addChild(buffer);
@@ -151,8 +157,8 @@ bool FirstLevel::start() {
 	buffer = Enemy::makeEnemy();
 	buffer->transform->position = {340, 180};
 	root->addChild(buffer);
-	
-	
+
+
 	putEnemies();
 
 	root->start();
@@ -164,7 +170,7 @@ bool FirstLevel::start() {
 }
 
 bool FirstLevel::cleanUp() {
-	LOG("Unloading first level");
+	LOG("Unloading first level", "");
 	Scene::cleanUp();
 	App->player->disable();
 	return true;
@@ -173,85 +179,85 @@ bool FirstLevel::cleanUp() {
 void FirstLevel::putEnemies() {
 	fPoint positionTrigger = fPoint(180, 0);
 	std::vector<fPoint> enemies = std::vector<fPoint>();
-		enemies.push_back({350,155});
+	enemies.push_back({350, 155});
 	makeEnemy(positionTrigger, enemies);
 
-	positionTrigger.x=220;
+	positionTrigger.x = 220;
 	enemies.clear();
-	enemies.push_back({380,135});
+	enemies.push_back({380, 135});
 	makeEnemy(positionTrigger, enemies);
 
 	positionTrigger.x = 340;
 	enemies.clear();
-	enemies.push_back({490,70}); //rock
-	enemies.push_back({490,180}); //hidden
+	enemies.push_back({490, 70}); //rock
+	enemies.push_back({490, 180}); //hidden
 	makeEnemy(positionTrigger, enemies);
 
 
 	positionTrigger.x = 410;
 	enemies.clear();
-	enemies.push_back({570,45});
+	enemies.push_back({570, 45});
 	makeEnemy(positionTrigger, enemies);
 
 	positionTrigger.x = 480;
 	enemies.clear();
-	enemies.push_back({620,65}); //rock
-	enemies.push_back({620,180}); //egg
+	enemies.push_back({620, 65}); //rock
+	enemies.push_back({620, 180}); //egg
 	makeEnemy(positionTrigger, enemies);
 
 	positionTrigger.x = 506;
 	enemies.clear();
-	enemies.push_back({690,110});
-	enemies.push_back({690,180}); //hidden
+	enemies.push_back({690, 110});
+	enemies.push_back({690, 180}); //hidden
 	makeEnemy(positionTrigger, enemies);
 
 	positionTrigger.x = 580;
 	enemies.clear();
-	enemies.push_back({430,180}); //por detras
-	enemies.push_back({730,180}); //rock
-	//helicoptero, no poner
+	enemies.push_back({430, 180}); //por detras
+	enemies.push_back({730, 180}); //rock
+								   //helicoptero, no poner
 	makeEnemy(positionTrigger, enemies);
 
 
 	positionTrigger.x = 650;
 	enemies.clear();
-	enemies.push_back({450,180}); //por detras up
-	enemies.push_back({820,180}); //hidden
+	enemies.push_back({450, 180}); //por detras up
+	enemies.push_back({820, 180}); //hidden
 	makeEnemy(positionTrigger, enemies);
 
 	positionTrigger.x = 720;
 	enemies.clear();
-	enemies.push_back({890,180});
+	enemies.push_back({890, 180});
 	makeEnemy(positionTrigger, enemies);
 
 }
 
 void FirstLevel::makeEnemy(fPoint positionTrigger, const std::vector<fPoint>& enemies) {
 	SceneNode* enlace = root;
-	
-	Entity* buffer = Trigger::makeTrigger(positionTrigger, {10,256}, 
-							[enlace, enemies]() {
-								for (auto it = enemies.cbegin(); it != enemies.cend(); ++it) {
-									Entity* enemy = Enemy::makeEnemy();
-									fPoint positionEnemy = *it;
-									enemy->transform->position.x = positionEnemy.x;
-									enemy->transform->position.y = positionEnemy.y;
 
-									enemy->start();
-									enlace->addChild(enemy);
-								}
-							}
-						);
+	Entity* buffer = Trigger::makeTrigger(positionTrigger, {10, 256},
+		[enlace, enemies]() {
+		for (auto it = enemies.cbegin(); it != enemies.cend(); ++it) {
+			Entity* enemy = Enemy::makeEnemy();
+			fPoint positionEnemy = *it;
+			enemy->transform->position.x = positionEnemy.x;
+			enemy->transform->position.y = positionEnemy.y;
+
+			enemy->start();
+			enlace->addChild(enemy);
+		}
+	}
+	);
 	root->addChild(buffer);
 }
 
 void FirstLevel::makeHUD() {
 	GUI::GUILifeBar* lifebar = new GUI::GUILifeBar("gui_lifebar.png", App->player->life);
-	lifebar->transform.position = {24,12};
-	lifebar->pointColor[GUI::PointColor::GREEN] = {0,0,5,12};
-	lifebar->pointColor[GUI::PointColor::YELLOW] = {5,0,5,12};
-	lifebar->pointColor[GUI::PointColor::RED] = {10,0,5,12};
-	lifebar->pointColor[GUI::PointColor::EMPTY] = {15,0,5,12};
+	lifebar->transform.position = {24, 12};
+	lifebar->pointColor[GUI::PointColor::GREEN] = {0, 0, 5, 12};
+	lifebar->pointColor[GUI::PointColor::YELLOW] = {5, 0, 5, 12};
+	lifebar->pointColor[GUI::PointColor::RED] = {10, 0, 5, 12};
+	lifebar->pointColor[GUI::PointColor::EMPTY] = {15, 0, 5, 12};
 	rootGUI->pack(lifebar);
 
 

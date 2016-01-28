@@ -6,8 +6,7 @@
 #include "EntryScene.h"
 #include "GUIComponent.h"
 
-ModuleScene::ModuleScene(bool started):Module(started), currentScene(false), nextScene(nullptr) {}
-
+ModuleScene::ModuleScene(bool started) : Module(started), currentScene(nullptr), nextScene(nullptr) {}
 
 ModuleScene::~ModuleScene() {
 	delete currentScene;
@@ -50,12 +49,12 @@ bool ModuleScene::cleanUp() {
 }
 
 void ModuleScene::changeScene(Scene * scene, float time) {
-	LOG("Scene change");
+	LOG("Scene change", "");
 	nextScene = scene;
 	App->input->disable();
 	fadingIn = (currentScene != nullptr) ? true : false;
 	startTime = SDL_GetTicks();
-	totalTime = (Uint32) (time  * 0.5f * 1000.0f);
+	totalTime = (Uint32) (time * 0.5f * 1000.0f);
 }
 
 void ModuleScene::addEntity(Entity * entity) {
@@ -87,7 +86,7 @@ void ModuleScene::makeChangeScene() {
 				// Elimina la escena anterior (de haberla)
 				if (currentScene != nullptr) {
 					//clean the scene and delete it
-					LOG("Cleaning scene");
+					LOG("Cleaning scene", "");
 					currentScene->cleanUp();
 					delete currentScene;
 				}
@@ -108,3 +107,4 @@ void ModuleScene::makeChangeScene() {
 		}
 	}
 }
+

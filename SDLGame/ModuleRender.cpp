@@ -18,7 +18,7 @@ ModuleRender::ModuleRender(bool started ):
 
 // Destructor
 ModuleRender::~ModuleRender() {
-	LOG("Destroying renderer");
+	LOG("Destroying renderer","");
 
 	//Destroy window
 	if (renderer != nullptr) {
@@ -28,7 +28,7 @@ ModuleRender::~ModuleRender() {
 
 // Called before render is available
 bool ModuleRender::init() {
-	LOG("Creating Renderer context");
+	LOG("Creating Renderer context","");
 	bool ret = true;
 	Uint32 flags = 0;
 
@@ -36,9 +36,10 @@ bool ModuleRender::init() {
 		flags |= SDL_RENDERER_PRESENTVSYNC;
 	}
 
+	renderer = nullptr;
 	renderer = SDL_CreateRenderer(App->window->window, -1, flags);
 
-	if (renderer == NULL) {
+	if (renderer == nullptr) {
 		LOG("Renderer could not be created! SDL_Error: %s\n", SDL_GetError());
 		ret = false;
 	}
@@ -93,7 +94,7 @@ update_status ModuleRender::postUpdate() {
 
 // Called before quitting
 bool ModuleRender::cleanUp() {
-	LOG("CleanUp render");
+	LOG("CleanUp render","");
 	return true;
 }
 
@@ -255,7 +256,8 @@ bool ModuleRender::paintParticle(const Particle* particle) {
 		trans.position = particle->position;
 		trans.position.x += particle->anim.offset.x;
 		trans.position.y += particle->anim.offset.y;
-		blit(particle->graphics, trans, &particle->anim.GetCurrentFrame());
+		SDL_Rect rectAnim = particle->anim.GetCurrentFrame();
+		blit(particle->graphics, trans, &rectAnim);
 	}
 	return true;
 }

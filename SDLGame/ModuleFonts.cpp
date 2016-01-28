@@ -7,7 +7,7 @@ ModuleFonts::~ModuleFonts() {
 }
 
 bool ModuleFonts::init() {
-	LOG("init Fonts library");
+	LOG("init Fonts library","");
 	bool ret = true;
 
 	if (TTF_Init()) {
@@ -19,7 +19,7 @@ bool ModuleFonts::init() {
 }
 
 bool ModuleFonts::cleanUp() {
-	LOG("Freeing fonts and Font library");
+	LOG("Freeing fonts and Font library","");
 
 	for (std::list<LoadedFont*>::iterator it = fonts.begin(); it != fonts.end(); ++it) {
 		delete (*it);

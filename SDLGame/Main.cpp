@@ -2,7 +2,6 @@
 #include "Globals.h"
 #include "Application.h"
 
-
 enum main_states {
 	MAIN_CREATION,
 	MAIN_INIT,
@@ -14,6 +13,7 @@ enum main_states {
 Application* App = nullptr;
 
 //Standard c++, gcc, default
+
 int main(int argc, char* argv[]) {
 	int main_return = EXIT_FAILURE;
 	main_states state = MAIN_CREATION;
@@ -22,20 +22,20 @@ int main(int argc, char* argv[]) {
 		switch (state) {
 			case MAIN_CREATION:
 
-				LOG("Application Creation --------------");
+				LOG("Application Creation --------------", "");
 				App = new Application();
 				state = MAIN_INIT;
 				break;
 
 			case MAIN_INIT:
 
-				LOG("Application init --------------");
+				LOG("Application init --------------", "");
 				if (App->init() == false) {
-					LOG("Application init exits with error -----");
+					LOG("Application init exits with error -----", "");
 					state = MAIN_EXIT;
 				} else {
 					state = MAIN_UPDATE;
-					LOG("Application update --------------");
+					LOG("Application update --------------", "");
 				}
 
 				break;
@@ -45,7 +45,7 @@ int main(int argc, char* argv[]) {
 			{
 				int update_return = App->update();
 				if (update_return == UPDATE_ERROR) {
-					LOG("Application preUpdate exits with error -----");
+					LOG("Application preUpdate exits with error -----", "");
 					state = MAIN_EXIT;
 				} else if (update_return == UPDATE_STOP) {
 					state = MAIN_FINISH;
@@ -57,9 +57,9 @@ int main(int argc, char* argv[]) {
 
 			case MAIN_FINISH:
 
-				LOG("Application cleanUp --------------");
+				LOG("Application cleanUp --------------", "");
 				if (App->cleanUp() == false) {
-					LOG("Application cleanUp exits with error -----");
+					LOG("Application cleanUp exits with error -----", "");
 				} else
 					main_return = EXIT_SUCCESS;
 
@@ -76,7 +76,7 @@ int main(int argc, char* argv[]) {
 		delete App;
 		App = nullptr;
 	}
-	LOG("Bye :)\n");
+	LOG("Bye :)\n", "");
 	return main_return;
 }
 
@@ -89,4 +89,3 @@ int mainCRTstartup(int argc, char* argv[]) {
 int WinMainCRTstartup(int argc, char* argv[]) {
 	return main(argc, argv);
 }
-

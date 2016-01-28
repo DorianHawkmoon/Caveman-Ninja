@@ -9,7 +9,7 @@ ModuleFadeToBlack::ModuleFadeToBlack(bool started):Module(started) {}
 ModuleFadeToBlack::~ModuleFadeToBlack() {}
 
 bool ModuleFadeToBlack::start() {
-	LOG("Preparing Fade Screen");
+	LOG("Preparing Fade Screen","");
 	SDL_SetRenderDrawBlendMode(App->renderer->renderer, SDL_BLENDMODE_BLEND);
 	return true;
 }

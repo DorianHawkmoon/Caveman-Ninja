@@ -9,7 +9,6 @@
 #include "AnimationComponent.h" 
 #include "Application.h"
 #include "ModuleInput.h"
-#include "SDL\SDL.h"
 #include "StateMachine.h"
 #include "JumpComponent.h"
 #include "ConditionComparison.h"
@@ -19,7 +18,7 @@
 #include "RectangleCollider.h"
 #include "CircleCollider.h"
 #include "CollisionComponent.h"
-#include "SDL\SDL_rect.h"
+#include "SDL/SDL_rect.h"
 #include "Animation.h"
 #include "LifeComponent.h"
 #include "WallCollisionComponent.h"
@@ -490,6 +489,6 @@ void Joe::makeAnimations(Entity* entity) {
 
 
 	//create the component
-	AnimationComponent* component=new AnimationComponent("animations", "Joe.png", animations);
+	AnimationComponent* component = new AnimationComponent("animations", "joe.png", animations);
 	entity->addComponent(component);
 }

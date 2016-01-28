@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #ifndef GUI_CONTAINER_H
 #define GUI_CONTAINER_H
 
@@ -17,8 +17,8 @@ namespace GUI {
 		*/
 		virtual ~GUIContainer();
 		/**
-		* Añade un componente al contenedor
-		* @param component componente a añadir
+		* AÃ±ade un componente al contenedor
+		* @param component componente a aÃ±adir
 		*/
 		void pack(GUIComponent* component);
 		/**
@@ -36,16 +36,15 @@ namespace GUI {
 		*/
 		void clearSelection();
 
-		void GUIContainer::draw(const GUITransform& states) const;
+		void draw(const GUITransform& states) const;
 
+		virtual bool start();
 
-		inline virtual bool start();
+		virtual update_status preUpdate();
 
-		inline virtual update_status preUpdate();
+		virtual update_status update();
 
-		inline virtual update_status update();
-
-		inline virtual bool cleanUp();
+		virtual bool cleanUp();
 
 	private:
 		/**
@@ -53,12 +52,12 @@ namespace GUI {
 		*/
 		std::vector<GUIComponent*> children;
 		/**
-		* Índice del hijo seleccionado
+		* Ã­ndice del hijo seleccionado
 		*/
 		int selectedChild;
 
 		/**
-		* Indica si tiene algún hijo seleccionado
+		* Indica si tiene algÃºn hijo seleccionado
 		* @return true si hay hijo seleccionado
 		*/
 		bool hasSelection() const;
@@ -79,4 +78,3 @@ namespace GUI {
 }
 
 #endif // !GUI_CONTAINER_H
-

@@ -2,7 +2,7 @@
 #include "Application.h"
 #include "ModuleRender.h"
 #include "CircleCollider.h"
-#include "SDL\SDL_rect.h"
+#include "SDL/SDL_rect.h"
 #include "Transform.h"
 #include "LineCollider.h"
 
@@ -55,7 +55,7 @@ Collider * RectangleCollider::clone() const {
 	return Collider::clone(result);
 }
 
-inline iPoint RectangleCollider::getSize() const {
+iPoint RectangleCollider::getSize() const {
 	return rect;
 }
 

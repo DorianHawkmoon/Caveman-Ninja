@@ -1,6 +1,7 @@
 #include "ModuleGUI.h"
 #include "GUIComponent.h"
 #include "Transform.h"
+#include <algorithm>
 
 ModuleGUI::~ModuleGUI() {}
 

@@ -2,6 +2,7 @@
 #include "CollisionListener.h"
 #include "Application.h"
 #include "ModuleCollision.h"
+#include <algorithm>
 
 Collider::Collider(fPoint position, const TypeCollider type) : position(position), type(type), listeners(), parentTransform(nullptr), parent(nullptr) {
 	previousFrame = new std::list<Collider*>();
@@ -45,7 +46,7 @@ update_status Collider::postUpdate() {
 void Collider::notify(Collider * other) {
 	//type of collision
 	bool newCollision = false;
-	if (find(previousFrame->begin(), previousFrame->end(), other) == previousFrame->end()) {
+	if (std::find(previousFrame->begin(), previousFrame->end(), other) == previousFrame->end()) {
 		newCollision = true;
 		actualFrame->push_back(other);
 	}
@@ -62,14 +63,14 @@ void Collider::notify(Collider * other) {
 }
 
 void Collider::addListener(CollisionListener * newListener) {
-	auto it = find(listeners.begin(), listeners.end(), newListener);
+	auto it = std::find(listeners.begin(), listeners.end(), newListener);
 	if (it == listeners.end()) {
 		listeners.push_back(newListener);
 	}
 }
 
 void Collider::removeListener(CollisionListener * listener) {
-	auto it = find(listeners.begin(), listeners.end(), listener);
+	auto it = std::find(listeners.begin(), listeners.end(), listener);
 	if (it != listeners.end()) {
 		listeners.erase(it);
 	}

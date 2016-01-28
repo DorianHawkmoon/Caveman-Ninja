@@ -1,7 +1,7 @@
 #include "SpriteComponent.h"
 #include "Application.h"
 #include "ModuleRender.h"
-#include "SDL\SDL.h"
+#include "SDL/SDL.h"
 #include "ModuleTextures.h"
 #include "Transform.h"
 #include "Entity.h"

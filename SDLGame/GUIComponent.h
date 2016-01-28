@@ -3,7 +3,7 @@
 #define GUI_COMPONENT_H
 
 #include "GUITransform.h"
-#include "SDL\SDL.h"
+#include "SDL/SDL.h"
 #include "IUpdater.h"
 
 namespace GUI {
@@ -48,7 +48,7 @@ namespace GUI {
 		*/
 		virtual void handleEvent(const SDL_Event& event) = 0;
 
-		virtual void draw(const GUITransform& state) const=0;
+		virtual void draw(const GUITransform& state) const = 0;
 
 		/**
 		* Transform

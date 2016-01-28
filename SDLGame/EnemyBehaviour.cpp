@@ -15,6 +15,7 @@
 #include "ModuleAudio.h"
 #include "Particle.h"
 #include "JumpComponent.h"
+#include "Globals.h"
 #include "LifespanComponent.h"
 
 IComponent* EnemyBehaviour::clone() const {
@@ -97,7 +98,7 @@ void EnemyBehaviour::attacking(const Transform & globalMine, const Transform& gl
 	switch (attack) {
 		case 1: //atacando, buscamos al jugador
 			if (actualAnimation->isFinished()) {
-				LOG("Enemy attacking");
+				LOG("Enemy attacking", "");
 				//la animación ha terminado, está en el último frame donde se hace efectivo el golpe
 				//comprobamos colisión a ver si de verdad hemos dado al jugador o se nos ha escapado
 				//check collision with player
@@ -118,7 +119,7 @@ void EnemyBehaviour::attacking(const Transform & globalMine, const Transform& gl
 				if (colliderPlayer->checkCollision(&colliderCheck)) {
 					//damage player and notify him of the collision so he can react
 					App->audio->playEffect(hit);
-					LOG("Enemy damage!!");
+					LOG("Enemy damage!!", "");
 
 					position.y += size.y*0.5f;
 					fPoint velocity = fPoint(0, 0);
@@ -134,10 +135,10 @@ void EnemyBehaviour::attacking(const Transform & globalMine, const Transform& gl
 			}
 			break;
 		case 2: //precalentamiento de huida
-			//si ha terminado, corremos!!
+				//si ha terminado, corremos!!
 			if (actualAnimation->isFinished()) {
 				//set a lifetime
-				LifespanComponent* lifespan = new LifespanComponent("lifespan",5000);
+				LifespanComponent* lifespan = new LifespanComponent("lifespan", 5000);
 				lifespan->start();
 				parent->addComponent(lifespan);
 
@@ -324,7 +325,7 @@ iPoint EnemyBehaviour::directionPlayer(const Transform & globalMine, const Trans
 	int difference = static_cast<int>(globalPlayer.position.y - globalMine.position.y);
 	if (difference > 20) {
 		result.y = 1;
-	} else if(difference < -20){
+	} else if (difference < -20) {
 		result.y = -1;
 	}
 
