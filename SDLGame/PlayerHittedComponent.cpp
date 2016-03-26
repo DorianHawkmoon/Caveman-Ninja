@@ -153,6 +153,7 @@ bool PlayerHittedComponent::hittedEnemy(const Transform& globalAnother, const Tr
 		result = true;
 		//do actions
 		controller->stateJump = TypeJump::JUMP; //animations as jump
+		LOG("hitted enemy, jump!");
 		motion->velocity.y = -1 * (motion->speed*0.15f); //jump again a little
 
 		fPoint position = globalMine.position;

@@ -35,18 +35,7 @@ Entity * Joe::makeJoe() {
 	//prepare the entity for the player
 	Entity* result = new Entity();
 
-	MotionComponent* motion = new MotionComponent("motion");
-	motion->velocity.x = 0;
-	motion->velocity.y = 0;
-	motion->speed = 50;
-	motion->doubleSpeed = 50;
-	result->addComponent(motion);
-
-	CircleCollider* circleGravity = new CircleCollider(fPoint(14, 41), 1, TypeCollider::GRAVITY);
-	GravityComponent* gravity = new GravityPlayerComponent("gravity", circleGravity);
-	gravity->gravity = 550;
-	gravity->maxVelocity = 500;
-	result->addComponent(gravity);
+	
 
 	PlayerHittedComponent* hitted = new PlayerHittedComponent("hitted");
 	result->addComponent(hitted);
@@ -77,6 +66,19 @@ Entity * Joe::makeJoe() {
 	
 	WeaponComponent* weapon = new WeaponComponent("weapon", 2, 250);
 	result->addComponent(weapon);
+
+	CircleCollider* circleGravity = new CircleCollider(fPoint(14, 41), 1, TypeCollider::GRAVITY);
+	GravityComponent* gravity = new GravityPlayerComponent("gravity", circleGravity);
+	gravity->gravity = 550;
+	gravity->maxVelocity = 500;
+	result->addComponent(gravity);
+
+	MotionComponent* motion = new MotionComponent("motion");
+	motion->velocity.x = 0;
+	motion->velocity.y = 0;
+	motion->speed = 50;
+	motion->doubleSpeed = 50;
+	result->addComponent(motion);
 
 	makeAnimations(result);
 
@@ -159,6 +161,8 @@ void Joe::makeAnimations(Entity* entity) {
 
 	ConditionComparison<TypeJump> conditionStartJump1 = ConditionComparison<TypeJump>(&controller->stateJump, TypeJump::JUMP);
 	ConditionComparison<TypeJump> conditionStartJump2 = ConditionComparison<TypeJump>(&controller->stateJump, TypeJump::DOUBLE_JUMP);
+	ConditionComparison<TypeJump> conditionEndJump = ConditionComparison<TypeJump>(&controller->stateJump, TypeJump::NONE);
+	StateTransition<Animation> transitionEndJump = StateTransition<Animation>(idleAnimation, &conditionEndJump);
 	StateTransition<Animation> transitionStartJump1 = StateTransition<Animation>(startJumpAnimation, &conditionStartJump1);
 	StateTransition<Animation> transitionStartJump2 = StateTransition<Animation>(startJumpAnimation, &conditionStartJump2);
 
@@ -167,6 +171,7 @@ void Joe::makeAnimations(Entity* entity) {
 	forwardAnimation->addTransition(&transitionStartJump1);
 	forwardAnimation->addTransition(&transitionStartJump2);
 	lookingUpAnimation->addTransition(&transitionStartJump2);
+	startJumpAnimation->addTransition(&transitionEndJump);
 
 	// ---------------------------------------------
 
@@ -183,6 +188,7 @@ void Joe::makeAnimations(Entity* entity) {
 					transitionJump.addCondition(&conditionStartJump1);
 
 	startJumpAnimation->addTransition(&transitionJump);
+	jumpAnimation->addTransition(&transitionEndJump);
 
 	// ---------------------------------------------
 
@@ -199,6 +205,7 @@ void Joe::makeAnimations(Entity* entity) {
 					transitionDoubleJump.addCondition(&conditionStartJump2);
 
 	startJumpAnimation->addTransition(&transitionDoubleJump);
+	doubleJumpAnimation->addTransition(&transitionEndJump);
 
 	// ---------------------------------------------
 

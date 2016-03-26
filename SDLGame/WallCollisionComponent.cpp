@@ -40,7 +40,7 @@ void WallCollisionComponent::onCollisionEnter(const Collider * self, const Colli
 		int count = 0;
 		do {
 			parent->transform->position.x += stepDirection;
-		} while (self->checkCollision(another) && ++count < 100);
+		} while (self->checkCollision(another) && ++count < 500);
 	}
 }
 

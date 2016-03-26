@@ -257,7 +257,7 @@ update_status ModulePlayer::update(){
 	}
 
 	//don't move while receiving damage
-	if (controller->damage == 0) {
+	if (controller->damage == 0 && levelFinished==false) {
 		controller->moveX = 0;
 		controller->moveY = 0;
 
