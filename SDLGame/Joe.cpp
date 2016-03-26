@@ -48,9 +48,6 @@ Entity * Joe::makeJoe() {
 	jump->doubleSpeed = 400;
 	result->addComponent(jump);
 
-	WallCollisionComponent* walls = new WallCollisionComponent("walls");
-	result->addComponent(walls);
-
 	RectangleCollider* rectangle= new RectangleCollider(fPoint(4,4), iPoint(20,38), 0, TypeCollider::PLAYER);
 	CollisionComponent* collider = new CollisionComponent("collider", rectangle);
 	result->addComponent(collider);
@@ -67,6 +64,8 @@ Entity * Joe::makeJoe() {
 	WeaponComponent* weapon = new WeaponComponent("weapon", 2, 250);
 	result->addComponent(weapon);
 
+	
+
 	CircleCollider* circleGravity = new CircleCollider(fPoint(14, 41), 1, TypeCollider::GRAVITY);
 	GravityComponent* gravity = new GravityPlayerComponent("gravity", circleGravity);
 	gravity->gravity = 550;
@@ -79,6 +78,9 @@ Entity * Joe::makeJoe() {
 	motion->speed = 50;
 	motion->doubleSpeed = 50;
 	result->addComponent(motion);
+
+	WallCollisionComponent* walls = new WallCollisionComponent("walls");
+	result->addComponent(walls);
 
 	makeAnimations(result);
 
@@ -403,8 +405,8 @@ void Joe::makeAnimations(Entity* entity) {
 	// ---------------------------------------------
 	
 	Animation backDead(3);
-	backDead.sizeFrame = {0,320,128,128};
-	backDead.offset = {-40,-82};
+	backDead.sizeFrame = {0,384,128,64};
+	backDead.offset = {-40,-18};
 	backDead.flippedOffset.x = -22;
 	backDead.speed = 0.2f;
 	backDead.repeat = 1;
