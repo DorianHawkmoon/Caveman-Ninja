@@ -26,6 +26,7 @@ public:
 	void handleEventGUI(const SDL_Event& event);
 
 private:
+	//not owned!
 	std::vector<GUI::GUIComponent*> gui;
 
 };

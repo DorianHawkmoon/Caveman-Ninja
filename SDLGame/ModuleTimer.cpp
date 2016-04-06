@@ -16,6 +16,9 @@ bool ModuleTimer::start() {
 }
 
 update_status ModuleTimer::preUpdate() {
+	if (fpsTimer.isPaused()) {
+		return UPDATE_CONTINUE;
+	}
 	++frames;
 	//get the delta time (time of the last frame)
 	deltaTime = fpsTimer.value();
@@ -50,6 +53,7 @@ int ModuleTimer::getFPS() const {
 
 void ModuleTimer::pause() {
 	fpsTimer.pause();
+	deltaTime = 0;
 	for (std::list<Timer*>::iterator it = temporalTimers.begin(); it != temporalTimers.end(); ++it) {
 		(*it)->pause();
 	}

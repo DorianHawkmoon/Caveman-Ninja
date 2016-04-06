@@ -84,7 +84,6 @@ update_status ModuleInput::preUpdate() {
 					case SDL_WINDOWEVENT_MINIMIZED:
 						break;
 					case SDL_WINDOWEVENT_FOCUS_LOST:
-
 						App->pause(true);
 						break;
 

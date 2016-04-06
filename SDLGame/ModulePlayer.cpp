@@ -241,16 +241,17 @@ void ModulePlayer::portraitAnimation() {
 update_status ModulePlayer::update(){
 	debugging();
 
-
 	ControlEntity* controller = &player->controller;
 	Transform* trans = player->transform;
 
+	//finished level and not dead
 	if (levelFinished && !gameOverTimer->isStopped() && gameOverTimer->value() > 3000) {
 		Scene* next = new EntryScene();
 		App->scene->changeScene(next, 1);
 		gameOverTimer->stop();
 		App->audio->stopMusic(); //stop music
 
+	//level finished because of game over
 	}else if (levelFinished && gameOverTimer->isStopped()) {
 		controller->moveX = 0;
 		controller->moveY = 0;

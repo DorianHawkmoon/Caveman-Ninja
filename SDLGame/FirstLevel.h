@@ -14,6 +14,9 @@ public:
 
 	virtual bool start();
 	virtual bool cleanUp();
+
+	virtual update_status update();
+
 private:
 	void putEnemies();
 	void makeEnemy(fPoint positionTrigger, const std::vector<fPoint>& enemies);

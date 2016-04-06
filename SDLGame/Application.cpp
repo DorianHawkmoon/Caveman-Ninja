@@ -63,6 +63,14 @@ bool Application::init() {
 		}
 	}
 
+	SDL_Color color = SDL_Color();
+	color.g = 255;
+	color.b = 255;
+	color.r = 255;
+	color.a = 255;
+	label = new GUI::GUILabel("Paused", color, "arcadepix.ttf", GUILocation::CENTER);
+	//label->transform.position = {100,120};
+
 	// Start the first scene --
 	fade->fadeToBlack(scene, nullptr, 3.0f);
 
@@ -72,20 +80,6 @@ bool Application::init() {
 update_status Application::update() {
 	update_status ret = UPDATE_CONTINUE;
 
-	if (paused) {
-		input->preUpdate();
-		input->update();
-
-		//only do the postUpdate (draw)
-		for (std::list<Module*>::iterator it = modules.begin(); it != modules.end() && ret == UPDATE_CONTINUE; ++it) {
-			if ((*it)->isEnabled() == true) {
-				ret = (*it)->postUpdate();
-			}
-		}
-		
-
-	} else {
-		timer->unpause();
 		for (std::list<Module*>::iterator it = modules.begin(); it != modules.end() && ret == UPDATE_CONTINUE; ++it) {
 			if ((*it)->isEnabled() == true) {
 				ret = (*it)->preUpdate();
@@ -103,7 +97,6 @@ update_status Application::update() {
 				ret = (*it)->postUpdate();
 			}
 		}
-	}
 	
 	//control fps
 	int delay = static_cast<int>(1.0 / FPS) - (timer->getDeltaFrame() / 1000);
@@ -137,9 +130,11 @@ void Application::pause(bool pause) {
 		c.b = 0;
 		c.r = 0;
 		c.g = 0;
-		renderer->setFaddingEffect(0.5f*255.0f, c);
+		renderer->setFaddingEffect(0.5f, c);
+		gui->registerGUI(label);
 	} else {
 		timer->unpause();
+		gui->removeGUI(label);
 		renderer->clearFaddingEffect();
 	}
 }

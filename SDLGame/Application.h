@@ -5,6 +5,7 @@
 #include "Globals.h"
 #include <list>
 #include "Module.h"
+#include "GUILabel.h"
 
 class ModuleRender;
 class ModuleWindow;
@@ -50,6 +51,7 @@ public:
 private:
 	std::list<Module*> modules;
 	bool paused;
+	GUI::GUILabel* label;
 };
 
 extern Application* App;

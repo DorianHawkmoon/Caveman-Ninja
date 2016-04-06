@@ -55,9 +55,7 @@ bool EntryScene::start() {
 }
 
 update_status EntryScene::update() {
-	if (root != nullptr) {
-		root->update();
-	}
+	Scene::update();
 
 
 	if (App->input->keyActive(SDL_SCANCODE_RETURN) || App->input->keyActive(SDL_SCANCODE_SPACE)) {

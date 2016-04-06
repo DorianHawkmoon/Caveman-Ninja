@@ -170,6 +170,16 @@ bool FirstLevel::cleanUp() {
 	return true;
 }
 
+update_status FirstLevel::update() {
+	Scene::update();
+
+	if (App->input->getKey(SDL_SCANCODE_P)==KEY_DOWN) {
+		App->pause(!App->isPaused());
+	}
+
+	return UPDATE_CONTINUE;
+}
+
 void FirstLevel::putEnemies() {
 	fPoint positionTrigger = fPoint(180, 0);
 	std::vector<fPoint> enemies = std::vector<fPoint>();
