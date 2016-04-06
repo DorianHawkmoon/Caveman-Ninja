@@ -3,12 +3,12 @@
 #define LIFESPAN_COMPONENT_H
 
 #include "IComponent.h"
-#include "Timer.h"
 #include <string>
+class Timer;
 
 class LifespanComponent : public IComponent {
 public:
-	LifespanComponent(const std::string& name, unsigned int lifespan): IComponent(name), lifespan(lifespan) {}
+	LifespanComponent(const std::string& name, unsigned int lifespan);
 	virtual ~LifespanComponent();
 
 	virtual bool start();
@@ -16,7 +16,7 @@ public:
 	virtual IComponent* makeClone() const;
 
 private:
-	Timer time;
+	Timer* time;
 	unsigned int lifespan;
 };
 

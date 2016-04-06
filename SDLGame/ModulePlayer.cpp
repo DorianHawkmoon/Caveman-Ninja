@@ -26,6 +26,8 @@
 #include "TimerCondition.h"
 #include "GUIAnimation.h"
 #include "ConditionCallback.h"
+#include "Timer.h"
+#include "ModuleTimer.h"
 
 ModulePlayer::ModulePlayer(bool start_enabled) : Module(start_enabled), lifes(1), player(nullptr)
 {
@@ -66,7 +68,8 @@ bool ModulePlayer::start(){
 	//restore his life
 	life->setActualLife(life->getMaxLife());
 	score->score.resetScore();
-	gameOverTimer.stop();
+	gameOverTimer = App->timer->getTimer();
+	gameOverTimer->stop();
 	levelFinished = false;
 
 	App->renderer->camera.setCamera(player->transform);
@@ -107,6 +110,7 @@ bool ModulePlayer::cleanUp(){
 	if (player != nullptr) {
 		player->cleanUp();
 	}
+	App->timer->deleteTimer(gameOverTimer);
 	return true;
 }
 
@@ -126,7 +130,7 @@ void ModulePlayer::dead() {
 		AnimationComponent* animation = static_cast<AnimationComponent*>(player->getComponent("animations"));
 		if (animation->getActualAnimation()->isInfinity()) {
 			//start the countdown!
-			gameOverTimer.start();
+			gameOverTimer->start();
 			addGameOver();
 			lifes--;
 
@@ -241,18 +245,18 @@ update_status ModulePlayer::update(){
 	ControlEntity* controller = &player->controller;
 	Transform* trans = player->transform;
 
-	if (levelFinished && !gameOverTimer.isStopped() && gameOverTimer.value() > 3000) {
+	if (levelFinished && !gameOverTimer->isStopped() && gameOverTimer->value() > 3000) {
 		Scene* next = new EntryScene();
 		App->scene->changeScene(next, 1);
-		gameOverTimer.stop();
+		gameOverTimer->stop();
 		App->audio->stopMusic(); //stop music
 
-	}else if (levelFinished && gameOverTimer.isStopped()) {
+	}else if (levelFinished && gameOverTimer->isStopped()) {
 		controller->moveX = 0;
 		controller->moveY = 0;
 		controller->attack = 0;
 		controller->damage = 0;
-		gameOverTimer.start();
+		gameOverTimer->start();
 		//put the animation
 	}
 
@@ -313,10 +317,10 @@ update_status ModulePlayer::update(){
 	}
 	player->update();
 
-	if (!gameOverTimer.isStopped() && gameOverTimer.value() > 10000) {
+	if (!gameOverTimer->isStopped() && gameOverTimer->value() > 10000) {
 		Scene* next = new EntryScene();
 		App->scene->changeScene(next, 1);
-		gameOverTimer.stop();
+		gameOverTimer->stop();
 		App->audio->stopMusic(); //stop music
 	}
 	return UPDATE_CONTINUE;

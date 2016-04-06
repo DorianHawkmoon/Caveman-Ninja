@@ -3,13 +3,18 @@
 #include "ModuleAudio.h"
 #include "Entity.h"
 #include "Collider.h"
+#include "ModuleTimer.h"
 
-WeaponComponent::WeaponComponent(const std::string & name, int maxThrowable, unsigned int delay) : IComponent(name), maxThrowable(maxThrowable), delay(delay), weapons() {}
+WeaponComponent::WeaponComponent(const std::string & name, int maxThrowable, unsigned int delay) : IComponent(name), maxThrowable(maxThrowable), delay(delay), weapons() {
+	time=App->timer->getTimer();
+}
 
-WeaponComponent::~WeaponComponent() {}
+WeaponComponent::~WeaponComponent() {
+	App->timer->deleteTimer(time);
+}
 
 bool WeaponComponent::start() {
-	time.start();
+	time->start();
 	//prepare sound
 	soundEffect = App->audio->loadEffect("attack.wav");
 	return true;
@@ -47,9 +52,9 @@ void WeaponComponent::throwWeapon() {
 	Transform* trans = parent->transform;
 
 	//can throw?
-	if (static_cast<int>(weapons.size()) < maxThrowable && time.value() > delay) {
+	if (static_cast<int>(weapons.size()) < maxThrowable && time->value() > delay) {
 		controller->attack = (trans->flip == SDL_FLIP_HORIZONTAL) ? -1 : 1;//segun la dirección de joe
-		time.start();
+		time->start();
 		//create weapon
 		Entity* entity = PlayerWeapon::makeWeapon();
 		weapons.push_back(entity);

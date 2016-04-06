@@ -8,9 +8,9 @@
 #include "StateMachine.h"
 #include "Joe.h"
 #include <vector>
-#include "Timer.h"
 #include "Score.h"
 
+class Timer;
 class LifeComponent;
 class JumpComponent;
 class WeaponComponent;
@@ -28,6 +28,7 @@ public:
 	update_status preUpdate();
 	update_status update();
 	update_status postUpdate();
+
 	bool cleanUp();
 
 public:
@@ -41,7 +42,7 @@ public:
 
 private:
 	Entity* deadBody;
-	Timer gameOverTimer;
+	Timer* gameOverTimer;
 	
 	int lifes;
 	bool ghost;

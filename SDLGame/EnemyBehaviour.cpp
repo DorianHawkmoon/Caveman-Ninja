@@ -15,7 +15,18 @@
 #include "ModuleAudio.h"
 #include "Particle.h"
 #include "JumpComponent.h"
+#include "Timer.h"
 #include "LifespanComponent.h"
+#include "ModuleTimer.h"
+#include "Application.h"
+
+inline EnemyBehaviour::EnemyBehaviour(const std::string & name) : IAComponent(name) {
+	controlIA = App->timer->getTimer();
+}
+
+inline EnemyBehaviour::~EnemyBehaviour() {
+	App->timer->deleteTimer(controlIA);
+}
 
 IComponent* EnemyBehaviour::clone() const {
 	EnemyBehaviour* result = new EnemyBehaviour(getID());
@@ -31,7 +42,7 @@ bool EnemyBehaviour::start() {
 	started = started & ((jump = static_cast<JumpComponent*>(parent->getComponent("jump"))) != nullptr);
 
 	state = SEARCHING;
-	controlIA.start();
+	controlIA->start();
 
 	hit = App->audio->loadEffect("enemy_hit.wav");
 	startRun = App->audio->loadEffect("enemy_caveman_run_start.wav");
@@ -193,15 +204,15 @@ void EnemyBehaviour::checkCollisions(const Transform& globalMine, const Transfor
 void EnemyBehaviour::forward(const Transform& globalMine, const Transform& globalPlayer) {
 	ControlEntity* controller = &parent->controller;
 	//I'm walking for a time
-	if (controlIA.value() > 2000) {
+	if (controlIA->value() > 2000) {
 		//stop and search for the player
 		iPoint player = directionPlayer(globalMine, globalPlayer);
 		previousplayer = player;
 		state = SEARCHING;
 		//decide inmediatly or thinking?
 		if (Utils::range(3) == 0) {
-			controlIA.stop();
-			controlIA.start();
+			controlIA->stop();
+			controlIA->start();
 		}
 	} else {
 		controller->run = false;
@@ -224,7 +235,7 @@ void EnemyBehaviour::runningAway(const Transform& globalMine) {
 
 void EnemyBehaviour::search(const Transform & globalMine, const  Transform & globalPlayer) {
 	ControlEntity* controller = &parent->controller;
-	if (controlIA.value() < 1000) {
+	if (controlIA->value() < 1000) {
 		setController(iPoint(0, previousplayer.y));
 		return;
 	}
@@ -247,14 +258,14 @@ void EnemyBehaviour::search(const Transform & globalMine, const  Transform & glo
 		if (Utils::range(4) != 0) {
 			//run!!
 			state = RUN;
-			controlIA.stop();
-			controlIA.start();
+			controlIA->stop();
+			controlIA->start();
 			controller->run = true;
 		} else {
 			//walk
 			state = FORWARD;
-			controlIA.stop();
-			controlIA.start();
+			controlIA->stop();
+			controlIA->start();
 		}
 	}
 
@@ -263,11 +274,11 @@ void EnemyBehaviour::search(const Transform & globalMine, const  Transform & glo
 
 void EnemyBehaviour::running(const Transform& globalMine, const Transform& globalPlayer) {
 	//he is running, stop after a time
-	if (controlIA.value() > 1700) {
+	if (controlIA->value() > 1700) {
 		state = FORWARD;
 		parent->controller.run = false;
-		controlIA.stop();
-		controlIA.start();
+		controlIA->stop();
+		controlIA->start();
 	}
 	setController(iPoint(previousplayer.x, 0));
 }
@@ -278,8 +289,8 @@ void EnemyBehaviour::jumping(const Transform & globalMine, const  Transform & gl
 		state = SEARCHING;
 		//decide inmediatly or thinking?
 		if (Utils::range(3) == 0) {
-			controlIA.stop();
-			controlIA.start();
+			controlIA->stop();
+			controlIA->start();
 		}
 	}
 }

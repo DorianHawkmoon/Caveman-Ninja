@@ -25,7 +25,7 @@ public:
 	void throwWeapon();
 
 private:
-	Timer time;
+	Timer* time;
 	int maxThrowable;
 	unsigned int delay;
 	std::list<Entity*> weapons;

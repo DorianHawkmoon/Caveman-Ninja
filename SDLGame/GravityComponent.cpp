@@ -8,8 +8,10 @@
 #include "ModuleAudio.h"
 #include "CircleCollider.h"
 #include "Entity.h"
+#include "ModuleTimer.h"
 
-GravityComponent::GravityComponent(const std::string& nameComponent, Collider *collider) : IComponent(nameComponent), gravity(0), collision(collider), cleaned(true) {}
+GravityComponent::GravityComponent(const std::string& nameComponent, Collider *collider) : IComponent(nameComponent), gravity(0), collision(collider), cleaned(true) {
+}
 
 GravityComponent::~GravityComponent() {
 	//just in case

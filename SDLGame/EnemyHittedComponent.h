@@ -28,7 +28,7 @@ private:
 private:
 	bool hitted;
 	bool dead;
-	Timer timer;
+	Timer* timer;
 
 	CollisionComponent* collision;
 	LifeComponent* life;

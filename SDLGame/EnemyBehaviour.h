@@ -5,7 +5,7 @@
 #include "Transform.h"
 #include "IAComponent.h"
 #include <string>
-#include "Timer.h"
+class Timer;
 struct Particle;
 class LifeComponent;
 class MotionComponent;
@@ -25,8 +25,8 @@ private:
 	};
 
 public:
-	EnemyBehaviour(const std::string& name): IAComponent(name) {}
-	virtual ~EnemyBehaviour() {}
+	EnemyBehaviour(const std::string& name);
+	virtual ~EnemyBehaviour();
 
 	virtual IComponent* clone() const;
 
@@ -53,8 +53,7 @@ private:
 
 	statesIA state;
 	iPoint previousplayer;
-	Timer controlIA;
-
+	Timer* controlIA;
 
 
 	LifeComponent* life;

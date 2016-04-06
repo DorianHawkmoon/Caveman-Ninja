@@ -61,17 +61,15 @@ update_status ModuleInput::preUpdate() {
 
 	if (getKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN) {
 		return UPDATE_STOP;
-
-	} else if (windowEvents[WE_PAUSE] || windowEvents[WE_HIDE]) {
-		App->pause();
+		 
+	}
+	/*
+	else if (windowEvents[WE_PAUSE] || windowEvents[WE_HIDE]) {
+		App->pause(true);
 
 	} else if (getKey(SDL_SCANCODE_P) == KEY_DOWN || windowEvents[WE_SHOW]) {
-		if (App->isPaused()) {
-			App->unpause();
-		} else {
-			App->pause();
-		}
-	}
+		App->pause(!App->isPaused());
+	} */
 
 	SDL_Event events;
 	while (SDL_PollEvent(&events)) {
@@ -84,24 +82,26 @@ update_status ModuleInput::preUpdate() {
 					case SDL_WINDOWEVENT_LEAVE:
 					case SDL_WINDOWEVENT_HIDDEN:
 					case SDL_WINDOWEVENT_MINIMIZED:
+						break;
 					case SDL_WINDOWEVENT_FOCUS_LOST:
-						windowEvents[WE_HIDE] = true;
+
+						App->pause(true);
 						break;
 
-						//case SDL_WINDOWEVENT_ENTER:
+					case SDL_WINDOWEVENT_ENTER:
 					case SDL_WINDOWEVENT_SHOWN:
-					case SDL_WINDOWEVENT_FOCUS_GAINED:
 					case SDL_WINDOWEVENT_MAXIMIZED:
 					case SDL_WINDOWEVENT_RESTORED:
-						windowEvents[WE_SHOW] = true;
+						break;
+					case SDL_WINDOWEVENT_FOCUS_GAINED:
+						App->pause(false);
 						break;
 
 					case SDL_WINDOWEVENT_MOVED:
 					case SDL_WINDOWEVENT_RESIZED:
 					case SDL_WINDOWEVENT_SIZE_CHANGED:
-					//case SDL_WINDOWEVENT_FOCUS_LOST:
-						windowEvents[WE_PAUSE] = true;
-
+					case SDL_WINDOWEVENT_EXPOSED:
+						break;
 				}
 				break;
 		}
@@ -112,7 +112,6 @@ update_status ModuleInput::preUpdate() {
 			gui->handleEventGUI(events);
 		}
 	}
-
 	return UPDATE_CONTINUE;
 }
 

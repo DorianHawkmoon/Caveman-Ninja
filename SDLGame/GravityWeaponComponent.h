@@ -9,7 +9,7 @@ class CollisionComponent;
 
 class GravityWeaponComponent : public IComponent {
 public:
-	GravityWeaponComponent(std::string nameComponent) : IComponent(nameComponent), gravity(0), timer() {}
+	GravityWeaponComponent(std::string nameComponent);
 	virtual ~GravityWeaponComponent();
 
 	virtual IComponent * makeClone() const;
@@ -23,7 +23,7 @@ public:
 private:
 	MotionComponent* motion;
 	CollisionComponent* collision;
-	Timer timer;
+	Timer* timer;
 };
 
 

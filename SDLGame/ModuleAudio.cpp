@@ -58,6 +58,7 @@ bool ModuleAudio::cleanUp() {
 
 bool const ModuleAudio::playMusic(const char * path, float fade_time) {
 	bool result = true;
+	return result;
 
 	if (music != nullptr) {
 		if (fade_time > 0.0f) {
@@ -115,6 +116,7 @@ unsigned int const ModuleAudio::loadEffect(const char * path) {
 }
 
 bool ModuleAudio::playEffect(unsigned int fx, int repeat) {
+	return true;
 	bool result = false;
 
 	if (fx < effects.size()) {

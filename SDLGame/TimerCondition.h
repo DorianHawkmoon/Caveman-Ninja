@@ -4,22 +4,28 @@
 
 #include "Condition.h"
 #include "Timer.h"
+#include "ModuleTimer.h"
+#include "Application.h"
 
 class TimerCondition : public Condition {
 public:
-	TimerCondition(unsigned int milliseconds) : milliseconds(milliseconds), timer() {}
-	virtual ~TimerCondition() {}
+	TimerCondition(unsigned int milliseconds) : milliseconds(milliseconds), timer() {
+		timer=App->timer->getTimer();
+	}
+	virtual ~TimerCondition() {
+		App->timer->deleteTimer(timer);
+	}
 
 	bool start() { 
-		timer.start();
+		timer->start();
 		return true;
 	}
 	bool check() const {
-		return timer.value() >= milliseconds;
+		return timer->value() >= milliseconds;
 	}
 
 	bool cleanUp() { 
-		timer.stop();
+		timer->stop();
 		return true; 
 	}
 
@@ -29,7 +35,7 @@ public:
 
 private:
 	unsigned int milliseconds;
-	Timer timer;
+	Timer* timer;
 };
 
 

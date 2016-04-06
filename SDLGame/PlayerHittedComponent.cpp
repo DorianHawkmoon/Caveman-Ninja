@@ -9,17 +9,23 @@
 #include "ModuleParticles.h"
 #include "CollisionComponent.h"
 #include "DamageComponent.h"
+#include "Application.h"
+#include "ModuleTimer.h"
 
 PlayerHittedComponent::PlayerHittedComponent(const std::string& name) : IComponent(name), timer(), dead(false), securityTimer() {
-
+	timer = App->timer->getTimer();
+	securityTimer = App->timer->getTimer();
 }
 
 
-PlayerHittedComponent::~PlayerHittedComponent() {}
+PlayerHittedComponent::~PlayerHittedComponent() {
+	App->timer->deleteTimer(timer);
+	App->timer->deleteTimer(securityTimer);
+}
 
 bool PlayerHittedComponent::start() {
 	bool result = true;
-	timer.stop();
+	timer->stop();
 	result = result & ((life = static_cast<LifeComponent*>(this->parent->getComponent("life"))) != nullptr);
 	result = result & ((motion = static_cast<MotionComponent*>(this->parent->getComponent("motion"))) != nullptr);
 	result = result & ((collision = static_cast<CollisionComponent*>(this->parent->getComponent("collider"))) != nullptr);
@@ -51,29 +57,29 @@ update_status PlayerHittedComponent::update() {
 	}
 	//si hitted and alive and not falling more, damage to zero
 	if (hitted) {
-		if (timer.isStopped()) {
+		if (timer->isStopped()) {
 			if (motion->velocity.y == 0) {
 				motion->velocity.x = 0;
-				timer.start();
+				timer->start();
 			}
-			if (securityTimer.isStopped()) {
-				securityTimer.start();
-			} else if (securityTimer.value() > 2000) {
-				timer.start();
+			if (securityTimer->isStopped()) {
+				securityTimer->start();
+			} else if (securityTimer->value() > 2000) {
+				timer->start();
 			}
-		} else if (timer.value() >= 600 && life->isAlive()) {
+		} else if (timer->value() >= 600 && life->isAlive()) {
 			hitted = false;
 			collision->enable();
 			parent->controller.damage = 0;
-			timer.stop();
-			securityTimer.stop();
+			timer->stop();
+			securityTimer->stop();
 
-		} else if (timer.value() >= 50 && !life->isAlive()) {
+		} else if (timer->value() >= 50 && !life->isAlive()) {
 			dead = true;
 			int dam = (parent->controller.damage > 0) ? 1 : -1;
 			parent->controller.damage = dam * 3;
-			securityTimer.stop();
-			timer.stop();
+			securityTimer->stop();
+			timer->stop();
 		}
 	}
 	return UPDATE_CONTINUE;

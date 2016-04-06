@@ -1,6 +1,7 @@
 #include "ModuleParticles.h"
 #include "Application.h"
 #include "ModuleRender.h"
+#include "Timer.h"
 
 ModuleParticles::~ModuleParticles() {}
 
@@ -34,7 +35,7 @@ bool ModuleParticles::cleanUp() {
 
 void ModuleParticles::addParticle(const Particle& particle, fPoint position, fPoint velocity, int delay) {
 	Particle* p = new Particle(particle);
-	p->timer.start();
+	p->timer->start();
 	p->position = position;
 	p->delay = delay;
 	p->speed = velocity;

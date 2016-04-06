@@ -15,16 +15,22 @@
 #include "ModulePlayer.h"
 #include "ScoreComponent.h"
 #include "DropItemComponent.h"
+#include "Application.h"
+#include "Moduletimer.h"
 
 
-EnemyHittedComponent::EnemyHittedComponent(const std::string& name) : IComponent(name), timer(), dead(false), playSound(true) {}
+EnemyHittedComponent::EnemyHittedComponent(const std::string& name) : IComponent(name), timer(), dead(false), playSound(true) {
+	timer = App->timer->getTimer();
+}
 
 
-EnemyHittedComponent::~EnemyHittedComponent() {}
+EnemyHittedComponent::~EnemyHittedComponent() {
+	App->timer->deleteTimer(timer);
+}
 
 bool EnemyHittedComponent::start() {
 	bool result = true;
-	timer.stop();
+	timer->stop();
 	result = result & ((life = static_cast<LifeComponent*>(this->parent->getComponent("life"))) != nullptr);
 	result = result & ((motion = static_cast<MotionComponent*>(this->parent->getComponent("motion"))) != nullptr);
 	result = result & ((collision = static_cast<CollisionComponent*>(this->parent->getComponent("collider"))) != nullptr);
@@ -52,26 +58,26 @@ update_status EnemyHittedComponent::update() {
 		}
 
 		//start the timer to die or run
-		if (timer.isStopped()) {
+		if (timer->isStopped()) {
 			if (motion->velocity.y == 0) {
 				motion->velocity.x = 0;
-				timer.start();
+				timer->start();
 			}
 
 		//is alive? come back!
-		} else if (timer.value() >= 800 && life->isAlive()) {
+		} else if (timer->value() >= 800 && life->isAlive()) {
 			hitted = false;
 			collision->enable();
 			parent->controller.damage = 0;
-			timer.stop();
+			timer->stop();
 
 		//is not, start dying
-		} else if (timer.value() >= 100 && !life->isAlive()) {
+		} else if (timer->value() >= 100 && !life->isAlive()) {
 			dead = true;
 			int dam = parent->controller.damage;
 			parent->controller.damage = (dam / dam) * 3;
 
-			timer.stop();
+			timer->stop();
 		}
 
 	}
@@ -134,9 +140,9 @@ void EnemyHittedComponent::onCollisionEnter(const Collider * self, const Collide
 }
 
 void EnemyHittedComponent::deadUpdate() {
-	if (timer.isStopped()) {
+	if (timer->isStopped()) {
 		//start the time of dead animation
-		timer.start();
+		timer->start();
 		//points to player (no effects)
 		App->player->score->score.addScore(300);
 
@@ -153,7 +159,7 @@ void EnemyHittedComponent::deadUpdate() {
 			App->scene->addEntity(item);
 		}
 
-	} else if (timer.value() > 500) {
+	} else if (timer->value() > 500) {
 		AnimationComponent* animation = static_cast<AnimationComponent*>(parent->getComponent("animations"));
 		if (animation != nullptr) {
 			if (animation->getActualAnimation()->isFinished()) {

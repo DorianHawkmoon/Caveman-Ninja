@@ -11,7 +11,9 @@ Timer::Timer() {
 }
 
 
-Timer::~Timer() {}
+Timer::~Timer() {
+	stop();
+}
 
 void Timer::start() {
 	//Start the timer

@@ -14,6 +14,11 @@
 #include "ModuleGUI.h"
 #include "SDL/SDL.h"
 
+#include <iomanip>
+#include <locale>
+#include <sstream>
+#include <string> 
+
 int DEBUG_COLLISIONS = 0;
 
 Application::Application() {
@@ -71,6 +76,7 @@ update_status Application::update() {
 		input->preUpdate();
 		input->update();
 
+		//only do the postUpdate (draw)
 		for (std::list<Module*>::iterator it = modules.begin(); it != modules.end() && ret == UPDATE_CONTINUE; ++it) {
 			if ((*it)->isEnabled() == true) {
 				ret = (*it)->postUpdate();
@@ -98,8 +104,12 @@ update_status Application::update() {
 			}
 		}
 	}
+	
 	//control fps
-	SDL_Delay(static_cast<int>(1.0 / FPS ) - (timer->getDeltaFrame()/1000));
+	int delay = static_cast<int>(1.0 / FPS) - (timer->getDeltaFrame() / 1000);
+	if (delay > 0) {
+		SDL_Delay(delay);
+	}
 	return ret;
 }
 
@@ -117,18 +127,19 @@ bool Application::isPaused() const {
 	return paused;
 }
 
-void Application::pause() {
-	timer->pause();
-	SDL_Color c;
-	c.b = 0;
-	c.r = 0;
-	c.g = 0;
-	renderer->setFaddingEffect(0.5f*255.0f, c);
-	paused = true;
-}
+void Application::pause(bool pause) {
+	if (paused == pause) return;
 
-void Application::unpause() {
-	timer->unpause();
-	renderer->clearFaddingEffect();
-	paused = false;
+	paused = pause;
+	if (paused) {
+		timer->pause();
+		SDL_Color c;
+		c.b = 0;
+		c.r = 0;
+		c.g = 0;
+		renderer->setFaddingEffect(0.5f*255.0f, c);
+	} else {
+		timer->unpause();
+		renderer->clearFaddingEffect();
+	}
 }

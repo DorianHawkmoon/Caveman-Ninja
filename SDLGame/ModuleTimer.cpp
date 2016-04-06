@@ -1,9 +1,14 @@
 #include "ModuleTimer.h"
+#include <algorithm>
 
-ModuleTimer::ModuleTimer(): Module(), fpsTimer(), deltaTime(0), fps(0), frames(0) {}
+ModuleTimer::ModuleTimer(): Module(), fpsTimer(), deltaTime(0), fps(0), frames(0), temporalTimers() {}
 
 
-ModuleTimer::~ModuleTimer() {}
+ModuleTimer::~ModuleTimer() {
+	for (std::list<Timer*>::iterator it = temporalTimers.begin(); it != temporalTimers.end(); ++it) {
+		delete (*it);
+	}
+}
 
 bool ModuleTimer::start() {
 	fpsTimer.start();
@@ -27,6 +32,11 @@ bool ModuleTimer::cleanUp() {
 	deltaTime = 0;
 	fps = 0;
 	frames = 0;
+
+	for (std::list<Timer*>::iterator it = temporalTimers.begin(); it != temporalTimers.end(); ++it) {
+		(*it)->stop();
+	}
+
 	return true;
 }
 
@@ -40,12 +50,35 @@ int ModuleTimer::getFPS() const {
 
 void ModuleTimer::pause() {
 	fpsTimer.pause();
+	for (std::list<Timer*>::iterator it = temporalTimers.begin(); it != temporalTimers.end(); ++it) {
+		(*it)->pause();
+	}
 }
 
 void ModuleTimer::unpause() {
 	fpsTimer.unpause();
+	for (std::list<Timer*>::iterator it = temporalTimers.begin(); it != temporalTimers.end(); ++it) {
+		(*it)->unpause();
+	}
 }
 
 void ModuleTimer::resetFrames() {
 	frames = 0;
+}
+
+Timer * ModuleTimer::getTimer() {
+	Timer* timer = new Timer();
+	temporalTimers.push_back(timer);
+	return timer;
+}
+
+void ModuleTimer::deleteTimer(Timer * timer) {
+	//search for the texture
+	std::list<Timer*>::iterator it = std::find_if(temporalTimers.begin(), temporalTimers.end(),
+		[&timer](Timer* loaded) { return loaded == timer; });
+
+	if (it != temporalTimers.end()) {
+		temporalTimers.erase(it);
+		delete *it;
+	}
 }

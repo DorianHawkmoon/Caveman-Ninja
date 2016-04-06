@@ -5,7 +5,13 @@
 #include "Application.h"
 #include "ModuleTimer.h"
 
-GravityWeaponComponent::~GravityWeaponComponent() {}
+inline GravityWeaponComponent::GravityWeaponComponent(std::string nameComponent) : IComponent(nameComponent), gravity(0), timer() {
+	timer = App->timer->getTimer();
+}
+
+GravityWeaponComponent::~GravityWeaponComponent() {
+	App->timer->deleteTimer(timer);
+}
 
 IComponent * GravityWeaponComponent::makeClone() const {
 	GravityWeaponComponent* result = new GravityWeaponComponent(this->getID());
@@ -16,14 +22,14 @@ IComponent * GravityWeaponComponent::makeClone() const {
 bool GravityWeaponComponent::start() {
 	motion = static_cast<MotionComponent*>(parent->getComponent("motion"));
 	collision = static_cast<CollisionComponent*>(parent->getComponent("collider"));
-	timer.start();
+	timer->start();
 	return true;
 }
 
 update_status GravityWeaponComponent::update() {
 	if (motion != nullptr) {
 		//apply force gravity
-		if (timer.value() > 200) {
+		if (timer->value() > 200) {
 			motion->velocity.y += 1.0f * gravity *(App->timer->getDeltaFrame() / 1000.0f);
 		}
 

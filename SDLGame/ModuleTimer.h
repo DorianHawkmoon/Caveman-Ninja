@@ -4,6 +4,7 @@
 
 #include "Module.h"
 #include "Timer.h"
+#include <list>
 
 class ModuleTimer :	public Module {
 public:
@@ -23,11 +24,16 @@ public:
 
 	void resetFrames();
 
+	Timer* getTimer();
+	void deleteTimer(Timer* timer);
+
 private:
 	Timer fpsTimer;
 	unsigned int deltaTime;
 	unsigned int fps;
 	unsigned int frames;
+
+	std::list<Timer*> temporalTimers;
 };
 
 #endif // !MODULE_TIMER_H

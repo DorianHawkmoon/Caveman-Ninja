@@ -30,8 +30,7 @@ public:
 	bool cleanUp();
 
 	bool isPaused() const;
-	void pause();
-	void unpause();
+	void pause(bool pause);
 
 public:
 	ModuleRender* renderer;

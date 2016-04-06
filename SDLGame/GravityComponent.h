@@ -5,8 +5,6 @@
 #include "IComponent.h"
 #include <string>
 #include "Entity.h"
-#include "Application.h"
-#include "ModuleTimer.h"
 class MotionComponent;
 class LifeComponent;
 class Collider;
@@ -39,7 +37,6 @@ private:
 	LifeComponent* life;
 	Collider* collision;
 	Collider* gravityCollider;
-	Timer fallTime;
 
 	bool cleaned;
 

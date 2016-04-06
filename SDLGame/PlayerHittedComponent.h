@@ -26,8 +26,8 @@ public:
 
 private:
 	bool hitted;
-	Timer timer;
-	Timer securityTimer; //when get stuck!
+	Timer* timer;
+	Timer* securityTimer; //when get stuck!
 	bool dead;
 
 	LifeComponent* life;
