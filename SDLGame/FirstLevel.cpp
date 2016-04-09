@@ -265,5 +265,5 @@ void FirstLevel::makeHUD() {
 	rootGUI->pack(lifebar);
 
 
-	App->gui->registerGUI(rootGUI);
+	//App->gui->registerGUI(rootGUI);
 }

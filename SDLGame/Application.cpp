@@ -68,8 +68,8 @@ bool Application::init() {
 	color.b = 255;
 	color.r = 255;
 	color.a = 255;
-	label = new GUI::GUILabel("Paused", color, "arcadepix.ttf", GUILocation::CENTER);
-	//label->transform.position = {100,120};
+	label = new GUI::GUILabel("Paused", color, "arcadepix.ttf", CENTER, 50);
+	label->transform.pivot = GUILocation::CENTER;
 
 	// Start the first scene --
 	fade->fadeToBlack(scene, nullptr, 3.0f);

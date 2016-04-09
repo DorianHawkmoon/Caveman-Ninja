@@ -55,6 +55,7 @@ namespace GUI {
 		*/
 		GUITransform transform;
 
+
 	private:
 		/**
 		* Para comprobar si está seleccionado

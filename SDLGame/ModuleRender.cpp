@@ -273,15 +273,15 @@ bool ModuleRender::insideCamera(const SDL_Rect & one, float speed) const {
 	return SDL_HasIntersection(&sizeWindows, &rectDestiny) == SDL_TRUE;
 }
 
-bool ModuleRender::paintGUI(SDL_Texture * texture, const GUITransform & transform, const SDL_Rect* sectionTexture ) {
+bool ModuleRender::paintGUI(SDL_Texture * texture, const GUITransform & transform, const SDL_Rect* sectionTexture) {
 	bool result = true;
 
 	SDL_Rect cam = camera.getWindowsSize();
 
 	SDL_Rect rectDestiny;
 	iPoint pos = {(int) transform.position.x, (int) transform.position.y};
-	rectDestiny.x = pos.x*SCREEN_SIZE;
-	rectDestiny.y = pos.y*SCREEN_SIZE;
+	rectDestiny.x = pos.x;
+	rectDestiny.y = pos.y;
 	rectDestiny.w = 0;
 	rectDestiny.h = 0;
 
@@ -296,8 +296,37 @@ bool ModuleRender::paintGUI(SDL_Texture * texture, const GUITransform & transfor
 	
 	rectDestiny.w *= SCREEN_SIZE;
 	rectDestiny.h *= SCREEN_SIZE;
+
+	//in this case, absolute means nothing at all, pivot by default
+	if (transform.pivot == GUILocation::ABSOLUTE) {
+	} else {
+		//start centered as default
+		rectDestiny.x -= rectDestiny.w * 0.5f;
+		rectDestiny.y -= rectDestiny.h * 0.5f;
+
+		if ((transform.pivot & TOP) > 0) {
+			LOG("top");
+			rectDestiny.y += rectDestiny.h * 0.5f;
+
+		}
+		if ((transform.pivot & BOTTOM) > 0) {
+			LOG("bottom");
+			rectDestiny.y -= rectDestiny.h * 0.5f;
+
+		}
+		if ((transform.pivot & LEFT) > 0) {
+			LOG("left");
+			rectDestiny.x += rectDestiny.w * 0.5f;
+
+		}
+		if ((transform.pivot & RIGHT) > 0) {
+			LOG("right");
+			rectDestiny.x -= rectDestiny.w * 0.5f;
+			
+		}
+	}
 	
-	//paint
+	
 	if (SDL_RenderCopyEx(renderer, texture, sectionTexture, &rectDestiny, transform.rotation, nullptr, SDL_FLIP_NONE) != 0) {
 		LOG("Cannot blit GUI to screen. SDL_RenderCopy error: %s", SDL_GetError());
 		result = false;

@@ -3,9 +3,14 @@
 #include "ModuleRender.h"
 #include "ModuleFonts.h"
 
+#include <iostream>
+#include <sstream>  // Required for stringstreams
+#include <string> 
+
 namespace GUI {
 
-	GUILabel::GUILabel(const std::string& text, const SDL_Color& color, const std::string& font, const GUILocation& location, int size) : GUI::GUITexture(), nameFont(font), text(text), size(size+1), color(color)  {
+	GUILabel::GUILabel(const std::string& text, const SDL_Color& color, const std::string& font, const GUILocation& location, int size) 
+								: GUI::GUITexture(), nameFont(font), text(text), size(size+1), color(color)  {
 		transform.location = location;
 		setSize(size);
 
@@ -50,7 +55,6 @@ namespace GUI {
 		return size;
 	}
 
-
 	void GUILabel::createTexture() {
 		//Render text surface
 		SDL_Surface* textSurface = TTF_RenderText_Solid(font, text.c_str(), color);
@@ -70,25 +74,6 @@ namespace GUI {
 		// Establece el offset de acuerdo al alineamiento
 		if (transform.location == GUILocation::ABSOLUTE) {
 			return;
-		}
-		int textureWidth;
-		int textureHeight;
-		SDL_QueryTexture(texture, nullptr, nullptr, &textureWidth, &textureHeight);
-		
-			offset.x = -(float) textureWidth / 2.0f;
-			offset.y = -(float) textureHeight / 2.0f;
-		
-		if ((transform.location & TOP) > 0) {
-			offset.y = +(float) textureWidth / 2.0f;
-		}
-		if ((transform.location & BOTTOM) > 0) {
-			offset.y = -(float) textureWidth / 2.0f;
-		}
-		if ((transform.location | LEFT) > 0) {
-			offset.x = +(float) textureWidth / 2.0f;
-		}
-		if ((transform.location | RIGHT) > 0) {
-			offset.x = -(float) textureWidth / 2.0f;
 		}
 	}
 

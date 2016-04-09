@@ -17,5 +17,7 @@ bool GUITransform::IsZero() const {
 GUITransform & GUITransform::setToZero() {
 	position.setToZero();
 	rotation = 0;
+	location = ABSOLUTE;
+	pivot = ABSOLUTE;
 	return(*this);
 }

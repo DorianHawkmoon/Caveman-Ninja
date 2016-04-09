@@ -22,6 +22,7 @@ void GUI::GUITexture::draw(const GUITransform & states) const {
 	result.position = getPosition(states);
 	result.position += temp.rotate(states.rotation);
 	result.position += offset;
+	result.pivot = transform.pivot;
 
 	// Determina el frame que pintar
 	SDL_Rect* renderArea = nullptr;
@@ -44,19 +45,26 @@ fPoint GUI::GUITexture::getPosition(const GUITransform& transformParent) const {
 		position += fPoint((float) viewArea.w / (2 * SCREEN_SIZE), (float) viewArea.h / (2 * SCREEN_SIZE));
 
 		if ((transform.location & TOP) > 0) {
+			LOG("top");
 			position -= fPoint(0.0f, (float) viewArea.h / (2 * SCREEN_SIZE));
 		}
 		if ((transform.location & BOTTOM) > 0) {
+			LOG("bottom");
 			position += fPoint(0.0f, (float) viewArea.h / (2 * SCREEN_SIZE));
 		}
 		if ((transform.location & LEFT) > 0) {
+			LOG("left");
 			position -= fPoint((float) viewArea.w / (2 * SCREEN_SIZE), 0.0f);
 		}
 		if ((transform.location & RIGHT) > 0) {
+			LOG("right");
 			position += fPoint((float) viewArea.w / (2 * SCREEN_SIZE), 0.0f);
 		}
 	}
 
 	position += offset;
+	position.x *= SCREEN_SIZE;
+	position.y *= SCREEN_SIZE;
+
 	return position;
 }

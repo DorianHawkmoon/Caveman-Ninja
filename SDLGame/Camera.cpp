@@ -9,6 +9,7 @@ int Camera::getX(float speed) const {
 	float x = (transform == nullptr) ? 0 : transform->getGlobalTransform().position.x;
 	x += offset.x;
 	x *= SCREEN_SIZE;
+	//to center the subject on display
 	x -= size.x / 2.0f;
 	return static_cast<int>(x*speed);
 }
