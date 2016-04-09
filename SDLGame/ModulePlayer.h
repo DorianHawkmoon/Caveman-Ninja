@@ -15,8 +15,11 @@ class LifeComponent;
 class JumpComponent;
 class WeaponComponent;
 class MotionComponent;
+class AnimationComponent;
 class Entity;
 class ScoreComponent;
+struct ControlEntity;
+struct Transform;
 
 class ModulePlayer : public Module
 {
@@ -38,12 +41,13 @@ public:
 	LifeComponent* life;
 	WeaponComponent* weapon;
 	ScoreComponent* score;
+	AnimationComponent* animation;
 	bool levelFinished;
 
 private:
 	Entity* deadBody;
 	Timer* gameOverTimer;
-	
+	const Animation* attackAnimation;
 	int lifes;
 	bool ghost;
 	unsigned int soundDie;
@@ -51,6 +55,8 @@ private:
 private:
 	void addGameOver();
 	void dead();
+	void checkInput();
+	void levelEnd();
 	void debugging();
 	void portraitAnimation();
 };

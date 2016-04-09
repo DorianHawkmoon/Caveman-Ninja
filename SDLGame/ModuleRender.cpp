@@ -305,22 +305,18 @@ bool ModuleRender::paintGUI(SDL_Texture * texture, const GUITransform & transfor
 		rectDestiny.y -= rectDestiny.h * 0.5f;
 
 		if ((transform.pivot & TOP) > 0) {
-			LOG("top");
 			rectDestiny.y += rectDestiny.h * 0.5f;
 
 		}
 		if ((transform.pivot & BOTTOM) > 0) {
-			LOG("bottom");
 			rectDestiny.y -= rectDestiny.h * 0.5f;
 
 		}
 		if ((transform.pivot & LEFT) > 0) {
-			LOG("left");
 			rectDestiny.x += rectDestiny.w * 0.5f;
 
 		}
 		if ((transform.pivot & RIGHT) > 0) {
-			LOG("right");
 			rectDestiny.x -= rectDestiny.w * 0.5f;
 			
 		}

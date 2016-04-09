@@ -3,10 +3,6 @@
 #include "ModuleRender.h"
 #include "ModuleFonts.h"
 
-#include <iostream>
-#include <sstream>  // Required for stringstreams
-#include <string> 
-
 namespace GUI {
 
 	GUILabel::GUILabel(const std::string& text, const SDL_Color& color, const std::string& font, const GUILocation& location, int size) 

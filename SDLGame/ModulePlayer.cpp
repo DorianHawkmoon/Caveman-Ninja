@@ -19,6 +19,7 @@
 #include "GUISprite.h"
 #include "ModuleGUI.h"
 #include "Animation.h"
+#include "AnimationComponent.h"
 #include "SpriteComponent.h"
 #include "ScoreComponent.h"
 #include "ConditionComparison.h"
@@ -45,6 +46,7 @@ ModulePlayer::~ModulePlayer()
 bool ModulePlayer::start(){
 	LOG("Loading player");
 	bool started = true;
+	attackAnimation = nullptr;
 
 	if (lifes <= 0 || player==nullptr) {
 		if (player != nullptr) {
@@ -59,6 +61,7 @@ bool ModulePlayer::start(){
 	deadBody = nullptr;
 	started = started & ((motion = static_cast<MotionComponent*>(player->getComponent("motion")))!=nullptr);
 	started = started & ((jump = static_cast<JumpComponent*>(player->getComponent("jump"))) != nullptr);
+	started = started & ((animation = static_cast<AnimationComponent*>(player->getComponent("animations"))) != nullptr);
 	started = started & ((life = static_cast<LifeComponent*>(player->getComponent("life"))) != nullptr);
 	started = started & ((weapon = static_cast<WeaponComponent*>(player->getComponent("weapon"))) != nullptr);
 	started = started & ((score = static_cast<ScoreComponent*>(player->getComponent("score"))) != nullptr);
@@ -122,10 +125,13 @@ void ModulePlayer::addGameOver() {
 void ModulePlayer::dead() {
 	ControlEntity* controller = &player->controller;
 
+	//is a dead body, he's dead, update animation
 	if (deadBody != nullptr) {
 		motion->velocity.y = -(motion->speed*0.6F);
 		motion->velocity.x = 0;
+		deadBody->update();
 
+	//check if is dead
 	} else if ((controller->damage == 3 || controller->damage == -3) && deadBody == nullptr) {
 		AnimationComponent* animation = static_cast<AnimationComponent*>(player->getComponent("animations"));
 		if (animation->getActualAnimation()->isInfinity()) {
@@ -134,8 +140,8 @@ void ModulePlayer::dead() {
 			addGameOver();
 			lifes--;
 
+			//create the body lying on the ground while the player is flying as a ghost
 			deadBody = new Entity();
-
 			Transform transPlayer = player->transform->getGlobalTransform();
 			deadBody->transform->position = transPlayer.position;
 			deadBody->transform->flip = transPlayer.flip;
@@ -241,83 +247,18 @@ void ModulePlayer::portraitAnimation() {
 update_status ModulePlayer::update(){
 	debugging();
 
-	ControlEntity* controller = &player->controller;
-	Transform* trans = player->transform;
 
-	//finished level and not dead
-	if (levelFinished && !gameOverTimer->isStopped() && gameOverTimer->value() > 3000) {
-		Scene* next = new EntryScene();
-		App->scene->changeScene(next, 1);
-		gameOverTimer->stop();
-		App->audio->stopMusic(); //stop music
+	levelEnd();
 
-	//level finished because of game over
-	}else if (levelFinished && gameOverTimer->isStopped()) {
-		controller->moveX = 0;
-		controller->moveY = 0;
-		controller->attack = 0;
-		controller->damage = 0;
-		gameOverTimer->start();
-		//put the animation
-	}
+	//check the input and move or do things accordingly
+	checkInput();
 
-	//don't move while receiving damage
-	if (controller->damage == 0 && levelFinished==false) {
-		controller->moveX = 0;
-		controller->moveY = 0;
-
-		controller->attack = 0;
-
-		if (App->input->getKey(SDL_SCANCODE_A)) {
-			controller->moveX -= 1;
-			trans->flip = SDL_FLIP_HORIZONTAL;
-		}
-
-		if (App->input->getKey(SDL_SCANCODE_D)) {
-			controller->moveX += 1;
-			trans->flip = SDL_FLIP_NONE;
-		}
-
-		if (App->input->getKey(SDL_SCANCODE_W)) {
-			controller->moveY -= 1;
-		}
-
-		if (App->input->getKey(SDL_SCANCODE_S)) {
-			controller->moveY += 1;
-		}
-
-		if (App->input->getKey(SDL_SCANCODE_L)==KEY_DOWN) {
-			weapon->throwWeapon();
-			motion->velocity.x = 0;
-		}
-
-
-
-		//don't jump again when jumping or falling
-		if (App->input->getKey(SDL_SCANCODE_J)== KEY_DOWN && controller->stateJump == TypeJump::NONE) {
-			if (App->input->getKey(SDL_SCANCODE_W)) {
-				controller->stateJump = TypeJump::DOUBLE_JUMP;
-			} else if(App->input->getKey(SDL_SCANCODE_S)){
-				controller->stateJump = TypeJump::JUMP_DOWN;
-			} else {
-				controller->stateJump = TypeJump::JUMP;
-			}
-		}
-
-		if (controller->moveY != 1) {
-			motion->velocity.x = controller->moveX * motion->speed;
-		} else {
-			motion->velocity.x = 0.0f;
-		}
-		
-	}
-
+	//do things about the death of the player
 	dead();
-	if (deadBody != nullptr) {
-		deadBody->update();
-	}
+	//update the entity player after setting all
 	player->update();
 
+	//check if the time since he's dead is over and change the scene
 	if (!gameOverTimer->isStopped() && gameOverTimer->value() > 10000) {
 		Scene* next = new EntryScene();
 		App->scene->changeScene(next, 1);
@@ -325,6 +266,112 @@ update_status ModulePlayer::update(){
 		App->audio->stopMusic(); //stop music
 	}
 	return UPDATE_CONTINUE;
+}
+
+void ModulePlayer::levelEnd() {
+	ControlEntity* controller = &player->controller;
+
+	//finished level and the countdown is over, change the scene
+	if (levelFinished && !gameOverTimer->isStopped() && gameOverTimer->value() > 3000) {
+		Scene* next = new EntryScene();
+		App->scene->changeScene(next, 1);
+		gameOverTimer->stop();
+		App->audio->stopMusic(); //stop music
+
+	//level finished, start the countdown
+	} else if (levelFinished && gameOverTimer->isStopped()) {
+		controller->moveX = 0;
+		controller->moveY = 0;
+		controller->attack = 0;
+		controller->damage = 0;
+		gameOverTimer->start();
+		//put the animation
+	}
+}
+
+void ModulePlayer::checkInput() {
+	ControlEntity* controller = &player->controller;
+	Transform* trans = player->transform;
+
+	//don't move while receiving damage
+	if (controller->damage != 0 || levelFinished) {
+		return;
+	}
+
+	controller->moveX = 0;
+	controller->moveY = 0;
+
+	//don't move while attacking
+	if (controller->attack != 0) {
+		//but! only if is not double jumping
+		if (controller->stateJump != TypeJump::DOUBLE_JUMP) {
+			//attack setted! get the animation and wait until its finished
+			//this works because between attack setted and this line of code, is an entire update cicle (only one!)
+			//so does not matter if animation component was after or before, it had time to update and
+			//set the attack animation
+			if (attackAnimation == nullptr) {
+				//set animation
+				attackAnimation = animation->getActualAnimation();
+			}
+		}
+	}
+	controller->attack = 0;
+
+
+	//don't move while attacking except if is jumping
+	if (attackAnimation != nullptr && (!attackAnimation->isFinished()) && controller->stateJump==TypeJump::NONE) {
+		motion->velocity.x = 0;
+		return;
+
+	//animation attack finished? clear the animation
+	} else if(attackAnimation!=nullptr && attackAnimation->isFinished()){
+		attackAnimation = nullptr;
+	}
+	
+
+	//movement
+	if (App->input->getKey(SDL_SCANCODE_A)) {
+		controller->moveX -= 1;
+		trans->flip = SDL_FLIP_HORIZONTAL;
+	}
+
+	if (App->input->getKey(SDL_SCANCODE_D)) {
+		controller->moveX += 1;
+		trans->flip = SDL_FLIP_NONE;
+	}
+
+	if (App->input->getKey(SDL_SCANCODE_W)) {
+		controller->moveY -= 1;
+	}
+
+	if (App->input->getKey(SDL_SCANCODE_S)) {
+		controller->moveY += 1;
+	}
+
+	//weapon
+	if (App->input->getKey(SDL_SCANCODE_L) == KEY_DOWN) {
+		weapon->throwWeapon();
+	}
+
+	//don't jump again when jumping or falling
+	if (App->input->getKey(SDL_SCANCODE_J) == KEY_DOWN && controller->stateJump == TypeJump::NONE) {
+		if (App->input->getKey(SDL_SCANCODE_W)) {
+			controller->stateJump = TypeJump::DOUBLE_JUMP;
+
+		} else if (App->input->getKey(SDL_SCANCODE_S)) {
+			controller->stateJump = TypeJump::JUMP_DOWN;
+
+		} else {
+			controller->stateJump = TypeJump::JUMP;
+		}
+	}
+
+	//if the player is crouched down, dont move horizontally
+	if (controller->moveY != 1) {
+		motion->velocity.x = controller->moveX * motion->speed;
+	} else {
+		motion->velocity.x = 0.0f;
+	}
 }
 
 update_status ModulePlayer::postUpdate() {

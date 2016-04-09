@@ -45,19 +45,15 @@ fPoint GUI::GUITexture::getPosition(const GUITransform& transformParent) const {
 		position += fPoint((float) viewArea.w / (2 * SCREEN_SIZE), (float) viewArea.h / (2 * SCREEN_SIZE));
 
 		if ((transform.location & TOP) > 0) {
-			LOG("top");
 			position -= fPoint(0.0f, (float) viewArea.h / (2 * SCREEN_SIZE));
 		}
 		if ((transform.location & BOTTOM) > 0) {
-			LOG("bottom");
 			position += fPoint(0.0f, (float) viewArea.h / (2 * SCREEN_SIZE));
 		}
 		if ((transform.location & LEFT) > 0) {
-			LOG("left");
 			position -= fPoint((float) viewArea.w / (2 * SCREEN_SIZE), 0.0f);
 		}
 		if ((transform.location & RIGHT) > 0) {
-			LOG("right");
 			position += fPoint((float) viewArea.w / (2 * SCREEN_SIZE), 0.0f);
 		}
 	}

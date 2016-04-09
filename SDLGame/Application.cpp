@@ -14,11 +14,6 @@
 #include "ModuleGUI.h"
 #include "SDL/SDL.h"
 
-#include <iomanip>
-#include <locale>
-#include <sstream>
-#include <string> 
-
 int DEBUG_COLLISIONS = 0;
 
 Application::Application() {

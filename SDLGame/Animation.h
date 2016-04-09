@@ -20,7 +20,8 @@ public:
 	}
 
 	bool start() { 
-		current_frame = 0; 
+		current_frame = 0;
+		actualRepeat = repeat;
 		return true;
 	};
 
@@ -29,12 +30,12 @@ public:
 			return UPDATE_CONTINUE;
 		}
 
-		if (repeat >= 0) {
+		if (actualRepeat >= 0) {
 			if (current_frame + speed > numberFrames) {
-				if (repeat > 0) {
-					--repeat;
+				if (actualRepeat > 0) {
+					--actualRepeat;
 				}
-				current_frame = (repeat>0 || repeat<0) ? 0.0f : current_frame;
+				current_frame = (actualRepeat>0 || actualRepeat<0) ? 0.0f : current_frame;
 
 			} else {
 				current_frame += speed;
@@ -49,6 +50,7 @@ public:
 
 	bool cleanUp() {
 		current_frame = 0;
+		actualRepeat = repeat;
 		return true;
 	};
 
@@ -58,16 +60,17 @@ public:
 	}
 
 	bool isFinished() const {
-		return repeat == 0;
+		return actualRepeat == 0;
 	}
 
 	bool isInfinity() const {
-		return repeat == -1;
+		return actualRepeat == -1;
 	}
 
 
 private:
 	float current_frame;
+	int actualRepeat;
 
 public:
 	float speed;
