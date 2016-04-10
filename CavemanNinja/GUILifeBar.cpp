@@ -39,7 +39,7 @@ update_status GUI::GUILifeBar::update() {
 		actualColor = PointColor::GREEN;
 	}
 
-	coloredPoint = static_cast<int>(longLife*percent)-1;
+	coloredPoint = static_cast<int>(longLife*percent);
 
 	return UPDATE_CONTINUE;
 }
@@ -58,7 +58,7 @@ void GUI::GUILifeBar::draw(const GUITransform & states) const {
 
 	SDL_Rect actual = pointColor[PointColor::EMPTY];
 	for (unsigned int i = longLife; i > 0; --i) {
-		if (i < coloredPoint) {
+		if (i == coloredPoint) {
 			actual = pointColor[actualColor];
 		}
 		App->renderer->paintGUI(texture, result, &actual);
