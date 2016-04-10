@@ -34,7 +34,6 @@
 Entity * Joe::makeJoe() {
 	//prepare the entity for the player
 	Entity* result = new Entity();
-
 	
 
 	PlayerHittedComponent* hitted = new PlayerHittedComponent("hitted");
@@ -423,7 +422,7 @@ void Joe::makeAnimations(Entity* entity) {
 	// ---------------------------------------------
 
 	Animation ghostBackDead(4);
-	ghostBackDead.sizeFrame = {256,320,128,128};
+	ghostBackDead.sizeFrame = {384,320,128,128};
 	ghostBackDead.offset = {-40,-82};
 	ghostBackDead.flippedOffset.x = -22;
 	ghostBackDead.speed = 0.08f;

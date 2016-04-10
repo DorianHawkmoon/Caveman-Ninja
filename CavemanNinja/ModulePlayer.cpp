@@ -149,8 +149,8 @@ void ModulePlayer::dead() {
 
 			SpriteComponent* body = new SpriteComponent("body", "Joe.png");
 			if (controller->damage < 0) {
-				body->rect = {256,320, 128,128};
-				body->offset = {-40,-82};
+				body->rect = {256,384, 128,64};
+				body->offset = {-40,-18};
 				body->flippedOffset.x = -22;
 
 			} else {
