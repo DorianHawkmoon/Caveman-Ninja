@@ -1,0 +1,537 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="CircleCollider.cpp">
+      <Filter>Source code\Colliders</Filter>
+    </ClCompile>
+    <ClCompile Include="Collider.cpp">
+      <Filter>Source code\Colliders</Filter>
+    </ClCompile>
+    <ClCompile Include="ModuleAudio.cpp">
+      <Filter>Source code\Core Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="ModuleCollision.cpp">
+      <Filter>Source code\Core Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="ModuleFadeToBlack.cpp">
+      <Filter>Source code\Core Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="ModuleFonts.cpp">
+      <Filter>Source code\Core Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="ModuleGUI.cpp">
+      <Filter>Source code\Core Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="ModuleInput.cpp">
+      <Filter>Source code\Core Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="ModuleParticles.cpp">
+      <Filter>Source code\Core Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="ModuleRender.cpp">
+      <Filter>Source code\Core Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="ModuleScene.cpp">
+      <Filter>Source code\Core Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="ModuleTextures.cpp">
+      <Filter>Source code\Core Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="ModuleTimer.cpp">
+      <Filter>Source code\Core Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="ModuleWindow.cpp">
+      <Filter>Source code\Core Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="LineCollider.cpp">
+      <Filter>Source code\Colliders</Filter>
+    </ClCompile>
+    <ClCompile Include="RectangleCollider.cpp">
+      <Filter>Source code\Colliders</Filter>
+    </ClCompile>
+    <ClCompile Include="EntryScene.cpp">
+      <Filter>Source code\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="FirstLevel.cpp">
+      <Filter>Source code\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneNode.cpp">
+      <Filter>Source code\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene.cpp">
+      <Filter>Source code\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="Camera.cpp">
+      <Filter>Source code\Utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="Log.cpp">
+      <Filter>Source code\Utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="GUIComponent.cpp">
+      <Filter>Source code\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="GUIContainer.cpp">
+      <Filter>Source code\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="GUILabel.cpp">
+      <Filter>Source code\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="GUISprite.cpp">
+      <Filter>Source code\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="GUITexture.cpp">
+      <Filter>Source code\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="GUITransform.cpp">
+      <Filter>Source code\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="GUILifeBar.cpp">
+      <Filter>Source code\GUI\GUIgame</Filter>
+    </ClCompile>
+    <ClCompile Include="GUIScore.cpp">
+      <Filter>Source code\GUI\GUIgame</Filter>
+    </ClCompile>
+    <ClCompile Include="Score.cpp">
+      <Filter>Source code\Game Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="ModulePlayer.cpp">
+      <Filter>Source code\Game Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="Application.cpp">
+      <Filter>Source code\Main</Filter>
+    </ClCompile>
+    <ClCompile Include="Main.cpp">
+      <Filter>Source code\Main</Filter>
+    </ClCompile>
+    <ClCompile Include="AnimationComponent.cpp">
+      <Filter>Source code\Entities\Properties</Filter>
+    </ClCompile>
+    <ClCompile Include="CollisionComponent.cpp">
+      <Filter>Source code\Entities\Properties</Filter>
+    </ClCompile>
+    <ClCompile Include="DamageComponent.cpp">
+      <Filter>Source code\Entities\Properties</Filter>
+    </ClCompile>
+    <ClCompile Include="DataItemComponent.cpp">
+      <Filter>Source code\Entities\ItemProperties</Filter>
+    </ClCompile>
+    <ClCompile Include="DisappearOutCamera.cpp">
+      <Filter>Source code\Entities\EnemyProperties</Filter>
+    </ClCompile>
+    <ClCompile Include="DropItemComponent.cpp">
+      <Filter>Source code\Entities\ItemProperties</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyBehaviour.cpp">
+      <Filter>Source code\Entities\EnemyProperties</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyHittedComponent.cpp">
+      <Filter>Source code\Entities\EnemyProperties</Filter>
+    </ClCompile>
+    <ClCompile Include="Entity.cpp">
+      <Filter>Source code\Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="DestroyOnCollisionComponent.cpp">
+      <Filter>Source code\Entities\Properties</Filter>
+    </ClCompile>
+    <ClCompile Include="GravityComponent.cpp">
+      <Filter>Source code\Entities\Properties</Filter>
+    </ClCompile>
+    <ClCompile Include="GravityPlayerComponent.cpp">
+      <Filter>Source code\Entities\PlayerProperties</Filter>
+    </ClCompile>
+    <ClCompile Include="GravityWeaponComponent.cpp">
+      <Filter>Source code\Entities\PlayerProperties</Filter>
+    </ClCompile>
+    <ClCompile Include="GUIAnimation.cpp">
+      <Filter>Source code\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="HorizontalSpriteScrollComponent.cpp">
+      <Filter>Source code\Entities\Properties</Filter>
+    </ClCompile>
+    <ClCompile Include="IAComponent.cpp">
+      <Filter>Source code\Entities\EnemyProperties</Filter>
+    </ClCompile>
+    <ClCompile Include="Joe.cpp">
+      <Filter>Source code\Entities\Factories</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy.cpp">
+      <Filter>Source code\Entities\Factories</Filter>
+    </ClCompile>
+    <ClCompile Include="IComponent.cpp">
+      <Filter>Source code\Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="JumpComponent.cpp">
+      <Filter>Source code\Entities\Properties</Filter>
+    </ClCompile>
+    <ClCompile Include="LifeComponent.cpp">
+      <Filter>Source code\Entities\Properties</Filter>
+    </ClCompile>
+    <ClCompile Include="LifespanComponent.cpp">
+      <Filter>Source code\Entities\Properties</Filter>
+    </ClCompile>
+    <ClCompile Include="MotionComponent.cpp">
+      <Filter>Source code\Entities\Properties</Filter>
+    </ClCompile>
+    <ClCompile Include="SingleAnimationComponent.cpp">
+      <Filter>Source code\Entities\Properties</Filter>
+    </ClCompile>
+    <ClCompile Include="SpriteComponent.cpp">
+      <Filter>Source code\Entities\Properties</Filter>
+    </ClCompile>
+    <ClCompile Include="VerticalSpriteScrollComponent.cpp">
+      <Filter>Source code\Entities\Properties</Filter>
+    </ClCompile>
+    <ClCompile Include="WallCollisionComponent.cpp">
+      <Filter>Source code\Entities\Properties</Filter>
+    </ClCompile>
+    <ClCompile Include="Items.cpp">
+      <Filter>Source code\Entities\Factories</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerWeapon.cpp">
+      <Filter>Source code\Entities\Factories</Filter>
+    </ClCompile>
+    <ClCompile Include="Trigger.cpp">
+      <Filter>Source code\Entities\Factories</Filter>
+    </ClCompile>
+    <ClCompile Include="OnCollisionWeaponComponent.cpp">
+      <Filter>Source code\Entities\PlayerProperties</Filter>
+    </ClCompile>
+    <ClCompile Include="PickupItemComponent.cpp">
+      <Filter>Source code\Entities\PlayerProperties</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerHittedComponent.cpp">
+      <Filter>Source code\Entities\PlayerProperties</Filter>
+    </ClCompile>
+    <ClCompile Include="OnCollisionTrigger.cpp">
+      <Filter>Source code\Entities\EnemyProperties</Filter>
+    </ClCompile>
+    <ClCompile Include="WeaponComponent.cpp">
+      <Filter>Source code\Entities\PlayerProperties</Filter>
+    </ClCompile>
+    <ClCompile Include="ScoreComponent.cpp">
+      <Filter>Source code\Entities\PlayerProperties</Filter>
+    </ClCompile>
+    <ClCompile Include="Particle.cpp">
+      <Filter>Source code\Utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="Timer.cpp">
+      <Filter>Source code\Utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="Transform.cpp">
+      <Filter>Source code\Utilities</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="CircleCollider.h">
+      <Filter>Source code\Colliders</Filter>
+    </ClInclude>
+    <ClInclude Include="Collider.h">
+      <Filter>Source code\Colliders</Filter>
+    </ClInclude>
+    <ClInclude Include="ColliderInteraction.h">
+      <Filter>Source code\Colliders</Filter>
+    </ClInclude>
+    <ClInclude Include="CollisionListener.h">
+      <Filter>Source code\Colliders</Filter>
+    </ClInclude>
+    <ClInclude Include="Module.h">
+      <Filter>Source code\Core Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="ModuleAudio.h">
+      <Filter>Source code\Core Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="ModuleCollision.h">
+      <Filter>Source code\Core Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="ModuleFadeToBlack.h">
+      <Filter>Source code\Core Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="ModuleFonts.h">
+      <Filter>Source code\Core Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="ModuleGUI.h">
+      <Filter>Source code\Core Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="ModuleInput.h">
+      <Filter>Source code\Core Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="ModuleParticles.h">
+      <Filter>Source code\Core Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="ModuleRender.h">
+      <Filter>Source code\Core Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="ModuleScene.h">
+      <Filter>Source code\Core Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="ModuleTextures.h">
+      <Filter>Source code\Core Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="ModuleTimer.h">
+      <Filter>Source code\Core Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="ModuleWindow.h">
+      <Filter>Source code\Core Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Animation.h">
+      <Filter>Source code\Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="Condition.h">
+      <Filter>Source code\Conditions</Filter>
+    </ClInclude>
+    <ClInclude Include="ConditionCallback.h">
+      <Filter>Source code\Conditions</Filter>
+    </ClInclude>
+    <ClInclude Include="ConditionComparison.h">
+      <Filter>Source code\Conditions</Filter>
+    </ClInclude>
+    <ClInclude Include="TimerCondition.h">
+      <Filter>Source code\Conditions</Filter>
+    </ClInclude>
+    <ClInclude Include="State.h">
+      <Filter>Source code\StateMachine</Filter>
+    </ClInclude>
+    <ClInclude Include="StateMachine.h">
+      <Filter>Source code\StateMachine</Filter>
+    </ClInclude>
+    <ClInclude Include="StateTransition.h">
+      <Filter>Source code\StateMachine</Filter>
+    </ClInclude>
+    <ClInclude Include="LineCollider.h">
+      <Filter>Source code\Colliders</Filter>
+    </ClInclude>
+    <ClInclude Include="RectangleCollider.h">
+      <Filter>Source code\Colliders</Filter>
+    </ClInclude>
+    <ClInclude Include="EntryScene.h">
+      <Filter>Source code\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="FirstLevel.h">
+      <Filter>Source code\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneNode.h">
+      <Filter>Source code\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene.h">
+      <Filter>Source code\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera.h">
+      <Filter>Source code\Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="IUpdater.h">
+      <Filter>Source code\Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="GUIAnimation.h">
+      <Filter>Source code\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="GUIComponent.h">
+      <Filter>Source code\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="GUIContainer.h">
+      <Filter>Source code\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="GUILabel.h">
+      <Filter>Source code\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="GUISprite.h">
+      <Filter>Source code\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="GUITexture.h">
+      <Filter>Source code\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="GUITransform.h">
+      <Filter>Source code\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="GUILifeBar.h">
+      <Filter>Source code\GUI\GUIgame</Filter>
+    </ClInclude>
+    <ClInclude Include="GUIScore.h">
+      <Filter>Source code\GUI\GUIgame</Filter>
+    </ClInclude>
+    <ClInclude Include="Score.h">
+      <Filter>Source code\Game Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="ModulePlayer.h">
+      <Filter>Source code\Game Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Application.h">
+      <Filter>Source code\Main</Filter>
+    </ClInclude>
+    <ClInclude Include="AnimationComponent.h">
+      <Filter>Source code\Entities\Properties</Filter>
+    </ClInclude>
+    <ClInclude Include="CollisionComponent.h">
+      <Filter>Source code\Entities\Properties</Filter>
+    </ClInclude>
+    <ClInclude Include="DamageComponent.h">
+      <Filter>Source code\Entities\Properties</Filter>
+    </ClInclude>
+    <ClInclude Include="DataItemComponent.h">
+      <Filter>Source code\Entities\ItemProperties</Filter>
+    </ClInclude>
+    <ClInclude Include="DisappearOutCamera.h">
+      <Filter>Source code\Entities\EnemyProperties</Filter>
+    </ClInclude>
+    <ClInclude Include="DropItemComponent.h">
+      <Filter>Source code\Entities\ItemProperties</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyBehaviour.h">
+      <Filter>Source code\Entities\EnemyProperties</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyHittedComponent.h">
+      <Filter>Source code\Entities\EnemyProperties</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity.h">
+      <Filter>Source code\Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="DestroyOnCollisionComponent.h">
+      <Filter>Source code\Entities\Properties</Filter>
+    </ClInclude>
+    <ClInclude Include="GravityComponent.h">
+      <Filter>Source code\Entities\Properties</Filter>
+    </ClInclude>
+    <ClInclude Include="GravityPlayerComponent.h">
+      <Filter>Source code\Entities\PlayerProperties</Filter>
+    </ClInclude>
+    <ClInclude Include="GravityWeaponComponent.h">
+      <Filter>Source code\Entities\PlayerProperties</Filter>
+    </ClInclude>
+    <ClInclude Include="HorizontalSpriteScrollComponent.h">
+      <Filter>Source code\Entities\Properties</Filter>
+    </ClInclude>
+    <ClInclude Include="IAComponent.h">
+      <Filter>Source code\Entities\EnemyProperties</Filter>
+    </ClInclude>
+    <ClInclude Include="Joe.h">
+      <Filter>Source code\Entities\Factories</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy.h">
+      <Filter>Source code\Entities\Factories</Filter>
+    </ClInclude>
+    <ClInclude Include="IComponent.h">
+      <Filter>Source code\Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="MotionComponent.h">
+      <Filter>Source code\Entities\Properties</Filter>
+    </ClInclude>
+    <ClInclude Include="JumpComponent.h">
+      <Filter>Source code\Entities\Properties</Filter>
+    </ClInclude>
+    <ClInclude Include="LifeComponent.h">
+      <Filter>Source code\Entities\Properties</Filter>
+    </ClInclude>
+    <ClInclude Include="LifespanComponent.h">
+      <Filter>Source code\Entities\Properties</Filter>
+    </ClInclude>
+    <ClInclude Include="SingleAnimationComponent.h">
+      <Filter>Source code\Entities\Properties</Filter>
+    </ClInclude>
+    <ClInclude Include="SpriteComponent.h">
+      <Filter>Source code\Entities\Properties</Filter>
+    </ClInclude>
+    <ClInclude Include="VerticalSpriteScrollComponent.h">
+      <Filter>Source code\Entities\Properties</Filter>
+    </ClInclude>
+    <ClInclude Include="WallCollisionComponent.h">
+      <Filter>Source code\Entities\Properties</Filter>
+    </ClInclude>
+    <ClInclude Include="Items.h">
+      <Filter>Source code\Entities\Factories</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerWeapon.h">
+      <Filter>Source code\Entities\Factories</Filter>
+    </ClInclude>
+    <ClInclude Include="Trigger.h">
+      <Filter>Source code\Entities\Factories</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerHittedComponent.h">
+      <Filter>Source code\Entities\PlayerProperties</Filter>
+    </ClInclude>
+    <ClInclude Include="OnCollisionWeaponComponent.h">
+      <Filter>Source code\Entities\PlayerProperties</Filter>
+    </ClInclude>
+    <ClInclude Include="PickupItemComponent.h">
+      <Filter>Source code\Entities\PlayerProperties</Filter>
+    </ClInclude>
+    <ClInclude Include="OnCollisionTrigger.h">
+      <Filter>Source code\Entities\EnemyProperties</Filter>
+    </ClInclude>
+    <ClInclude Include="WeaponComponent.h">
+      <Filter>Source code\Entities\PlayerProperties</Filter>
+    </ClInclude>
+    <ClInclude Include="ScoreComponent.h">
+      <Filter>Source code\Entities\PlayerProperties</Filter>
+    </ClInclude>
+    <ClInclude Include="Particle.h">
+      <Filter>Source code\Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="Point.h">
+      <Filter>Source code\Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="Timer.h">
+      <Filter>Source code\Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="Transform.h">
+      <Filter>Source code\Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils.h">
+      <Filter>Source code\Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="Globals.h">
+      <Filter>Source code\Main</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Source code">
+      <UniqueIdentifier>{d56cec9c-0c51-45d8-a112-feb0c59410a4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source code\Colliders">
+      <UniqueIdentifier>{723aacbe-8360-470f-bdce-ce941d2018a3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source code\Conditions">
+      <UniqueIdentifier>{7249740f-069e-4955-997a-74260916fa75}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source code\Core Modules">
+      <UniqueIdentifier>{34d96011-610b-4095-9418-d050243c36e7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source code\Entities">
+      <UniqueIdentifier>{f909875a-f08f-4891-a505-2ee63f07594e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source code\Game Modules">
+      <UniqueIdentifier>{b1dba863-6d2a-4c69-a80e-726a015ff095}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source code\GUI">
+      <UniqueIdentifier>{f62da261-5917-440a-b541-0237ba183b54}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source code\Main">
+      <UniqueIdentifier>{7c746992-0037-40e1-938e-62887c80c958}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source code\Scenes">
+      <UniqueIdentifier>{2bd83d1b-fd4e-4de5-b216-fc52350e7d7b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source code\StateMachine">
+      <UniqueIdentifier>{946c28b7-67de-4c1f-9bd4-0e6724faff9a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source code\Utilities">
+      <UniqueIdentifier>{8d518644-ac4e-4f07-a3d2-9e2f248705f9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source code\GUI\GUIgame">
+      <UniqueIdentifier>{06fe8c7a-460f-4ff0-864c-933a0015d862}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source code\Entities\EnemyProperties">
+      <UniqueIdentifier>{2fce5d7b-b4b1-40ac-94e9-7cce75615c15}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source code\Entities\Factories">
+      <UniqueIdentifier>{60ee04c1-3824-4405-8f90-e44a58d6a122}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source code\Entities\ItemProperties">
+      <UniqueIdentifier>{40d164ba-7164-4c02-939e-9aa183545e51}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source code\Entities\PlayerProperties">
+      <UniqueIdentifier>{9346ae60-146b-4fcc-ad55-c4dec628e046}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source code\Entities\Properties">
+      <UniqueIdentifier>{e374a36f-0772-44d6-9422-85c81f938fc6}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>
