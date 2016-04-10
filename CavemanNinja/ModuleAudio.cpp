@@ -110,7 +110,7 @@ unsigned int const ModuleAudio::loadEffect(const char * path) {
 
 	}else {
 		effects.push_back(effect);
-		result= effects.size() - 1;
+		result = static_cast<int>(effects.size()) - 1;
 	}
 	return result;
 }

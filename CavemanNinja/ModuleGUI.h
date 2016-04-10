@@ -5,10 +5,12 @@
 #include "Module.h"
 #include <vector>
 #include "SDL\SDL_events.h"
+#include "GUIContainer.h"
 
 namespace GUI {
 	class GUIComponent;
 }
+
 class ModuleGUI : public Module {
 public:
 	ModuleGUI(bool started = true) : Module(started), gui() {}
@@ -28,6 +30,10 @@ public:
 private:
 	//not owned!
 	std::vector<GUI::GUIComponent*> gui;
+	/**
+	 * root container of the windows
+	 */
+	GUI::GUIContainer root;
 
 };
 

@@ -21,8 +21,11 @@ class ScoreComponent;
 struct ControlEntity;
 struct Transform;
 
-class ModulePlayer : public Module
-{
+namespace GUI {
+	class GUIComponent;
+}
+
+class ModulePlayer : public Module {
 public:
 	ModulePlayer(bool start_enabled = true);
 	virtual ~ModulePlayer();
@@ -33,6 +36,8 @@ public:
 	update_status postUpdate();
 
 	bool cleanUp();
+
+	GUI::GUIComponent* getHUD() const;
 
 public:
 	Entity* player;
@@ -47,18 +52,20 @@ public:
 private:
 	Entity* deadBody;
 	Timer* gameOverTimer;
+	GUI::GUIComponent* HUD;
 	const Animation* attackAnimation;
 	int lifes;
 	bool ghost;
 	unsigned int soundDie;
 
 private:
+	void makeHUD();
 	void addGameOver();
 	void dead();
 	void checkInput();
 	void levelEnd();
 	void debugging();
-	void portraitAnimation();
+	GUI::GUIComponent* portraitAnimation();
 };
 
 #endif // __MODULEPLAYER_H__

@@ -10,7 +10,7 @@ class Animation;
 namespace GUI {
 	class GUITexture : public GUI::GUIComponent {
 	public:
-		GUITexture() : GUIComponent(), texture(nullptr), animation(nullptr), offset(0,0) {}
+		GUITexture() : GUIComponent(), texture(nullptr), animation(nullptr) {}
 		virtual ~GUITexture();
 
 		void draw(const GUITransform& states) const;
@@ -18,9 +18,6 @@ namespace GUI {
 	protected:
 		SDL_Texture* texture;
 		Animation* animation;
-		fPoint offset;
-
-		fPoint getPosition(const GUITransform& transformParent) const;
 	};
 }
 

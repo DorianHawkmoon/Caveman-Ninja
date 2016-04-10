@@ -4,6 +4,10 @@
 
 #include "Scene.h"
 
+namespace GUI {
+	class GUIComponent;
+}
+
 class EntryScene : public Scene {
 public:
 	EntryScene();
@@ -13,5 +17,6 @@ public:
 	virtual update_status update();
 
 private:
+	GUI::GUIComponent* rootGUI;
 };
 #endif // !ENTRY_SCENE_H

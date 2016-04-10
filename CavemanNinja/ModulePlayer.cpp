@@ -28,17 +28,21 @@
 #include "GUIAnimation.h"
 #include "ConditionCallback.h"
 #include "Timer.h"
+#include "GUIContainer.h"
 #include "ModuleTimer.h"
+#include "GUIComponent.h"
+#include "GUILifeBar.h"
 
-ModulePlayer::ModulePlayer(bool start_enabled) : Module(start_enabled), lifes(1), player(nullptr)
-{
+ModulePlayer::ModulePlayer(bool start_enabled) : Module(start_enabled), lifes(1), player(nullptr){
 }
 
-ModulePlayer::~ModulePlayer()
-{
-	// Homework : check for memory leaks
+ModulePlayer::~ModulePlayer(){
 	if (player != nullptr) {
 		delete player;
+	}
+
+	if (HUD != nullptr) {
+		delete HUD;
 	}
 }
 
@@ -81,15 +85,7 @@ bool ModulePlayer::start(){
 	soundDie = App->audio->loadEffect("player_die.wav");
 
 	//create the gui
-	SDL_Color color;
-	color.r = 255;
-	color.g = 255;
-	color.b = 255;
-	GUI::GUIScore* scoreText  = new GUI::GUIScore(&score->score, color, "arcadepix.ttf", GUILocation::ABSOLUTE, 8);
-	scoreText->transform.position = {50, 2};
-
-	App->scene->addGUI(scoreText);
-	portraitAnimation();
+	makeHUD();
 
 	return started;
 }
@@ -115,6 +111,10 @@ bool ModulePlayer::cleanUp(){
 	}
 	App->timer->deleteTimer(gameOverTimer);
 	return true;
+}
+
+GUI::GUIComponent * ModulePlayer::getHUD() const {
+	return HUD;
 }
 
 void ModulePlayer::addGameOver() {
@@ -171,7 +171,44 @@ void ModulePlayer::debugging() {
 	}
 }
 
-void ModulePlayer::portraitAnimation() {
+void ModulePlayer::makeHUD() {
+	GUI::GUIContainer* container = new GUI::GUIContainer();
+	container->transform.location = GUILocation::TOP_LEFT;
+	container->transform.pivot = GUILocation::TOP_LEFT;
+	container->offset = fPoint(3, 3);
+	container->setSize(iPoint(90*SCREEN_SIZE+24*SCREEN_SIZE, 15*SCREEN_SIZE));
+
+	//portrait
+	GUI::GUIComponent* animationPortrait = portraitAnimation();
+	animationPortrait->transform.location = GUILocation::TOP_LEFT;
+	animationPortrait->transform.pivot = GUILocation::TOP_LEFT;
+	container->pack(animationPortrait);
+
+	//lifebar
+	GUI::GUILifeBar* lifebar = new GUI::GUILifeBar("gui_lifebar.png", App->player->life);
+	lifebar->transform.location = GUILocation::BOTTOM_RIGHT;
+	lifebar->transform.pivot = GUILocation::BOTTOM_RIGHT;
+
+	lifebar->pointColor[GUI::PointColor::GREEN] = {0,0,5,12};
+	lifebar->pointColor[GUI::PointColor::YELLOW] = {5,0,5,12};
+	lifebar->pointColor[GUI::PointColor::RED] = {10,0,5,12};
+	lifebar->pointColor[GUI::PointColor::EMPTY] = {15,0,5,12};
+	container->pack(lifebar);
+
+	//score
+	SDL_Color color;
+	color.r = 255;
+	color.g = 255;
+	color.b = 255;
+	GUI::GUIScore* scoreText = new GUI::GUIScore(&score->score, color, "arcadepix.ttf", GUILocation::TOP_RIGHT, 8);
+	scoreText->transform.pivot = GUILocation::TOP_RIGHT;
+	scoreText->offset.y = 2 ;
+	container->pack(scoreText);
+	
+	HUD = container;
+}
+
+GUI::GUIComponent* ModulePlayer::portraitAnimation() {
 	ControlEntity* controller = &player->controller;
 	StateMachine<Animation>* animations;
 
@@ -239,14 +276,13 @@ void ModulePlayer::portraitAnimation() {
 
 	GUI::GUIAnimation* animationPortrait = new GUI::GUIAnimation("gui_portrait.png", animations);
 	animationPortrait->transform.position = {0,0};
-	App->scene->addGUI(animationPortrait);
+	return animationPortrait;
 }
 
 
 // Update
 update_status ModulePlayer::update(){
 	debugging();
-
 
 	levelEnd();
 

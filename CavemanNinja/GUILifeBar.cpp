@@ -56,38 +56,42 @@ void GUI::GUILifeBar::draw(const GUITransform & states) const {
 	result.position = getPosition(states);
 	result.position += temp.rotate(states.rotation);
 
-	SDL_Rect actual = pointColor[actualColor];
-	for (unsigned int i = 0; i < longLife; ++i) {
-		if (i > coloredPoint) {
-			actual = pointColor[PointColor::EMPTY];
+	SDL_Rect actual = pointColor[PointColor::EMPTY];
+	for (unsigned int i = longLife; i > 0; --i) {
+		if (i < coloredPoint) {
+			actual = pointColor[actualColor];
 		}
 		App->renderer->paintGUI(texture, result, &actual);
-		result.position.x += actual.w;
+		result.position.x -= actual.w * SCREEN_SIZE;;
 	}
 }
 
 fPoint GUI::GUILifeBar::getPosition(const GUITransform & transformParent) const {
-	SDL_Rect viewArea = App->renderer->camera.getWindowsSize();
 	fPoint position = transformParent.position;
 
 	if (transform.location == ABSOLUTE) {
 		position += transform.position;
 	} else {
+		iPoint sizeParent = getParent()->getSize();
 		//start centered as default
-		position += fPoint((float) viewArea.w / (2 * SCREEN_SIZE), (float) viewArea.h / (2 * SCREEN_SIZE));
+		position += fPoint(sizeParent.x * 0.5f, sizeParent.y * 0.5f);
 
 		if ((transform.location & TOP) > 0) {
-			position -= fPoint(0.0f, (float) viewArea.h / (2 * SCREEN_SIZE));
+			position -= fPoint(0.0f, sizeParent.y * 0.5f);
 		}
 		if ((transform.location & BOTTOM) > 0) {
-			position += fPoint(0.0f, (float) viewArea.h / (2 * SCREEN_SIZE));
+			position += fPoint(0.0f, sizeParent.y * 0.5f);
 		}
 		if ((transform.location & LEFT) > 0) {
-			position -= fPoint((float) viewArea.w / (2 * SCREEN_SIZE), 0.0f);
+			position -= fPoint(sizeParent.x * 0.5f, 0.0f);
 		}
 		if ((transform.location & RIGHT) > 0) {
-			position += fPoint((float) viewArea.w / (2 * SCREEN_SIZE), 0.0f);
+			position += fPoint(sizeParent.x * 0.5f, 0.0f);
 		}
 	}
+
+	//offset is given in base units, instead of parent size, given in its final size
+	//position += offset*SCREEN_SIZE;
+
 	return position;
 }

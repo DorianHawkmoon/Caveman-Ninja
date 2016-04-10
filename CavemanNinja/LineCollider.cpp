@@ -63,7 +63,7 @@ bool LineCollider::checkCollision(const CircleCollider * other) const {
 		}
 
 	if (!found) {	// Está más a la derecha que el último punto, comprueba la colision con el último segmento
-		leftBoundIndex = points.size() - 2;	// size - 2 es el índice del penúltimo elemento
+		leftBoundIndex = static_cast<int>(points.size()) - 2;	// size - 2 es el índice del penúltimo elemento
 	}
 
 	// Crea el rectángulo del segmento adecuado y comprueba la colision

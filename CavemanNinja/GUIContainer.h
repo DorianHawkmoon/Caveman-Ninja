@@ -38,6 +38,7 @@ namespace GUI {
 
 		void GUIContainer::draw(const GUITransform& states) const;
 
+		void setSize(iPoint size);
 
 		inline virtual bool start();
 

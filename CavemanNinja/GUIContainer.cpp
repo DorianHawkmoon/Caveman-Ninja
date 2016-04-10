@@ -7,8 +7,8 @@ namespace GUI {
 	}
 
 	void GUIContainer::pack(GUIComponent* component) {
+		component->setParent(this);
 		children.push_back(component);
-
 	}
 
 	void GUIContainer::clearSelection() {
@@ -42,9 +42,16 @@ namespace GUI {
 	void GUIContainer::draw(const GUITransform& states) const {
 		GUITransform trans = transform + states;
 
+		// Determina la posición teniendo en cuenta el padre y la posición que tiene
+		trans.position = getPosition(states);
+
 		for (const GUIComponent* child : children) {
 			child->draw(trans);
 		}
+	}
+
+	void GUIContainer::setSize(iPoint size) {
+		this->size = size;
 	}
 
 	bool GUIContainer::start() {
@@ -110,7 +117,7 @@ namespace GUI {
 
 	void GUIContainer::selectPrevious() {
 		if (!hasSelection()) {
-			int index = children.size() - 1;
+			int index = (int)children.size() - 1;
 			if (index >= 0) {
 				select(index);
 			}
@@ -119,7 +126,7 @@ namespace GUI {
 			// Search previous component that is selectable, wrap around if necessary
 			int prev = selectedChild;
 			do {
-				prev = (prev + children.size() - 1) % children.size();
+				prev = (prev + (int)children.size() - 1) % children.size();
 			} while (!children[prev]->isSelectable());
 
 			// Select that component

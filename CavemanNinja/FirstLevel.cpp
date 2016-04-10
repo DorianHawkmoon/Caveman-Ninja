@@ -138,6 +138,8 @@ bool FirstLevel::start() {
 
 	root->addChild(buffer); //added scenario
 
+	// ----------------------------------------------
+
 	fPoint positionTrigger = {1060,0};
 	buffer = Trigger::makeTrigger(positionTrigger, {10,256},
 		[]() {
@@ -152,11 +154,10 @@ bool FirstLevel::start() {
 	buffer->transform->position = {340, 180};
 	root->addChild(buffer);
 	
-	
 	putEnemies();
-
 	root->start();
-	makeHUD();
+
+	addGUI(App->player->getHUD());
 
 	App->audio->playMusic("backgroundMusic.mp3");
 
@@ -253,17 +254,4 @@ void FirstLevel::makeEnemy(fPoint positionTrigger, const std::vector<fPoint>& en
 							}
 						);
 	root->addChild(buffer);
-}
-
-void FirstLevel::makeHUD() {
-	GUI::GUILifeBar* lifebar = new GUI::GUILifeBar("gui_lifebar.png", App->player->life);
-	lifebar->transform.position = {24,12};
-	lifebar->pointColor[GUI::PointColor::GREEN] = {0,0,5,12};
-	lifebar->pointColor[GUI::PointColor::YELLOW] = {5,0,5,12};
-	lifebar->pointColor[GUI::PointColor::RED] = {10,0,5,12};
-	lifebar->pointColor[GUI::PointColor::EMPTY] = {15,0,5,12};
-	rootGUI->pack(lifebar);
-
-
-	//App->gui->registerGUI(rootGUI);
 }

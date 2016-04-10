@@ -5,6 +5,7 @@
 #include "Globals.h"
 #include <list>
 #include "IUpdater.h"
+#include <vector>
 namespace GUI {
 	class GUIContainer;
 	class GUIComponent;
@@ -29,7 +30,8 @@ public:
 
 protected:
 	SceneNode* root;
-	GUI::GUIContainer* rootGUI;
+	//not owned!
+	std::vector<GUI::GUIComponent*> gui;
 	std::list<Entity*> entities;
 
 private:

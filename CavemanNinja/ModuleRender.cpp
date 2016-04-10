@@ -276,8 +276,6 @@ bool ModuleRender::insideCamera(const SDL_Rect & one, float speed) const {
 bool ModuleRender::paintGUI(SDL_Texture * texture, const GUITransform & transform, const SDL_Rect* sectionTexture) {
 	bool result = true;
 
-	SDL_Rect cam = camera.getWindowsSize();
-
 	SDL_Rect rectDestiny;
 	iPoint pos = {(int) transform.position.x, (int) transform.position.y};
 	rectDestiny.x = pos.x;
@@ -301,23 +299,23 @@ bool ModuleRender::paintGUI(SDL_Texture * texture, const GUITransform & transfor
 	if (transform.pivot == GUILocation::ABSOLUTE) {
 	} else {
 		//start centered as default
-		rectDestiny.x -= rectDestiny.w * 0.5f;
-		rectDestiny.y -= rectDestiny.h * 0.5f;
+		rectDestiny.x -= static_cast<int>(rectDestiny.w * 0.5f);
+		rectDestiny.y -= static_cast<int>(rectDestiny.h * 0.5f);
 
 		if ((transform.pivot & TOP) > 0) {
-			rectDestiny.y += rectDestiny.h * 0.5f;
+			rectDestiny.y += static_cast<int>(rectDestiny.h * 0.5f);
 
 		}
 		if ((transform.pivot & BOTTOM) > 0) {
-			rectDestiny.y -= rectDestiny.h * 0.5f;
+			rectDestiny.y -= static_cast<int>(rectDestiny.h * 0.5f);
 
 		}
 		if ((transform.pivot & LEFT) > 0) {
-			rectDestiny.x += rectDestiny.w * 0.5f;
+			rectDestiny.x += static_cast<int>(rectDestiny.w * 0.5f);
 
 		}
 		if ((transform.pivot & RIGHT) > 0) {
-			rectDestiny.x -= rectDestiny.w * 0.5f;
+			rectDestiny.x -= static_cast<int>(rectDestiny.w * 0.5f);
 			
 		}
 	}

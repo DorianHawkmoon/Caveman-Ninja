@@ -1,10 +1,15 @@
 #include "ModuleGUI.h"
 #include "GUIComponent.h"
 #include "Transform.h"
+#include "Application.h"
+#include "ModuleRender.h"
 
 ModuleGUI::~ModuleGUI() {}
 
 bool ModuleGUI::start() {
+	//get the size windows and set a root container
+	SDL_Rect windows = App->renderer->camera.getWindowsSize();
+	root.setSize(iPoint(windows.h, windows.w));
 	return true;
 }
 
@@ -41,6 +46,7 @@ bool ModuleGUI::cleanUp() {
 
 void ModuleGUI::registerGUI(GUI::GUIComponent * component) {
 	if (std::find(gui.begin(), gui.end(), component) == gui.end()) {
+		component->setParent(&root);
 		component->start();
 		gui.push_back(component);
 	}
@@ -50,6 +56,7 @@ void ModuleGUI::removeGUI(GUI::GUIComponent * component) {
 	auto result = std::find(gui.begin(), gui.end(), component);
 	if (result != gui.end()) {
 		(*result)->cleanUp();
+		(*result)->setParent(nullptr);
 		gui.erase(result);
 	}
 }

@@ -13,10 +13,14 @@
 #include "GUIContainer.h"
 #include "GUIComponent.h"
 
-EntryScene::EntryScene() {}
+EntryScene::EntryScene():rootGUI(nullptr) {}
 
 
-EntryScene::~EntryScene() {}
+EntryScene::~EntryScene() {
+	if (rootGUI != nullptr) {
+		delete rootGUI;
+	}
+}
 
 bool EntryScene::start() {
 	LOG("Loading title");
@@ -44,13 +48,13 @@ bool EntryScene::start() {
 	color.b = 255;
 	color.r = 255;
 	color.a = 255;
-	GUI::GUILabel* label = new GUI::GUILabel("Press SPACE to start", color, "arcadepix.ttf", GUILocation::ABSOLUTE);
-	label->transform.position = {35,190};
+	GUI::GUILabel* label = new GUI::GUILabel("Press SPACE to start", color, "arcadepix.ttf", GUILocation::BOTTOM_CENTER);
+	label->transform.pivot = GUILocation::BOTTOM_CENTER;
+	label->offset.y = -60;
 
-	rootGUI->pack(label);
-	rootGUI->start();
-
-	App->gui->registerGUI(rootGUI);
+	addGUI(label);
+	rootGUI=label;
+	
 	return true;
 }
 

@@ -5,6 +5,7 @@
 #include "GUITransform.h"
 #include "SDL\SDL.h"
 #include "IUpdater.h"
+#include "Point.h"
 
 namespace GUI {
 	class GUIComponent : public IUpdater {
@@ -50,11 +51,20 @@ namespace GUI {
 
 		virtual void draw(const GUITransform& state) const=0;
 
+		virtual const iPoint getSize() const;
+
+		const GUIComponent* getParent() const;
+		void setParent(const GUIComponent* child);
+
+	public:
 		/**
 		* Transform
 		*/
 		GUITransform transform;
-
+		/**
+		* Offset to the position
+		*/
+		fPoint offset;
 
 	private:
 		/**
@@ -65,6 +75,20 @@ namespace GUI {
 		* Para comprobar si está activo
 		*/
 		bool actived;
+		/**
+		* Parent of the component
+		*/
+		const GUIComponent* parent;
+		
+
+	protected:
+		/**
+		 * Tamaño del componente
+		 */
+		iPoint size;
+
+		fPoint getPosition(const GUITransform& transformParent) const;
+		
 	};
 
 }

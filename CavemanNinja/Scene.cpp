@@ -9,19 +9,16 @@
 #include "GUIComponent.h"
 #include <functional>
 
-Scene::Scene(): root(nullptr), entities() {
+Scene::Scene(): root(nullptr), entities(), gui() {
 	rootE = new Entity();
 	root = new SceneNode(rootE);
-	rootGUI = new GUI::GUIContainer();
 }
 
 Scene::~Scene() {
 	if (root != nullptr) {
 		delete root;
 	}
-	if (rootGUI != nullptr) {
-		delete rootGUI;
-	}
+	//dont delete gui, not owned
 }
 
 update_status Scene::preUpdate() {
@@ -58,8 +55,13 @@ bool Scene::cleanUp() {
 	}
 	entities.clear();
 
-	App->gui->removeGUI(rootGUI);
-	rootGUI->cleanUp();
+	for (auto it = gui.begin(); it != gui.end(); ++it) {
+		//remove from gui module
+		App->gui->removeGUI(*it);
+		(*it)->cleanUp(); //don't delete, not owned
+	}
+	gui.clear();
+
 	return true;
 }
 
@@ -70,9 +72,7 @@ void Scene::addNode(Entity * entity) {
 	}
 }
 
-void Scene::addGUI(GUI::GUIComponent * gui) {
-	if (rootGUI != nullptr) {
-		gui->start();
-		rootGUI->pack(gui);
-	}
+void Scene::addGUI(GUI::GUIComponent * component) {
+	gui.push_back(component);
+	App->gui->registerGUI(component);
 }
