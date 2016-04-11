@@ -66,6 +66,10 @@ void ModuleScene::addGUI(GUI::GUIComponent * gui) {
 	currentScene->addGUI(gui);
 }
 
+const Scene * ModuleScene::getCurrentScene() const {
+	return currentScene;
+}
+
 void ModuleScene::makeChangeScene() {
 	if (startTime > 0) {
 		Uint32 now = SDL_GetTicks() - startTime;

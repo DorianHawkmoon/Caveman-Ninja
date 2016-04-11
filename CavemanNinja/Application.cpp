@@ -13,6 +13,7 @@
 #include "ModuleFonts.h"
 #include "ModuleGUI.h"
 #include "SDL/SDL.h"
+#include "Scene.h"
 
 int DEBUG_COLLISIONS = 0;
 
@@ -117,6 +118,11 @@ bool Application::isPaused() const {
 
 void Application::pause(bool pause, bool userPaused) {
 	if (paused == pause) return;
+
+	const Scene* actualScene = App->scene->getCurrentScene();
+	if (actualScene->getTypeScene() != TypeScene::LEVEL_SCENE) {
+		return;
+	}
 
 	if (pause== false && this->userPaused==true && userPaused==false) {
 		return;

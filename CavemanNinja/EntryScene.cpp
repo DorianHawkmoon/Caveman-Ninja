@@ -13,7 +13,9 @@
 #include "GUIContainer.h"
 #include "GUIComponent.h"
 
-EntryScene::EntryScene():rootGUI(nullptr) {}
+EntryScene::EntryScene():rootGUI(nullptr) {
+	type=TypeScene::TITLE_SCENE;
+}
 
 
 EntryScene::~EntryScene() {

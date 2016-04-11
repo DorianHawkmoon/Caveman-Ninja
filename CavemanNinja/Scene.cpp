@@ -9,7 +9,7 @@
 #include "GUIComponent.h"
 #include <functional>
 
-Scene::Scene(): root(nullptr), entities(), gui() {
+Scene::Scene(): root(nullptr), entities(), gui(), type(TypeScene::LEVEL_SCENE) {
 	rootE = new Entity();
 	root = new SceneNode(rootE);
 }
@@ -75,4 +75,8 @@ void Scene::addNode(Entity * entity) {
 void Scene::addGUI(GUI::GUIComponent * component) {
 	gui.push_back(component);
 	App->gui->registerGUI(component);
+}
+
+TypeScene Scene::getTypeScene() const {
+	return type;
 }

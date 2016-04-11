@@ -14,6 +14,13 @@ namespace GUI {
 class Entity;
 class SceneNode;
 
+enum TypeScene {
+	TITLE_SCENE,
+	CUT_SCENE,
+	LEVEL_SCENE,
+
+};
+
 class Scene : public IUpdater{
 public:
 	Scene();
@@ -27,12 +34,14 @@ public:
 
 	void addNode(Entity* entity);
 	void addGUI(GUI::GUIComponent* gui);
+	TypeScene getTypeScene() const;
 
 protected:
 	SceneNode* root;
 	//not owned!
 	std::vector<GUI::GUIComponent*> gui;
 	std::list<Entity*> entities;
+	TypeScene type;
 
 private:
 	Entity* rootE;

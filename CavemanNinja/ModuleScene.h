@@ -25,6 +25,7 @@ public:
 
 	void addEntity(Entity* entity);
 	void addGUI(GUI::GUIComponent* gui);
+	const Scene* getCurrentScene() const;
 
 private:
 	Scene* currentScene;
