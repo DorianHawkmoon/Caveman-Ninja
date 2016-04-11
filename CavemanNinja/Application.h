@@ -31,7 +31,7 @@ public:
 	bool cleanUp();
 
 	bool isPaused() const;
-	void pause(bool pause);
+	void pause(bool pause, bool userPaused=false);
 
 public:
 	ModuleRender* renderer;
@@ -51,6 +51,7 @@ public:
 private:
 	std::list<Module*> modules;
 	bool paused;
+	bool userPaused;
 	GUI::GUILabel* label;
 };
 

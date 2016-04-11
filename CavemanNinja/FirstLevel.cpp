@@ -175,7 +175,7 @@ update_status FirstLevel::update() {
 	Scene::update();
 
 	if (App->input->getKey(SDL_SCANCODE_P)==KEY_DOWN) {
-		App->pause(!App->isPaused());
+		App->pause(!App->isPaused(), true);
 	}
 
 	return UPDATE_CONTINUE;

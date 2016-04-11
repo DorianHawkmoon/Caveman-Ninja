@@ -115,10 +115,14 @@ bool Application::isPaused() const {
 	return paused;
 }
 
-void Application::pause(bool pause) {
+void Application::pause(bool pause, bool userPaused) {
 	if (paused == pause) return;
 
+	if (pause== false && this->userPaused==true && userPaused==false) {
+		return;
+	}
 	paused = pause;
+	this->userPaused = userPaused;
 	if (paused) {
 		timer->pause();
 		SDL_Color c;
