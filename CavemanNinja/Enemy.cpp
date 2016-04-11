@@ -340,6 +340,7 @@ void Enemy::makeAnimations(Entity* entity) {
 	startFallAnimation->addTransition(&transitionBackDamage);
 	endFallAnimation->addTransition(&transitionBackDamage);
 	backHitAnimation->addTransition(&transitionDamageIdle);
+	jumpAnimation->addTransition(&transitionBackDamage);
 
 	// ---------------------------------------------
 
@@ -365,6 +366,7 @@ void Enemy::makeAnimations(Entity* entity) {
 	startFallAnimation->addTransition(&transitionFrontDamage);
 	endFallAnimation->addTransition(&transitionFrontDamage);
 	frontHitAnimation->addTransition(&transitionDamageIdle);
+	jumpAnimation->addTransition(&transitionFrontDamage);
 
 	// ---------------------------------------------
 	
